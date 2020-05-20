@@ -101,8 +101,6 @@ class BigBlueButton
         try {
             $response = $this->isMeetingRunning($meetingParams);
 
-            var_dump($response);
-
             if (!$response->success() && !$response->failed()) {
                 // invalid url
                 return false;
