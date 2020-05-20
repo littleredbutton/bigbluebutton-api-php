@@ -46,6 +46,32 @@ class BigBlueButtonTest extends TestCase
         $this->bbb = new BigBlueButton();
     }
 
+
+
+    /* Check Connection */
+
+    /**
+     * Test Check Connection call
+     */
+    public function testCheckConnection()
+    {
+        // Check with correct baseurl and correct secret
+        $result = $this->bbb->checkConnection();
+        $this->assertTrue($result);
+
+        // Check with wrong baseurl and correct secret
+        $wrong_url_bbb = new BigBlueButton($this->faker->url);
+        $result = $wrong_url_bbb->checkConnection();
+        $this->assertFalse($result);
+
+        // Check with correct baseurl and wrong secret
+        $wrong_url_bbb = new BigBlueButton(null,$this->faker->text);
+        $result = $wrong_url_bbb->checkConnection();
+        $this->assertFalse($result);
+    }
+
+
+
     /* API Version */
 
     /**
