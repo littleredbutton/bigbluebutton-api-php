@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace BigBlueButton\Parameters;
 
 /**
@@ -24,7 +25,7 @@ namespace BigBlueButton\Parameters;
 class CreateMeetingParameters extends MetaParameters
 {
     const ALWAYS_ACCEPT = 'ALWAYS_ACCEPT';
-    const ALWAYS_DENY   = 'ALWAYS_DENY';
+    const ALWAYS_DENY = 'ALWAYS_DENY';
     const ASK_MODERATOR = 'ASK_MODERATOR';
 
     /**
@@ -210,7 +211,7 @@ class CreateMeetingParameters extends MetaParameters
      */
     public function __construct($meetingId, $meetingName)
     {
-        $this->meetingId   = $meetingId;
+        $this->meetingId = $meetingId;
         $this->meetingName = $meetingName;
     }
 
@@ -523,7 +524,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $webcamsOnlyForModerator
+     * @param bool $webcamsOnlyForModerator
+     *
      * @return CreateMeetingParameters
      */
     public function setWebcamsOnlyForModerator($webcamsOnlyForModerator)
@@ -542,7 +544,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  string                  $logo
+     * @param string $logo
+     *
      * @return CreateMeetingParameters
      */
     public function setLogo($logo)
@@ -561,7 +564,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  string                  $copyright
+     * @param string $copyright
+     *
      * @return CreateMeetingParameters
      */
     public function setCopyright($copyright)
@@ -580,7 +584,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $muteOnStart
+     * @param bool $muteOnStart
+     *
      * @return CreateMeetingParameters
      */
     public function setMuteOnStart($muteOnStart)
@@ -599,7 +604,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $lockSettingsDisableCam
+     * @param bool $lockSettingsDisableCam
+     *
      * @return CreateMeetingParameters
      */
     public function setLockSettingsDisableCam($lockSettingsDisableCam)
@@ -618,7 +624,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $lockSettingsDisableMic
+     * @param bool $lockSettingsDisableMic
+     *
      * @return CreateMeetingParameters
      */
     public function setLockSettingsDisableMic($lockSettingsDisableMic)
@@ -637,7 +644,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $lockSettingsDisablePrivateChat
+     * @param bool $lockSettingsDisablePrivateChat
+     *
      * @return CreateMeetingParameters
      */
     public function setLockSettingsDisablePrivateChat($lockSettingsDisablePrivateChat)
@@ -656,7 +664,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $lockSettingsDisablePublicChat
+     * @param bool $lockSettingsDisablePublicChat
+     *
      * @return CreateMeetingParameters
      */
     public function setLockSettingsDisablePublicChat($lockSettingsDisablePublicChat)
@@ -675,7 +684,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $lockSettingsDisableNote
+     * @param bool $lockSettingsDisableNote
+     *
      * @return CreateMeetingParameters
      */
     public function setLockSettingsDisableNote($lockSettingsDisableNote)
@@ -694,7 +704,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $lockSettingsHideUserList
+     * @param bool $lockSettingsHideUserList
+     *
      * @return CreateMeetingParameters
      */
     public function setLockSettingsHideUserList($lockSettingsHideUserList)
@@ -713,7 +724,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $lockSettingsLockedLayout
+     * @param bool $lockSettingsLockedLayout
+     *
      * @return CreateMeetingParameters
      */
     public function setLockSettingsLockedLayout($lockSettingsLockedLayout)
@@ -732,7 +744,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $lockOnJoin
+     * @param bool $lockOnJoin
+     *
      * @return CreateMeetingParameters
      */
     public function setLockSettingsLockOnJoin($lockOnJoin)
@@ -751,7 +764,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $lockOnJoinConfigurable
+     * @param bool $lockOnJoinConfigurable
+     *
      * @return CreateMeetingParameters
      */
     public function setLockSettingsLockOnJoinConfigurable($lockOnJoinConfigurable)
@@ -770,7 +784,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $allowModsToUnmuteUsers
+     * @param bool $allowModsToUnmuteUsers
+     *
      * @return CreateMeetingParameters
      */
     public function setAllowModsToUnmuteUsers($allowModsToUnmuteUsers)
@@ -782,6 +797,7 @@ class CreateMeetingParameters extends MetaParameters
 
     /**
      * @param $endCallbackUrl
+     *
      * @return CreateMeetingParameters
      */
     public function setEndCallbackUrl($endCallbackUrl)
@@ -793,6 +809,7 @@ class CreateMeetingParameters extends MetaParameters
 
     /**
      * @param $recordingReadyCallbackUrl
+     *
      * @return CreateMeetingParameters
      */
     public function setRecordingReadyCallbackUrl($recordingReadyCallbackUrl)
@@ -811,7 +828,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $isBreakout
+     * @param bool $isBreakout
+     *
      * @return CreateMeetingParameters
      */
     public function setBreakout($isBreakout)
@@ -830,7 +848,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  string                  $parentMeetingId
+     * @param string $parentMeetingId
+     *
      * @return CreateMeetingParameters
      */
     public function setParentMeetingId($parentMeetingId)
@@ -849,7 +868,8 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  int                     $sequence
+     * @param int $sequence
+     *
      * @return CreateMeetingParameters
      */
     public function setSequence($sequence)
@@ -868,12 +888,13 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param  bool                    $freeJoin
+     * @param bool $freeJoin
+     *
      * @return CreateMeetingParameters
      */
     public function setFreeJoin($freeJoin)
     {
-        $this->freeJoin    = $freeJoin;
+        $this->freeJoin = $freeJoin;
 
         return $this;
     }
@@ -886,6 +907,9 @@ class CreateMeetingParameters extends MetaParameters
         return $this->guestPolicy === self::ALWAYS_DENY;
     }
 
+    /**
+     * @return CreateMeetingParameters
+     */
     public function setBlockedJoin()
     {
         $this->guestPolicy = self::ALWAYS_DENY;
@@ -901,6 +925,9 @@ class CreateMeetingParameters extends MetaParameters
         return $this->guestPolicy === self::ASK_MODERATOR;
     }
 
+    /**
+     * @return CreateMeetingParameters
+     */
     public function setModerateJoin()
     {
         $this->guestPolicy = self::ASK_MODERATOR;
@@ -916,6 +943,9 @@ class CreateMeetingParameters extends MetaParameters
         return $this->guestPolicy === self::ALWAYS_ACCEPT;
     }
 
+    /**
+     * @return CreateMeetingParameters
+     */
     public function setOpenJoin()
     {
         $this->guestPolicy = self::ALWAYS_ACCEPT;
@@ -940,7 +970,7 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @param $nameOrUrl
+     * @param      $nameOrUrl
      * @param null $content
      * @param null $filename
      *
@@ -965,7 +995,7 @@ class CreateMeetingParameters extends MetaParameters
         $result = '';
 
         if (!empty($this->presentations)) {
-            $xml    = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><modules/>');
+            $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><modules/>');
             $module = $xml->addChild('module');
             $module->addAttribute('name', 'presentation');
 
