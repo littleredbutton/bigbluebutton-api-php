@@ -85,7 +85,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'webcamsOnlyForModerator'            => $this->faker->boolean(50),
             'logo'                               => $this->faker->imageUrl(330, 70),
             'copyright'                          => $this->faker->text,
-            'guestPolicy'                        => 'ALWAYS_ACCEPT',
+            'guestPolicy'                        => CreateMeetingParameters::ALWAYS_ACCEPT,
             'muteOnStart'                        => $this->faker->boolean(50),
             'lockSettingsDisableCam'             => $this->faker->boolean(50),
             'lockSettingsDisableMic'             => $this->faker->boolean(50),
@@ -155,6 +155,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setLockSettingsLockOnJoin($params['lockSettingsLockOnJoin'])
             ->setLockSettingsLockOnJoinConfigurable($params['lockSettingsLockOnJoinConfigurable'])
             ->setAllowModsToUnmuteUsers($params['allowModsToUnmuteUsers'])
+            ->setOpenJoin()
             ->addMeta('presenter', $params['meta_presenter']);
     }
 
