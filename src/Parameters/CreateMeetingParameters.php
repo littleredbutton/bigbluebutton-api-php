@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace BigBlueButton\Parameters;
 
 /**
@@ -25,7 +24,7 @@ namespace BigBlueButton\Parameters;
 class CreateMeetingParameters extends MetaParameters
 {
     const ALWAYS_ACCEPT = 'ALWAYS_ACCEPT';
-    const ALWAYS_DENY = 'ALWAYS_DENY';
+    const ALWAYS_DENY   = 'ALWAYS_DENY';
     const ASK_MODERATOR = 'ASK_MODERATOR';
 
     /**
@@ -211,7 +210,7 @@ class CreateMeetingParameters extends MetaParameters
      */
     public function __construct($meetingId, $meetingName)
     {
-        $this->meetingId = $meetingId;
+        $this->meetingId   = $meetingId;
         $this->meetingName = $meetingName;
     }
 
@@ -995,7 +994,7 @@ class CreateMeetingParameters extends MetaParameters
         $result = '';
 
         if (!empty($this->presentations)) {
-            $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><modules/>');
+            $xml    = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><modules/>');
             $module = $xml->addChild('module');
             $module->addAttribute('name', 'presentation');
 
