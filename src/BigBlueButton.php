@@ -90,6 +90,34 @@ class BigBlueButton
         return new ApiVersionResponse($xml);
     }
 
+    /**
+     * Check if connection to api can be established with the baseurl and secret
+     * @return bool connection successful
+     */
+    public function checkConnection(): bool
+    {
+        $meetingParams = new IsMeetingRunningParameters("connection_check");
+
+        try {
+            $response = $this->isMeetingRunning($meetingParams);
+
+            if (!$response->success() && !$response->failed()) {
+                // invalid url
+                return false;
+            }
+
+            if (!$response->success()) {
+                // invalid secret
+                return false;
+            }
+
+            // url and secret are valid
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
     /* __________________ BBB ADMINISTRATION METHODS _________________ */
     /* The methods in the following section support the following categories of the BBB API:
     -- create
