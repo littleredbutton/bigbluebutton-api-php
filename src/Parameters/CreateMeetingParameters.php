@@ -901,7 +901,7 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @return bool
      */
-    public function isBlockedJoin()
+    public function isGuestPolicyAlwaysDeny()
     {
         return $this->guestPolicy === self::ALWAYS_DENY;
     }
@@ -909,7 +909,7 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @return CreateMeetingParameters
      */
-    public function setBlockedJoin()
+    public function setGuestPolicyAlwaysDeny()
     {
         $this->guestPolicy = self::ALWAYS_DENY;
 
@@ -919,7 +919,7 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @return bool
      */
-    public function isModerateJoin()
+    public function isGuestPolicyAskModerator()
     {
         return $this->guestPolicy === self::ASK_MODERATOR;
     }
@@ -927,7 +927,7 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @return CreateMeetingParameters
      */
-    public function setModerateJoin()
+    public function setGuestPolicyAskModerator()
     {
         $this->guestPolicy = self::ASK_MODERATOR;
 
@@ -937,7 +937,7 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @return bool
      */
-    public function isOpenJoin()
+    public function isGuestPolicyAlwaysAccept()
     {
         return $this->guestPolicy === self::ALWAYS_ACCEPT;
     }
@@ -945,7 +945,7 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @return CreateMeetingParameters
      */
-    public function setOpenJoin()
+    public function setGuestPolicyAlwaysAccept()
     {
         $this->guestPolicy = self::ALWAYS_ACCEPT;
 

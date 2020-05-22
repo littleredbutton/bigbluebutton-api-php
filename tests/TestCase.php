@@ -155,7 +155,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setLockSettingsLockOnJoin($params['lockSettingsLockOnJoin'])
             ->setLockSettingsLockOnJoinConfigurable($params['lockSettingsLockOnJoinConfigurable'])
             ->setAllowModsToUnmuteUsers($params['allowModsToUnmuteUsers'])
-            ->setOpenJoin()
+            ->setGuestPolicyAlwaysAccept()
             ->addMeta('presenter', $params['meta_presenter']);
     }
 
