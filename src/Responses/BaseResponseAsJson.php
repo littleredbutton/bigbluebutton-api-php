@@ -36,7 +36,7 @@ abstract class BaseResponseAsJson
     /**
      * BaseResponseAsJson constructor.
      *
-     * @param rawJson
+     * @param string $rawJson
      */
     public function __construct($rawJson)
     {
@@ -44,13 +44,16 @@ abstract class BaseResponseAsJson
     }
 
     /**
-     * @return json|false|string
+     * @return string
      */
     public function getRawJson()
     {
         return json_encode($this->rawJson);
     }
 
+    /**
+     * @return array
+     */
     public function getRawArray()
     {
         return json_decode(json_encode($this->rawJson), true);
@@ -88,11 +91,17 @@ abstract class BaseResponseAsJson
         return $this->rawJson->response->returncode;
     }
 
+    /**
+     * @return bool
+     */
     public function success()
     {
         return $this->getReturnCode() === self::SUCCESS;
     }
 
+    /**
+     * @return bool
+     */
     public function failed()
     {
         return $this->getReturnCode() === self::FAILED;

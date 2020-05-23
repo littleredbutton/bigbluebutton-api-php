@@ -489,11 +489,6 @@ class BigBlueButton
         $this->jSessionId = $jSessionId;
     }
 
-    private function isJson($string)
-    {
-        return is_string($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
-    }
-
     /* ____________________ INTERNAL CLASS METHODS ___________________ */
 
     /**
@@ -526,10 +521,6 @@ class BigBlueButton
             curl_close($ch);
 
             return $data;
-
-           /* return file_get_contents(str_replace("/src",'',__DIR__) . DIRECTORY_SEPARATOR .  'tests' .
-                DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'get_recording_text_tracks.json');
-           */
         } else {
             throw new \RuntimeException('Post JSON data set but curl PHP module is not installed or not enabled.');
         }

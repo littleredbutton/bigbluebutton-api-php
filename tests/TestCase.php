@@ -284,7 +284,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function loadJsonFile($path)
     {
-        return file_get_contents(($path));
+        return file_get_contents($path);
     }
 
     protected function minifyString($string)
