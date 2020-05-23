@@ -60,6 +60,11 @@ class BigBlueButton
     protected $bbbServerBaseUrl;
     protected $urlBuilder;
     protected $jSessionId;
+    protected $connectionError;
+
+    const CONNECTION_ERROR_BASEURL = 1;
+    const CONNECTION_ERROR_SECRET = 2;
+
 
     /**
      * @param string $baseUrl (optional)
@@ -96,32 +101,45 @@ class BigBlueButton
      * Check if connection to api can be established with the baseurl and secret
      * @return bool connection successful
      */
-    public function checkConnection(): bool
+    public function isConnectionWorking(): bool
     {
+        $this->connectionError = null;
         try {
             $response = $this->isMeetingRunning(
                 new IsMeetingRunningParameters("connection_check")
             );
 
-           /* if (!$response->success() && !$response->failed()) {
-                // invalid url
+            // invalid url
+            if (!$response->success() && !$response->failed()) {
+                $this->connectionError = self::CONNECTION_ERROR_BASEURL;
                 return false;
             }
 
+            // invalid secret
             if (!$response->success()) {
-                // invalid secret
+                $this->connectionError = self::CONNECTION_ERROR_SECRET;
                 return false;
-            }*/
+            }
 
            // url and secret are valid
            if($response->success()) {
                return true;
            }
 
-            return false;
         } catch (\Exception $e) {
+            $this->connectionError = self::CONNECTION_ERROR_BASEURL;
             return false;
         }
+    }
+
+
+    /**
+     * Return connection error type
+     * @return int|null Connection error (const CONNECTION_ERROR_BASEURL or CONNECTION_ERROR_SECRET)
+     */
+    public function getConnectionError(): ?int
+    {
+        return $this->connectionError;
     }
 
     /* __________________ BBB ADMINISTRATION METHODS _________________ */
