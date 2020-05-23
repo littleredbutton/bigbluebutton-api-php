@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace BigBlueButton;
 
 use BigBlueButton\Core\ApiMethod;
@@ -63,8 +62,7 @@ class BigBlueButton
     protected $connectionError;
 
     const CONNECTION_ERROR_BASEURL = 1;
-    const CONNECTION_ERROR_SECRET = 2;
-
+    const CONNECTION_ERROR_SECRET  = 2;
 
     /**
      * @param string $baseUrl (optional)
@@ -75,7 +73,7 @@ class BigBlueButton
     public function __construct($baseUrl = null, $secret = null)
     {
         // Keeping backward compatibility with older deployed versions
-        $this->securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
+        $this->securitySecret   = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
         $this->bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
 
         if (empty($this->bbbServerBaseUrl)) {
@@ -105,9 +103,10 @@ class BigBlueButton
     {
         // Reset connection error
         $this->connectionError = null;
+
         try {
             $response = $this->isMeetingRunning(
-                new IsMeetingRunningParameters("connection_check")
+                new IsMeetingRunningParameters('connection_check')
             );
 
             // url and secret working
@@ -116,19 +115,20 @@ class BigBlueButton
             }
 
             // Checksum error - invalid secret
-            if($response->hasChecksumError()){
+            if ($response->hasChecksumError()) {
                 $this->connectionError = self::CONNECTION_ERROR_SECRET;
+
                 return false;
             }
 
-        // HTTP exception or XML parse
-        } catch (\Exception $e) {}
+            // HTTP exception or XML parse
+        } catch (\Exception $e) {
+        }
 
         $this->connectionError = self::CONNECTION_ERROR_BASEURL;
+
         return false;
     }
-
-
 
     /**
      * Return connection error type
@@ -533,7 +533,7 @@ class BigBlueButton
             $timeout = 10;
 
             // Needed to store the JSESSIONID
-            $cookiefile = tmpfile();
+            $cookiefile     = tmpfile();
             $cookiefilepath = stream_get_meta_data($cookiefile)['uri'];
 
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
