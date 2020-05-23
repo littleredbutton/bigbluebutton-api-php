@@ -26,6 +26,7 @@ abstract class BaseResponse
 {
     const SUCCESS = 'SUCCESS';
     const FAILED  = 'FAILED';
+    const CHECKSUM_ERROR = 'checksumError';
 
     /**
      * @var \SimpleXMLElement
@@ -83,4 +84,14 @@ abstract class BaseResponse
     {
         return $this->getReturnCode() === self::FAILED;
     }
+
+
+    /**
+     * Check is response is checksum error
+     * @return bool
+     */
+    public function hasChecksumError(): bool{
+        return $this->failed() && $this->getMessageKey()==self::CHECKSUM_ERROR;
+    }
+
 }

@@ -103,34 +103,31 @@ class BigBlueButton
      */
     public function isConnectionWorking(): bool
     {
+        // Reset connection error
         $this->connectionError = null;
         try {
             $response = $this->isMeetingRunning(
                 new IsMeetingRunningParameters("connection_check")
             );
 
-            // invalid url
-            if (!$response->success() && !$response->failed()) {
-                $this->connectionError = self::CONNECTION_ERROR_BASEURL;
-                return false;
+            // url and secret working
+            if ($response->success()) {
+                return true;
             }
 
-            // invalid secret
-            if (!$response->success()) {
+            // Checksum error - invalid secret
+            if($response->hasChecksumError()){
                 $this->connectionError = self::CONNECTION_ERROR_SECRET;
                 return false;
             }
 
-           // url and secret are valid
-           if($response->success()) {
-               return true;
-           }
+        // HTTP exception or XML parse
+        } catch (\Exception $e) {}
 
-        } catch (\Exception $e) {
-            $this->connectionError = self::CONNECTION_ERROR_BASEURL;
-            return false;
-        }
+        $this->connectionError = self::CONNECTION_ERROR_BASEURL;
+        return false;
     }
+
 
 
     /**
