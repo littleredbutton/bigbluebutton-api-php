@@ -451,7 +451,7 @@ class BigBlueButton
     public function getRecordingTextTracks($getRecordingTextTracksParams)
     {
         return new GetRecordingTextTracksResponse(
-            $this->processJsonResponse($this->getRecordingTextTracksUrl($getRecordingTextTracksParams))
+            $this->processResponse($this->getRecordingTextTracksUrl($getRecordingTextTracksParams))
         );
     }
 
@@ -538,40 +538,6 @@ class BigBlueButton
 
     /* ____________________ INTERNAL CLASS METHODS ___________________ */
 
-    /**
-     * A private utility method used by other public methods to process JSON responses.
-     *
-     * @param string $url
-     *
-     * @return string
-     * @throws \RuntimeException
-     */
-    private function processJsonResponse($url)
-    {
-        if (extension_loaded('curl')) {
-            $ch = curl_init();
-            if (!$ch) {
-                throw new \RuntimeException('Unhandled curl error: ' . curl_error($ch));
-            }
-
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-            curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-
-            $data = curl_exec($ch);
-            if ($data === false) {
-                throw new \RuntimeException('Unhandled curl error: ' . curl_error($ch));
-            }
-            curl_close($ch);
-
-            return $data;
-        } else {
-            throw new \RuntimeException('Post JSON data set but curl PHP module is not installed or not enabled.');
-        }
-    }
 
     /**
      * A private utility method used by other public methods to process XML responses.
@@ -584,6 +550,22 @@ class BigBlueButton
      * @throws \RuntimeException
      */
     private function processXmlResponse($url, $payload = '', $contentType = 'application/xml')
+    {
+        return new SimpleXMLElement($this->processResponse($url,$payload,$contentType));
+    }
+
+
+    /**
+     * A private utility method used by other public methods to process responses.
+     *
+     * @param string $url
+     * @param string $payload
+     * @param string $contentType
+     *
+     * @return string Response body
+     * @throws \RuntimeException
+     */
+    private function processResponse($url, $payload = '', $contentType = 'application/xml')
     {
         if (extension_loaded('curl')) {
             $ch = curl_init();
@@ -626,9 +608,9 @@ class BigBlueButton
                 $this->setJSessionId($output_array['JSESSIONID']);
             }
 
-            return new SimpleXMLElement($data);
+            return $data;
         } else {
-            throw new \RuntimeException('Post XML data set but curl PHP module is not installed or not enabled.');
+            throw new \RuntimeException('Curl PHP module is not installed or not enabled.');
         }
     }
 }
