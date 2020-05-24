@@ -538,7 +538,6 @@ class BigBlueButton
 
     /* ____________________ INTERNAL CLASS METHODS ___________________ */
 
-
     /**
      * A private utility method used by other public methods to process XML responses.
      *
@@ -551,9 +550,8 @@ class BigBlueButton
      */
     private function processXmlResponse($url, $payload = '', $contentType = 'application/xml')
     {
-        return new SimpleXMLElement($this->processResponse($url,$payload,$contentType));
+        return new SimpleXMLElement($this->processResponse($url, $payload, $contentType));
     }
-
 
     /**
      * A private utility method used by other public methods to process responses.
@@ -562,7 +560,7 @@ class BigBlueButton
      * @param string $payload
      * @param string $contentType
      *
-     * @return string Response body
+     * @return string            Response body
      * @throws \RuntimeException
      */
     private function processResponse($url, $payload = '', $contentType = 'application/xml')
