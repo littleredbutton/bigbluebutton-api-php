@@ -1,6 +1,6 @@
 <?php
-namespace unit\Responses;
 
+namespace unit\Responses;
 
 use BigBlueButton\Responses\GetRecordingTextTracksResponse;
 use BigBlueButton\TestCase;
@@ -28,7 +28,6 @@ class GetRecordingsTextTracksResponseTest extends TestCase
         $this->assertTrue($this->tracks->success());
         $this->assertFalse($this->tracks->failed());
         $this->assertCount(2, $this->tracks->getTracks());
-
     }
 
     public function testGetRecordingTextTracksResponseTypes()
@@ -56,31 +55,29 @@ class GetRecordingsTextTracksResponseTest extends TestCase
         $secondTracks = $this->tracks->getTracks()[1];
 
         $this->assertEquals(
-            "https://captions.example.com/textTrack/95b62d1b762700b9d5366a9e71d5fcc5086f2723/183f0bf3a0982a127bdb8161e0c44eb696b3e75c-1554230749920/subtitles_pt-BR.vtt",
+            'https://captions.example.com/textTrack/95b62d1b762700b9d5366a9e71d5fcc5086f2723/183f0bf3a0982a127bdb8161e0c44eb696b3e75c-1554230749920/subtitles_pt-BR.vtt',
             $secondTracks->getHref()
         );
         $this->assertEquals(
-            "subtitles",
+            'subtitles',
             $secondTracks->getKind()
         );
         $this->assertEquals(
-            "Brazil",
+            'Brazil',
             $secondTracks->getLabel()
         );
         $this->assertEquals(
-            "pt-BR",
+            'pt-BR',
             $secondTracks->getLang()
         );
         $this->assertEquals(
-            "upload",
+            'upload',
             $secondTracks->getSource()
         );
 
         $this->assertNotEquals(
-            "en-US",
+            'en-US',
             $secondTracks->getLang()
         );
     }
-
-
 }

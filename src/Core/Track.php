@@ -49,7 +49,6 @@ class Track
      */
     private $source;
 
-
     /**
      * Track constructor.
      *
@@ -57,10 +56,10 @@ class Track
      */
     public function __construct($track)
     {
-        $this->href = $track->href;
-        $this->kind = $track->kind;
-        $this->label = $track->label;
-        $this->lang = $track->lang;
+        $this->href   = $track->href;
+        $this->kind   = $track->kind;
+        $this->label  = $track->label;
+        $this->lang   = $track->lang;
         $this->source = $track->source;
     }
 
