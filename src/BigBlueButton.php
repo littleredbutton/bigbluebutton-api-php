@@ -61,10 +61,15 @@ class BigBlueButton
     protected $bbbServerBaseUrl;
     protected $urlBuilder;
     protected $jSessionId;
+    protected $connectionError;
+
+    const CONNECTION_ERROR_BASEURL = 1;
+    const CONNECTION_ERROR_SECRET  = 2;
 
     /**
-     * @param  string     $baseUrl (optional)
-     * @param  string     $secret  (optional)
+     * @param string $baseUrl (optional)
+     * @param string $secret  (optional)
+     *
      * @throws \Exception
      */
     public function __construct($baseUrl = null, $secret = null)
@@ -77,7 +82,7 @@ class BigBlueButton
             throw new \Exception('Base url required');
         }
 
-        $this->urlBuilder       = new UrlBuilder($this->securitySecret, $this->bbbServerBaseUrl);
+        $this->urlBuilder = new UrlBuilder($this->securitySecret, $this->bbbServerBaseUrl);
     }
 
     /**
@@ -92,6 +97,50 @@ class BigBlueButton
         return new ApiVersionResponse($xml);
     }
 
+    /**
+     * Check if connection to api can be established with the baseurl and secret
+     * @return bool connection successful
+     */
+    public function isConnectionWorking(): bool
+    {
+        // Reset connection error
+        $this->connectionError = null;
+
+        try {
+            $response = $this->isMeetingRunning(
+                new IsMeetingRunningParameters('connection_check')
+            );
+
+            // url and secret working
+            if ($response->success()) {
+                return true;
+            }
+
+            // Checksum error - invalid secret
+            if ($response->hasChecksumError()) {
+                $this->connectionError = self::CONNECTION_ERROR_SECRET;
+
+                return false;
+            }
+
+            // HTTP exception or XML parse
+        } catch (\Exception $e) {
+        }
+
+        $this->connectionError = self::CONNECTION_ERROR_BASEURL;
+
+        return false;
+    }
+
+    /**
+     * Return connection error type
+     * @return int|null Connection error (const CONNECTION_ERROR_BASEURL or CONNECTION_ERROR_SECRET)
+     */
+    public function getConnectionError(): ?int
+    {
+        return $this->connectionError;
+    }
+
     /* __________________ BBB ADMINISTRATION METHODS _________________ */
     /* The methods in the following section support the following categories of the BBB API:
     -- create
@@ -102,7 +151,8 @@ class BigBlueButton
     */
 
     /**
-     * @param  CreateMeetingParameters $createMeetingParams
+     * @param CreateMeetingParameters $createMeetingParams
+     *
      * @return string
      */
     public function getCreateMeetingUrl($createMeetingParams)
@@ -111,7 +161,8 @@ class BigBlueButton
     }
 
     /**
-     * @param  CreateMeetingParameters $createMeetingParams
+     * @param CreateMeetingParameters $createMeetingParams
+     *
      * @return CreateMeetingResponse
      * @throws \RuntimeException
      */
@@ -151,6 +202,7 @@ class BigBlueButton
 
     /**
      * @param  $setConfigXMLParams
+     *
      * @return SetConfigXMLResponse
      * @throws \RuntimeException
      */
@@ -218,6 +270,7 @@ class BigBlueButton
 
     /**
      * @param $meetingParams IsMeetingRunningParameters
+     *
      * @return string
      */
     public function getIsMeetingRunningUrl($meetingParams)
@@ -227,6 +280,7 @@ class BigBlueButton
 
     /**
      * @param $meetingParams
+     *
      * @return IsMeetingRunningResponse
      * @throws \RuntimeException
      */
@@ -258,6 +312,7 @@ class BigBlueButton
 
     /**
      * @param $meetingParams GetMeetingInfoParameters
+     *
      * @return string
      */
     public function getMeetingInfoUrl($meetingParams)
@@ -267,6 +322,7 @@ class BigBlueButton
 
     /**
      * @param $meetingParams GetMeetingInfoParameters
+     *
      * @return GetMeetingInfoResponse
      * @throws \RuntimeException
      */
@@ -286,6 +342,7 @@ class BigBlueButton
 
     /**
      * @param $recordingsParams GetRecordingsParameters
+     *
      * @return string
      */
     public function getRecordingsUrl($recordingsParams)
@@ -295,6 +352,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams
+     *
      * @return GetRecordingsResponse
      * @throws \RuntimeException
      */
@@ -307,6 +365,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams PublishRecordingsParameters
+     *
      * @return string
      */
     public function getPublishRecordingsUrl($recordingParams)
@@ -316,6 +375,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams PublishRecordingsParameters
+     *
      * @return PublishRecordingsResponse
      * @throws \RuntimeException
      */
@@ -328,6 +388,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams DeleteRecordingsParameters
+     *
      * @return string
      */
     public function getDeleteRecordingsUrl($recordingParams)
@@ -337,6 +398,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams DeleteRecordingsParameters
+     *
      * @return DeleteRecordingsResponse
      * @throws \RuntimeException
      */
@@ -349,6 +411,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams UpdateRecordingsParameters
+     *
      * @return string
      */
     public function getUpdateRecordingsUrl($recordingParams)
@@ -358,6 +421,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams UpdateRecordingsParameters
+     *
      * @return UpdateRecordingsResponse
      * @throws \RuntimeException
      */
@@ -395,6 +459,7 @@ class BigBlueButton
 
     /**
      * @param $hookCreateParams HooksCreateParameters
+     *
      * @return string
      */
     public function getHooksCreateUrl($hookCreateParams)
@@ -404,6 +469,7 @@ class BigBlueButton
 
     /**
      * @param $hookCreateParams
+     *
      * @return HooksCreateResponse
      */
     public function hooksCreate($hookCreateParams)
@@ -433,6 +499,7 @@ class BigBlueButton
 
     /**
      * @param $hooksDestroyParams HooksDestroyParameters
+     *
      * @return string
      */
     public function getHooksDestroyUrl($hooksDestroyParams)
@@ -442,6 +509,7 @@ class BigBlueButton
 
     /**
      * @param $hooksDestroyParams
+     *
      * @return HooksDestroyResponse
      */
     public function hooksDestroy($hooksDestroyParams)
@@ -508,9 +576,10 @@ class BigBlueButton
     /**
      * A private utility method used by other public methods to process XML responses.
      *
-     * @param  string            $url
-     * @param  string            $payload
-     * @param  string            $contentType
+     * @param string $url
+     * @param string $payload
+     * @param string $contentType
+     *
      * @return SimpleXMLElement
      * @throws \RuntimeException
      */
