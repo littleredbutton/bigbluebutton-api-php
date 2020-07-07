@@ -16,35 +16,33 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Responses;
 
-use BigBlueButton\Responses\ApiVersionResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Core\Track;
 
-class ApiVersionResponseTest extends TestCase
+/**
+ * Class GetRecordingTextTracksResponse
+ * @package BigBlueButton\Responses
+ */
+class GetRecordingTextTracksResponse extends BaseResponseAsJson
 {
     /**
-     * @var \BigBlueButton\Responses\ApiVersionResponse
+     * @var Track[]
      */
-    private $version;
+    private $tracks;
 
-    public function setUp()
+    /**
+     * @return Track[]
+     */
+    public function getTracks()
     {
-        parent::setUp();
+        if ($this->tracks === null) {
+            $this->tracks = [];
+            foreach ($this->data->response->tracks as $track) {
+                $this->tracks[] = new Track($track);
+            }
+        }
 
-        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'api_version.xml');
-
-        $this->version = new ApiVersionResponse($xml);
-    }
-
-    public function testApiVersionResponseContent()
-    {
-        $this->assertEquals('SUCCESS', $this->version->getReturnCode());
-        $this->assertEquals('2.0', $this->version->getVersion());
-    }
-
-    public function testApiVersionResponseTypes()
-    {
-        $this->assertEachGetterValueIsString($this->version, ['getReturnCode', 'getVersion']);
+        return $this->tracks;
     }
 }

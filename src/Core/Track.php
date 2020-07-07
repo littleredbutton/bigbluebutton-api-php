@@ -1,5 +1,4 @@
 <?php
-
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -20,93 +19,87 @@
 namespace BigBlueButton\Core;
 
 /**
- * Class Meeting
+ * Class Track
  * @package BigBlueButton\Core
  */
-class Hook
+class Track
 {
-
     /**
-     * @var \SimpleXMLElement
+     * @var string
      */
-    protected $rawXml;
-
-    /**
-     * @var int
-     */
-    private $hookId;
+    private $href;
 
     /**
      * @var string
      */
-    private $meetingId;
+    private $kind;
 
     /**
      * @var string
      */
-    private $callbackUrl;
+    private $label;
 
     /**
-     * @var bool
+     * @var string
      */
-    private $permanentHook;
+    private $lang;
 
     /**
-     * @var bool
+     * @var string
      */
-    private $rawData;
+    private $source;
 
     /**
-     * Meeting constructor.
-     * @param $xml \SimpleXMLElement
+     * Track constructor.
+     *
+     * @param $track
      */
-    public function __construct($xml)
+    public function __construct($track)
     {
-        $this->rawXml        = $xml;
-        $this->hookId        = (int) $xml->hookID->__toString();
-        $this->callbackUrl   = $xml->callbackURL->__toString();
-        $this->meetingId     = $xml->meetingID->__toString();
-        $this->permanentHook = $xml->permanentHook->__toString() === 'true';
-        $this->rawData       = $xml->rawData->__toString() === 'true';
-    }
-
-    /**
-     * @return int
-     */
-    public function getHookId()
-    {
-        return $this->hookId;
+        $this->href   = $track->href;
+        $this->kind   = $track->kind;
+        $this->label  = $track->label;
+        $this->lang   = $track->lang;
+        $this->source = $track->source;
     }
 
     /**
      * @return string
      */
-    public function getMeetingId()
+    public function getHref()
     {
-        return $this->meetingId;
+        return $this->href;
     }
 
     /**
      * @return string
      */
-    public function getCallbackUrl()
+    public function getKind()
     {
-        return $this->callbackUrl;
+        return $this->kind;
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isPermanentHook()
+    public function getLabel()
     {
-        return $this->permanentHook;
+        return $this->label;
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function hasRawData()
+    public function getLang()
     {
-        return $this->rawData;
+        return $this->lang;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }

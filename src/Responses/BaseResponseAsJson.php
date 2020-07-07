@@ -19,52 +19,44 @@
 namespace BigBlueButton\Responses;
 
 /**
- * Class BaseResponse
+ * Class BaseResponseAsJson
  * @package BigBlueButton\Responses
  */
-abstract class BaseResponse
+abstract class BaseResponseAsJson
 {
     const SUCCESS        = 'SUCCESS';
     const FAILED         = 'FAILED';
     const CHECKSUM_ERROR = 'checksumError';
 
     /**
-     * @var \SimpleXMLElement
+     * @var string
      */
-    protected $rawXml;
+    protected $data;
 
     /**
-     * BaseResponse constructor.
+     * BaseResponseAsJson constructor.
      *
-     * @param \SimpleXMLElement $xml
+     * @param string $rawJson
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public function __construct($rawJson)
     {
-        $this->rawXml = $xml;
-    }
-
-    /**
-     * @return \SimpleXMLElement
-     */
-    public function getRawXml()
-    {
-        return $this->rawXml;
+        $this->data = json_decode($rawJson);
     }
 
     /**
      * @return string
      */
-    public function getReturnCode()
+    public function getRawJson()
     {
-        return $this->rawXml->returncode->__toString();
+        return json_encode($this->data);
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getMessageKey()
+    public function getRawArray()
     {
-        return $this->rawXml->messageKey->__toString();
+        return json_decode(json_encode($this->data), true);
     }
 
     /**
@@ -72,14 +64,44 @@ abstract class BaseResponse
      */
     public function getMessage()
     {
-        return $this->rawXml->message->__toString();
+        if ($this->failed()) {
+            return $this->data->response->message;
+        }
+
+        return null;
     }
 
+    /**
+     * @return string
+     */
+    public function getMessageKey()
+    {
+        if ($this->failed()) {
+            return $this->data->response->messageKey;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReturnCode()
+    {
+        return $this->data->response->returncode;
+    }
+
+    /**
+     * @return bool
+     */
     public function success()
     {
         return $this->getReturnCode() === self::SUCCESS;
     }
 
+    /**
+     * @return bool
+     */
     public function failed()
     {
         return $this->getReturnCode() === self::FAILED;

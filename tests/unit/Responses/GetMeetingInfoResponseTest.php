@@ -24,11 +24,11 @@ class GetMeetingInfoResponseTest extends \BigBlueButton\TestCase
      */
     private $meetingInfo;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'get_meeting_info.xml');
+        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'get_meeting_info.xml');
 
         $this->meetingInfo = new \BigBlueButton\Responses\GetMeetingInfoResponse($xml);
     }
@@ -63,6 +63,7 @@ class GetMeetingInfoResponseTest extends \BigBlueButton\TestCase
         $this->assertEquals(20, $info->getMaxUsers());
         $this->assertEquals(2, $info->getModeratorCount());
         $this->assertEquals(10, sizeof($info->getMetas()));
+        $this->assertEquals(true, $info->isBreakout());
     }
 
     public function testMeetingAttendeeContent()

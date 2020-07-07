@@ -28,11 +28,11 @@ class GetRecordingsResponseTest extends TestCase
      */
     private $records;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'get_recordings.xml');
+        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'get_recordings.xml');
 
         $this->records = new GetRecordingsResponse($xml);
     }

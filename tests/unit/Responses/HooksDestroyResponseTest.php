@@ -18,34 +18,34 @@
  */
 namespace BigBlueButton\Parameters;
 
-use BigBlueButton\Responses\EndMeetingResponse;
+use BigBlueButton\Responses\HooksDestroyResponse;
 use BigBlueButton\TestCase;
 
-class EndMeetingResponseTest extends TestCase
+class HooksDestroyResponseTest extends TestCase
 {
     /**
-     * @var \BigBlueButton\Responses\EndMeetingResponse
+     * @var \BigBlueButton\Responses\HooksDestroyResponse
      */
-    private $end;
+    private $destroyResponse;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'end_meeting.xml');
+        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'hooks_destroy.xml');
 
-        $this->end = new EndMeetingResponse($xml);
+        $this->destroyResponse = new HooksDestroyResponse($xml);
     }
 
-    public function testEndMeetingResponseContent()
+    public function testHooksDestroyResponseContent()
     {
-        $this->assertEquals('SUCCESS', $this->end->getReturnCode());
-        $this->assertEquals('sentEndMeetingRequest', $this->end->getMessageKey());
-        $this->assertEquals('A request to end the meeting was sent. Please wait a few seconds, and then use the getMeetingInfo or isMeetingRunning API calls to verify that it was ended.', $this->end->getMessage());
+        $this->assertEquals('SUCCESS', $this->destroyResponse->getReturnCode());
+        $this->assertEquals(true, $this->destroyResponse->removed());
     }
 
-    public function testEndMeetingResponseTypes()
+    public function testHooksDestroyResponseTypes()
     {
-        $this->assertEachGetterValueIsString($this->end, ['getReturnCode', 'getMessageKey', 'getMessage']);
+        $this->assertEachGetterValueIsString($this->destroyResponse, ['getReturnCode']);
+        $this->assertEachGetterValueIsBoolean($this->destroyResponse, ['removed']);
     }
 }

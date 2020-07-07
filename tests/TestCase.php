@@ -42,7 +42,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -85,6 +85,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'webcamsOnlyForModerator'            => $this->faker->boolean(50),
             'logo'                               => $this->faker->imageUrl(330, 70),
             'copyright'                          => $this->faker->text,
+            'guestPolicy'                        => CreateMeetingParameters::ALWAYS_ACCEPT,
             'muteOnStart'                        => $this->faker->boolean(50),
             'lockSettingsDisableCam'             => $this->faker->boolean(50),
             'lockSettingsDisableMic'             => $this->faker->boolean(50),
@@ -95,6 +96,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'lockSettingsLockedLayout'           => $this->faker->boolean(50),
             'lockSettingsLockOnJoin'             => $this->faker->boolean(50),
             'lockSettingsLockOnJoinConfigurable' => $this->faker->boolean(50),
+            'allowModsToUnmuteUsers'             => $this->faker->boolean(50),
             'meta_presenter'                     => $this->faker->name,
             'meta_endCallbackUrl'                => $this->faker->url,
             'meta_bbb-recording-ready-url'       => $this->faker->url,
@@ -124,17 +126,36 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         $createMeetingParams = new CreateMeetingParameters($params['meetingId'], $params['meetingName']);
 
-        return $createMeetingParams->setAttendeePassword($params['attendeePassword'])->setModeratorPassword($params['moderatorPassword'])
-            ->setDialNumber($params['dialNumber'])->setVoiceBridge($params['voiceBridge'])->setWebVoice($params['webVoice'])
-            ->setLogoutUrl($params['logoutUrl'])->setMaxParticipants($params['maxParticipants'])->setRecord($params['record'])
-            ->setDuration($params['duration'])->setWelcomeMessage($params['welcomeMessage'])->setAutoStartRecording($params['autoStartRecording'])
-            ->setAllowStartStopRecording($params['allowStartStopRecording'])->setModeratorOnlyMessage($params['moderatorOnlyMessage'])
-            ->setWebcamsOnlyForModerator($params['webcamsOnlyForModerator'])->setLogo($params['logo'])->setCopyright($params['copyright'])
-            ->setEndCallbackUrl($params['meta_endCallbackUrl'])->setMuteOnStart($params['muteOnStart'])->setLockSettingsDisableCam($params['lockSettingsDisableCam'])
-            ->setLockSettingsDisableMic($params['lockSettingsDisableMic'])->setLockSettingsDisablePrivateChat($params['lockSettingsDisablePrivateChat'])
-            ->setLockSettingsDisablePublicChat($params['lockSettingsDisablePublicChat'])->setLockSettingsDisableNote($params['lockSettingsDisableNote'])
-            ->setLockSettingsHideUserList($params['lockSettingsHideUserList'])->setLockSettingsLockedLayout($params['lockSettingsLockedLayout'])
-            ->setLockSettingsLockOnJoin($params['lockSettingsLockOnJoin'])->setLockSettingsLockOnJoinConfigurable($params['lockSettingsLockOnJoin'])
+        return $createMeetingParams->setAttendeePassword($params['attendeePassword'])
+            ->setModeratorPassword($params['moderatorPassword'])
+            ->setDialNumber($params['dialNumber'])
+            ->setVoiceBridge($params['voiceBridge'])
+            ->setWebVoice($params['webVoice'])
+            ->setLogoutUrl($params['logoutUrl'])
+            ->setMaxParticipants($params['maxParticipants'])
+            ->setRecord($params['record'])
+            ->setDuration($params['duration'])
+            ->setWelcomeMessage($params['welcomeMessage'])
+            ->setAutoStartRecording($params['autoStartRecording'])
+            ->setAllowStartStopRecording($params['allowStartStopRecording'])
+            ->setModeratorOnlyMessage($params['moderatorOnlyMessage'])
+            ->setWebcamsOnlyForModerator($params['webcamsOnlyForModerator'])
+            ->setLogo($params['logo'])
+            ->setCopyright($params['copyright'])
+            ->setEndCallbackUrl($params['meta_endCallbackUrl'])
+            ->setRecordingReadyCallbackUrl($params['meta_bbb-recording-ready-url'])
+            ->setMuteOnStart($params['muteOnStart'])
+            ->setLockSettingsDisableCam($params['lockSettingsDisableCam'])
+            ->setLockSettingsDisableMic($params['lockSettingsDisableMic'])
+            ->setLockSettingsDisablePrivateChat($params['lockSettingsDisablePrivateChat'])
+            ->setLockSettingsDisablePublicChat($params['lockSettingsDisablePublicChat'])
+            ->setLockSettingsDisableNote($params['lockSettingsDisableNote'])
+            ->setLockSettingsHideUserList($params['lockSettingsHideUserList'])
+            ->setLockSettingsLockedLayout($params['lockSettingsLockedLayout'])
+            ->setLockSettingsLockOnJoin($params['lockSettingsLockOnJoin'])
+            ->setLockSettingsLockOnJoinConfigurable($params['lockSettingsLockOnJoinConfigurable'])
+            ->setAllowModsToUnmuteUsers($params['allowModsToUnmuteUsers'])
+            ->setGuestPolicyAlwaysAccept()
             ->addMeta('presenter', $params['meta_presenter']);
     }
 
@@ -263,44 +284,17 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return simplexml_load_string(file_get_contents(($path)));
     }
 
+    protected function loadJsonFile($path)
+    {
+        return file_get_contents($path);
+    }
+
     protected function minifyString($string)
     {
         return str_replace(["\r\n", "\r", "\n", "\t", ' '], '', $string);
     }
 
     // Additional assertions
-
-    public function assertIsString($actual, $message = '')
-    {
-        if (empty($message)) {
-            $message = 'Got a ' . gettype($actual) . ' instead of a string';
-        }
-        $this->assertTrue(is_string($actual), $message);
-    }
-
-    public function assertIsInteger($actual, $message = '')
-    {
-        if (empty($message)) {
-            $message = 'Got a ' . gettype($actual) . ' instead of an integer.';
-        }
-        $this->assertTrue(is_integer($actual), $message);
-    }
-
-    public function assertIsDouble($actual, $message = '')
-    {
-        if (empty($message)) {
-            $message = 'Got a ' . gettype($actual) . ' instead of a double.';
-        }
-        $this->assertTrue(is_double($actual), $message);
-    }
-
-    public function assertIsBoolean($actual, $message = '')
-    {
-        if (empty($message)) {
-            $message = 'Got a ' . gettype($actual) . ' instead of a boolean.';
-        }
-        $this->assertTrue(is_bool($actual), $message);
-    }
 
     public function assertEachGetterValueIsString($obj, $getters)
     {
@@ -312,21 +306,21 @@ class TestCase extends \PHPUnit\Framework\TestCase
     public function assertEachGetterValueIsInteger($obj, $getters)
     {
         foreach ($getters as $getterName) {
-            $this->assertIsInteger($obj->$getterName(), 'Got a ' . gettype($obj->$getterName()) . ' instead of an integer for property -> ' . $getterName);
+            $this->assertIsInt($obj->$getterName(), 'Got a ' . gettype($obj->$getterName()) . ' instead of an integer for property -> ' . $getterName);
         }
     }
 
     public function assertEachGetterValueIsDouble($obj, $getters)
     {
         foreach ($getters as $getterName) {
-            $this->assertIsDouble($obj->$getterName(), 'Got a ' . gettype($obj->$getterName()) . ' instead of a double for property -> ' . $getterName);
+            $this->assertIsFloat($obj->$getterName(), 'Got a ' . gettype($obj->$getterName()) . ' instead of a double for property -> ' . $getterName);
         }
     }
 
     public function assertEachGetterValueIsBoolean($obj, $getters)
     {
         foreach ($getters as $getterName) {
-            $this->assertIsBoolean($obj->$getterName(), 'Got a ' . gettype($obj->$getterName()) . ' instead of a boolean for property -> ' . $getterName);
+            $this->assertIsBool($obj->$getterName(), 'Got a ' . gettype($obj->$getterName()) . ' instead of a boolean for property -> ' . $getterName);
         }
     }
 }

@@ -28,11 +28,11 @@ class GetMeetingsResponseTest extends TestCase
      */
     private $meetings;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'get_meetings.xml');
+        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'get_meetings.xml');
 
         $this->meetings = new GetMeetingsResponse($xml);
     }

@@ -16,36 +16,28 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Responses;
 
-use BigBlueButton\Responses\SetConfigXMLResponse;
 use BigBlueButton\TestCase;
 
-class SetConfigXMLResponseTest extends TestCase
+class GetDefaultConfigXMLResponseTest extends TestCase
 {
     /**
-     * @var \BigBlueButton\Responses\SetConfigXMLResponse
+     * @var \BigBlueButton\Responses\GetDefaultConfigXMLResponse
      */
-    private $config;
+    private $configXml;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'set_config_xml.xml');
+        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'default_config_xml.xml');
 
-        $this->config = new SetConfigXMLResponse($xml);
+        $this->configXml = new GetDefaultConfigXMLResponse($xml);
     }
 
-    public function testSetConfigXMLResponseContent()
+    public function testEndMeetingResponseContent()
     {
-        $this->assertEquals('SUCCESS', $this->config->getReturnCode());
-        $this->assertEquals('TETDApIC', $this->config->getToken());
-    }
-
-    public function testSetConfigXMLResponseTypes()
-    {
-        $this->assertEachGetterValueIsString($this->config, ['getReturnCode']);
-        $this->assertEachGetterValueIsString($this->config, ['getToken']);
+        $this->assertNotEmpty('SUCCESS', $this->configXml->getRawXml()->asXML());
     }
 }

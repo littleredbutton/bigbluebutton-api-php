@@ -1,8 +1,9 @@
 <?php
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
- * Copyright (c) 2016-2018 BigBlueButton Inc. and by respective authors (see below).
+ * Copyright (c) 2016-2019 BigBlueButton Inc. and by respective authors (see below).
  *
  * This program is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -20,21 +21,16 @@ namespace BigBlueButton\Parameters;
 
 use BigBlueButton\TestCase;
 
-class GetRecordingsParametersTest extends TestCase
+class GetRecordingTextTracksParametersTest extends TestCase
 {
-    public function testGetRecordingsParameters()
+    public function testGetRecordingTextTracksParameters()
     {
-        $getRecordings = new GetRecordingsParameters();
-        $getRecordings->setMeetingId($meetingId = $this->faker->uuid);
-        $getRecordings->setRecordId($recordId = $this->faker->uuid);
-        $getRecordings->setState($state = 'published');
-        $getRecordings->addMeta($meta = 'name', $name = $this->faker->firstName);
+        $getRecordingTextTracksParams = new GetRecordingTextTracksParameters($recordId = $this->faker->uuid);
 
-        $params = $getRecordings->getHTTPQuery();
+        $this->assertEquals($recordId, $getRecordingTextTracksParams->getRecordId());
 
-        $this->assertEquals($meetingId, $getRecordings->getMeetingId());
-        $this->assertEquals($recordId, $getRecordings->getRecordId());
-        $this->assertEquals($state, $getRecordings->getState());
-        $this->assertContains('meta_' . $meta . '=' . $name, $params);
+        // Test setters that are ignored by the constructor
+        $getRecordingTextTracksParams->setRecordId($newRecordId = $this->faker->uuid);
+        $this->assertEquals($newRecordId, $getRecordingTextTracksParams->getRecordId());
     }
 }

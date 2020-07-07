@@ -18,34 +18,33 @@
  */
 namespace BigBlueButton\Parameters;
 
-use BigBlueButton\Responses\HooksDestroyResponse;
+use BigBlueButton\Responses\ApiVersionResponse;
 use BigBlueButton\TestCase;
 
-class HooksDestroyResponseTest extends TestCase
+class ApiVersionResponseTest extends TestCase
 {
     /**
-     * @var \BigBlueButton\Responses\HooksDestroyResponse
+     * @var \BigBlueButton\Responses\ApiVersionResponse
      */
-    private $destroyResponse;
+    private $version;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'hooks_destroy.xml');
+        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'api_version.xml');
 
-        $this->destroyResponse = new HooksDestroyResponse($xml);
+        $this->version = new ApiVersionResponse($xml);
     }
 
-    public function testHooksDestroyResponseContent()
+    public function testApiVersionResponseContent()
     {
-        $this->assertEquals('SUCCESS', $this->destroyResponse->getReturnCode());
-        $this->assertEquals(true, $this->destroyResponse->removed());
+        $this->assertEquals('SUCCESS', $this->version->getReturnCode());
+        $this->assertEquals('2.0', $this->version->getVersion());
     }
 
-    public function testHooksDestroyResponseTypes()
+    public function testApiVersionResponseTypes()
     {
-        $this->assertEachGetterValueIsString($this->destroyResponse, ['getReturnCode']);
-        $this->assertEachGetterValueIsBoolean($this->destroyResponse, ['removed']);
+        $this->assertEachGetterValueIsString($this->version, ['getReturnCode', 'getVersion']);
     }
 }

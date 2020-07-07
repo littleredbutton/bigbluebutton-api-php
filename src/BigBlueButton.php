@@ -24,6 +24,7 @@ use BigBlueButton\Parameters\DeleteRecordingsParameters;
 use BigBlueButton\Parameters\EndMeetingParameters;
 use BigBlueButton\Parameters\GetMeetingInfoParameters;
 use BigBlueButton\Parameters\GetRecordingsParameters;
+use BigBlueButton\Parameters\GetRecordingTextTracksParameters;
 use BigBlueButton\Parameters\HooksCreateParameters;
 use BigBlueButton\Parameters\HooksDestroyParameters;
 use BigBlueButton\Parameters\IsMeetingRunningParameters;
@@ -38,6 +39,7 @@ use BigBlueButton\Responses\GetDefaultConfigXMLResponse;
 use BigBlueButton\Responses\GetMeetingInfoResponse;
 use BigBlueButton\Responses\GetMeetingsResponse;
 use BigBlueButton\Responses\GetRecordingsResponse;
+use BigBlueButton\Responses\GetRecordingTextTracksResponse;
 use BigBlueButton\Responses\HooksCreateResponse;
 use BigBlueButton\Responses\HooksDestroyResponse;
 use BigBlueButton\Responses\HooksListResponse;
@@ -59,13 +61,28 @@ class BigBlueButton
     protected $bbbServerBaseUrl;
     protected $urlBuilder;
     protected $jSessionId;
+    protected $connectionError;
 
-    public function __construct()
+    const CONNECTION_ERROR_BASEURL = 1;
+    const CONNECTION_ERROR_SECRET  = 2;
+
+    /**
+     * @param string $baseUrl (optional)
+     * @param string $secret  (optional)
+     *
+     * @throws \Exception
+     */
+    public function __construct($baseUrl = null, $secret = null)
     {
         // Keeping backward compatibility with older deployed versions
-        $this->securitySecret   = (getenv('BBB_SECURITY_SALT') === false) ? getenv('BBB_SECRET') : $this->securitySecret = getenv('BBB_SECURITY_SALT');
-        $this->bbbServerBaseUrl = getenv('BBB_SERVER_BASE_URL');
-        $this->urlBuilder       = new UrlBuilder($this->securitySecret, $this->bbbServerBaseUrl);
+        $this->securitySecret   = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
+        $this->bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
+
+        if (empty($this->bbbServerBaseUrl)) {
+            throw new \Exception('Base url required');
+        }
+
+        $this->urlBuilder = new UrlBuilder($this->securitySecret, $this->bbbServerBaseUrl);
     }
 
     /**
@@ -80,6 +97,50 @@ class BigBlueButton
         return new ApiVersionResponse($xml);
     }
 
+    /**
+     * Check if connection to api can be established with the baseurl and secret
+     * @return bool connection successful
+     */
+    public function isConnectionWorking(): bool
+    {
+        // Reset connection error
+        $this->connectionError = null;
+
+        try {
+            $response = $this->isMeetingRunning(
+                new IsMeetingRunningParameters('connection_check')
+            );
+
+            // url and secret working
+            if ($response->success()) {
+                return true;
+            }
+
+            // Checksum error - invalid secret
+            if ($response->hasChecksumError()) {
+                $this->connectionError = self::CONNECTION_ERROR_SECRET;
+
+                return false;
+            }
+
+            // HTTP exception or XML parse
+        } catch (\Exception $e) {
+        }
+
+        $this->connectionError = self::CONNECTION_ERROR_BASEURL;
+
+        return false;
+    }
+
+    /**
+     * Return connection error type
+     * @return int|null Connection error (const CONNECTION_ERROR_BASEURL or CONNECTION_ERROR_SECRET)
+     */
+    public function getConnectionError(): ?int
+    {
+        return $this->connectionError;
+    }
+
     /* __________________ BBB ADMINISTRATION METHODS _________________ */
     /* The methods in the following section support the following categories of the BBB API:
     -- create
@@ -90,7 +151,8 @@ class BigBlueButton
     */
 
     /**
-     * @param  CreateMeetingParameters $createMeetingParams
+     * @param CreateMeetingParameters $createMeetingParams
+     *
      * @return string
      */
     public function getCreateMeetingUrl($createMeetingParams)
@@ -99,7 +161,8 @@ class BigBlueButton
     }
 
     /**
-     * @param  CreateMeetingParameters $createMeetingParams
+     * @param CreateMeetingParameters $createMeetingParams
+     *
      * @return CreateMeetingResponse
      * @throws \RuntimeException
      */
@@ -139,6 +202,7 @@ class BigBlueButton
 
     /**
      * @param  $setConfigXMLParams
+     *
      * @return SetConfigXMLResponse
      * @throws \RuntimeException
      */
@@ -206,6 +270,7 @@ class BigBlueButton
 
     /**
      * @param $meetingParams IsMeetingRunningParameters
+     *
      * @return string
      */
     public function getIsMeetingRunningUrl($meetingParams)
@@ -215,6 +280,7 @@ class BigBlueButton
 
     /**
      * @param $meetingParams
+     *
      * @return IsMeetingRunningResponse
      * @throws \RuntimeException
      */
@@ -246,6 +312,7 @@ class BigBlueButton
 
     /**
      * @param $meetingParams GetMeetingInfoParameters
+     *
      * @return string
      */
     public function getMeetingInfoUrl($meetingParams)
@@ -255,6 +322,7 @@ class BigBlueButton
 
     /**
      * @param $meetingParams GetMeetingInfoParameters
+     *
      * @return GetMeetingInfoResponse
      * @throws \RuntimeException
      */
@@ -274,6 +342,7 @@ class BigBlueButton
 
     /**
      * @param $recordingsParams GetRecordingsParameters
+     *
      * @return string
      */
     public function getRecordingsUrl($recordingsParams)
@@ -283,6 +352,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams
+     *
      * @return GetRecordingsResponse
      * @throws \RuntimeException
      */
@@ -295,6 +365,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams PublishRecordingsParameters
+     *
      * @return string
      */
     public function getPublishRecordingsUrl($recordingParams)
@@ -304,6 +375,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams PublishRecordingsParameters
+     *
      * @return PublishRecordingsResponse
      * @throws \RuntimeException
      */
@@ -316,6 +388,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams DeleteRecordingsParameters
+     *
      * @return string
      */
     public function getDeleteRecordingsUrl($recordingParams)
@@ -325,6 +398,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams DeleteRecordingsParameters
+     *
      * @return DeleteRecordingsResponse
      * @throws \RuntimeException
      */
@@ -337,6 +411,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams UpdateRecordingsParameters
+     *
      * @return string
      */
     public function getUpdateRecordingsUrl($recordingParams)
@@ -346,6 +421,7 @@ class BigBlueButton
 
     /**
      * @param $recordingParams UpdateRecordingsParameters
+     *
      * @return UpdateRecordingsResponse
      * @throws \RuntimeException
      */
@@ -356,10 +432,34 @@ class BigBlueButton
         return new UpdateRecordingsResponse($xml);
     }
 
+    /**
+     * @param $getRecordingTextTracksParams GetRecordingTextTracksParameters
+     *
+     * @return string
+     */
+    public function getRecordingTextTracksUrl($getRecordingTextTracksParams)
+    {
+        return $this->urlBuilder->buildUrl(ApiMethod::GET_RECORDING_TEXT_TRACKS, $getRecordingTextTracksParams->getHTTPQuery());
+    }
+
+    /**
+     * @param $getRecordingTextTracksParams GetRecordingTextTracksParameters
+     *
+     * @return GetRecordingTextTracksResponse
+     * @throws \RuntimeException
+     */
+    public function getRecordingTextTracks($getRecordingTextTracksParams)
+    {
+        return new GetRecordingTextTracksResponse(
+            $this->processJsonResponse($this->getRecordingTextTracksUrl($getRecordingTextTracksParams))
+        );
+    }
+
     /* ____________________ WEB HOOKS METHODS ___________________ */
 
     /**
      * @param $hookCreateParams HooksCreateParameters
+     *
      * @return string
      */
     public function getHooksCreateUrl($hookCreateParams)
@@ -369,6 +469,7 @@ class BigBlueButton
 
     /**
      * @param $hookCreateParams
+     *
      * @return HooksCreateResponse
      */
     public function hooksCreate($hookCreateParams)
@@ -398,6 +499,7 @@ class BigBlueButton
 
     /**
      * @param $hooksDestroyParams HooksDestroyParameters
+     *
      * @return string
      */
     public function getHooksDestroyUrl($hooksDestroyParams)
@@ -407,6 +509,7 @@ class BigBlueButton
 
     /**
      * @param $hooksDestroyParams
+     *
      * @return HooksDestroyResponse
      */
     public function hooksDestroy($hooksDestroyParams)
@@ -438,58 +541,89 @@ class BigBlueButton
     /**
      * A private utility method used by other public methods to process XML responses.
      *
-     * @param  string            $url
-     * @param  string            $payload
-     * @param  string            $contentType
+     * @param string $url
+     * @param string $payload
+     * @param string $contentType
+     *
      * @return SimpleXMLElement
      * @throws \RuntimeException
      */
     private function processXmlResponse($url, $payload = '', $contentType = 'application/xml')
     {
-        if (extension_loaded('curl')) {
-            $ch = curl_init();
-            if (!$ch) {
-                throw new \RuntimeException('Unhandled curl error: ' . curl_error($ch));
-            }
-            $timeout = 10;
+        return new SimpleXMLElement($this->requestUrl($url, $payload, $contentType));
+    }
 
-            // Needed to store the JSESSIONID
-            $cookiefile     = tmpfile();
-            $cookiefilepath = stream_get_meta_data($cookiefile)['uri'];
+    /**
+     * A private utility method used by other public methods to process json responses.
+     *
+     * @param string $url
+     * @param string $payload
+     * @param string $contentType
+     *
+     * @return string
+     * @throws \RuntimeException
+     */
+    private function processJsonResponse($url, $payload = '', $contentType = 'application/json')
+    {
+        return $this->requestUrl($url, $payload, $contentType);
+    }
 
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-            curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-            curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefilepath);
-            curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefilepath);
-            if (!empty($payload)) {
-                curl_setopt($ch, CURLOPT_HEADER, 0);
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                    'Content-type: ' . $contentType,
-                    'Content-length: ' . mb_strlen($payload),
-                ]);
-            }
-            $data = curl_exec($ch);
-            if ($data === false) {
-                throw new \RuntimeException('Unhandled curl error: ' . curl_error($ch));
-            }
-            curl_close($ch);
-
-            $cookies = file_get_contents($cookiefilepath);
-            if (strpos($cookies, 'JSESSIONID') !== false) {
-                preg_match('/(?:JSESSIONID\s*)(?<JSESSIONID>.*)/', $cookies, $output_array);
-                $this->setJSessionId($output_array['JSESSIONID']);
-            }
-
-            return new SimpleXMLElement($data);
-        } else {
-            throw new \RuntimeException('Post XML data set but curl PHP module is not installed or not enabled.');
+    /**
+     * A private utility method used by other public methods to request from the api.
+     *
+     * @param string $url
+     * @param string $payload
+     * @param string $contentType
+     *
+     * @return string            Response body
+     * @throws \RuntimeException
+     */
+    private function requestUrl($url, $payload = '', $contentType = 'application/xml')
+    {
+        if (!extension_loaded('curl')) {
+            throw new \RuntimeException('Curl PHP module is not installed or not enabled.');
         }
+
+        $ch = curl_init();
+        if (!$ch) {
+            throw new \RuntimeException('Unhandled curl error: ' . curl_error($ch));
+        }
+        $timeout = 10;
+
+        // Needed to store the JSESSIONID
+        $cookiefile     = tmpfile();
+        $cookiefilepath = stream_get_meta_data($cookiefile)['uri'];
+
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+        curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefilepath);
+        curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefilepath);
+        if (!empty($payload)) {
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-type: ' . $contentType,
+                'Content-length: ' . mb_strlen($payload),
+            ]);
+        }
+        $data = curl_exec($ch);
+        if ($data === false) {
+            throw new \RuntimeException('Unhandled curl error: ' . curl_error($ch));
+        }
+        curl_close($ch);
+
+        $cookies = file_get_contents($cookiefilepath);
+        if (strpos($cookies, 'JSESSIONID') !== false) {
+            preg_match('/(?:JSESSIONID\s*)(?<JSESSIONID>.*)/', $cookies, $output_array);
+            $this->setJSessionId($output_array['JSESSIONID']);
+        }
+
+        return $data;
     }
 }

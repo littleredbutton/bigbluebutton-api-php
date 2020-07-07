@@ -18,34 +18,34 @@
  */
 namespace BigBlueButton\Parameters;
 
-use BigBlueButton\Responses\DeleteRecordingsResponse;
+use BigBlueButton\Responses\SetConfigXMLResponse;
 use BigBlueButton\TestCase;
 
-class DeleteRecordingsResponseTest extends TestCase
+class SetConfigXMLResponseTest extends TestCase
 {
     /**
-     * @var \BigBlueButton\Responses\DeleteRecordingsResponse
+     * @var \BigBlueButton\Responses\SetConfigXMLResponse
      */
-    private $delete;
+    private $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'delete_recordings.xml');
+        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'set_config_xml.xml');
 
-        $this->delete = new DeleteRecordingsResponse($xml);
+        $this->config = new SetConfigXMLResponse($xml);
     }
 
-    public function testDeleteRecordingsResponseContent()
+    public function testSetConfigXMLResponseContent()
     {
-        $this->assertEquals('SUCCESS', $this->delete->getReturnCode());
-        $this->assertEquals(true, $this->delete->isDeleted());
+        $this->assertEquals('SUCCESS', $this->config->getReturnCode());
+        $this->assertEquals('TETDApIC', $this->config->getToken());
     }
 
-    public function testDeleteRecordingsResponseTypes()
+    public function testSetConfigXMLResponseTypes()
     {
-        $this->assertEachGetterValueIsString($this->delete, ['getReturnCode']);
-        $this->assertEachGetterValueIsBoolean($this->delete, ['isDeleted']);
+        $this->assertEachGetterValueIsString($this->config, ['getReturnCode']);
+        $this->assertEachGetterValueIsString($this->config, ['getToken']);
     }
 }

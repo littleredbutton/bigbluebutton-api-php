@@ -16,28 +16,36 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
-namespace BigBlueButton\Responses;
+namespace BigBlueButton\Parameters;
 
+use BigBlueButton\Responses\EndMeetingResponse;
 use BigBlueButton\TestCase;
 
-class GetDefaultConfigXMLResponseTest extends TestCase
+class EndMeetingResponseTest extends TestCase
 {
     /**
-     * @var \BigBlueButton\Responses\GetDefaultConfigXMLResponse
+     * @var \BigBlueButton\Responses\EndMeetingResponse
      */
-    private $configXml;
+    private $end;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'default_config_xml.xml');
+        $xml = $this->loadXmlFile(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'end_meeting.xml');
 
-        $this->configXml = new GetDefaultConfigXMLResponse($xml);
+        $this->end = new EndMeetingResponse($xml);
     }
 
     public function testEndMeetingResponseContent()
     {
-        $this->assertNotEmpty('SUCCESS', $this->configXml->getRawXml()->asXML());
+        $this->assertEquals('SUCCESS', $this->end->getReturnCode());
+        $this->assertEquals('sentEndMeetingRequest', $this->end->getMessageKey());
+        $this->assertEquals('A request to end the meeting was sent. Please wait a few seconds, and then use the getMeetingInfo or isMeetingRunning API calls to verify that it was ended.', $this->end->getMessage());
+    }
+
+    public function testEndMeetingResponseTypes()
+    {
+        $this->assertEachGetterValueIsString($this->end, ['getReturnCode', 'getMessageKey', 'getMessage']);
     }
 }
