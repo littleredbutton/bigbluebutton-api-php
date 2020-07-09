@@ -71,7 +71,7 @@ class CreateMeetingResponse extends BaseResponse
      */
     public function getCreationTime($milliseconds = true)
     {
-        return $milliseconds ?  (float) $this->rawXml->createTime : (int) ($this->rawXml->createTime/1000);
+        return $milliseconds ? (float) $this->rawXml->createTime : (int) ($this->rawXml->createTime / 1000);
     }
 
     /**
