@@ -24,6 +24,8 @@ namespace BigBlueButton\Responses;
  */
 class CreateMeetingResponse extends BaseResponse
 {
+    const KEY_DUPLICATE_WARNING = 'duplicateWarning';
+
     /**
      * @return string
      */
@@ -122,5 +124,13 @@ class CreateMeetingResponse extends BaseResponse
     public function hasBeenForciblyEnded()
     {
         return $this->rawXml->hasBeenForciblyEnded->__toString() === 'true';
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDuplicate()
+    {
+        return $this->getMessageKey() === self::KEY_DUPLICATE_WARNING;
     }
 }
