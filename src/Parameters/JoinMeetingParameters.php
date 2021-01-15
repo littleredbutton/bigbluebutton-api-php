@@ -83,6 +83,13 @@ class JoinMeetingParameters extends UserDataParameters
      */
     private $guest;
 
+
+     /**
+     * @var array
+     */
+    private $customParameters;
+
+
     /**
      * JoinMeetingParametersTest constructor.
      *
@@ -95,6 +102,7 @@ class JoinMeetingParameters extends UserDataParameters
         $this->meetingId = $meetingId;
         $this->username  = $username;
         $this->password  = $password;
+        $this->customParameters = array();
     }
 
     /**
@@ -331,6 +339,27 @@ class JoinMeetingParameters extends UserDataParameters
         return $this;
     }
 
+    
+    /**
+     * @return array
+     */
+    public function getCustomParameter()
+    {
+        return $this->customParameters;
+    }
+
+    /**
+     * @param  string $paramName
+     * @param  string $paramValue
+     * @return JoinMeetingParameters
+     */
+    public function setCustomParameter($paramName, $paramValue)
+    {
+        $this->customParameters[$paramName] = $paramValue;
+
+        return $this;
+    }
+
     /**
      * @return string
      */
@@ -352,6 +381,10 @@ class JoinMeetingParameters extends UserDataParameters
 
         if ($this->guest) {
             $queries['guest'] = 'true';
+        }
+
+        foreach( $this->customParameters as $key => $value ) {
+            $queries[$key] = $value;
         }
 
         $this->buildUserData($queries);
