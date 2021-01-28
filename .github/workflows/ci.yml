@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  laravel-tests:
+    name: PHP ${{ matrix.php-versions }}
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['7.2','7.3','7.4','8.1']
+        
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup PHP, with composer and extensions
+      uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
+      with:
+        php-version: ${{ matrix.php-versions }}
+        extensions: bcmath, ctype, fileinfo, json, mbstring, dom, ldap, pdo, tokenizer, xml, mysql, sqlite
+        coverage: xdebug
+    - name: Install php dependencies
+      run: |
+        composer self-update
+        composer install --dev --no-interaction
+    - name: Execute code style check via php-cs-fixer
+      run: vendor/bin/php-cs-fixer fix --dry-run
+    - name: Execute tests with coverage
+      if: matrix.php-versions != '8.1'
+      run: vendor/bin/phpunit --coverage-clover=coverage.xml
+    - name: Execute tests without coverage
+      if: matrix.php-versions == '8.1'
+      run: vendor/bin/phpunit
+     
+    - name: Upload coverage
+      if: matrix.php-versions != '7.2'
+      run: |
+        php vendor/bin/php-coveralls -v
+        wget https://scrutinizer-ci.com/ocular.phar
+        php ocular.phar code-coverage:upload --format=php-clover coverage.xml
