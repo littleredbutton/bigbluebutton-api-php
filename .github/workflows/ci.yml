@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  laravel-tests:
+  tests:
     name: PHP ${{ matrix.php-versions }}
     runs-on: ubuntu-latest
     
