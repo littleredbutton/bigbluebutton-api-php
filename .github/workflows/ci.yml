@@ -29,9 +29,7 @@ jobs:
         extensions: bcmath, ctype, fileinfo, json, mbstring, dom, ldap, pdo, tokenizer, xml, mysql, sqlite
         coverage: xdebug
     - name: Install php dependencies
-      run: |
-        composer self-update
-        composer install --dev --no-interaction
+      run: composer install --dev --no-interaction
     - name: Execute code style check via php-cs-fixer
       run: vendor/bin/php-cs-fixer fix --dry-run
     - name: Execute tests with coverage
@@ -59,6 +57,5 @@ jobs:
       - uses: azjezz/setup-hhvm@v1
         with:
           version: 'latest'
-      - run: hhvm $(which composer) self-update
       - run: hhvm $(which composer) install --dev --no-interaction
       - run: hhvm vendor/bin/phpunit
