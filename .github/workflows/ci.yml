@@ -36,9 +36,8 @@ jobs:
       if: matrix.php-versions == '8.1'
       run: vendor/bin/phpunit
      
-    - name: Upload coverage
-      if: matrix.php-versions != '7.2'
-      run: |
-        php vendor/bin/php-coveralls -v
-        wget https://scrutinizer-ci.com/ocular.phar
-        php ocular.phar code-coverage:upload --format=php-clover coverage.xml
+    - name: Coveralls
+      if: matrix.php-versions == '7.2'
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+      run: vendor/bin/php-coveralls --coverage_clover=coverage.xml -v
