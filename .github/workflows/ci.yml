@@ -5,14 +5,19 @@ on:
   pull_request:
 
 jobs:
-  tests:
+  PHP:
     name: PHP ${{ matrix.php-versions }}
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
     
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.2','7.3','7.4','8.1']
+        php-versions: ['7.2','7.3','7.4']
+        experimental: [false]
+        include:
+          - php-versions: '8.1'
+            experimental: true
         
     steps:
     - name: Checkout
@@ -43,3 +48,17 @@ jobs:
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
       run: vendor/bin/php-coveralls --coverage_clover=build/logs/coverage.xml -v
+    
+    
+  HHVM:
+    name: HHVM
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azjezz/setup-hhvm@v1
+        with:
+          version: 'latest'
+      - run: hhvm $(which composer) self-update
+      - run: hhvm $(which composer) install --dev --no-interaction
+      - run: hhvm vendor/bin/phpunit
