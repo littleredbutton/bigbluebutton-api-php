@@ -31,7 +31,9 @@ jobs:
       run: vendor/bin/php-cs-fixer fix --dry-run
     - name: Execute tests with coverage
       if: matrix.php-versions != '8.1'
-      run: vendor/bin/phpunit --coverage-clover=coverage.xml
+      run: |
+        mkdir -p build/logs
+        vendor/bin/phpunit --coverage-clover=build/logs/coverage.xml
     - name: Execute tests without coverage
       if: matrix.php-versions == '8.1'
       run: vendor/bin/phpunit
@@ -40,4 +42,4 @@ jobs:
       if: matrix.php-versions == '7.2'
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
-      run: vendor/bin/php-coveralls --coverage_clover=coverage.xml -v
+      run: vendor/bin/php-coveralls --coverage_clover=build/logs/coverage.xml -v
