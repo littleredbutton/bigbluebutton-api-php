@@ -90,7 +90,8 @@
         "vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes"
       ],
       "pre-push": [
-        "vendor/bin/phpunit"
+        "vendor/bin/phpunit",
+        "psalm --threads=1"
       ],
       "post-merge": "composer install",
       "post-checkout": "composer install"
