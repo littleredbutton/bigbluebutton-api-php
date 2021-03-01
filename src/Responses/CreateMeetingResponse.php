@@ -25,6 +25,7 @@ namespace BigBlueButton\Responses;
 class CreateMeetingResponse extends BaseResponse
 {
     const KEY_DUPLICATE_WARNING = 'duplicateWarning';
+    const KEY_ID_NOT_UNIQUE     = 'idNotUnique';
 
     /**
      * @return string

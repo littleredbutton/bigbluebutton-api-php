@@ -24,6 +24,8 @@ namespace BigBlueButton\Responses;
  */
 class DeleteRecordingsResponse extends BaseResponse
 {
+    const KEY_INVALID_ID = 'InvalidRecordingId';
+
     /**
      * @return bool
      */

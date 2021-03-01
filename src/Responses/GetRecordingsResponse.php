@@ -26,6 +26,8 @@ use BigBlueButton\Core\Record;
  */
 class GetRecordingsResponse extends BaseResponse
 {
+    const KEY_NO_RECORDINGS = 'noRecordings';
+
     /**
      * @var Record[]
      */

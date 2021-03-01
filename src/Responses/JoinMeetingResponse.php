@@ -24,6 +24,11 @@ namespace BigBlueButton\Responses;
  */
 class JoinMeetingResponse extends BaseResponse
 {
+    const KEY_SUCCESSFULLY_JOINED = 'successfullyJoined';
+    const KEY_INVALID_SESSION     = 'InvalidSession';
+    const KEY_SERVER_ERROR        = 'BigBlueButtonServerError';
+    const KEY_GUEST_DENY          = ' guestDeny';
+
     /**
      * @return string
      */

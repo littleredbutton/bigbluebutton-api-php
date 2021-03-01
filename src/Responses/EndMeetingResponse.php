@@ -24,6 +24,8 @@ namespace BigBlueButton\Responses;
  */
 class EndMeetingResponse extends BaseResponse
 {
+    const KEY_SET_END_MEETING_REQUEST = 'sentEndMeetingRequest';
+
     /**
      * @return string
      */

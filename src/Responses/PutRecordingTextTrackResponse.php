@@ -24,6 +24,11 @@ namespace BigBlueButton\Responses;
  */
 class PutRecordingTextTrackResponse extends BaseResponseAsJson
 {
+    const KEY_SUCCESS     = 'upload_text_track_success';
+    const KEY_FAILED      = 'upload_text_track_failed';
+    const KEY_EMPTY       = 'empty_uploaded_text_track';
+    const KEY_PARAM_ERROR = 'paramError';
+
     /**
      * @return string
      */
