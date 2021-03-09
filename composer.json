@@ -91,7 +91,7 @@
       ],
       "pre-push": [
         "vendor/bin/phpunit",
-        "psalm --threads=1"
+        "vendor/bin/psalm --threads=1"
       ],
       "post-merge": "composer install",
       "post-checkout": "composer install"
