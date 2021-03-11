@@ -33,4 +33,12 @@ class DeleteRecordingsResponse extends BaseResponse
     {
         return $this->rawXml->deleted->__toString() == 'true';
     }
+
+    /**
+     * @return bool
+     */
+    public function isInvalidId(): bool
+    {
+        return $this->getMessageKey() === self::KEY_INVALID_ID;
+    }
 }

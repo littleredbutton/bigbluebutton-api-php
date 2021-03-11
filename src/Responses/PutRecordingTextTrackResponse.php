@@ -36,4 +36,36 @@ class PutRecordingTextTrackResponse extends BaseResponseAsJson
     {
         return $this->data->response->recordId;
     }
+
+    /**
+     * @return bool
+     */
+    public function isUploadTrackSuccess(): bool
+    {
+        return $this->getMessageKey() === self::KEY_SUCCESS;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUploadTrackFailed(): bool
+    {
+        return $this->getMessageKey() === self::KEY_FAILED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUploadTrackEmpty(): bool
+    {
+        return $this->getMessageKey() === self::KEY_EMPTY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isKeyParamError(): bool
+    {
+        return $this->getMessageKey() === self::KEY_PARAM_ERROR;
+    }
 }

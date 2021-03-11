@@ -41,4 +41,12 @@ class EndMeetingResponse extends BaseResponse
     {
         return $this->rawXml->message->__toString();
     }
+
+    /**
+     * @return bool
+     */
+    public function isEndMeetingRequestSent(): bool
+    {
+        return $this->getMessageKey() === self::KEY_SET_END_MEETING_REQUEST;
+    }
 }

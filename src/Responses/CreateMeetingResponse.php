@@ -130,8 +130,16 @@ class CreateMeetingResponse extends BaseResponse
     /**
      * @return bool
      */
-    public function isDuplicate()
+    public function isDuplicate(): bool
     {
         return $this->getMessageKey() === self::KEY_DUPLICATE_WARNING;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isIdNotUnique(): bool
+    {
+        return $this->getMessageKey() === self::KEY_ID_NOT_UNIQUE;
     }
 }

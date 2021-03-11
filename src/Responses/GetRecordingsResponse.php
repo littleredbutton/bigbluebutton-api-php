@@ -47,4 +47,12 @@ class GetRecordingsResponse extends BaseResponse
 
         return $this->records;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasNoRecordings(): bool
+    {
+        return $this->getMessageKey() === self::KEY_NO_RECORDINGS;
+    }
 }

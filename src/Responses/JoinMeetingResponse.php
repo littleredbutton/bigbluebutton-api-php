@@ -76,4 +76,36 @@ class JoinMeetingResponse extends BaseResponse
     {
         return $this->rawXml->url->__toString();
     }
+
+    /**
+     * @return bool
+     */
+    public function isSuccessfullyJoined(): bool
+    {
+        return $this->getMessageKey() === self::KEY_SUCCESSFULLY_JOINED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSessionInvalid(): bool
+    {
+        return $this->getMessageKey() === self::KEY_INVALID_SESSION;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isServerError(): bool
+    {
+        return $this->getMessageKey() === self::KEY_SERVER_ERROR;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGuestDeny(): bool
+    {
+        return $this->getMessageKey() === self::KEY_GUEST_DENY;
+    }
 }
