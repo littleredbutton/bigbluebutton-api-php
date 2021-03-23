@@ -48,7 +48,7 @@ jobs:
       if: matrix.php-versions == '7.2'
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: vendor/bin/php-coveralls --coverage_clover=build/logs/coverage.xml -v
+      run: vendor/bin/php-coveralls --service=github --coverage_clover=build/logs/coverage.xml -v
 
 
   HHVM:
