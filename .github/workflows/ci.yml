@@ -45,10 +45,10 @@ jobs:
       run: vendor/bin/phpunit
       continue-on-error: true
     - name: Coveralls
-      if: matrix.php-versions == '7.2'
+      if: matrix.php-versions == '7.2' && secrets.COVERALLS_TOKEN
       env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: vendor/bin/php-coveralls --coverage_clover=build/logs/coverage.xml -vvv
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+      run: vendor/bin/php-coveralls --coverage_clover=build/logs/coverage.xml -v
 
 
   HHVM:
