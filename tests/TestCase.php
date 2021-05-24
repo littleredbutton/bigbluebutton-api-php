@@ -136,6 +136,10 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setRecord($params['record'])
             ->setDuration($params['duration'])
             ->setWelcomeMessage($params['welcome'])
+            ->setWebVoice($params['webVoice'])
+            ->setRecord($params['record'])
+            ->setDuration($params['duration'])
+            ->setWelcomeMessage($params['welcomeMessage'])
             ->setAutoStartRecording($params['autoStartRecording'])
             ->setAllowStartStopRecording($params['allowStartStopRecording'])
             ->setModeratorOnlyMessage($params['moderatorOnlyMessage'])
@@ -158,7 +162,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setGuestPolicyAlwaysAccept()
             ->addMeta('presenter', $params['meta_presenter'])
             ->setBannerText($params['bannerText'])
-            ->setBannerColor($params['bannerColor']);
+            ->setBannerColor($params['bannerColor'])
+            ->addMeta('bbb-recording-ready-url', $params['meta_bbb-recording-ready-url']);
     }
 
     /**

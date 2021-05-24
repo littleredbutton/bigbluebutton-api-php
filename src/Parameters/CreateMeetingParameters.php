@@ -587,8 +587,17 @@ class CreateMeetingParameters extends MetaParameters
         return $this;
     }
 
+
     /**
-     * @param      $nameOrUrl
+     * @return array
+     */
+    public function getPresentations()
+    {
+        return $this->presentations;
+    }
+
+    /**
+     * @param $nameOrUrl
      * @param null $content
      * @param null $filename
      *
@@ -603,14 +612,6 @@ class CreateMeetingParameters extends MetaParameters
         }
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPresentations(): array
-    {
-        return $this->presentations;
     }
 
     /**
@@ -651,6 +652,7 @@ class CreateMeetingParameters extends MetaParameters
     {
         $queries = $this->getHTTPQueryArray();
 
+        // Add breakout rooms parameters only if the meeting is a breakout room
         if ($this->isBreakout()) {
             if ($this->parentMeetingID === null || $this->sequence === null) {
                 trigger_error('Breakout rooms require a parentMeetingID and sequence number.', E_USER_WARNING);
