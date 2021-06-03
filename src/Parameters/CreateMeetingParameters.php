@@ -87,6 +87,8 @@ namespace BigBlueButton\Parameters;
  * @method $this setLockSettingsLockOnJoinConfigurable(bool $isLockSettingsLockOnJoinConfigurable)
  * @method string getGuestPolicy()
  * @method $this setGuestPolicy(string $guestPolicy)
+ * @method string getWebVoice()
+ * @method $this setWebVoice(string $webVoice)
  *
  */
 class CreateMeetingParameters extends MetaParameters
@@ -130,6 +132,11 @@ class CreateMeetingParameters extends MetaParameters
      * @var string
      */
     protected $voiceBridge;
+
+    /**
+     * @var string
+     */
+    protected $webVoice;
 
     /**
      * @var int
@@ -587,15 +594,6 @@ class CreateMeetingParameters extends MetaParameters
         return $this;
     }
 
-
-    /**
-     * @return array
-     */
-    public function getPresentations()
-    {
-        return $this->presentations;
-    }
-
     /**
      * @param $nameOrUrl
      * @param null $content
@@ -612,6 +610,14 @@ class CreateMeetingParameters extends MetaParameters
         }
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPresentations(): array
+    {
+        return $this->presentations;
     }
 
     /**
