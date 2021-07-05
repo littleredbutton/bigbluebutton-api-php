@@ -1,0 +1,30 @@
+name: Generate usable library and upload as release asset
+on:
+  release:
+    types: [published]
+jobs:
+  build:
+    name: Upload Release Asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build project
+        run: |
+          sudo apt install rsync openssh-client zip
+          mkdir -p build
+          rsync -ar src composer.json LICENSE README.md .env build/
+          cd build
+          composer install --no-dev --optimize-autoloader --no-scripts
+          zip -X -r bigbluebutton-api-php-release.zip *
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+            name: bigbluebutton-api-php-release
+            path: build/bigbluebutton-api-php-release.zip
+      - name: Upload to release
+        uses: JasonEtco/upload-to-release@master
+        with:
+          args: build/bigbluebutton-api-php-release.zip application/zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
