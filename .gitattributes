@@ -2,3 +2,7 @@
 .gitignore export-ignore
 .github export-ignore
 codeception.yml export-ignore
+.php_cs export-ignore
+/phpunit.xml.dist export-ignore
+/psalm.xml export-ignore
+/tests/ export-ignore
