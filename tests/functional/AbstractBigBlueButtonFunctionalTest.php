@@ -276,4 +276,17 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertEquals('FAILED', $result->getReturnCode());
         $this->assertTrue($result->failed());
     }
+
+    public function testSetPollXML()
+    {
+        $createParams = $this->generateCreateParams();
+        $createResult = $this->bbb->createMeeting($this->getCreateMock($createParams));
+        $this->assertEquals('SUCCESS', $createResult->getReturnCode(), 'Create meeting');
+
+        $setPollXMLParameters = $this->getSetPollXMLParamsMock($this->generateSetPollXMLParams());
+        $result               = $this->bbb->setPollXML($setPollXMLParameters);
+
+        $this->assertEquals('SUCCESS', $result->getReturnCode());
+        $this->assertTrue($result->success());
+    }
 }

@@ -38,6 +38,7 @@ use BigBlueButton\Parameters\HooksDestroyParameters;
 use BigBlueButton\Parameters\IsMeetingRunningParameters;
 use BigBlueButton\Parameters\JoinMeetingParameters;
 use BigBlueButton\Parameters\PublishRecordingsParameters;
+use BigBlueButton\Parameters\SetPollXMLParameters;
 use BigBlueButton\Parameters\UpdateRecordingsParameters;
 use BigBlueButton\Responses\ApiVersionResponse;
 use BigBlueButton\Responses\CreateMeetingResponse;
@@ -54,6 +55,7 @@ use BigBlueButton\Responses\HooksListResponse;
 use BigBlueButton\Responses\IsMeetingRunningResponse;
 use BigBlueButton\Responses\JoinMeetingResponse;
 use BigBlueButton\Responses\PublishRecordingsResponse;
+use BigBlueButton\Responses\SetPollXMLResponse;
 use BigBlueButton\Responses\UpdateRecordingsResponse;
 use BigBlueButton\Util\UrlBuilder;
 use SimpleXMLElement;
@@ -498,6 +500,18 @@ class BigBlueButton
         $xml = $this->processXmlResponse($this->getHooksDestroyUrl($hooksDestroyParams));
 
         return new HooksDestroyResponse($xml);
+    }
+
+    public function getSetPollXMLUrl(SetPollXMLParameters $setPollXMLParameters): string
+    {
+        return $this->urlBuilder->buildUrl(ApiMethod::SET_POLL_XML, $setPollXMLParameters->getHTTPQuery());
+    }
+
+    public function setPollXML(SetPollXMLParameters $setPollXMLParameters)
+    {
+        $xml = $this->processXmlResponse($this->getSetPollXMLUrl($setPollXMLParameters));
+
+        return new SetPollXMLResponse($xml);
     }
 
     /* ____________________ SPECIAL METHODS ___________________ */

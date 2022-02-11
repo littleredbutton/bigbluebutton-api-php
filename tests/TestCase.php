@@ -21,6 +21,7 @@ namespace BigBlueButton;
 use BigBlueButton\Parameters\CreateMeetingParameters as CreateMeetingParameters;
 use BigBlueButton\Parameters\EndMeetingParameters;
 use BigBlueButton\Parameters\JoinMeetingParameters as JoinMeetingParameters;
+use BigBlueButton\Parameters\SetPollXMLParameters;
 use BigBlueButton\Parameters\UpdateRecordingsParameters as UpdateRecordingsParameters;
 use BigBlueButton\Responses\CreateMeetingResponse;
 use BigBlueButton\Responses\UpdateRecordingsResponse;
@@ -262,6 +263,42 @@ class TestCase extends \PHPUnit\Framework\TestCase
         $updateRecordingsParams = new UpdateRecordingsParameters($params['recordID']);
 
         return $updateRecordingsParams->addMeta('presenter', $params['meta_presenter']);
+    }
+
+    protected function generateSetPollXMLParams(): array
+    {
+        return [
+            'meetingID'    => $this->faker->uuid,
+            'title'        => $this->faker->word,
+            'question'     => $this->faker->sentence,
+            'questionType' => $this->faker->randomElement([
+                SetPollXMLParameters::POLL_TYPE_YES_NO,
+                SetPollXMLParameters::POLL_TYPE_YES_NO_ABSTENTION,
+                SetPollXMLParameters::POLL_TYPE_TRUE_FALSE,
+                SetPollXMLParameters::POLL_TYPE_RESPONSE,
+                SetPollXMLParameters::POLL_TYPE_LETTER,
+                SetPollXMLParameters::POLL_TYPE_CUSTOM,
+                SetPollXMLParameters::POLL_TYPE_A2,
+                SetPollXMLParameters::POLL_TYPE_A3,
+                SetPollXMLParameters::POLL_TYPE_A4,
+                SetPollXMLParameters::POLL_TYPE_A5,
+            ]),
+            'answers' => [
+                $this->faker->word,
+                $this->faker->word,
+            ]
+        ];
+    }
+
+    protected function getSetPollXMLParamsMock(array $params): SetPollXMLParameters
+    {
+        $setPollXMLParameters = new SetPollXMLParameters($params['meetingID'], $params['title'], $params['question'], $params['questionType']);
+
+        foreach ($params['answers'] as $answer) {
+            $setPollXMLParameters->addAnswer($answer);
+        }
+
+        return $setPollXMLParameters;
     }
 
     // Load fixtures
