@@ -18,12 +18,16 @@
  */
 namespace BigBlueButton\Core;
 
+use BigBlueButton\Util\LazyLoadProperties;
+
 /**
  * Class Record
  * @package BigBlueButton\Core
  */
 class Record
 {
+    use LazyLoadProperties;
+
     private $recordId;
     private $meetingId;
     private $name;
@@ -37,8 +41,8 @@ class Record
     private $playbackLength;
     private $metas = [];
 
-    /** @var PlaybackFormat[] */
-    private $playbackFormats = [];
+    /** @var \SimpleXMLElement */
+    private $playbackFormatsRaw;
 
     public function __construct(\SimpleXMLElement $xml)
     {
@@ -54,9 +58,7 @@ class Record
         $this->playbackUrl        = $xml->playback->format->url->__toString();
         $this->playbackLength     = (int) $xml->playback->format->length->__toString();
 
-        foreach ($xml->playback->children() as $format) {
-            $this->playbackFormats[] = new PlaybackFormat($format);
-        }
+        $this->playbackFormatsRaw = $xml->playback;
 
         foreach ($xml->metadata->children() as $meta) {
             $this->metas[$meta->getName()] = $meta->__toString();
@@ -162,8 +164,13 @@ class Record
     /**
      * @return PlaybackFormat[]
      */
-    public function getPlaybackFormats(): array
+    private function lazyResolvePlaybackFormats(): array
     {
-        return $this->playbackFormats;
+        $playbackFormats = [];
+        foreach ($this->playbackFormatsRaw->children() as $format) {
+            $playbackFormats[] = new PlaybackFormat($format);
+        }
+
+        return $playbackFormats;
     }
 }

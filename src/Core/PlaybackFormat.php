@@ -20,8 +20,11 @@ declare(strict_types=1);
  */
 namespace BigBlueButton\Core;
 
+use BigBlueButton\Util\LazyLoadProperties;
+
 class PlaybackFormat
 {
+    use LazyLoadProperties;
 
     /** @var string */
     private $type;
@@ -76,18 +79,14 @@ class PlaybackFormat
         return !!$this->imagePreviewsRaw;
     }
 
-    public function getImagePreviews(): array
+    private function lazyResolveImagePreviews()
     {
-        if ($this->imagePreviews !== null) {
-            return $this->imagePreviews;
-        }
-
-        $this->imagePreviews = [];
+        $imagePreviews = [];
         if ($this->imagePreviewsRaw) {
             foreach ($this->imagePreviewsRaw->children() as $image) {
                 $attributes = $image->attributes();
 
-                $this->imagePreviews[] = [
+                $imagePreviews[] = [
                     'width'  => (int) $attributes->width->__toString(),
                     'height' => (int) $attributes->height->__toString(),
                     'alt'    => $attributes->alt->__toString(),
@@ -96,6 +95,6 @@ class PlaybackFormat
             }
         }
 
-        return $this->imagePreviews;
+        return $imagePreviews;
     }
 }
