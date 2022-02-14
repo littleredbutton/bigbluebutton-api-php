@@ -79,6 +79,10 @@ class PlaybackFormat
         return !!$this->imagePreviewsRaw;
     }
 
+    /**
+     *
+     * @return array<int, array{width: int, height: int, alt: string, url: string}>
+     */
     private function lazyResolveImagePreviews()
     {
         $imagePreviews = [];

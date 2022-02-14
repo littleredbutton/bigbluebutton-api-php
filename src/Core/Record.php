@@ -130,6 +130,7 @@ class Record
     }
 
     /**
+     * @deprecated since 4.2. Use getPlaybackFormats() instead.
      * @return string
      */
     public function getPlaybackType()
@@ -138,6 +139,7 @@ class Record
     }
 
     /**
+     * @deprecated since 4.2. Use getPlaybackFormats() instead.
      * @return string
      */
     public function getPlaybackUrl()
@@ -146,6 +148,7 @@ class Record
     }
 
     /**
+     * @deprecated since 4.2. Use getPlaybackFormats() instead.
      * @return string
      */
     public function getPlaybackLength()
