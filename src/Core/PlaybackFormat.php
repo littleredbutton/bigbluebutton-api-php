@@ -83,7 +83,7 @@ class PlaybackFormat
      *
      * @return array<int, array{width: int, height: int, alt: string, url: string}>
      */
-    private function lazyResolveImagePreviews()
+    private function lazyResolveImagePreviews(): array
     {
         $imagePreviews = [];
         if ($this->imagePreviewsRaw) {
