@@ -19,3 +19,6 @@ reports
 # Local environment variables
 /.env.local
 /.env.*.local
+
+# Composer lock file
+/composer.lock
