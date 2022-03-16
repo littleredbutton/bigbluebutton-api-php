@@ -125,12 +125,12 @@
       "brainmaestro/composer-git-hooks": "^2.8",
       "extensions": {
         "phpunit/phpunit": {
-          "fakerphp/faker": "^1.19"
+          "fakerphp/faker": "^1.14"
         }
       },
       "friendsofphp/php-cs-fixer": "^3.7",
-      "php-coveralls/php-coveralls": "^2.5",
-      "phpunit/phpunit": "^9.5",
+      "php-coveralls/php-coveralls": "^2.4",
+      "phpunit/phpunit": "^8",
       "vimeo/psalm": "^4.22"
     }
   }
