@@ -72,7 +72,6 @@
     "symfony/http-client": "To use the SymfonyHttpClientTransport."
   },
   "require-dev": {
-    "composer/composer": "^1.10.0",
     "psr/http-client": "^1.0",
     "psr/http-factory": "^1.0",
     "psr/http-message": "^1.0",
