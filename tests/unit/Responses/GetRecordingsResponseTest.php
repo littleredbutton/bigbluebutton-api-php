@@ -52,6 +52,7 @@ class GetRecordingsResponseTest extends TestCase
         $this->assertEquals('published', $aRecord->getState());
         $this->assertEquals(1462980100026, $aRecord->getStartTime());
         $this->assertEquals(1462986640649, $aRecord->getEndTime());
+        $this->assertEquals(0, $aRecord->getParticipantCount());
         $this->assertEquals('presentation', $aRecord->getPlaybackFormats()[0]->getType());
         $this->assertEquals('http://test-install.blindsidenetworks.com/playback/presentation/0.9.0/playback.html?meetingId=f71d810b6e90a4a34ae02b8c7143e8733178578e-1462980100026', $aRecord->getPlaybackFormats()[0]->getUrl());
         $this->assertEquals(86, $aRecord->getPlaybackFormats()[0]->getLength());
