@@ -223,34 +223,4 @@ class JoinMeetingParameters extends UserDataParameters
 
         return $this;
     }
-
-    /**
-     * @deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.
-     *
-     * @return $this
-     */
-    public function setJoinViaHtml5(bool $joinViaHtml5): self
-    {
-        @trigger_error(
-            sprintf('Using "%s" is deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.', __METHOD__),
-            E_USER_DEPRECATED
-        );
-
-        $this->joinViaHtml5 = $joinViaHtml5;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.
-     */
-    public function isJoinViaHtml5(): bool
-    {
-        @trigger_error(
-            sprintf('Using "%s" is deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.', __METHOD__),
-            E_USER_DEPRECATED
-        );
-
-        return $this->joinViaHtml5;
-    }
 }
