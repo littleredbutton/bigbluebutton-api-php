@@ -232,7 +232,7 @@ class JoinMeetingParameters extends UserDataParameters
     public function setJoinViaHtml5(bool $joinViaHtml5): self
     {
         @trigger_error(
-            sprintf('Using "%s" is deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.', __METHOD__),
+            sprintf('Using "%s()" is deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.', __METHOD__),
             E_USER_DEPRECATED
         );
 
@@ -247,7 +247,7 @@ class JoinMeetingParameters extends UserDataParameters
     public function isJoinViaHtml5(): bool
     {
         @trigger_error(
-            sprintf('Using "%s" is deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.', __METHOD__),
+            sprintf('Using "%s()" is deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.', __METHOD__),
             E_USER_DEPRECATED
         );
 
