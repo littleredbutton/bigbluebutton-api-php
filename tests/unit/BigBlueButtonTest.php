@@ -358,7 +358,7 @@ class BigBlueButtonTest extends TestCase
             'URL is not ok'
         );
     }
- 
+
     public function testGetInsertDocument(): void
     {
         $params = new InsertDocumentParameters('foobar');
