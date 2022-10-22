@@ -69,8 +69,6 @@ class PutRecordingTextTrackParameters extends BaseParameters
 
     /**
      * GetRecordingTextTracksParameters constructor.
-     *
-     * @param $recordID
      */
     public function __construct(string $recordID, string $kind, string $lang, string $label)
     {
