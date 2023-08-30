@@ -18,6 +18,8 @@ return $config
         'yoda_style' => false,
         'single_line_throw' => false,
         'increment_style' => false,
+        'modernize_strpos' => false,
+        'get_class_to_class_keyword' => false,
     ])
     ->setRiskyAllowed(true)
     ->setFinder($finder);

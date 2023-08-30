@@ -62,9 +62,6 @@ class PutRecordingTextTrackParameters extends BaseParameters
      */
     protected $contentType;
 
-    /**
-     * @var mixed
-     */
     protected $file;
 
     /**

@@ -40,9 +40,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected $faker;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
