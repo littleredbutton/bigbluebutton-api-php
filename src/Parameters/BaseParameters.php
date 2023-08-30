@@ -45,9 +45,6 @@ abstract class BaseParameters
         return null;
     }
 
-    /**
-     * @return mixed
-     */
     protected function getter(string $name)
     {
         if (property_exists($this, $name)) {
