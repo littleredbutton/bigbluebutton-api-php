@@ -20,6 +20,7 @@
 namespace BigBlueButton;
 
 use BigBlueButton\Core\ApiMethod;
+use BigBlueButton\Enum\HashingAlgorithm;
 use BigBlueButton\Exceptions\ConfigException;
 use BigBlueButton\Exceptions\NetworkException;
 use BigBlueButton\Exceptions\ParsingException;
@@ -351,20 +352,21 @@ class BigBlueButtonTest extends TestCase
 
     public function testBuildUrl(): void
     {
-        // Test with default hash algorithm (sha1)
+        // Test with default hash algorithm (sha256)
         $bigBlueButton = new BigBlueButton('https://bbb.example/bigbluebutton/', 'S3cr3t');
 
         $this->assertSame(
-            'https://bbb.example/bigbluebutton/api/foo?foo=bar&baz=bazinga&checksum=694ad46bc5a79a572bab6c8b9a939527c39ac7f6',
+            'https://bbb.example/bigbluebutton/api/foo?foo=bar&baz=bazinga&checksum=0ce0d779a8220be9824c7eab055b36b59ac504ba899a76d7c528b8473960025e',
             $bigBlueButton->buildUrl('foo', 'foo=bar&baz=bazinga'),
             'URL is not ok'
         );
 
-        // Test with different hash algorithm (sha256)
-        $bigBlueButton = new BigBlueButton('https://bbb.example/bigbluebutton/', 'S3cr3t', null, 'sha256');
+        // Test with different hash algorithm (sha1)
+        $bigBlueButton = new BigBlueButton('https://bbb.example/bigbluebutton/', 'S3cr3t', null);
+        $bigBlueButton->setHashingAlgorithm(HashingAlgorithm::SHA_1);
 
         $this->assertSame(
-            'https://bbb.example/bigbluebutton/api/foo?foo=bar&baz=bazinga&checksum=0ce0d779a8220be9824c7eab055b36b59ac504ba899a76d7c528b8473960025e',
+            'https://bbb.example/bigbluebutton/api/foo?foo=bar&baz=bazinga&checksum=694ad46bc5a79a572bab6c8b9a939527c39ac7f6',
             $bigBlueButton->buildUrl('foo', 'foo=bar&baz=bazinga'),
             'URL is not ok'
         );
