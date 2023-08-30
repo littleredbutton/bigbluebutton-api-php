@@ -26,9 +26,6 @@ use BigBlueButton\Http\Transport\TransportInterface;
 
 final class BigBlueButtonWithCurlTransportTest extends AbstractBigBlueButtonFunctionalTest
 {
-    /**
-     * {@inheritDoc}
-     */
     protected static function createTransport(): TransportInterface
     {
         return CurlTransport::createWithDefaultOptions();
