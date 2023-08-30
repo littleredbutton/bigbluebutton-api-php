@@ -34,9 +34,6 @@ use PHPUnit\Framework\TestCase;
  */
 final class CurlTransportTest extends TestCase
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function setUpBeforeClass(): void
     {
         TestHttpServer::start();
@@ -45,9 +42,9 @@ final class CurlTransportTest extends TestCase
     public function provideBadResponseCodes(): iterable
     {
         // cURL does not understand codes below 200 properly.
-//        foreach (range(100, 199) as $badCode) {
-//            yield 'HTTP code ' . $badCode => [$badCode];
-//        }
+        //        foreach (range(100, 199) as $badCode) {
+        //            yield 'HTTP code ' . $badCode => [$badCode];
+        //        }
 
         foreach (range(300, 599) as $badCode) {
             yield 'HTTP code '.$badCode => [$badCode];

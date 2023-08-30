@@ -26,9 +26,6 @@ use BigBlueButton\Http\Transport\TransportInterface;
 
 final class BigBlueButtonWithSymfonyHttpClientTransportTest extends AbstractBigBlueButtonFunctionalTest
 {
-    /**
-     * {@inheritDoc}
-     */
     protected static function createTransport(): TransportInterface
     {
         return SymfonyHttpClientTransport::create();

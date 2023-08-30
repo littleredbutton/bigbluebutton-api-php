@@ -90,6 +90,8 @@ class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['breakoutRoomsRecord'], $createMeetingParams->isBreakoutRoomsRecord());
         $this->assertEquals($params['allowRequestsWithoutSession'], $createMeetingParams->isAllowRequestsWithoutSession());
         $this->assertEquals($params['virtualBackgroundsDisabled'], $createMeetingParams->isVirtualBackgroundsDisabled());
+        $this->assertEquals($params['virtualBackgroundsDisabled'], $createMeetingParams->isVirtualBackgroundsDisabled());
+        $this->assertEquals($params['disabledFeatures'], $createMeetingParams->getDisabledFeatures());
 
         // Check values are empty of this is not a breakout room
         $this->assertNull($createMeetingParams->isBreakout());
@@ -102,6 +104,22 @@ class CreateMeetingParametersTest extends TestCase
         $createMeetingParams->setName($newName = $this->faker->name);
         $this->assertEquals($newName, $createMeetingParams->getName());
         $this->assertEquals($newId, $createMeetingParams->getMeetingID());
+    }
+
+    public function testDisabledFeatures()
+    {
+        $params = $this->generateCreateParams();
+        $createMeetingParams = $this->getCreateMock($params);
+
+        // Test empty disabled features
+        $createMeetingParams->setDisabledFeatures([]);
+        $params = urldecode($createMeetingParams->getHTTPQuery());
+        $this->assertStringNotContainsString('disabledFeatures=', $params);
+
+        // Test with multiple disabled features
+        $createMeetingParams->setDisabledFeatures(['chat', 'privateChat']);
+        $params = urldecode($createMeetingParams->getHTTPQuery());
+        $this->assertStringContainsString('disabledFeatures=chat,privateChat', $params);
     }
 
     public function testCreateBreakoutMeeting()

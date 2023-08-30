@@ -21,11 +21,9 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Exceptions;
 
-use Exception;
-
 /**
  * @abstract since 4.0.
  */
-class BaseException extends Exception
+class BaseException extends \Exception
 {
 }

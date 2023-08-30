@@ -165,6 +165,11 @@ class BigBlueButtonTest extends TestCase
             if (\is_bool($value)) {
                 $value = $value ? 'true' : 'false';
             }
+
+            if ($key == 'disabledFeatures') {
+                $value = implode(',', $value);
+            }
+
             $this->assertStringContainsString(rawurlencode($key).'='.rawurlencode($value), $url);
         }
     }

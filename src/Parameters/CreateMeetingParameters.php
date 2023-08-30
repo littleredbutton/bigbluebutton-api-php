@@ -120,6 +120,8 @@ use BigBlueButton\Core\GuestPolicy;
  * @method $this     setVirtualBackgroundsDisabled(bool $isVirtualBackgroundsDisabled)
  * @method int       getUserCameraCap()
  * @method $this     setUserCameraCap(int $cap)
+ * @method array     getDisabledFeatures()
+ * @method $this     setDisabledFeatures(array $disabledFeatures)
  */
 class CreateMeetingParameters extends MetaParameters
 {
@@ -376,10 +378,17 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @var array
      */
+    protected $disabledFeatures = [];
+
+    /**
+     * @var array
+     */
     private $presentations = [];
 
     public function __construct(string $meetingID, string $name)
     {
+        $this->ignoreProperties = ['disabledFeatures'];
+
         $this->meetingID = $meetingID;
         $this->name = $name;
     }
@@ -476,7 +485,7 @@ class CreateMeetingParameters extends MetaParameters
         return $this;
     }
 
-    public function addPresentation(string $nameOrUrl, ?string $content = null, ?string $filename = null): self
+    public function addPresentation(string $nameOrUrl, string $content = null, string $filename = null): self
     {
         if (!$filename) {
             $this->presentations[$nameOrUrl] = !$content ?: base64_encode($content);
@@ -492,9 +501,6 @@ class CreateMeetingParameters extends MetaParameters
         return $this->presentations;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPresentationsAsXML()
     {
         $result = '';
@@ -526,6 +532,10 @@ class CreateMeetingParameters extends MetaParameters
     public function getHTTPQuery(): string
     {
         $queries = $this->getHTTPQueryArray();
+
+        if (\count($this->getDisabledFeatures()) != 0) {
+            $queries['disabledFeatures'] = implode(',', $this->getDisabledFeatures());
+        }
 
         if ($this->isBreakout()) {
             if ($this->parentMeetingID === null || $this->sequence === null) {

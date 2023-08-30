@@ -104,9 +104,6 @@ final class PsrHttpClientTransport implements TransportInterface
         $this->defaultHeaders = $defaultHeaders;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function request(TransportRequest $request): TransportResponse
     {
         if ('' !== $payload = $request->getPayload()) {
