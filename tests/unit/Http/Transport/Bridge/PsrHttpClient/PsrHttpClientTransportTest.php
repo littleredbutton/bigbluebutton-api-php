@@ -62,9 +62,6 @@ final class PsrHttpClientTransportTest extends TestCase
      */
     private $streamFactoryMock;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         $this->transport = $this->createTransport();

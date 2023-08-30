@@ -40,9 +40,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected $faker;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -127,8 +124,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param $createParams
-     *
      * @return array
      */
     protected function generateBreakoutCreateParams($createParams)
@@ -202,8 +197,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param $params
-     *
      * @return CreateMeetingParameters
      */
     protected function getBreakoutCreateMock($params)

@@ -84,9 +84,6 @@ final class CurlTransport implements TransportInterface
         // @codeCoverageIgnoreEnd
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function request(TransportRequest $request): TransportResponse
     {
         // @codeCoverageIgnoreStart

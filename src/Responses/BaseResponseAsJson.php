@@ -28,9 +28,6 @@ abstract class BaseResponseAsJson
     public const FAILED = 'FAILED';
     public const CHECKSUM_ERROR = 'checksumError';
 
-    /**
-     * @var mixed
-     */
     protected $data;
 
     /**

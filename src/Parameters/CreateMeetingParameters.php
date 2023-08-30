@@ -483,7 +483,6 @@ class CreateMeetingParameters extends MetaParameters
 
     /**
      * @deprecated old flash client parameter, not used anymore
-     * @return string
      */
     public function getConfigToken(): ?string
     {
@@ -492,7 +491,6 @@ class CreateMeetingParameters extends MetaParameters
 
     /**
      * @deprecated old flash client parameter, not used anymore
-     * @param string $configToken
      *
      * @return JoinMeetingParameters
      */
@@ -503,7 +501,7 @@ class CreateMeetingParameters extends MetaParameters
         return $this;
     }
 
-    public function addPresentation(string $nameOrUrl, ?string $content = null, ?string $filename = null): self
+    public function addPresentation(string $nameOrUrl, string $content = null, string $filename = null): self
     {
         if (!$filename) {
             $this->presentations[$nameOrUrl] = !$content ?: base64_encode($content);
@@ -519,9 +517,6 @@ class CreateMeetingParameters extends MetaParameters
         return $this->presentations;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPresentationsAsXML()
     {
         $result = '';

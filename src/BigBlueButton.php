@@ -59,7 +59,6 @@ use BigBlueButton\Responses\PublishRecordingsResponse;
 use BigBlueButton\Responses\PutRecordingTextTrackResponse;
 use BigBlueButton\Responses\UpdateRecordingsResponse;
 use BigBlueButton\Util\UrlBuilder;
-use SimpleXMLElement;
 
 /**
  * Class BigBlueButton.
@@ -108,7 +107,7 @@ class BigBlueButton
      *
      * @throws ConfigException
      */
-    public function __construct(?string $baseUrl = null, ?string $secret = null, ?TransportInterface $transport = null)
+    public function __construct(string $baseUrl = null, string $secret = null, TransportInterface $transport = null)
     {
         // Keeping backward compatibility with older deployed versions
         $this->securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
@@ -478,10 +477,10 @@ class BigBlueButton
      * @throws ParsingException
      * @throws RuntimeException
      */
-    private function processXmlResponse(string $url, string $payload = '', string $contentType = 'application/xml'): SimpleXMLElement
+    private function processXmlResponse(string $url, string $payload = '', string $contentType = 'application/xml'): \SimpleXMLElement
     {
         try {
-            return new SimpleXMLElement($this->requestUrl($url, $payload, $contentType));
+            return new \SimpleXMLElement($this->requestUrl($url, $payload, $contentType));
         } catch (NetworkException|RuntimeException $e) {
             throw $e;
         } catch (\Throwable $e) {

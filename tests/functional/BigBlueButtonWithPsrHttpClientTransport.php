@@ -29,9 +29,6 @@ use Symfony\Component\HttpClient\Psr18Client;
 
 final class BigBlueButtonWithPsrHttpClientTransport extends AbstractBigBlueButtonFunctionalTest
 {
-    /**
-     * {@inheritDoc}
-     */
     protected static function createTransport(): TransportInterface
     {
         $psr17Factory = new Psr17Factory();

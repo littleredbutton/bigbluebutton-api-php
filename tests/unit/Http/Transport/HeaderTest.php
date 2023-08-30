@@ -78,8 +78,6 @@ final class HeaderTest extends TestCase
 
     /**
      * @dataProvider provideNonStringHeaders
-     *
-     * @param mixed $badHeader
      */
     public function testMergeCurlHeadersWithNonStringHeaders($badHeader): void
     {

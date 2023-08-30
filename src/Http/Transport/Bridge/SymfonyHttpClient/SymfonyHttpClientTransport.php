@@ -101,9 +101,6 @@ final class SymfonyHttpClientTransport implements TransportInterface
         // @codeCoverageIgnoreEnd
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function request(TransportRequest $request): TransportResponse
     {
         $headers = $this->defaultHeaders;
