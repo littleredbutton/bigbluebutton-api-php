@@ -29,6 +29,7 @@ use BigBlueButton\Parameters\DeleteRecordingsParameters;
 use BigBlueButton\Parameters\GetRecordingsParameters;
 use BigBlueButton\Parameters\InsertDocumentParameters;
 use BigBlueButton\Parameters\PublishRecordingsParameters;
+use BigBlueButton\Util\ParamsIterator;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -161,17 +162,9 @@ class BigBlueButtonTest extends TestCase
     {
         $params = $this->generateCreateParams();
         $url = $this->bbb->getCreateMeetingUrl($this->getCreateMock($params));
-        foreach ($params as $key => $value) {
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
 
-            if ($key == 'disabledFeatures') {
-                $value = implode(',', $value);
-            }
-
-            $this->assertStringContainsString(rawurlencode($key).'='.rawurlencode($value), $url);
-        }
+        $paramsIterator = new ParamsIterator();
+        $paramsIterator->iterate($params, $url);
     }
 
     /* Join Meeting */

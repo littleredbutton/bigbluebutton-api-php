@@ -533,8 +533,10 @@ class CreateMeetingParameters extends MetaParameters
     {
         $queries = $this->getHTTPQueryArray();
 
-        if (\count($this->getDisabledFeatures()) != 0) {
-            $queries['disabledFeatures'] = implode(',', $this->getDisabledFeatures());
+        if (!empty($this->disabledFeatures)) {
+            $queries = array_merge($queries, [
+                'disabledFeatures' => implode(',', $this->disabledFeatures),
+            ]);
         }
 
         if ($this->isBreakout()) {
