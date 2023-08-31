@@ -20,6 +20,7 @@
 namespace BigBlueButton\Parameters;
 
 use BigBlueButton\Core\GuestPolicy;
+use BigBlueButton\Enum\Feature;
 use BigBlueButton\TestCase;
 use PHPUnit\Framework\Error\Warning;
 
@@ -92,6 +93,7 @@ class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['virtualBackgroundsDisabled'], $createMeetingParams->isVirtualBackgroundsDisabled());
         $this->assertEquals($params['virtualBackgroundsDisabled'], $createMeetingParams->isVirtualBackgroundsDisabled());
         $this->assertEquals($params['disabledFeatures'], $createMeetingParams->getDisabledFeatures());
+        $this->assertEquals($params['disabledFeaturesExclude'], $createMeetingParams->getDisabledFeaturesExclude());
 
         // Check values are empty of this is not a breakout room
         $this->assertNull($createMeetingParams->isBreakout());
@@ -117,9 +119,19 @@ class CreateMeetingParametersTest extends TestCase
         $this->assertStringNotContainsString('disabledFeatures=', $params);
 
         // Test with multiple disabled features
-        $createMeetingParams->setDisabledFeatures(['chat', 'privateChat']);
+        $createMeetingParams->setDisabledFeatures([Feature::CHAT, Feature::POLLS, Feature::CAPTIONS]);
         $params = urldecode($createMeetingParams->getHTTPQuery());
-        $this->assertStringContainsString('disabledFeatures=chat,privateChat', $params);
+        $this->assertStringContainsString('disabledFeatures=chat,polls,captions', $params);
+
+        // Test empty disabled features exclude
+        $createMeetingParams->setDisabledFeaturesExclude([]);
+        $params = urldecode($createMeetingParams->getHTTPQuery());
+        $this->assertStringNotContainsString('disabledFeaturesExclude=', $params);
+
+        // Test with multiple disabled features exclude
+        $createMeetingParams->setDisabledFeaturesExclude([Feature::CHAT, Feature::POLLS]);
+        $params = urldecode($createMeetingParams->getHTTPQuery());
+        $this->assertStringContainsString('disabledFeaturesExclude=chat,polls', $params);
     }
 
     public function testCreateBreakoutMeeting()

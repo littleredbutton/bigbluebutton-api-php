@@ -99,6 +99,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'allowModsToUnmuteUsers' => $this->faker->boolean(50),
             'allowModsToEjectCameras' => $this->faker->boolean(50),
             'disabledFeatures' => $this->faker->randomElements(Feature::getValues(), 3),
+            'disabledFeaturesExclude' => $this->faker->randomElements(Feature::getValues(), 2),
             'meta_presenter' => $this->faker->name,
             'meta_endCallbackUrl' => $this->faker->url,
             'meta_bbb-recording-ready-url' => $this->faker->url,
@@ -196,7 +197,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setAllowRequestsWithoutSession($params['allowRequestsWithoutSession'])
             ->setVirtualBackgroundsDisabled($params['virtualBackgroundsDisabled'])
             ->setUserCameraCap($params['userCameraCap'])
-            ->setDisabledFeatures($params['disabledFeatures']);
+            ->setDisabledFeatures($params['disabledFeatures'])
+            ->setDisabledFeaturesExclude($params['disabledFeaturesExclude']);
     }
 
     /**
