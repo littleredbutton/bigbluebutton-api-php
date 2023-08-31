@@ -60,14 +60,8 @@ class Meeting
      */
     private $dialNumber;
 
-    /**
-     * @var string
-     */
     private $attendeePassword;
 
-    /**
-     * @var string
-     */
     private $moderatorPassword;
 
     /**

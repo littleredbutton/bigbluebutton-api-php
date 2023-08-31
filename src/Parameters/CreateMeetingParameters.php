@@ -376,6 +376,11 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @var array
      */
+    private $breakoutRoomsGroups = [];
+
+    /**
+     * @var array
+     */
     private $presentations = [];
 
     public function __construct(string $meetingID, string $name)
@@ -487,6 +492,21 @@ class CreateMeetingParameters extends MetaParameters
         return $this;
     }
 
+    public function getBreakoutRoomsGroups(): array
+    {
+        return $this->breakoutRoomsGroups;
+    }
+
+    /**
+     * @return $this
+     */
+    public function addBreakoutRoomsGroup($id, $name, $roster)
+    {
+        $this->breakoutRoomsGroups[] = ['id' => $id, 'name' => $name, 'roster' => $roster];
+
+        return $this;
+    }
+
     public function getPresentations(): array
     {
         return $this->presentations;
@@ -523,6 +543,13 @@ class CreateMeetingParameters extends MetaParameters
     public function getHTTPQuery(): string
     {
         $queries = $this->getHTTPQueryArray();
+
+        // Pre-defined groups to automatically assign the students to a given breakout room
+        if (!empty($this->breakoutRoomsGroups)) {
+            $queries = array_merge($queries, [
+                'groups' => json_encode($this->breakoutRoomsGroups),
+            ]);
+        }
 
         if ($this->isBreakout()) {
             if ($this->parentMeetingID === null || $this->sequence === null) {
