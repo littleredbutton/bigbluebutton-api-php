@@ -82,8 +82,8 @@ use BigBlueButton\Core\GuestPolicy;
  * @method $this     setLockSettingsDisablePrivateChat(bool $isLockSettingsDisablePrivateChat)
  * @method bool|null isLockSettingsDisablePublicChat()
  * @method $this     setLockSettingsDisablePublicChat(bool $isLockSettingsDisablePublicChat)
- * @method bool|null isLockSettingsDisableNote()
- * @method $this     setLockSettingsDisableNote(bool $isLockSettingsDisableNote)
+ * @method bool|null isLockSettingsDisableNotes()
+ * @method $this     setLockSettingsDisableNotes(bool $isLockSettingsDisableNotes)
  * @method bool|null isLockSettingsLockedLayout()
  * @method $this     setLockSettingsLockedLayout(bool $isLockSettingsLockedLayout)
  * @method bool|null isLockSettingsHideUserList()
@@ -291,7 +291,7 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @var bool
      */
-    protected $lockSettingsDisableNote;
+    protected $lockSettingsDisableNotes;
 
     /**
      * @var bool
@@ -312,6 +312,11 @@ class CreateMeetingParameters extends MetaParameters
      * @var bool
      */
     protected $lockSettingsLockOnJoinConfigurable;
+
+    /**
+     * @var bool
+     */
+    protected $lockSettingsHideViewersCursor;
 
     /**
      * @var string
@@ -388,6 +393,51 @@ class CreateMeetingParameters extends MetaParameters
      */
     protected $disabledFeaturesExclude = [];
 
+    /**   
+     * @var int
+     */
+    protected $meetingCameraCap;
+
+    /**
+     * @var int
+     */
+    protected $meetingExpireIfNoUserJoinedInMinutes;
+
+    /**
+     * @var int
+     */
+    protected $meetingExpireWhenLastUserLeftInMinutes;
+
+    /**
+     * @var bool
+     */
+    protected $preUploadedPresentationOverrideDefault;
+
+    /**
+     * @var bool
+     */
+    protected $notifyRecordingIsOn;
+
+    /**
+     * @var bool
+     */
+    protected $remindRecordingIsOn;
+
+    /**
+     * @var bool
+     */
+    protected $recordFullDurationMedia;
+
+    /**
+     * @var string
+     */
+    protected $presentationUploadExternalUrl;
+
+    /**
+     * @var string
+     */
+    protected $presentationUploadExternalDescription;
+
     /**
      * @var array
      */
@@ -425,6 +475,96 @@ class CreateMeetingParameters extends MetaParameters
     public function isBreakout(): ?bool
     {
         return $this->isBreakout;
+    }
+
+    /**
+     * @deprecated Not required anymore, use role during join
+     */
+    public function setAttendeePW(string $attendeePW): self
+    {
+        $this->attendeePW = $attendeePW;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated Not required anymore, use role during join
+     */
+    public function getAttendeePW(): ?string
+    {
+        return $this->attendeePW;
+    }
+
+    /**
+     * @deprecated Not required anymore, use role during join
+     */
+    public function setModeratorPW(string $moderatorPW): self
+    {
+        $this->moderatorPW = $moderatorPW;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated Not required anymore, use role during join
+     */
+    public function getModeratorPW(): ?string
+    {
+        return $this->moderatorPW;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function setLearningDashboardEnabled(bool $learningDashboardEnabled): self
+    {
+        $this->learningDashboardEnabled = $learningDashboardEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function isLearningDashboardEnabled(): bool
+    {
+        return $this->learningDashboardEnabled;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function setVirtualBackgroundsDisabled(bool $virtualBackgroundsDisabled): self
+    {
+        $this->virtualBackgroundsDisabled = $virtualBackgroundsDisabled;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function isVirtualBackgroundsDisabled(): bool
+    {
+        return $this->virtualBackgroundsDisabled;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function setBreakoutRoomsEnabled(bool $breakoutRoomsEnabled): self
+    {
+        $this->breakoutRoomsEnabled = $breakoutRoomsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function isBreakoutRoomsEnabled(): bool
+    {
+        return $this->breakoutRoomsEnabled;
     }
 
     public function isUserCameraCapDisabled(): bool

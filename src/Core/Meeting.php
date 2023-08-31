@@ -20,6 +20,8 @@
 
 namespace BigBlueButton\Core;
 
+use BigBlueButton\Enum\Role;
+
 /**
  * Class Meeting.
  */
@@ -324,7 +326,7 @@ class Meeting
         $attendees = $this->getAttendees();
 
         $moderators = array_filter($attendees, function ($attendee) {
-            return $attendee->getRole() === 'MODERATOR';
+            return $attendee->getRole() === Role::MODERATOR;
         });
 
         return array_values($moderators);
@@ -340,7 +342,7 @@ class Meeting
         $attendees = $this->getAttendees();
 
         $viewers = array_filter($attendees, function ($attendee) {
-            return $attendee->getRole() === 'VIEWER';
+            return $attendee->getRole() === Role::VIEWER;
         });
 
         return array_values($viewers);

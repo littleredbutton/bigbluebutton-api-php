@@ -19,6 +19,8 @@
 
 namespace BigBlueButton\Parameters;
 
+use BigBlueButton\Enum\Role;
+
 /**
  * Class JoinMeetingParametersTest.
  *
@@ -122,15 +124,20 @@ class JoinMeetingParameters extends UserDataParameters
      */
     protected $excludeFromDashboard;
 
-    public function __construct(string $meetingID, string $fullName, string $password = null)
+    public function __construct(string $meetingID, string $fullName, $passwordOrRole = null)
     {
         if (\func_num_args() === 3) {
-            @trigger_error(sprintf('Passing $password parameter to constructor of "%s" is deprecated since 5.1 and will be removed in 6.0. Use "%s::setRole()" to set the designated role for the joining user instead.', self::class, self::class), \E_USER_DEPRECATED);
+            @trigger_error(sprintf('Passing $passwordOrRole parameter to constructor of "%s" is deprecated since 5.1 and will be removed in 6.0. Use "%s::setRole()" to set the designated role for the joining user instead.', self::class, self::class), \E_USER_DEPRECATED);
         }
 
         $this->meetingID = $meetingID;
         $this->fullName = $fullName;
-        $this->password = $password;
+
+        if (Role::MODERATOR === $passwordOrRole || Role::VIEWER === $passwordOrRole) {
+            $this->role = $passwordOrRole;
+        } else {
+            $this->password = $passwordOrRole;
+        }
     }
 
     /**
