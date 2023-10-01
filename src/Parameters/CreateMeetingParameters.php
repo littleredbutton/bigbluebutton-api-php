@@ -26,10 +26,6 @@ use BigBlueButton\Core\GuestPolicy;
  * @method $this     setName(string $name)
  * @method string    getMeetingID()
  * @method $this     setMeetingID(string $id)
- * @method string    getAttendeePW()
- * @method $this     setAttendeePW(string $password)
- * @method string    getModeratorPW()
- * @method $this     setModeratorPW(string $password)
  * @method string    getWelcome()
  * @method $this     setWelcome(string $welcome)
  * @method string    getDialNumber()
@@ -134,12 +130,12 @@ class CreateMeetingParameters extends MetaParameters
     protected $meetingID;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $attendeePW;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $moderatorPW;
 
@@ -518,6 +514,54 @@ class CreateMeetingParameters extends MetaParameters
         }
 
         return $result;
+    }
+
+    /**
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
+     */
+    public function getAttendeePW(): string
+    {
+        if (null === $this->attendeePW) {
+            throw new \RuntimeException(sprintf('Attendee password was not passed to "%s".', self::class));
+        }
+
+        return $this->attendeePW;
+    }
+
+    /**
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
+     *
+     * @return $this
+     */
+    public function setAttendeePW(string $attendeePW): self
+    {
+        $this->attendeePW = $attendeePW;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
+     */
+    public function getModeratorPW(): string
+    {
+        if (null === $this->moderatorPW) {
+            throw new \RuntimeException(sprintf('Moderator password was not passed to "%s".', self::class));
+        }
+
+        return $this->moderatorPW;
+    }
+
+    /**
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
+     *
+     * @return $this
+     */
+    public function setModeratorPW(string $moderatorPW): self
+    {
+        $this->moderatorPW = $moderatorPW;
+
+        return $this;
     }
 
     public function getHTTPQuery(): string

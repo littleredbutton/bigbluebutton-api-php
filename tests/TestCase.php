@@ -145,9 +145,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         $createMeetingParams = new CreateMeetingParameters($params['meetingID'], $params['name']);
 
-        return $createMeetingParams->setAttendeePW($params['attendeePW'])
-            ->setModeratorPW($params['moderatorPW'])
-            ->setDialNumber($params['dialNumber'])
+        $createMeetingParams->setDialNumber($params['dialNumber'])
             ->setVoiceBridge($params['voiceBridge'])
             ->setWebVoice($params['webVoice'])
             ->setLogoutURL($params['logoutURL'])
@@ -194,6 +192,16 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setAllowRequestsWithoutSession($params['allowRequestsWithoutSession'])
             ->setVirtualBackgroundsDisabled($params['virtualBackgroundsDisabled'])
             ->setUserCameraCap($params['userCameraCap']);
+
+        if (isset($params['moderatorPW'])) {
+            $createMeetingParams->setModeratorPW($params['moderatorPW']);
+        }
+
+        if (isset($params['attendeePW'])) {
+            $createMeetingParams->setAttendeePW($params['attendeePW']);
+        }
+
+        return $createMeetingParams;
     }
 
     /**
@@ -231,7 +239,11 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function getJoinMeetingMock($params)
     {
-        $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName'], $params['password']);
+        if (isset($params['password'])) {
+            $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName'], $params['password']);
+        } else {
+            $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName']);
+        }
 
         return $joinMeetingParams->setUserID($params['userID'])->setWebVoiceConf($params['webVoiceConf'])
             ->setCreateTime($params['createTime'])->addUserData('countrycode', $params['userdata-countrycode'])
