@@ -113,13 +113,13 @@ class BigBlueButton
      *
      * @throws ConfigException
      */
-    public function __construct(string $baseUrl = null, string $secret = null, TransportInterface $transport = null)
+    public function __construct(string $baseUrl = null, string $secret = null, TransportInterface $transport = null, string $hashingAlgorithm = HashingAlgorithm::SHA_1)
     {
         // Keeping backward compatibility with older deployed versions
         $this->securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
         $this->bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
 
-        $this->hashingAlgorithm = HashingAlgorithm::SHA_256;
+        $this->hashingAlgorithm = $hashingAlgorithm;
 
         if (empty($this->bbbServerBaseUrl)) {
             throw new ConfigException('Base url required');
@@ -127,12 +127,6 @@ class BigBlueButton
 
         $this->urlBuilder = new UrlBuilder($this->securitySecret, $this->bbbServerBaseUrl, $this->hashingAlgorithm);
         $this->transport = $transport ?? CurlTransport::createWithDefaultOptions();
-    }
-
-    public function setHashingAlgorithm(string $hashingAlgorithm): void
-    {
-        $this->hashingAlgorithm = $hashingAlgorithm;
-        $this->urlBuilder->setHashingAlgorithm($hashingAlgorithm);
     }
 
     /**

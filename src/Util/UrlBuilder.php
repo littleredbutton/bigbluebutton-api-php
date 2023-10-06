@@ -48,14 +48,6 @@ final class UrlBuilder
     }
 
     /**
-     * Sets the hashing algorithm.
-     */
-    public function setHashingAlgorithm(string $hashingAlgorithm): void
-    {
-        $this->hashingAlgorithm = $hashingAlgorithm;
-    }
-
-    /**
      * Builds an API method URL that includes the url + params + its generated checksum.
      */
     public function buildUrl(string $method = '', string $params = '', bool $append = true): string
