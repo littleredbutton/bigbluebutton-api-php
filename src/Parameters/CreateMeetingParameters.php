@@ -374,7 +374,7 @@ class CreateMeetingParameters extends MetaParameters
     protected $userCameraCap;
 
     /**
-     * @var array
+     * @var array<array{id: string, name: string|null, roster: array}>
      */
     private $breakoutRoomsGroups = [];
 
@@ -492,6 +492,9 @@ class CreateMeetingParameters extends MetaParameters
         return $this;
     }
 
+    /**
+     * @return array<array{id: string, name: string|null, roster: array}>
+     */
     public function getBreakoutRoomsGroups(): array
     {
         return $this->breakoutRoomsGroups;
@@ -500,7 +503,7 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @return $this
      */
-    public function addBreakoutRoomsGroup($id, $name, $roster)
+    public function addBreakoutRoomsGroup(String $id, ?String $name, array $roster)
     {
         $this->breakoutRoomsGroups[] = ['id' => $id, 'name' => $name, 'roster' => $roster];
 

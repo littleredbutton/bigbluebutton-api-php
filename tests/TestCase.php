@@ -355,4 +355,19 @@ class TestCase extends \PHPUnit\Framework\TestCase
             $this->assertIsBool($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of a boolean for property -> '.$getterName);
         }
     }
+
+    public function assertUrlContainsAllRequestParameters(string $url, array $parameters): void
+    {
+        foreach ($parameters as $parameter) {
+            if (\is_bool($parameter)) {
+                $parameter = $parameter ? 'true' : 'false';
+            }
+
+            if (!\is_array($parameter)) {
+                $this->assertStringContainsString($parameter, urldecode($url));
+            } else {
+                $this->assertUrlContainsAllRequestParameters($url, $parameter);
+            }
+        }
+    }
 }

@@ -29,7 +29,6 @@ use BigBlueButton\Parameters\DeleteRecordingsParameters;
 use BigBlueButton\Parameters\GetRecordingsParameters;
 use BigBlueButton\Parameters\InsertDocumentParameters;
 use BigBlueButton\Parameters\PublishRecordingsParameters;
-use BigBlueButton\Util\ParamsIterator;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -163,8 +162,7 @@ class BigBlueButtonTest extends TestCase
         $params = $this->generateCreateParams();
         $url = $this->bbb->getCreateMeetingUrl($this->getCreateMock($params));
 
-        $paramsIterator = new ParamsIterator();
-        $paramsIterator->iterate($params, $url);
+        $this->assertUrlContainsAllRequestParameters($url, $params);
     }
 
     /* Join Meeting */
