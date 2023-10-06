@@ -62,7 +62,7 @@ class Meeting
 
     /**
      * @var string|null
-     */ 
+     */
     private $attendeePassword;
 
     /**
