@@ -535,6 +535,8 @@ class CreateMeetingParameters extends MetaParameters
      */
     public function setAttendeePW(string $attendeePW): self
     {
+        @trigger_error(sprintf('Passing a attendee password to "%s::setAttendeePW()" is deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the attendee password to create a meeting.', self::class), \E_USER_DEPRECATED);
+
         $this->attendeePW = $attendeePW;
 
         return $this;
@@ -559,6 +561,8 @@ class CreateMeetingParameters extends MetaParameters
      */
     public function setModeratorPW(string $moderatorPW): self
     {
+        @trigger_error(sprintf('Passing a moderator password to "%s::setModeratorPW()" is deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the moderator password to create a meeting.', self::class), \E_USER_DEPRECATED);
+
         $this->moderatorPW = $moderatorPW;
 
         return $this;

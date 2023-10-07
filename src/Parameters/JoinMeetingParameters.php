@@ -127,7 +127,7 @@ class JoinMeetingParameters extends UserDataParameters
     public function __construct(string $meetingID, string $fullName, string $password = null)
     {
         if (\func_num_args() === 3) {
-            @trigger_error(sprintf('Passing $password parameter to constructor of "%s" is deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.', self::class), \E_USER_DEPRECATED);
+            @trigger_error(sprintf('Passing $password parameter to constructor of "%s" is deprecated since 5.1 and will be removed in 6.0. Use "%s::setRole()" to set the designated role for the joining user instead.', self::class, self::class), \E_USER_DEPRECATED);
         }
 
         $this->meetingID = $meetingID;
