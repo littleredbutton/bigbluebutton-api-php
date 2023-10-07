@@ -21,7 +21,6 @@ namespace BigBlueButton\Parameters;
 
 use BigBlueButton\Core\GuestPolicy;
 use BigBlueButton\TestCase;
-use PHPUnit\Framework\Error\Warning;
 
 /**
  * Class CreateMeetingParametersTest.
@@ -123,7 +122,7 @@ final class CreateMeetingParametersTest extends TestCase
 
     public function testCreateBreakoutMeetingWithMissingParams(): void
     {
-        $this->expectException(Warning::class);
+        $this->expectException(\RuntimeException::class);
 
         $params = new CreateMeetingParameters($this->faker->uuid, $this->faker->name);
         $params->setBreakout(true);
