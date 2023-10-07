@@ -28,8 +28,10 @@ use BigBlueButton\Http\Transport\TransportInterface;
 use BigBlueButton\Http\Transport\TransportResponse;
 use BigBlueButton\Parameters\DeleteRecordingsParameters;
 use BigBlueButton\Parameters\GetRecordingsParameters;
+use BigBlueButton\Parameters\GetRecordingTextTracksParameters;
 use BigBlueButton\Parameters\InsertDocumentParameters;
 use BigBlueButton\Parameters\PublishRecordingsParameters;
+use BigBlueButton\Parameters\PutRecordingTextTrackParameters;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -162,12 +164,8 @@ class BigBlueButtonTest extends TestCase
     {
         $params = $this->generateCreateParams();
         $url = $this->bbb->getCreateMeetingUrl($this->getCreateMock($params));
-        foreach ($params as $key => $value) {
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-            $this->assertStringContainsString(rawurlencode($key).'='.rawurlencode($value), $url);
-        }
+
+        $this->assertUrlContainsAllRequestParameters($url, $params);
     }
 
     /* Join Meeting */
@@ -382,5 +380,78 @@ class BigBlueButtonTest extends TestCase
         $response = $this->bbb->insertDocument($params);
 
         $this->assertTrue($response->success());
+    }
+
+    public function testGetRecordingTextTracks(): void
+    {
+        $params = new GetRecordingTextTracksParameters('foobar');
+
+        $json = '{
+              "response": {
+                "returncode": "SUCCESS",
+                "tracks": [
+                  {
+                    "href": "https://captions.example.com/textTrack/0ab39e419c9bcb63233168daefe390f232c71343/183f0bf3a0982a127bdb8161e0c44eb696b3e75c-1554230749920/subtitles_en-US.vtt",
+                    "kind": "subtitles",
+                    "label": "English",
+                    "lang": "en-US",
+                    "source": "upload"
+                  },
+                  {
+                    "href": "https://captions.example.com/textTrack/95b62d1b762700b9d5366a9e71d5fcc5086f2723/183f0bf3a0982a127bdb8161e0c44eb696b3e75c-1554230749920/subtitles_pt-BR.vtt",
+                    "kind": "subtitles",
+                    "label": "Brazil",
+                    "lang": "pt-BR",
+                    "source": "upload"
+                  }
+                ]
+              }
+            }';
+        $this->transport->method('request')->willReturn(new TransportResponse($json, null));
+
+        $response = $this->bbb->getRecordingTextTracks($params);
+
+        $this->assertTrue($response->success());
+        $this->assertSame('SUCCESS', $response->getReturnCode());
+
+        $tracks = $response->getTracks();
+        $this->assertCount(2, $tracks);
+        $this->assertArrayHasKey(0, $tracks);
+        $this->assertArrayHasKey(1, $tracks);
+
+        $this->assertSame('https://captions.example.com/textTrack/0ab39e419c9bcb63233168daefe390f232c71343/183f0bf3a0982a127bdb8161e0c44eb696b3e75c-1554230749920/subtitles_en-US.vtt', $tracks[0]->getHref());
+        $this->assertSame('subtitles', $tracks[0]->getKind());
+        $this->assertSame('English', $tracks[0]->getLabel());
+        $this->assertSame('en-US', $tracks[0]->getLang());
+        $this->assertSame('upload', $tracks[0]->getSource());
+
+        $this->assertSame('https://captions.example.com/textTrack/95b62d1b762700b9d5366a9e71d5fcc5086f2723/183f0bf3a0982a127bdb8161e0c44eb696b3e75c-1554230749920/subtitles_pt-BR.vtt', $tracks[1]->getHref());
+        $this->assertSame('subtitles', $tracks[1]->getKind());
+        $this->assertSame('Brazil', $tracks[1]->getLabel());
+        $this->assertSame('pt-BR', $tracks[1]->getLang());
+        $this->assertSame('upload', $tracks[1]->getSource());
+    }
+
+    public function testPutRecordingTextTrack(): void
+    {
+        $params = new PutRecordingTextTrackParameters('foobar', 'subtitles', 'en-US', 'English');
+
+        $json = '{
+              "response": {
+                "messageKey": "upload_text_track_success",
+                "message": "Text track uploaded successfully",
+                "recordId": "baz",
+                "returncode": "SUCCESS"
+              }
+            }';
+        $this->transport->method('request')->willReturn(new TransportResponse($json, null));
+
+        $response = $this->bbb->putRecordingTextTrack($params);
+
+        $this->assertTrue($response->success());
+        $this->assertNull($response->getMessageKey());
+        $this->assertNull($response->getMessage());
+        $this->assertSame('baz', $response->getRecordID());
+        $this->assertSame('SUCCESS', $response->getReturnCode());
     }
 }

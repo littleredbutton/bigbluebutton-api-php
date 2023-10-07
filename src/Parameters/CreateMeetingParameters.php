@@ -374,6 +374,11 @@ class CreateMeetingParameters extends MetaParameters
     protected $userCameraCap;
 
     /**
+     * @var array<array{id: string, name: string|null, roster: array}>
+     */
+    private $breakoutRoomsGroups = [];
+
+    /**
      * @var array
      */
     private $presentations = [];
@@ -487,6 +492,24 @@ class CreateMeetingParameters extends MetaParameters
         return $this;
     }
 
+    /**
+     * @return array<array{id: string, name: string|null, roster: array}>
+     */
+    public function getBreakoutRoomsGroups(): array
+    {
+        return $this->breakoutRoomsGroups;
+    }
+
+    /**
+     * @return $this
+     */
+    public function addBreakoutRoomsGroup(string $id, ?string $name, array $roster): self
+    {
+        $this->breakoutRoomsGroups[] = ['id' => $id, 'name' => $name, 'roster' => $roster];
+
+        return $this;
+    }
+
     public function getPresentations(): array
     {
         return $this->presentations;
@@ -524,9 +547,16 @@ class CreateMeetingParameters extends MetaParameters
     {
         $queries = $this->getHTTPQueryArray();
 
+        // Pre-defined groups to automatically assign the students to a given breakout room
+        if (!empty($this->breakoutRoomsGroups)) {
+            $queries = array_merge($queries, [
+                'groups' => json_encode($this->breakoutRoomsGroups),
+            ]);
+        }
+
         if ($this->isBreakout()) {
             if ($this->parentMeetingID === null || $this->sequence === null) {
-                trigger_error('Breakout rooms require a parentMeetingID and sequence number.', \E_USER_WARNING);
+                throw new \RuntimeException('Breakout rooms require a parentMeetingID and sequence number.');
             }
         } else {
             $queries = $this->filterBreakoutRelatedQueries($queries);

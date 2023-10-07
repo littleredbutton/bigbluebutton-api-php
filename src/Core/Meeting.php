@@ -61,12 +61,12 @@ class Meeting
     private $dialNumber;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $attendeePassword;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $moderatorPassword;
 
