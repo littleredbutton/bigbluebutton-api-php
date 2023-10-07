@@ -503,7 +503,7 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @return $this
      */
-    public function addBreakoutRoomsGroup(string $id, ?string $name, array $roster)
+    public function addBreakoutRoomsGroup(string $id, ?string $name, array $roster): self
     {
         $this->breakoutRoomsGroups[] = ['id' => $id, 'name' => $name, 'roster' => $roster];
 

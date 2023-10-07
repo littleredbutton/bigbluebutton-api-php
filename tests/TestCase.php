@@ -124,7 +124,10 @@ class TestCase extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    protected function generateBreakoutRoomsGroups()
+    /**
+      * @return array<array{id: string, name: string, roster: array}>
+      */
+    protected function generateBreakoutRoomsGroups(): array
     {
         $br = $this->faker->numberBetween(0, 8);
         $groups = [];
