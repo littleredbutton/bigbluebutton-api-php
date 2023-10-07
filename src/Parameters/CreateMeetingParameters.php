@@ -556,7 +556,7 @@ class CreateMeetingParameters extends MetaParameters
 
         if ($this->isBreakout()) {
             if ($this->parentMeetingID === null || $this->sequence === null) {
-                trigger_error('Breakout rooms require a parentMeetingID and sequence number.', \E_USER_WARNING);
+                throw new \RuntimeException('Breakout rooms require a parentMeetingID and sequence number.');
             }
         } else {
             $queries = $this->filterBreakoutRelatedQueries($queries);
