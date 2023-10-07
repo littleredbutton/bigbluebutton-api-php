@@ -72,7 +72,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'moderatorPW' => $this->faker->password,
             'autoStartRecording' => $this->faker->boolean(50),
             'dialNumber' => $this->faker->phoneNumber,
-            'voiceBridge' => $this->faker->randomNumber(5),
+            'voiceBridge' => $this->faker->randomNumber(5, true),
             'webVoice' => $this->faker->word,
             'logoutURL' => $this->faker->url,
             'maxParticipants' => $this->faker->numberBetween(2, 100),
