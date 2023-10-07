@@ -163,12 +163,8 @@ class BigBlueButtonTest extends TestCase
     {
         $params = $this->generateCreateParams();
         $url = $this->bbb->getCreateMeetingUrl($this->getCreateMock($params));
-        foreach ($params as $key => $value) {
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-            $this->assertStringContainsString(rawurlencode($key).'='.rawurlencode($value), $url);
-        }
+
+        $this->assertUrlContainsAllRequestParameters($url, $params);
     }
 
     /* Join Meeting */
