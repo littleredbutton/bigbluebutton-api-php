@@ -35,10 +35,16 @@ final class UrlBuilder
      */
     private $bbbServerBaseUrl;
 
-    public function __construct(string $secret, string $serverBaseUrl)
+    /**
+     * @var string
+     */
+    private $hashingAlgorithm;
+
+    public function __construct(string $secret, string $serverBaseUrl, string $hashingAlgorithm)
     {
         $this->securitySalt = $secret;
         $this->bbbServerBaseUrl = $serverBaseUrl;
+        $this->hashingAlgorithm = $hashingAlgorithm;
     }
 
     /**
@@ -61,6 +67,6 @@ final class UrlBuilder
             $checksumParam = 'checksum=';
         }
 
-        return $params.$checksumParam.sha1($method.$params.$this->securitySalt);
+        return $params.$checksumParam.hash($this->hashingAlgorithm, $method.$params.$this->securitySalt);
     }
 }

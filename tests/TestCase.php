@@ -120,7 +120,22 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'allowRequestsWithoutSession' => $this->faker->boolean(50),
             'virtualBackgroundsDisabled' => $this->faker->boolean(50),
             'userCameraCap' => $this->faker->numberBetween(1, 5),
+            'groups' => $this->generateBreakoutRoomsGroups(),
         ];
+    }
+
+    /**
+     * @return array<array{id: string, name: string, roster: array}>
+     */
+    protected function generateBreakoutRoomsGroups(): array
+    {
+        $br = $this->faker->numberBetween(0, 8);
+        $groups = [];
+        for ($i = 0; $i <= $br; ++$i) {
+            $groups[] = ['id' => $this->faker->uuid, 'name' => $this->faker->name, 'roster' => $this->faker->randomElements];
+        }
+
+        return $groups;
     }
 
     /**
@@ -144,7 +159,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function getCreateMock($params)
     {
         $createMeetingParams = new CreateMeetingParameters($params['meetingID'], $params['name']);
-
+      
         $createMeetingParams->setDialNumber($params['dialNumber'])
             ->setVoiceBridge($params['voiceBridge'])
             ->setWebVoice($params['webVoice'])
@@ -199,6 +214,10 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
         if (isset($params['attendeePW'])) {
             $createMeetingParams->setAttendeePW($params['attendeePW']);
+        }
+      
+        foreach ($params['groups'] as $group) {
+            $createMeetingParams->addBreakoutRoomsGroup($group['id'], $group['name'], $group['roster']);
         }
 
         return $createMeetingParams;
@@ -349,6 +368,21 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         foreach ($getters as $getterName) {
             $this->assertIsBool($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of a boolean for property -> '.$getterName);
+        }
+    }
+
+    public function assertUrlContainsAllRequestParameters(string $url, array $parameters): void
+    {
+        foreach ($parameters as $parameter) {
+            if (\is_bool($parameter)) {
+                $parameter = $parameter ? 'true' : 'false';
+            }
+
+            if (!\is_array($parameter)) {
+                $this->assertStringContainsString($parameter, urldecode($url));
+            } else {
+                $this->assertUrlContainsAllRequestParameters($url, $parameter);
+            }
         }
     }
 }
