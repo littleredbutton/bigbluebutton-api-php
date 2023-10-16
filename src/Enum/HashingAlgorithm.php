@@ -22,6 +22,9 @@ namespace BigBlueButton\Enum;
 
 use MabeEnum\Enum;
 
+/**
+ * @psalm-immutable
+ */
 class HashingAlgorithm extends Enum
 {
     public const SHA_1 = 'sha1';
