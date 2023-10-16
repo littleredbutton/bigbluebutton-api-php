@@ -159,7 +159,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function getCreateMock($params)
     {
         $createMeetingParams = new CreateMeetingParameters($params['meetingID'], $params['name']);
-      
+
         $createMeetingParams->setDialNumber($params['dialNumber'])
             ->setVoiceBridge($params['voiceBridge'])
             ->setWebVoice($params['webVoice'])
@@ -215,7 +215,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
         if (isset($params['attendeePW'])) {
             $createMeetingParams->setAttendeePW($params['attendeePW']);
         }
-      
+
         foreach ($params['groups'] as $group) {
             $createMeetingParams->addBreakoutRoomsGroup($group['id'], $group['name'], $group['roster']);
         }
