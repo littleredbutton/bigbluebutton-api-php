@@ -18,29 +18,17 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Util;
+namespace BigBlueButton\Enum;
 
-use PHPUnit\Framework\TestCase;
+use MabeEnum\Enum;
 
 /**
- * @internal
- *
- * @coversNothing
+ * @psalm-immutable
  */
-class ParamsIterator extends TestCase
+class HashingAlgorithm extends Enum
 {
-    public function iterate($params, $url)
-    {
-        foreach ($params as $key => $value) {
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-
-            if (!\is_array($value)) {
-                $this->assertStringContainsString($value, urldecode($url));
-            } else {
-                $this->iterate($value, $url);
-            }
-        }
-    }
+    public const SHA_1 = 'sha1';
+    public const SHA_256 = 'sha256';
+    public const SHA_512 = 'sha512';
+    public const SHA_384 = 'sha384';
 }
