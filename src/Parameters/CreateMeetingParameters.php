@@ -164,11 +164,6 @@ class CreateMeetingParameters extends MetaParameters
     protected $webVoice;
 
     /**
-     * @var string
-     */
-    protected $configToken;
-
-    /**
      * @var int
      */
     protected $maxParticipants;
@@ -482,26 +477,6 @@ class CreateMeetingParameters extends MetaParameters
     public function setGuestPolicyAlwaysAccept(): self
     {
         $this->guestPolicy = GuestPolicy::ALWAYS_ACCEPT;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated old flash client parameter, not used anymore
-     */
-    public function getConfigToken(): ?string
-    {
-        return $this->configToken;
-    }
-
-    /**
-     * @deprecated old flash client parameter, not used anymore
-     *
-     * @return JoinMeetingParameters
-     */
-    public function setConfigToken(string $configToken): self
-    {
-        $this->configToken = $configToken;
 
         return $this;
     }
