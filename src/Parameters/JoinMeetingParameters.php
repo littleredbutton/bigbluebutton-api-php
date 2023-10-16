@@ -153,6 +153,8 @@ class JoinMeetingParameters extends UserDataParameters
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
      }  
   
     /**
