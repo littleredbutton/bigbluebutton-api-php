@@ -21,7 +21,6 @@ namespace BigBlueButton\Parameters;
 
 use BigBlueButton\Core\GuestPolicy;
 use BigBlueButton\TestCase;
-use PHPUnit\Framework\Error\Warning;
 
 /**
  * Class CreateMeetingParametersTest.
@@ -90,6 +89,7 @@ class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['breakoutRoomsRecord'], $createMeetingParams->isBreakoutRoomsRecord());
         $this->assertEquals($params['allowRequestsWithoutSession'], $createMeetingParams->isAllowRequestsWithoutSession());
         $this->assertEquals($params['virtualBackgroundsDisabled'], $createMeetingParams->isVirtualBackgroundsDisabled());
+        $this->assertEquals(json_encode($params['groups']), json_encode($createMeetingParams->getBreakoutRoomsGroups()));
 
         // Check values are empty of this is not a breakout room
         $this->assertNull($createMeetingParams->isBreakout());
@@ -123,7 +123,7 @@ class CreateMeetingParametersTest extends TestCase
 
     public function testCreateBreakoutMeetingWithMissingParams()
     {
-        $this->expectException(Warning::class);
+        $this->expectException(\RuntimeException::class);
 
         $params = new CreateMeetingParameters($this->faker->uuid, $this->faker->name);
         $params->setBreakout(true);

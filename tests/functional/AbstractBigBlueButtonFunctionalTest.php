@@ -119,10 +119,12 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
      */
     public function testCreateMeeting()
     {
-        $params = $this->generateCreateParams();
-        $result = $this->bbb->createMeeting($this->getCreateMock($params));
+        $result = $this->createRealMeeting($this->bbb);
         $this->assertEquals('SUCCESS', $result->getReturnCode());
         $this->assertTrue($result->success());
+
+        // Cleanup
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
     }
 
     /**
@@ -138,6 +140,9 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertCount(1, $params->getPresentations());
         $this->assertEquals('SUCCESS', $result->getReturnCode());
         $this->assertTrue($result->success());
+
+        // Cleanup
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
     }
 
     /**
@@ -153,6 +158,9 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertCount(1, $params->getPresentations());
         $this->assertEquals('SUCCESS', $result->getReturnCode());
         $this->assertTrue($result->success());
+
+        // Cleanup
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
     }
 
     /**
@@ -168,6 +176,9 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertCount(1, $params->getPresentations());
         $this->assertEquals('SUCCESS', $result->getReturnCode());
         $this->assertTrue($result->success());
+
+        // Cleanup
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
     }
 
     /**
@@ -184,6 +195,9 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertCount(2, $params->getPresentations());
         $this->assertEquals('SUCCESS', $result->getReturnCode());
         $this->assertTrue($result->success());
+
+        // Cleanup
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
     }
 
     /* Join Meeting */
@@ -208,8 +222,9 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
 
     public function testJoinMeeting()
     {
-        $params = $this->generateCreateParams();
-        $result = $this->bbb->createMeeting($this->getCreateMock($params));
+        $params = $this->getCreateMock($this->generateCreateParams());
+        $params->setGuestPolicy('ALWAYS_ACCEPT');
+        $result = $this->bbb->createMeeting($params);
         $this->assertEquals('SUCCESS', $result->getReturnCode(), 'Create meeting');
         $creationTime = $result->getCreationTime();
 
@@ -226,6 +241,9 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertNotEmpty($joinMeeting->getSessionToken());
         $this->assertNotEmpty($joinMeeting->getGuestStatus());
         $this->assertNotEmpty($joinMeeting->getUrl());
+
+        // Cleanup
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
     }
 
     /* End Meeting */
@@ -283,8 +301,13 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
 
     public function testGetMeetings()
     {
+        $meeting = $this->createRealMeeting($this->bbb);
+
         $result = $this->bbb->getMeetings();
         $this->assertNotEmpty($result->getMeetings());
+
+        // Cleanup
+        $this->bbb->endMeeting(new EndMeetingParameters($meeting->getMeetingId(), $meeting->getModeratorPassword()));
     }
 
     /* Get meeting info */
@@ -295,6 +318,9 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
 
         $url = $this->bbb->getMeetingInfoUrl(new GetMeetingInfoParameters($meeting->getMeetingId()));
         $this->assertStringContainsString('='.rawurlencode($meeting->getMeetingId()), $url);
+
+        // Cleanup
+        $this->bbb->endMeeting(new EndMeetingParameters($meeting->getMeetingId(), $meeting->getModeratorPassword()));
     }
 
     public function testGetMeetingInfo()
@@ -304,6 +330,9 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $result = $this->bbb->getMeetingInfo(new GetMeetingInfoParameters($meeting->getMeetingId(), $meeting->getModeratorPassword()));
         $this->assertEquals('SUCCESS', $result->getReturnCode());
         $this->assertTrue($result->success());
+
+        // Cleanup
+        $this->bbb->endMeeting(new EndMeetingParameters($meeting->getMeetingId(), $meeting->getModeratorPassword()));
     }
 
     public function testGetRecordingsUrl(): void
