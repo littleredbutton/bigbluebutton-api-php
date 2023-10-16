@@ -146,8 +146,6 @@ class JoinMeetingParameters extends UserDataParameters
 
     /**
      * @deprecated old flash client parameter, not used anymore
-     *
-     * @return JoinMeetingParameters
      */
     public function setConfigToken(string $configToken): self
     {
