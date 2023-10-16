@@ -245,6 +245,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
                 'userID' => $this->faker->numberBetween(1, 1000),
                 'webVoiceConf' => $this->faker->word,
                 'createTime' => $this->faker->unixTime,
+                'configToken' => $this->faker->word,
                 'userdata-countrycode' => $this->faker->countryCode,
                 'userdata-email' => $this->faker->email,
                 'userdata-commercial' => false,
@@ -264,9 +265,14 @@ class TestCase extends \PHPUnit\Framework\TestCase
             $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName']);
         }
 
-        return $joinMeetingParams->setUserID($params['userID'])->setWebVoiceConf($params['webVoiceConf'])
-            ->setCreateTime($params['createTime'])->addUserData('countrycode', $params['userdata-countrycode'])
-            ->addUserData('email', $params['userdata-email'])->addUserData('commercial', $params['userdata-commercial']);
+        return $joinMeetingParams
+            ->setUserID($params['userID'])
+            ->setWebVoiceConf($params['webVoiceConf'])
+            ->setCreateTime($params['createTime'])
+            ->setConfigToken($params['configToken'])
+            ->addUserData('countrycode', $params['userdata-countrycode'])
+            ->addUserData('email', $params['userdata-email'])
+            ->addUserData('commercial', $params['userdata-commercial']);
     }
 
     /**

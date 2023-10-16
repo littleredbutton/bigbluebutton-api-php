@@ -32,8 +32,6 @@ namespace BigBlueButton\Parameters;
  * @method $this     setUserID(string $userID)
  * @method string    getWebVoiceConf()
  * @method $this     setWebVoiceConf(string $webVoiceConf)
- * @method string    getConfigToken()
- * @method $this     setConfigToken(string $configToken)
  * @method string    getDefaultLayout()
  * @method $this     setDefaultLayout(string $defaultLayout)
  * @method string    getAvatarURL()
@@ -155,6 +153,24 @@ class JoinMeetingParameters extends UserDataParameters
     public function setPassword(string $password): self
     {
         $this->password = $password;
+     }  
+  
+    /**
+     * @deprecated since 5.1 and will be removed in 6.0. Old BigBlueButton flash client parameter.
+     */
+    public function getConfigToken(): ?string
+    {
+        return $this->configToken;
+    }
+
+    /**
+     * @deprecated since 5.1 and will be removed in 6.0. Old BigBlueButton flash client parameter.
+     *
+     * @return $this
+     */
+    public function setConfigToken(string $configToken): self
+    {
+        $this->configToken = $configToken;
 
         return $this;
     }
