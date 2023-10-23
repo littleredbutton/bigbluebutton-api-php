@@ -21,9 +21,9 @@ namespace BigBlueButton\Parameters;
 
 use BigBlueButton\TestCase;
 
-class JoinMeetingParametersTest extends TestCase
+final class JoinMeetingParametersTest extends TestCase
 {
-    public function testJoinMeetingParameters()
+    public function testJoinMeetingParameters(): void
     {
         $params = $this->generateJoinMeetingParams();
         $joinMeetingParams = $this->getJoinMeetingMock($params);
@@ -46,7 +46,6 @@ class JoinMeetingParametersTest extends TestCase
         $joinMeetingParams->setAvatarURL($avatarUrl = $this->faker->url);
         $joinMeetingParams->setRedirect($redirect = $this->faker->boolean(50));
         $joinMeetingParams->setClientURL($clientUrl = $this->faker->url);
-        $joinMeetingParams->setJoinViaHtml5($joinViaHtml5 = $this->faker->boolean(50));
         $joinMeetingParams->setGuest($guest = $this->faker->boolean(50));
         $this->assertEquals($newId, $joinMeetingParams->getMeetingID());
         $this->assertEquals($newName, $joinMeetingParams->getFullName());
@@ -55,7 +54,33 @@ class JoinMeetingParametersTest extends TestCase
         $this->assertEquals($avatarUrl, $joinMeetingParams->getAvatarURL());
         $this->assertEquals($redirect, $joinMeetingParams->isRedirect());
         $this->assertEquals($clientUrl, $joinMeetingParams->getClientURL());
-        $this->assertEquals($joinViaHtml5, $joinMeetingParams->isJoinViaHtml5());
         $this->assertEquals($guest, $joinMeetingParams->isGuest());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testJoinMeetingParametersWithoutPassword(): void
+    {
+        $params = $this->generateJoinMeetingParams();
+        unset($params['password']);
+        $joinMeetingParams = $this->getJoinMeetingMock($params);
+
+        $this->expectException(\RuntimeException::class);
+
+        $joinMeetingParams->getPassword();
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testJoinMeetingParametersWithSetPassword(): void
+    {
+        $params = $this->generateJoinMeetingParams();
+        unset($params['password']);
+        $joinMeetingParams = $this->getJoinMeetingMock($params);
+
+        $joinMeetingParams->setPassword($password = $this->faker->password);
+        $this->assertSame($password, $joinMeetingParams->getPassword());
     }
 }

@@ -25,7 +25,7 @@ use BigBlueButton\TestCase;
 /**
  * Class CreateMeetingParametersTest.
  */
-class CreateMeetingParametersTest extends TestCase
+final class CreateMeetingParametersTest extends TestCase
 {
     public function testCreateMeetingParameters()
     {
@@ -121,7 +121,7 @@ class CreateMeetingParametersTest extends TestCase
         $this->assertStringContainsString('freeJoin='.rawurlencode($createBreakoutMeetingParams->isFreeJoin() ? 'true' : 'false'), $params);
     }
 
-    public function testCreateBreakoutMeetingWithMissingParams()
+    public function testCreateBreakoutMeetingWithMissingParams(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -130,7 +130,7 @@ class CreateMeetingParametersTest extends TestCase
         $params->getHTTPQuery();
     }
 
-    public function testNonExistingProperty()
+    public function testNonExistingProperty(): void
     {
         $this->expectException(\BadFunctionCallException::class);
 
@@ -138,7 +138,7 @@ class CreateMeetingParametersTest extends TestCase
         $params->getFoobar();
     }
 
-    public function testWrongMethodName()
+    public function testWrongMethodName(): void
     {
         $this->expectException(\BadFunctionCallException::class);
 
@@ -146,7 +146,7 @@ class CreateMeetingParametersTest extends TestCase
         $params->getname();
     }
 
-    public function testGetPresentationsAsXMLWithUrl()
+    public function testGetPresentationsAsXMLWithUrl(): void
     {
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
@@ -154,7 +154,7 @@ class CreateMeetingParametersTest extends TestCase
         $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_url.xml', $createMeetingParams->getPresentationsAsXML());
     }
 
-    public function testGetPresentationsAsXMLWithUrlAndFilename()
+    public function testGetPresentationsAsXMLWithUrlAndFilename(): void
     {
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
@@ -162,7 +162,7 @@ class CreateMeetingParametersTest extends TestCase
         $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_filename.xml', $createMeetingParams->getPresentationsAsXML());
     }
 
-    public function testGetPresentationsAsXMLWithFile()
+    public function testGetPresentationsAsXMLWithFile(): void
     {
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
@@ -220,5 +220,31 @@ class CreateMeetingParametersTest extends TestCase
         $createMeetingParams->setGuestPolicyAskModerator();
         $this->assertSame(GuestPolicy::ASK_MODERATOR, $createMeetingParams->getGuestPolicy());
         $this->assertTrue($createMeetingParams->isGuestPolicyAskModerator());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testCreateMeetingParametersWithoutAttendeePassword(): void
+    {
+        $params = $this->generateCreateParams();
+        unset($params['attendeePW']);
+        $createMeetingParams = $this->getCreateMock($params);
+
+        $this->expectException(\RuntimeException::class);
+        $createMeetingParams->getAttendeePW();
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testCreateMeetingParametersWithoutModeratorPassword(): void
+    {
+        $params = $this->generateCreateParams();
+        unset($params['moderatorPW']);
+        $createMeetingParams = $this->getCreateMock($params);
+
+        $this->expectException(\RuntimeException::class);
+        $createMeetingParams->getModeratorPW();
     }
 }
