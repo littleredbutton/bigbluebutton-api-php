@@ -21,9 +21,9 @@ namespace BigBlueButton\Parameters;
 
 use BigBlueButton\TestCase;
 
-class EndMeetingParametersTest extends TestCase
+final class EndMeetingParametersTest extends TestCase
 {
-    public function testEndMeetingParameters()
+    public function testEndMeetingParameters(): void
     {
         $endMeetingParams = new EndMeetingParameters($meetingId = $this->faker->uuid, $password = $this->faker->password());
 
@@ -35,5 +35,28 @@ class EndMeetingParametersTest extends TestCase
         $endMeetingParams->setPassword($newPassword = $this->faker->password);
         $this->assertEquals($newId, $endMeetingParams->getMeetingID());
         $this->assertEquals($newPassword, $endMeetingParams->getPassword());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testEndMeetingParametersWithoutPassword(): void
+    {
+        $endMeetingParams = new EndMeetingParameters($this->faker->uuid);
+
+        $this->expectException(\RuntimeException::class);
+
+        $endMeetingParams->getPassword();
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testEndMeetingParametersWithSetPassword(): void
+    {
+        $endMeetingParams = new EndMeetingParameters($this->faker->uuid);
+
+        $endMeetingParams->setPassword($password = $this->faker->password);
+        $this->assertSame($password, $endMeetingParams->getPassword());
     }
 }

@@ -213,11 +213,17 @@ class Meeting
         return $this->dialNumber;
     }
 
+    /**
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
+     */
     public function getAttendeePassword(): string
     {
         return $this->attendeePassword;
     }
 
+    /**
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
+     */
     public function getModeratorPassword(): string
     {
         return $this->moderatorPassword;

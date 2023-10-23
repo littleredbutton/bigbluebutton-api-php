@@ -163,13 +163,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         $createMeetingParams = new CreateMeetingParameters($params['meetingID'], $params['name']);
 
-        foreach ($params['groups'] as $group) {
-            $createMeetingParams->addBreakoutRoomsGroup($group['id'], $group['name'], $group['roster']);
-        }
-
-        return $createMeetingParams->setAttendeePW($params['attendeePW'])
-            ->setModeratorPW($params['moderatorPW'])
-            ->setDialNumber($params['dialNumber'])
+        $createMeetingParams->setDialNumber($params['dialNumber'])
             ->setVoiceBridge($params['voiceBridge'])
             ->setWebVoice($params['webVoice'])
             ->setLogoutURL($params['logoutURL'])
@@ -218,6 +212,20 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setUserCameraCap($params['userCameraCap'])
             ->setDisabledFeatures($params['disabledFeatures'])
             ->setDisabledFeaturesExclude($params['disabledFeaturesExclude']);
+
+        if (isset($params['moderatorPW'])) {
+            $createMeetingParams->setModeratorPW($params['moderatorPW']);
+        }
+
+        if (isset($params['attendeePW'])) {
+            $createMeetingParams->setAttendeePW($params['attendeePW']);
+        }
+
+        foreach ($params['groups'] as $group) {
+            $createMeetingParams->addBreakoutRoomsGroup($group['id'], $group['name'], $group['roster']);
+        }
+
+        return $createMeetingParams;
     }
 
     /**
@@ -256,7 +264,11 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function getJoinMeetingMock($params)
     {
-        $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName'], $params['password']);
+        if (isset($params['password'])) {
+            $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName'], $params['password']);
+        } else {
+            $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName']);
+        }
 
         return $joinMeetingParams
             ->setUserID($params['userID'])
