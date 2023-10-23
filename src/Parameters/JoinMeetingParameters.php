@@ -155,11 +155,11 @@ class JoinMeetingParameters extends UserDataParameters
         $this->password = $password;
 
         return $this;
-     }  
-  
+    }
+
     /**
-     * @deprecated since 5.1 and will be removed in 6.0. Old BigBlueButton flash client parameter.
-     */
+    * @deprecated since 5.1 and will be removed in 6.0. Old BigBlueButton flash client parameter.
+    */
     public function getConfigToken(): ?string
     {
         return $this->configToken;
