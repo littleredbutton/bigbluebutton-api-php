@@ -106,12 +106,8 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
     {
         $params = $this->generateCreateParams();
         $url = $this->bbb->getCreateMeetingUrl($this->getCreateMock($params));
-        foreach ($params as $key => $value) {
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-            $this->assertStringContainsString($key.'='.rawurlencode($value), $url);
-        }
+
+        $this->assertUrlContainsAllRequestParameters($url, $params);
     }
 
     /**
@@ -212,12 +208,7 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
 
         $url = $this->bbb->getJoinMeetingURL($joinMeetingMock);
 
-        foreach ($joinMeetingParams as $key => $value) {
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-            $this->assertStringContainsString('='.rawurlencode($value), $url);
-        }
+        $this->assertUrlContainsAllRequestParameters($url, $joinMeetingParams);
     }
 
     public function testJoinMeeting()
@@ -255,12 +246,8 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
     {
         $params = $this->generateEndMeetingParams();
         $url = $this->bbb->getEndMeetingURL($this->getEndMeetingMock($params));
-        foreach ($params as $key => $value) {
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-            $this->assertStringContainsString('='.rawurlencode($value), $url);
-        }
+
+        $this->assertUrlContainsAllRequestParameters($url, $params);
     }
 
     public function testEndMeeting()

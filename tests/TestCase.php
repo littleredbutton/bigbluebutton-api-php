@@ -21,6 +21,7 @@ namespace BigBlueButton;
 
 use BigBlueButton\Core\GuestPolicy;
 use BigBlueButton\Core\MeetingLayout;
+use BigBlueButton\Enum\Feature;
 use BigBlueButton\Parameters\CreateMeetingParameters;
 use BigBlueButton\Parameters\EndMeetingParameters;
 use BigBlueButton\Parameters\JoinMeetingParameters;
@@ -97,6 +98,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'lockSettingsLockOnJoinConfigurable' => $this->faker->boolean(50),
             'allowModsToUnmuteUsers' => $this->faker->boolean(50),
             'allowModsToEjectCameras' => $this->faker->boolean(50),
+            'disabledFeatures' => $this->faker->randomElements(Feature::getValues(), 3),
+            'disabledFeaturesExclude' => $this->faker->randomElements(Feature::getValues(), 2),
             'meta_presenter' => $this->faker->name,
             'meta_endCallbackUrl' => $this->faker->url,
             'meta_bbb-recording-ready-url' => $this->faker->url,
@@ -206,7 +209,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setBreakoutRoomsRecord($params['breakoutRoomsRecord'])
             ->setAllowRequestsWithoutSession($params['allowRequestsWithoutSession'])
             ->setVirtualBackgroundsDisabled($params['virtualBackgroundsDisabled'])
-            ->setUserCameraCap($params['userCameraCap']);
+            ->setUserCameraCap($params['userCameraCap'])
+            ->setDisabledFeatures($params['disabledFeatures'])
+            ->setDisabledFeaturesExclude($params['disabledFeaturesExclude']);
 
         if (isset($params['moderatorPW'])) {
             $createMeetingParams->setModeratorPW($params['moderatorPW']);

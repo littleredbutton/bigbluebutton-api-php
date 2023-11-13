@@ -20,6 +20,7 @@
 namespace BigBlueButton\Parameters;
 
 use BigBlueButton\Core\GuestPolicy;
+use BigBlueButton\Enum\Feature;
 use BigBlueButton\TestCase;
 
 /**
@@ -90,6 +91,8 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['allowRequestsWithoutSession'], $createMeetingParams->isAllowRequestsWithoutSession());
         $this->assertEquals($params['virtualBackgroundsDisabled'], $createMeetingParams->isVirtualBackgroundsDisabled());
         $this->assertEquals(json_encode($params['groups']), json_encode($createMeetingParams->getBreakoutRoomsGroups()));
+        $this->assertEquals($params['disabledFeatures'], $createMeetingParams->getDisabledFeatures());
+        $this->assertEquals($params['disabledFeaturesExclude'], $createMeetingParams->getDisabledFeaturesExclude());
 
         // Check values are empty of this is not a breakout room
         $this->assertNull($createMeetingParams->isBreakout());
@@ -102,6 +105,32 @@ final class CreateMeetingParametersTest extends TestCase
         $createMeetingParams->setName($newName = $this->faker->name);
         $this->assertEquals($newName, $createMeetingParams->getName());
         $this->assertEquals($newId, $createMeetingParams->getMeetingID());
+    }
+
+    public function testDisabledFeatures(): void
+    {
+        $params = $this->generateCreateParams();
+        $createMeetingParams = $this->getCreateMock($params);
+
+        // Test empty disabled features
+        $createMeetingParams->setDisabledFeatures([]);
+        $params = urldecode($createMeetingParams->getHTTPQuery());
+        $this->assertStringNotContainsString('disabledFeatures=', $params);
+
+        // Test with multiple disabled features
+        $createMeetingParams->setDisabledFeatures([Feature::CHAT, Feature::POLLS, Feature::CAPTIONS]);
+        $params = urldecode($createMeetingParams->getHTTPQuery());
+        $this->assertStringContainsString('disabledFeatures=chat,polls,captions', $params);
+
+        // Test empty disabled features exclude
+        $createMeetingParams->setDisabledFeaturesExclude([]);
+        $params = urldecode($createMeetingParams->getHTTPQuery());
+        $this->assertStringNotContainsString('disabledFeaturesExclude=', $params);
+
+        // Test with multiple disabled features exclude
+        $createMeetingParams->setDisabledFeaturesExclude([Feature::CHAT, Feature::POLLS]);
+        $params = urldecode($createMeetingParams->getHTTPQuery());
+        $this->assertStringContainsString('disabledFeaturesExclude=chat,polls', $params);
     }
 
     public function testCreateBreakoutMeeting()

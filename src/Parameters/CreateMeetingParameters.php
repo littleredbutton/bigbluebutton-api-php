@@ -116,6 +116,10 @@ use BigBlueButton\Core\GuestPolicy;
  * @method $this     setVirtualBackgroundsDisabled(bool $isVirtualBackgroundsDisabled)
  * @method int       getUserCameraCap()
  * @method $this     setUserCameraCap(int $cap)
+ * @method array     getDisabledFeatures()
+ * @method $this     setDisabledFeatures(array $disabledFeatures)
+ * @method array     getDisabledFeaturesExclude()
+ * @method $this     setDisabledFeaturesExclude(array $disabledFeaturesExclude)
  */
 class CreateMeetingParameters extends MetaParameters
 {
@@ -377,10 +381,22 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @var array
      */
+    protected $disabledFeatures = [];
+
+    /**
+     * @var array
+     */
+    protected $disabledFeaturesExclude = [];
+
+    /**
+     * @var array
+     */
     private $presentations = [];
 
     public function __construct(string $meetingID, string $name)
     {
+        $this->ignoreProperties = ['disabledFeatures', 'disabledFeaturesExclude'];
+
         $this->meetingID = $meetingID;
         $this->name = $name;
     }
@@ -594,6 +610,20 @@ class CreateMeetingParameters extends MetaParameters
     public function getHTTPQuery(): string
     {
         $queries = $this->getHTTPQueryArray();
+
+        // Add disabled features if any are set
+        if (!empty($this->disabledFeatures)) {
+            $queries = array_merge($queries, [
+                'disabledFeatures' => implode(',', $this->disabledFeatures),
+            ]);
+        }
+
+        // Add disabled features exclude if any are set
+        if (!empty($this->disabledFeaturesExclude)) {
+            $queries = array_merge($queries, [
+                'disabledFeaturesExclude' => implode(',', $this->disabledFeaturesExclude),
+            ]);
+        }
 
         // Pre-defined groups to automatically assign the students to a given breakout room
         if (!empty($this->breakoutRoomsGroups)) {
