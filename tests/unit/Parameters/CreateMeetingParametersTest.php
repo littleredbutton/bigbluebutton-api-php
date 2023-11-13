@@ -107,7 +107,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($newId, $createMeetingParams->getMeetingID());
     }
 
-    public function testDisabledFeatures()
+    public function testDisabledFeatures(): void
     {
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
