@@ -611,7 +611,7 @@ class CreateMeetingParameters extends MetaParameters
         return $this;
     }
 
-    public function addPresentation(string $nameOrUrl, string $content = null, string $filename = null): self
+    public function addPresentation(string $nameOrUrl, ?string $content = null, ?string $filename = null): self
     {
         if (!$filename) {
             $this->presentations[$nameOrUrl] = !$content ?: base64_encode($content);

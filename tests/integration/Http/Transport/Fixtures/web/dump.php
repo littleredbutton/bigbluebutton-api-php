@@ -29,7 +29,7 @@ declare(strict_types=1);
 
 if ('cli-server' !== \PHP_SAPI) {
     // safe guard against unwanted execution
-    throw new \Exception("You cannot run this script directly, it's a fixture for TestHttpServer.");
+    throw new Exception("You cannot run this script directly, it's a fixture for TestHttpServer.");
 }
 
 $vars = [];

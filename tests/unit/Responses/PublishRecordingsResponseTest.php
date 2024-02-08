@@ -25,7 +25,7 @@ use BigBlueButton\TestCase;
 class PublishRecordingsResponseTest extends TestCase
 {
     /**
-     * @var \BigBlueButton\Responses\PublishRecordingsResponse
+     * @var PublishRecordingsResponse
      */
     private $publish;
 

@@ -25,7 +25,7 @@ use BigBlueButton\TestCase;
 class HooksDestroyResponseTest extends TestCase
 {
     /**
-     * @var \BigBlueButton\Responses\HooksDestroyResponse
+     * @var HooksDestroyResponse
      */
     private $destroyResponse;
 
