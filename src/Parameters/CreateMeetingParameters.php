@@ -48,8 +48,6 @@ use BigBlueButton\Core\GuestPolicy;
  * @method $this     setSequence(int $sequence)
  * @method bool|null isFreeJoin()
  * @method $this     setFreeJoin(bool $isFreeJoin)
- * @method bool|null isBreakoutRoomsEnabled()
- * @method $this     setBreakoutRoomsEnabled(bool $isBreakoutRoomsEnabled)
  * @method bool|null isBreakoutRoomsPrivateChatEnabled()
  * @method $this     setBreakoutRoomsPrivateChatEnabled(bool $isBreakoutRoomsPrivateChatEnabled)
  * @method bool|null isBreakoutRoomsRecord()
@@ -104,16 +102,12 @@ use BigBlueButton\Core\GuestPolicy;
  * @method $this     setMeetingLayout(string $meetingLayout)
  * @method string    getMeetingEndedURL()
  * @method $this     setMeetingEndedURL(string $meetingEndedURL)
- * @method bool|null isLearningDashboardEnabled()
- * @method $this     setLearningDashboardEnabled(bool $isLearningDashboardEnabled)
  * @method int       getLearningDashboardCleanupDelayInMinutes()
  * @method $this     setLearningDashboardCleanupDelayInMinutes(int $learningDashboardCleanupDelayInMinutes)
  * @method bool|null isAllowModsToEjectCameras()
  * @method $this     setAllowModsToEjectCameras(bool $isAllowModsToEjectCameras)
  * @method bool|null isAllowRequestsWithoutSession()
  * @method $this     setAllowRequestsWithoutSession(bool $isAllowRequestsWithoutSession)
- * @method bool|null isVirtualBackgroundsDisabled()
- * @method $this     setVirtualBackgroundsDisabled(bool $isVirtualBackgroundsDisabled)
  * @method int       getUserCameraCap()
  * @method $this     setUserCameraCap(int $cap)
  * @method array     getDisabledFeatures()
@@ -393,7 +387,7 @@ class CreateMeetingParameters extends MetaParameters
      */
     protected $disabledFeaturesExclude = [];
 
-    /**   
+    /**
      * @var int
      */
     protected $meetingCameraCap;
@@ -478,39 +472,23 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @deprecated Not required anymore, use role during join
+     * @deprecated use disabledFeatures instead
+     * Backwards compatibility for the old method name with the missing 's' at the end
      */
-    public function setAttendeePW(string $attendeePW): self
+    public function setLockSettingsDisableNote(bool $isLockSettingsDisableNote): self
     {
-        $this->attendeePW = $attendeePW;
+        $this->isLockSettingsDisableNotes = $isLockSettingsDisableNote;
 
         return $this;
     }
 
     /**
-     * @deprecated Not required anymore, use role during join
+     * @deprecated use disabledFeatures instead
+     * Backwards compatibility for the old method name with the missing 's' at the end
      */
-    public function getAttendeePW(): ?string
+    public function isLockSettingsDisableNote(): bool
     {
-        return $this->attendeePW;
-    }
-
-    /**
-     * @deprecated Not required anymore, use role during join
-     */
-    public function setModeratorPW(string $moderatorPW): self
-    {
-        $this->moderatorPW = $moderatorPW;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated Not required anymore, use role during join
-     */
-    public function getModeratorPW(): ?string
-    {
-        return $this->moderatorPW;
+        return $this->isLockSettingsDisableNotes;
     }
 
     /**
