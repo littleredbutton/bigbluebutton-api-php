@@ -22,6 +22,9 @@ namespace BigBlueButton\Enum;
 
 use MabeEnum\Enum;
 
+/**
+ * @psalm-immutable
+ */
 class Role extends Enum
 {
     public const MODERATOR = 'MODERATOR';
