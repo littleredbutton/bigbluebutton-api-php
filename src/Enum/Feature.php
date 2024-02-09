@@ -43,4 +43,9 @@ class Feature extends Enum
     public const CUSTOM_VIRTUAL_BACKGROUNDS = 'customVirtualBackgrounds';
     public const LIVE_TRANSCRIPTION = 'liveTranscription';
     public const PRESENTATION = 'presentation';
+    public const CAMERA_AS_CONTENT = 'cameraAsContent';
+    public const SNAPSHOT_OF_CURRENT_SLIDE = 'snapshotOfCurrentSlide';
+    public const DOWNLOAD_PRESENTATION_ORIGINAL_FILE = 'downloadPresentationOriginalFile';
+    public const DOWNLOAD_PRESENTATION_CONVERTED_TO_PDF = 'downloadPresentationConvertedToPdf';
+    public const TIMER = 'timer';
 }
