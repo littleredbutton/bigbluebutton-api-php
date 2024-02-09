@@ -30,7 +30,7 @@ jobs:
       run: composer install --dev --no-interaction
     - name: Execute tests without coverage
       run: tools/phpunit --testsuite="BigBlueButton unit test suite,BigBlueButton integration test suite"
-   
+
   PHP:
     name: PHP ${{ matrix.php-versions }}
     runs-on: ubuntu-latest
@@ -42,7 +42,10 @@ jobs:
         include:
           - php-versions: '8.1'
             experimental: true
-
+          - php-versions: '8.2'
+            experimental: true
+          - php-versions: '8.3'
+            experimental: true
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -65,7 +68,7 @@ jobs:
         tools/phpunit --coverage-clover=build/logs/coverage.xml --testsuite="BigBlueButton unit test suite,BigBlueButton integration test suite"
     - name: Execute tests without coverage
       if: ${{ matrix.experimental }}
-      run: tools/phpunit --testsuite="BigBlueButton test suite"
+      run: tools/phpunit --testsuite="BigBlueButton unit test suite,BigBlueButton integration test suite"
       continue-on-error: true
     - name: Coveralls
       env:
