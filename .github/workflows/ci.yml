@@ -65,7 +65,7 @@ jobs:
         tools/phpunit --coverage-clover=build/logs/coverage.xml --testsuite="BigBlueButton unit test suite,BigBlueButton integration test suite"
     - name: Execute tests without coverage
       if: ${{ matrix.experimental }}
-      run: tools/phpunit --testsuite="BigBlueButton test suite"
+      run: tools/phpunit --testsuite="BigBlueButton unit test suite,BigBlueButton integration test suite"
       continue-on-error: true
     - name: Coveralls
       env:
