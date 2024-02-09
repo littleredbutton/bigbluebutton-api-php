@@ -24,7 +24,7 @@ use BigBlueButton\TestCase;
 /**
  * Class IsMeetingRunningParametersTest.
  */
-class IsMeetingRunningParametersTest extends TestCase
+final class IsMeetingRunningParametersTest extends TestCase
 {
     public function testIsMeetingRunningParameters()
     {

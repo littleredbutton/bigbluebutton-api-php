@@ -48,8 +48,6 @@ use BigBlueButton\Core\GuestPolicy;
  * @method $this     setSequence(int $sequence)
  * @method bool|null isFreeJoin()
  * @method $this     setFreeJoin(bool $isFreeJoin)
- * @method bool|null isBreakoutRoomsEnabled()
- * @method $this     setBreakoutRoomsEnabled(bool $isBreakoutRoomsEnabled)
  * @method bool|null isBreakoutRoomsPrivateChatEnabled()
  * @method $this     setBreakoutRoomsPrivateChatEnabled(bool $isBreakoutRoomsPrivateChatEnabled)
  * @method bool|null isBreakoutRoomsRecord()
@@ -82,8 +80,8 @@ use BigBlueButton\Core\GuestPolicy;
  * @method $this     setLockSettingsDisablePrivateChat(bool $isLockSettingsDisablePrivateChat)
  * @method bool|null isLockSettingsDisablePublicChat()
  * @method $this     setLockSettingsDisablePublicChat(bool $isLockSettingsDisablePublicChat)
- * @method bool|null isLockSettingsDisableNote()
- * @method $this     setLockSettingsDisableNote(bool $isLockSettingsDisableNote)
+ * @method bool|null isLockSettingsDisableNotes()
+ * @method $this     setLockSettingsDisableNotes(bool $isLockSettingsDisableNotes)
  * @method bool|null isLockSettingsLockedLayout()
  * @method $this     setLockSettingsLockedLayout(bool $isLockSettingsLockedLayout)
  * @method bool|null isLockSettingsHideUserList()
@@ -104,16 +102,12 @@ use BigBlueButton\Core\GuestPolicy;
  * @method $this     setMeetingLayout(string $meetingLayout)
  * @method string    getMeetingEndedURL()
  * @method $this     setMeetingEndedURL(string $meetingEndedURL)
- * @method bool|null isLearningDashboardEnabled()
- * @method $this     setLearningDashboardEnabled(bool $isLearningDashboardEnabled)
  * @method int       getLearningDashboardCleanupDelayInMinutes()
  * @method $this     setLearningDashboardCleanupDelayInMinutes(int $learningDashboardCleanupDelayInMinutes)
  * @method bool|null isAllowModsToEjectCameras()
  * @method $this     setAllowModsToEjectCameras(bool $isAllowModsToEjectCameras)
  * @method bool|null isAllowRequestsWithoutSession()
  * @method $this     setAllowRequestsWithoutSession(bool $isAllowRequestsWithoutSession)
- * @method bool|null isVirtualBackgroundsDisabled()
- * @method $this     setVirtualBackgroundsDisabled(bool $isVirtualBackgroundsDisabled)
  * @method int       getUserCameraCap()
  * @method $this     setUserCameraCap(int $cap)
  * @method array     getDisabledFeatures()
@@ -291,7 +285,7 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @var bool
      */
-    protected $lockSettingsDisableNote;
+    protected $lockSettingsDisableNotes;
 
     /**
      * @var bool
@@ -312,6 +306,11 @@ class CreateMeetingParameters extends MetaParameters
      * @var bool
      */
     protected $lockSettingsLockOnJoinConfigurable;
+
+    /**
+     * @var bool
+     */
+    protected $lockSettingsHideViewersCursor;
 
     /**
      * @var string
@@ -389,6 +388,51 @@ class CreateMeetingParameters extends MetaParameters
     protected $disabledFeaturesExclude = [];
 
     /**
+     * @var int
+     */
+    protected $meetingCameraCap;
+
+    /**
+     * @var int
+     */
+    protected $meetingExpireIfNoUserJoinedInMinutes;
+
+    /**
+     * @var int
+     */
+    protected $meetingExpireWhenLastUserLeftInMinutes;
+
+    /**
+     * @var bool
+     */
+    protected $preUploadedPresentationOverrideDefault;
+
+    /**
+     * @var bool
+     */
+    protected $notifyRecordingIsOn;
+
+    /**
+     * @var bool
+     */
+    protected $remindRecordingIsOn;
+
+    /**
+     * @var bool
+     */
+    protected $recordFullDurationMedia;
+
+    /**
+     * @var string
+     */
+    protected $presentationUploadExternalUrl;
+
+    /**
+     * @var string
+     */
+    protected $presentationUploadExternalDescription;
+
+    /**
      * @var array
      */
     private $presentations = [];
@@ -425,6 +469,80 @@ class CreateMeetingParameters extends MetaParameters
     public function isBreakout(): ?bool
     {
         return $this->isBreakout;
+    }
+
+    /**
+     * @deprecated use disabledFeatures instead
+     * Backwards compatibility for the old method name with the missing 's' at the end
+     */
+    public function setLockSettingsDisableNote(bool $isLockSettingsDisableNote): self
+    {
+        $this->isLockSettingsDisableNotes = $isLockSettingsDisableNote;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated use disabledFeatures instead
+     * Backwards compatibility for the old method name with the missing 's' at the end
+     */
+    public function isLockSettingsDisableNote(): bool
+    {
+        return $this->isLockSettingsDisableNotes;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function setLearningDashboardEnabled(bool $learningDashboardEnabled): self
+    {
+        $this->learningDashboardEnabled = $learningDashboardEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function isLearningDashboardEnabled(): bool
+    {
+        return $this->learningDashboardEnabled;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function setVirtualBackgroundsDisabled(bool $virtualBackgroundsDisabled): self
+    {
+        $this->virtualBackgroundsDisabled = $virtualBackgroundsDisabled;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function isVirtualBackgroundsDisabled(): bool
+    {
+        return $this->virtualBackgroundsDisabled;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function setBreakoutRoomsEnabled(bool $breakoutRoomsEnabled): self
+    {
+        $this->breakoutRoomsEnabled = $breakoutRoomsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated Use disabledFeatures instead
+     */
+    public function isBreakoutRoomsEnabled(): bool
+    {
+        return $this->breakoutRoomsEnabled;
     }
 
     public function isUserCameraCapDisabled(): bool
@@ -493,7 +611,7 @@ class CreateMeetingParameters extends MetaParameters
         return $this;
     }
 
-    public function addPresentation(string $nameOrUrl, string $content = null, string $filename = null): self
+    public function addPresentation(string $nameOrUrl, ?string $content = null, ?string $filename = null): self
     {
         if (!$filename) {
             $this->presentations[$nameOrUrl] = !$content ?: base64_encode($content);

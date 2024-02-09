@@ -21,7 +21,7 @@ namespace BigBlueButton\Parameters;
 
 use BigBlueButton\TestCase;
 
-class HooksDestroyParametersTest extends TestCase
+final class HooksDestroyParametersTest extends TestCase
 {
     public function testHooksDestroyParameters(): void
     {

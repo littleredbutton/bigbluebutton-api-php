@@ -19,6 +19,7 @@
 
 namespace BigBlueButton\Parameters;
 
+use BigBlueButton\Enum\Role;
 use BigBlueButton\TestCase;
 
 final class JoinMeetingParametersTest extends TestCase
@@ -26,14 +27,16 @@ final class JoinMeetingParametersTest extends TestCase
     public function testJoinMeetingParameters(): void
     {
         $params = $this->generateJoinMeetingParams();
+        $params['role'] = Role::MODERATOR;
         $joinMeetingParams = $this->getJoinMeetingMock($params);
 
         $this->assertEquals($params['meetingID'], $joinMeetingParams->getMeetingID());
         $this->assertEquals($params['fullName'], $joinMeetingParams->getFullName());
-        $this->assertEquals($params['password'], $joinMeetingParams->getPassword());
+        $this->assertEquals($params['role'], $joinMeetingParams->getRole());
         $this->assertEquals($params['userID'], $joinMeetingParams->getUserID());
         $this->assertEquals($params['webVoiceConf'], $joinMeetingParams->getWebVoiceConf());
         $this->assertEquals($params['createTime'], $joinMeetingParams->getCreateTime());
+        $this->assertEquals($params['errorRedirectUrl'], $joinMeetingParams->getErrorRedirectUrl());
         $this->assertEquals($params['userdata-countrycode'], $joinMeetingParams->getUserData('countrycode'));
         $this->assertEquals($params['userdata-email'], $joinMeetingParams->getUserData('email'));
         $this->assertEquals($params['userdata-commercial'], $joinMeetingParams->getUserData('commercial'));
@@ -41,29 +44,31 @@ final class JoinMeetingParametersTest extends TestCase
         // Test setters that are ignored by the constructor
         $joinMeetingParams->setMeetingID($newId = $this->faker->uuid);
         $joinMeetingParams->setFullName($newName = $this->faker->name);
-        $joinMeetingParams->setPassword($newPassword = $this->faker->password);
+        $joinMeetingParams->setRole($newRole = Role::VIEWER);
         $joinMeetingParams->setConfigToken($configToken = $this->faker->md5);
         $joinMeetingParams->setAvatarURL($avatarUrl = $this->faker->url);
         $joinMeetingParams->setRedirect($redirect = $this->faker->boolean(50));
         $joinMeetingParams->setClientURL($clientUrl = $this->faker->url);
+        $joinMeetingParams->setErrorRedirectUrl($newErrorRedirectUrl = $this->faker->url);
         $joinMeetingParams->setGuest($guest = $this->faker->boolean(50));
         $this->assertEquals($newId, $joinMeetingParams->getMeetingID());
         $this->assertEquals($newName, $joinMeetingParams->getFullName());
-        $this->assertEquals($newPassword, $joinMeetingParams->getPassword());
+        $this->assertEquals($newRole, $joinMeetingParams->getRole());
         $this->assertEquals($configToken, $joinMeetingParams->getConfigToken());
         $this->assertEquals($avatarUrl, $joinMeetingParams->getAvatarURL());
         $this->assertEquals($redirect, $joinMeetingParams->isRedirect());
         $this->assertEquals($clientUrl, $joinMeetingParams->getClientURL());
+        $this->assertEquals($newErrorRedirectUrl, $joinMeetingParams->getErrorRedirectUrl());
         $this->assertEquals($guest, $joinMeetingParams->isGuest());
     }
 
     /**
      * @group legacy
+     * Using the deprecated getPassword method, without setting the password in the constructor or using the setPassword method
      */
     public function testJoinMeetingParametersWithoutPassword(): void
     {
         $params = $this->generateJoinMeetingParams();
-        unset($params['password']);
         $joinMeetingParams = $this->getJoinMeetingMock($params);
 
         $this->expectException(\RuntimeException::class);
@@ -73,11 +78,27 @@ final class JoinMeetingParametersTest extends TestCase
 
     /**
      * @group legacy
+     * Using the deprecated getPassword method, with passing the password in the constructor
+     */
+    public function testJoinMeetingParametersWithPassword(): void
+    {
+        $params = $this->generateJoinMeetingParams();
+        // Legacy, allow users to pass a password as the third constructor parameter
+        $params['role'] = $this->faker->password;
+        $joinMeetingParams = $this->getJoinMeetingMock($params);
+
+        // Check if the password is set and the role is null
+        $this->assertSame($params['role'], $joinMeetingParams->getPassword());
+        $this->assertNull($joinMeetingParams->getRole());
+    }
+
+    /**
+     * @group legacy
+     * Using the deprecated getPassword method, with using the setPassword method
      */
     public function testJoinMeetingParametersWithSetPassword(): void
     {
         $params = $this->generateJoinMeetingParams();
-        unset($params['password']);
         $joinMeetingParams = $this->getJoinMeetingMock($params);
 
         $joinMeetingParams->setPassword($password = $this->faker->password);

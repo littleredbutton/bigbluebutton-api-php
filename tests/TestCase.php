@@ -22,6 +22,7 @@ namespace BigBlueButton;
 use BigBlueButton\Core\GuestPolicy;
 use BigBlueButton\Core\MeetingLayout;
 use BigBlueButton\Enum\Feature;
+use BigBlueButton\Enum\Role;
 use BigBlueButton\Parameters\CreateMeetingParameters;
 use BigBlueButton\Parameters\EndMeetingParameters;
 use BigBlueButton\Parameters\JoinMeetingParameters;
@@ -246,11 +247,12 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         return ['meetingID' => $this->faker->uuid,
                 'fullName' => $this->faker->name,
-                'password' => $this->faker->password,
+                'role' => $this->faker->randomElement(Role::getValues()),
                 'userID' => $this->faker->numberBetween(1, 1000),
                 'webVoiceConf' => $this->faker->word,
                 'createTime' => $this->faker->unixTime,
                 'configToken' => $this->faker->word,
+                'errorRedirectUrl' => $this->faker->url,
                 'userdata-countrycode' => $this->faker->countryCode,
                 'userdata-email' => $this->faker->email,
                 'userdata-commercial' => false,
@@ -264,16 +266,13 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function getJoinMeetingMock($params)
     {
-        if (isset($params['password'])) {
-            $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName'], $params['password']);
-        } else {
-            $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName']);
-        }
+        $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName'], $params['role']);
 
         return $joinMeetingParams
             ->setUserID($params['userID'])
             ->setWebVoiceConf($params['webVoiceConf'])
             ->setCreateTime($params['createTime'])
+            ->setErrorRedirectUrl($params['errorRedirectUrl'])
             ->setConfigToken($params['configToken'])
             ->addUserData('countrycode', $params['userdata-countrycode'])
             ->addUserData('email', $params['userdata-email'])
