@@ -36,6 +36,7 @@ final class JoinMeetingParametersTest extends TestCase
         $this->assertEquals($params['userID'], $joinMeetingParams->getUserID());
         $this->assertEquals($params['webVoiceConf'], $joinMeetingParams->getWebVoiceConf());
         $this->assertEquals($params['createTime'], $joinMeetingParams->getCreateTime());
+        $this->assertEquals($params['errorRedirectUrl'], $joinMeetingParams->getErrorRedirectUrl());
         $this->assertEquals($params['userdata-countrycode'], $joinMeetingParams->getUserData('countrycode'));
         $this->assertEquals($params['userdata-email'], $joinMeetingParams->getUserData('email'));
         $this->assertEquals($params['userdata-commercial'], $joinMeetingParams->getUserData('commercial'));
@@ -48,6 +49,7 @@ final class JoinMeetingParametersTest extends TestCase
         $joinMeetingParams->setAvatarURL($avatarUrl = $this->faker->url);
         $joinMeetingParams->setRedirect($redirect = $this->faker->boolean(50));
         $joinMeetingParams->setClientURL($clientUrl = $this->faker->url);
+        $joinMeetingParams->setErrorRedirectUrl($newErrorRedirectUrl = $this->faker->url);
         $joinMeetingParams->setGuest($guest = $this->faker->boolean(50));
         $this->assertEquals($newId, $joinMeetingParams->getMeetingID());
         $this->assertEquals($newName, $joinMeetingParams->getFullName());
@@ -56,6 +58,7 @@ final class JoinMeetingParametersTest extends TestCase
         $this->assertEquals($avatarUrl, $joinMeetingParams->getAvatarURL());
         $this->assertEquals($redirect, $joinMeetingParams->isRedirect());
         $this->assertEquals($clientUrl, $joinMeetingParams->getClientURL());
+        $this->assertEquals($newErrorRedirectUrl, $joinMeetingParams->getErrorRedirectUrl());
         $this->assertEquals($guest, $joinMeetingParams->isGuest());
     }
 

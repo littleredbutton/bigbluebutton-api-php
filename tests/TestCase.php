@@ -252,6 +252,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
                 'webVoiceConf' => $this->faker->word,
                 'createTime' => $this->faker->unixTime,
                 'configToken' => $this->faker->word,
+                'errorRedirectUrl' => $this->faker->url,
                 'userdata-countrycode' => $this->faker->countryCode,
                 'userdata-email' => $this->faker->email,
                 'userdata-commercial' => false,

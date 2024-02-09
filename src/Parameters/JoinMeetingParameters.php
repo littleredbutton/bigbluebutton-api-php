@@ -40,6 +40,8 @@ use BigBlueButton\Enum\Role;
  * @method $this     setAvatarURL(string $avatarURL)
  * @method bool|null isRedirect()
  * @method $this     setRedirect(bool $redirect)
+ * @method string    getErrorRedirectUrl()
+ * @method $this     setErrorRedirectUrl(string $errorRedirectUrl)
  * @method string    getClientURL()
  * @method $this     setClientURL(string $clientURL)
  * @method bool|null isGuest()
@@ -103,6 +105,11 @@ class JoinMeetingParameters extends UserDataParameters
      * @var bool
      */
     protected $redirect;
+
+    /**
+     * @var string
+     */
+    protected $errorRedirectUrl;
 
     /**
      * @var string
