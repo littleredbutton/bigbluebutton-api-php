@@ -21,7 +21,7 @@ namespace BigBlueButton\Parameters;
 
 use BigBlueButton\TestCase;
 
-class HooksCreateParametersTest extends TestCase
+final class HooksCreateParametersTest extends TestCase
 {
     public function testHooksCreateParameters()
     {

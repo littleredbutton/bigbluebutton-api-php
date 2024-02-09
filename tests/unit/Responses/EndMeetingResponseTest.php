@@ -22,7 +22,7 @@ namespace BigBlueButton\Parameters;
 use BigBlueButton\Responses\EndMeetingResponse;
 use BigBlueButton\TestCase;
 
-class EndMeetingResponseTest extends TestCase
+final class EndMeetingResponseTest extends TestCase
 {
     /**
      * @var EndMeetingResponse

@@ -21,7 +21,7 @@ namespace BigBlueButton\Parameters;
 
 use BigBlueButton\TestCase;
 
-class GetMeetingInfoParametersTest extends TestCase
+final class GetMeetingInfoParametersTest extends TestCase
 {
     public function testGetMeetingInfoParameters()
     {

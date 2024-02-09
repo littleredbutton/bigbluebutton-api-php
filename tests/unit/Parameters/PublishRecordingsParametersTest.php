@@ -21,7 +21,7 @@ namespace BigBlueButton\Parameters;
 
 use BigBlueButton\TestCase;
 
-class PublishRecordingsParametersTest extends TestCase
+final class PublishRecordingsParametersTest extends TestCase
 {
     public function testPublishRecordingsParameters()
     {

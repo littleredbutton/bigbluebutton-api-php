@@ -22,7 +22,7 @@ namespace BigBlueButton\Parameters;
 
 use BigBlueButton\TestCase;
 
-class GetRecordingTextTracksParametersTest extends TestCase
+final class GetRecordingTextTracksParametersTest extends TestCase
 {
     public function testGetRecordingTextTracksParameters()
     {

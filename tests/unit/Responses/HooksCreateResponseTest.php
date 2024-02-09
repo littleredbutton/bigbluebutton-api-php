@@ -22,7 +22,7 @@ namespace BigBlueButton\Parameters;
 use BigBlueButton\Responses\HooksCreateResponse;
 use BigBlueButton\TestCase;
 
-class HooksCreateResponseTest extends TestCase
+final class HooksCreateResponseTest extends TestCase
 {
     /**
      * @var HooksCreateResponse

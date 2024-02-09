@@ -22,7 +22,7 @@ namespace BigBlueButton\Parameters;
 use BigBlueButton\Responses\PublishRecordingsResponse;
 use BigBlueButton\TestCase;
 
-class PublishRecordingsResponseTest extends TestCase
+final class PublishRecordingsResponseTest extends TestCase
 {
     /**
      * @var PublishRecordingsResponse

@@ -272,6 +272,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setUserID($params['userID'])
             ->setWebVoiceConf($params['webVoiceConf'])
             ->setCreateTime($params['createTime'])
+            ->setErrorRedirectUrl($params['errorRedirectUrl'])
             ->setConfigToken($params['configToken'])
             ->addUserData('countrycode', $params['userdata-countrycode'])
             ->addUserData('email', $params['userdata-email'])

@@ -5,7 +5,7 @@ namespace BigBlueButton\Tests\Unit\Responses;
 use BigBlueButton\Responses\GetRecordingTextTracksResponse;
 use BigBlueButton\TestCase;
 
-class GetRecordingsTextTracksResponseTest extends TestCase
+final class GetRecordingsTextTracksResponseTest extends TestCase
 {
     /**
      * @var GetRecordingTextTracksResponse

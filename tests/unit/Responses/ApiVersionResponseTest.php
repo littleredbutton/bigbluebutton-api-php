@@ -22,7 +22,7 @@ namespace BigBlueButton\Parameters;
 use BigBlueButton\Responses\ApiVersionResponse;
 use BigBlueButton\TestCase;
 
-class ApiVersionResponseTest extends TestCase
+final class ApiVersionResponseTest extends TestCase
 {
     /**
      * @var ApiVersionResponse

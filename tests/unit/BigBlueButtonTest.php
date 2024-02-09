@@ -37,7 +37,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class BigBlueButtonTest.
  */
-class BigBlueButtonTest extends TestCase
+final class BigBlueButtonTest extends TestCase
 {
     /** @var MockObject */
     private $transport;

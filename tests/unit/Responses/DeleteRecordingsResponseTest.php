@@ -22,7 +22,7 @@ namespace BigBlueButton\Parameters;
 use BigBlueButton\Responses\DeleteRecordingsResponse;
 use BigBlueButton\TestCase;
 
-class DeleteRecordingsResponseTest extends TestCase
+final class DeleteRecordingsResponseTest extends TestCase
 {
     /**
      * @var DeleteRecordingsResponse
