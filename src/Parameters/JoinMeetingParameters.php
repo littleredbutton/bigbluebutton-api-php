@@ -124,10 +124,10 @@ class JoinMeetingParameters extends UserDataParameters
      */
     protected $excludeFromDashboard;
 
-    public function __construct(string $meetingID, string $fullName, $passwordOrRole = null)
+    public function __construct(string $meetingID, string $fullName, $passwordOrRole)
     {
-        if (\func_num_args() === 3) {
-            @trigger_error(sprintf('Passing $passwordOrRole parameter to constructor of "%s" is deprecated since 5.1 and will be removed in 6.0. Use "%s::setRole()" to set the designated role for the joining user instead.', self::class, self::class), \E_USER_DEPRECATED);
+        if (!$passwordOrRole instanceof Role) {
+            @trigger_error(sprintf('Passing a password as the third parameter to constructor of "%s" is deprecated since 5.1 and will be removed in 6.0. Pass the role for the joining user instead.', self::class, self::class), \E_USER_DEPRECATED);
         }
 
         $this->meetingID = $meetingID;
