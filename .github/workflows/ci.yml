@@ -30,7 +30,7 @@ jobs:
       run: composer install --dev --no-interaction
     - name: Execute tests without coverage
       run: tools/phpunit --testsuite="BigBlueButton unit test suite,BigBlueButton integration test suite"
-   
+
   PHP:
     name: PHP ${{ matrix.php-versions }}
     runs-on: ubuntu-latest
@@ -40,9 +40,12 @@ jobs:
         php-versions: ['7.4','8.0']
         experimental: [false]
         include:
-          - php-versions: ['8.1','8.2','8.3']
+          - php-versions: '8.1'
             experimental: true
-
+          - php-versions: '8.2'
+            experimental: true
+          - php-versions: '8.3'
+            experimental: true
     steps:
     - name: Checkout
       uses: actions/checkout@v2
