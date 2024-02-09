@@ -113,7 +113,7 @@ class BigBlueButton
      *
      * @throws ConfigException
      */
-    public function __construct(string $baseUrl = null, string $secret = null, TransportInterface $transport = null, string $hashingAlgorithm = HashingAlgorithm::SHA_1)
+    public function __construct(?string $baseUrl = null, ?string $secret = null, ?TransportInterface $transport = null, string $hashingAlgorithm = HashingAlgorithm::SHA_1)
     {
         // Keeping backward compatibility with older deployed versions
         $this->securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');

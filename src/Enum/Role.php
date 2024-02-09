@@ -1,8 +1,9 @@
 <?php
-/**
+
+/*
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
- * Copyright (c) 2016-2018 BigBlueButton Inc. and by respective authors (see below).
+ * Copyright (c) 2016-2022 BigBlueButton Inc. and by respective authors (see below).
  *
  * This program is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -17,20 +18,15 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Enum;
 
-use BigBlueButton\TestCase;
+use MabeEnum\Enum;
 
-final class GetMeetingInfoParametersTest extends TestCase
+/**
+ * @psalm-immutable
+ */
+class Role extends Enum
 {
-    public function testGetMeetingInfoParameters()
-    {
-        $getMeetingInfoParams = new GetMeetingInfoParameters($meetingId = $this->faker->uuid);
-
-        $this->assertEquals($meetingId, $getMeetingInfoParams->getMeetingID());
-
-        // Test setters that are ignored by the constructor
-        $getMeetingInfoParams->setMeetingID($newId = $this->faker->uuid);
-        $this->assertEquals($newId, $getMeetingInfoParams->getMeetingID());
-    }
+    public const MODERATOR = 'MODERATOR';
+    public const VIEWER = 'VIEWER';
 }

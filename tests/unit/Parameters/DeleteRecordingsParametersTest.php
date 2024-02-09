@@ -21,7 +21,7 @@ namespace BigBlueButton\Parameters;
 
 use BigBlueButton\TestCase;
 
-class DeleteRecordingsParametersTest extends TestCase
+final class DeleteRecordingsParametersTest extends TestCase
 {
     public function testDeleteRecordingParameter()
     {

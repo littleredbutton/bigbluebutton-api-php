@@ -17,10 +17,10 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
-class GetMeetingInfoResponseTest extends \BigBlueButton\TestCase
+final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
 {
     /**
-     * @var \BigBlueButton\Responses\GetMeetingInfoResponse
+     * @var BigBlueButton\Responses\GetMeetingInfoResponse
      */
     private $meetingInfo;
 
@@ -30,7 +30,7 @@ class GetMeetingInfoResponseTest extends \BigBlueButton\TestCase
 
         $xml = $this->loadXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'get_meeting_info.xml');
 
-        $this->meetingInfo = new \BigBlueButton\Responses\GetMeetingInfoResponse($xml);
+        $this->meetingInfo = new BigBlueButton\Responses\GetMeetingInfoResponse($xml);
     }
 
     public function testGetMeetingInfoResponseContent()

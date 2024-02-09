@@ -22,10 +22,10 @@ namespace BigBlueButton\Parameters;
 use BigBlueButton\Responses\CreateMeetingResponse;
 use BigBlueButton\TestCase;
 
-class CreateMeetingResponseTest extends TestCase
+final class CreateMeetingResponseTest extends TestCase
 {
     /**
-     * @var \BigBlueButton\Responses\CreateMeetingResponse
+     * @var CreateMeetingResponse
      */
     private $meeting;
 

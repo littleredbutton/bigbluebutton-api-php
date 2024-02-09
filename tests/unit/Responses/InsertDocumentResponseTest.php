@@ -24,7 +24,7 @@ namespace BigBlueButton\Parameters;
 use BigBlueButton\Responses\InsertDocumentResponse;
 use BigBlueButton\TestCase;
 
-class InsertDocumentResponseTest extends TestCase
+final class InsertDocumentResponseTest extends TestCase
 {
     /**
      * @var \BigBlueButton\Responses\IsMeetingRunningResponse

@@ -22,10 +22,10 @@ namespace BigBlueButton\Parameters;
 use BigBlueButton\Responses\HooksListResponse;
 use BigBlueButton\TestCase;
 
-class HooksListResponseTest extends TestCase
+final class HooksListResponseTest extends TestCase
 {
     /**
-     * @var \BigBlueButton\Responses\HooksListResponse
+     * @var HooksListResponse
      */
     private $listResponse;
 
