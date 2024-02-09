@@ -134,6 +134,10 @@ use BigBlueButton\Core\GuestPolicy;
  * @method $this     setPresentationUploadExternalUrl(string $presentationUploadExternalUrl)
  * @method string    getPresentationUploadExternalDescription()
  * @method $this     setPresentationUploadExternalDescription(string $presentationUploadExternalDescription)
+ * @method string    getPreUploadedPresentation()
+ * @method $this     setPreUploadedPresentation(string $preUploadedPresentation)
+ * @method string    getPreUploadedPresentationName()
+ * @method $this     setPreUploadedPresentationName(string $preUploadedPresentationName)
  */
 class CreateMeetingParameters extends MetaParameters
 {
@@ -426,6 +430,16 @@ class CreateMeetingParameters extends MetaParameters
      * @var bool
      */
     protected $preUploadedPresentationOverrideDefault;
+
+    /**
+     * @var string
+     */
+    protected $preUploadedPresentation;
+
+    /**
+     * @var string
+     */
+    protected $preUploadedPresentationName;
 
     /**
      * @var bool
