@@ -104,7 +104,7 @@
     "cs-fix": "tools/php-cs-fixer fix --allow-risky=yes",
     "cs-test": "tools/php-cs-fixer fix --dry-run --allow-risky=yes",
     "psalm": "tools/psalm --threads=1",
-    "psalm-clear": "tools/psalm --clear-cache && psalm --clear-global-cache",
+    "psalm-clear": "tools/psalm --clear-cache && tools/psalm --clear-global-cache",
     "psalm-fix": "tools/psalm --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType",
     "post-install-cmd": "tools/composer-git-hooks add --ignore-lock",
     "post-update-cmd": "tools/composer-git-hooks update"
