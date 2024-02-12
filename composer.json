@@ -62,8 +62,7 @@
     "ext-curl": "*",
     "ext-simplexml": "*",
     "ext-mbstring": "*",
-    "ext-json": "*",
-    "marc-mabe/php-enum": "^4.7"
+    "ext-json": "*"
   },
   "suggest": {
     "psr/http-client-implementation": "To use the PsrHttpClientTransport.",

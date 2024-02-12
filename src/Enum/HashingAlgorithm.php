@@ -20,8 +20,6 @@
 
 namespace BigBlueButton\Enum;
 
-use MabeEnum\Enum;
-
 /**
  * @psalm-immutable
  */
