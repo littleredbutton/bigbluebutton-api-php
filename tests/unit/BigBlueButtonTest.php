@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -309,8 +310,6 @@ final class BigBlueButtonTest extends TestCase
         $this->assertEquals('Tue Jul 10 16:47:38 UTC 2018', $response->getMeetings()[0]->getCreationDate());
         $this->assertEquals('70066', $response->getMeetings()[0]->getVoiceBridge());
         $this->assertEquals('613-555-1234', $response->getMeetings()[0]->getDialNumber());
-        $this->assertEquals('ap', $response->getMeetings()[0]->getAttendeePassword());
-        $this->assertEquals('mp', $response->getMeetings()[0]->getModeratorPassword());
         $this->assertFalse($response->getMeetings()[0]->isRunning());
         $this->assertEquals(0, $response->getMeetings()[0]->getDuration());
         $this->assertFalse($response->getMeetings()[0]->hasUserJoined());

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -18,8 +19,6 @@
  */
 
 namespace BigBlueButton\Parameters;
-
-use BigBlueButton\Enum\Role;
 
 /**
  * Class JoinMeetingParametersTest.
@@ -67,11 +66,6 @@ class JoinMeetingParameters extends UserDataParameters
     protected $meetingID;
 
     /**
-     * @var string|null
-     */
-    protected $password;
-
-    /**
      * @var int
      */
     protected $createTime;
@@ -85,11 +79,6 @@ class JoinMeetingParameters extends UserDataParameters
      * @var string
      */
     protected $webVoiceConf;
-
-    /**
-     * @var string
-     */
-    protected $configToken;
 
     /**
      * @var string
@@ -131,63 +120,10 @@ class JoinMeetingParameters extends UserDataParameters
      */
     protected $excludeFromDashboard;
 
-    public function __construct(string $meetingID, string $fullName, $passwordOrRole)
+    public function __construct(string $meetingID, string $fullName, string $role)
     {
-        if (!$passwordOrRole instanceof Role) {
-            @trigger_error(sprintf('Passing a password as the third parameter to constructor of "%s" is deprecated since 5.1 and will be removed in 6.0. Pass the role for the joining user instead.', self::class, self::class), \E_USER_DEPRECATED);
-        }
-
         $this->meetingID = $meetingID;
         $this->fullName = $fullName;
-
-        if (Role::MODERATOR === $passwordOrRole || Role::VIEWER === $passwordOrRole) {
-            $this->role = $passwordOrRole;
-        } else {
-            $this->password = $passwordOrRole;
-        }
-    }
-
-    /**
-     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
-     */
-    public function getPassword(): string
-    {
-        if (null === $this->password) {
-            throw new \RuntimeException(sprintf('Password was not passed to "%s".', self::class));
-        }
-
-        return $this->password;
-    }
-
-    /**
-     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
-     *
-     * @return $this
-     */
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated since 5.1 and will be removed in 6.0. Old BigBlueButton flash client parameter.
-     */
-    public function getConfigToken(): ?string
-    {
-        return $this->configToken;
-    }
-
-    /**
-     * @deprecated since 5.1 and will be removed in 6.0. Old BigBlueButton flash client parameter.
-     *
-     * @return $this
-     */
-    public function setConfigToken(string $configToken): self
-    {
-        $this->configToken = $configToken;
-
-        return $this;
+        $this->role = $role;
     }
 }

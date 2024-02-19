@@ -47,8 +47,6 @@ final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
         $this->assertEquals('Tue Jan 19 07:25:17 EST 2016', $info->getCreationDate());
         $this->assertEquals(70100, $info->getVoiceBridge());
         $this->assertEquals('613-555-1234', $info->getDialNumber());
-        $this->assertEquals('dbfc7207321527bbb870c82028', $info->getAttendeePassword());
-        $this->assertEquals('4bfbbeeb4a65cacaefe3676633', $info->getModeratorPassword());
         $this->assertTrue($info->isRunning());
         $this->assertEquals(20, $info->getDuration());
         $this->assertTrue($info->hasUserJoined());
@@ -122,11 +120,15 @@ final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
     {
         $info = $this->meetingInfo->getMeeting();
 
-        $this->assertEachGetterValueIsString($info, ['getMeetingName', 'getMeetingId', 'getInternalMeetingId',
-            'getModeratorPassword', 'getAttendeePassword', 'getCreationDate', 'getDialNumber', ]);
+        $this->assertEachGetterValueIsString($info, [
+            'getMeetingName', 'getMeetingId', 'getInternalMeetingId',
+            'getCreationDate', 'getDialNumber',
+        ]);
 
-        $this->assertEachGetterValueIsInteger($info, ['getVoiceBridge', 'getDuration', 'getParticipantCount',
-            'getListenerCount', 'getVoiceParticipantCount', 'getVideoCount', 'getMaxUsers', 'getModeratorCount', ]);
+        $this->assertEachGetterValueIsInteger($info, [
+            'getVoiceBridge', 'getDuration', 'getParticipantCount',
+            'getListenerCount', 'getVoiceParticipantCount', 'getVideoCount', 'getMaxUsers', 'getModeratorCount',
+        ]);
 
         $this->assertEachGetterValueIsDouble($info, ['getStartTime', 'getEndTime', 'getCreationTime']);
 
