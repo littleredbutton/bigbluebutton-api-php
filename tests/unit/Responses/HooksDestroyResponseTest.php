@@ -49,4 +49,22 @@ final class HooksDestroyResponseTest extends TestCase
         $this->assertEachGetterValueIsString($this->destroyResponse, ['getReturnCode']);
         $this->assertEachGetterValueIsBoolean($this->destroyResponse, ['removed']);
     }
+
+    public function testHookDestroyMissingHook()
+    {
+        $xml = simplexml_load_string('<response><returncode>FAILED</returncode><messageKey>destroyMissingHook</messageKey><message>The hook informed was not found.</message></response>');
+
+        $destroyResponse = new HooksDestroyResponse($xml);
+        $this->assertTrue($destroyResponse->failed());
+        $this->assertTrue($destroyResponse->isMissingHook());
+    }
+
+    public function testHookDestroyHookError()
+    {
+        $xml = simplexml_load_string('<response><returncode>FAILED</returncode><messageKey>destroyHookError</messageKey><message>An error happened while removing your hook. Check the logs.</message></response>');
+
+        $destroyResponse = new HooksDestroyResponse($xml);
+        $this->assertTrue($destroyResponse->failed());
+        $this->assertTrue($destroyResponse->isHookError());
+    }
 }
