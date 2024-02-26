@@ -34,7 +34,7 @@ class PutRecordingTextTrackResponse extends BaseResponseAsJson
 
     public function getRecordID(): string
     {
-        return $this->data->response->recordId;
+        return $this->data->response->recordId ?? '';
     }
 
     public function isUploadTrackSuccess(): bool
