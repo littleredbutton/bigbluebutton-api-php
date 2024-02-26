@@ -36,6 +36,7 @@ use BigBlueButton\Parameters\GetRecordingsParameters;
 use BigBlueButton\Parameters\GetRecordingTextTracksParameters;
 use BigBlueButton\Parameters\HooksCreateParameters;
 use BigBlueButton\Parameters\HooksDestroyParameters;
+use BigBlueButton\Parameters\HooksListParameters;
 use BigBlueButton\Parameters\InsertDocumentParameters;
 use BigBlueButton\Parameters\IsMeetingRunningParameters;
 use BigBlueButton\Parameters\JoinMeetingParameters;
@@ -418,14 +419,14 @@ class BigBlueButton
         return new HooksCreateResponse($xml);
     }
 
-    public function getHooksListUrl(): string
+    public function getHooksListUrl(HooksListParameters $hooksListParameters): string
     {
-        return $this->urlBuilder->buildUrl(ApiMethod::HOOKS_LIST);
+        return $this->urlBuilder->buildUrl(ApiMethod::HOOKS_LIST, $hooksListParameters->getHTTPQuery());
     }
 
-    public function hooksList(): HooksListResponse
+    public function hooksList(HooksListParameters $hooksListParameters): HooksListResponse
     {
-        $xml = $this->processXmlResponse($this->getHooksListUrl());
+        $xml = $this->processXmlResponse($this->getHooksListUrl($hooksListParameters));
 
         return new HooksListResponse($xml);
     }
