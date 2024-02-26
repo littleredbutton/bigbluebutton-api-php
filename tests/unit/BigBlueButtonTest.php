@@ -449,8 +449,8 @@ final class BigBlueButtonTest extends TestCase
         $response = $this->bbb->putRecordingTextTrack($params);
 
         $this->assertTrue($response->success());
-        $this->assertNull($response->getMessageKey());
-        $this->assertNull($response->getMessage());
+        $this->assertEquals('upload_text_track_success', $response->getMessageKey());
+        $this->assertEquals('Text track uploaded successfully', $response->getMessage());
         $this->assertSame('baz', $response->getRecordID());
         $this->assertSame('SUCCESS', $response->getReturnCode());
     }
