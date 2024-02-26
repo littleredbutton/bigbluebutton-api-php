@@ -26,6 +26,8 @@ class DeleteRecordingsResponse extends BaseResponse
 {
     public const KEY_INVALID_ID = 'InvalidRecordingId';
 
+    public const KEY_NOT_FOUND = 'notFound';
+
     public function isDeleted(): bool
     {
         return $this->rawXml->deleted->__toString() == 'true';
@@ -34,5 +36,10 @@ class DeleteRecordingsResponse extends BaseResponse
     public function isInvalidId(): bool
     {
         return $this->getMessageKey() === self::KEY_INVALID_ID;
+    }
+
+    public function isNotFound(): bool
+    {
+        return $this->getMessageKey() === self::KEY_NOT_FOUND;
     }
 }
