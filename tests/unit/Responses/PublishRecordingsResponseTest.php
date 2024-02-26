@@ -49,4 +49,14 @@ final class PublishRecordingsResponseTest extends TestCase
         $this->assertEachGetterValueIsString($this->publish, ['getReturnCode']);
         $this->assertEachGetterValueIsBoolean($this->publish, ['isPublished']);
     }
+
+    public function testNotFoundError()
+    {
+        $xml = $this->loadXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'not_found_error.xml');
+
+        $publish = new PublishRecordingsResponse($xml);
+
+        $this->assertTrue($publish->failed());
+        $this->assertTrue($publish->isNotFound());
+    }
 }

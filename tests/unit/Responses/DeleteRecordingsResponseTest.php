@@ -49,4 +49,14 @@ final class DeleteRecordingsResponseTest extends TestCase
         $this->assertEachGetterValueIsString($this->delete, ['getReturnCode']);
         $this->assertEachGetterValueIsBoolean($this->delete, ['isDeleted']);
     }
+
+    public function testNotFoundError()
+    {
+        $xml = $this->loadXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'not_found_error.xml');
+
+        $delete = new DeleteRecordingsResponse($xml);
+
+        $this->assertTrue($delete->failed());
+        $this->assertTrue($delete->isNotFound());
+    }
 }
