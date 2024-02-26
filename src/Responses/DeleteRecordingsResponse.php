@@ -24,6 +24,7 @@ namespace BigBlueButton\Responses;
  */
 class DeleteRecordingsResponse extends BaseResponse
 {
+    /** @deprecated and will be removed in 6.0. Use KEY_NOT_FOUND instead  */
     public const KEY_INVALID_ID = 'InvalidRecordingId';
 
     public const KEY_NOT_FOUND = 'notFound';
@@ -33,6 +34,7 @@ class DeleteRecordingsResponse extends BaseResponse
         return $this->rawXml->deleted->__toString() == 'true';
     }
 
+    /** @deprecated and will be removed in 6.0. Use isNotFound instead  */
     public function isInvalidId(): bool
     {
         return $this->getMessageKey() === self::KEY_INVALID_ID;
