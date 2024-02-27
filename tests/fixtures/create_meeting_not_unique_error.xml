@@ -1,0 +1,5 @@
+<response>
+    <returncode>FAILED</returncode>
+    <messageKey>idNotUnique</messageKey>
+    <message>A meeting already exists with that meeting ID.  Please use a different meeting ID.</message>
+</response>

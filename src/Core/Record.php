@@ -36,6 +36,9 @@ class Record
 
     /** @var PlaybackFormat[] */
     private $playbackFormats = [];
+    private $playbackType;
+    private $playbackUrl;
+    private $playbackLength;
 
     public function __construct(\SimpleXMLElement $xml)
     {
