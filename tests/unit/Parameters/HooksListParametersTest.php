@@ -17,9 +17,8 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace unit\Parameters;
+namespace BigBlueButton\Parameters;
 
-use BigBlueButton\Parameters\HooksListParameters;
 use BigBlueButton\TestCase;
 
 final class HooksListParametersTest extends TestCase

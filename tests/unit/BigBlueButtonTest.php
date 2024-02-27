@@ -525,6 +525,66 @@ final class BigBlueButtonTest extends TestCase
         $this->assertFalse($globalHook->hasRawData());
     }
 
+    /**
+     * @group legacy
+     */
+    public function testHooksListWithoutParameter(): void
+    {
+        $xml = '<response>
+          <returncode>SUCCESS</returncode>
+          <hooks>
+            <hook>
+              <hookID>1</hookID>
+              <callbackURL><![CDATA[http://postcatcher.in/catchers/abcdefghijk]]></callbackURL>
+              <meetingID><![CDATA[my-meeting]]></meetingID>
+              <permanentHook>false</permanentHook>
+              <rawData>false</rawData>
+            </hook>
+            <hook>
+              <hookID>2</hookID>
+              <callbackURL><![CDATA[http://postcatcher.in/catchers/1234567890]]></callbackURL>
+              <permanentHook>false</permanentHook>
+              <rawData>false</rawData>
+            </hook>
+          </hooks>
+        </response>';
+
+        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
+
+        $response = $this->bbb->hooksList();
+
+        $this->assertTrue($response->success());
+        $this->assertCount(2, $response->getHooks());
+    }
+
+    public function testHooksListUrl(): void
+    {
+        // Test without meeting ID
+        $params = new HooksListParameters();
+        $url = $this->bbb->getHooksListUrl($params);
+
+        $this->assertStringContainsString(ApiMethod::HOOKS_LIST, $url);
+        $this->assertStringNotContainsString('meetingID=', $url);
+
+        // Test with meeting ID
+        $params = new HooksListParameters();
+        $params->setMeetingID('foobar');
+        $url = $this->bbb->getHooksListUrl($params);
+
+        $this->assertStringContainsString('meetingID=foobar', $url);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testHooksListUrlWithoutParameter(): void
+    {
+        $url = $this->bbb->getHooksListUrl();
+
+        $this->assertStringContainsString(ApiMethod::HOOKS_LIST, $url);
+        $this->assertStringNotContainsString('meetingID=', $url);
+    }
+
     public function testHookDestroy(): void
     {
         $params = new HooksDestroyParameters(1);
