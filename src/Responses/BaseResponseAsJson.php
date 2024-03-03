@@ -50,27 +50,19 @@ abstract class BaseResponseAsJson
         return json_decode(json_encode($this->data), true);
     }
 
-    public function getMessage(): ?string
+    public function getMessage(): string
     {
-        if ($this->failed()) {
-            return $this->data->response->message;
-        }
-
-        return null;
+        return $this->data->response->message ?? '';
     }
 
-    public function getMessageKey(): ?string
+    public function getMessageKey(): string
     {
-        if ($this->failed()) {
-            return $this->data->response->messageKey;
-        }
-
-        return null;
+        return $this->data->response->messageKey ?? '';
     }
 
     public function getReturnCode(): string
     {
-        return $this->data->response->returncode;
+        return $this->data->response->returncode ?? '';
     }
 
     public function success(): bool
