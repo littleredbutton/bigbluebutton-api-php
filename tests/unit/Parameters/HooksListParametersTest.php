@@ -19,40 +19,18 @@
 
 namespace BigBlueButton\Parameters;
 
-/**
- * @method string    getCallbackURL()
- * @method $this     setCallbackURL(string $url)
- * @method string    getMeetingID()
- * @method $this     setMeetingID(string $id)
- * @method string    getEventID()
- * @method $this     setEventID(string $id)
- * @method bool|null isGetRaw()
- * @method $this     setGetRaw(bool $getRaw)
- */
-class HooksCreateParameters extends BaseParameters
+use BigBlueButton\TestCase;
+
+final class HooksListParametersTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    protected $callbackURL;
-
-    /**
-     * @var string
-     */
-    protected $meetingID;
-
-    /**
-     * @var string
-     */
-    protected $eventID;
-
-    /**
-     * @var bool
-     */
-    protected $getRaw;
-
-    public function __construct(string $callbackURL)
+    public function testHooksListParameters(): void
     {
-        $this->callbackURL = $callbackURL;
+        $hooksListParameters = new HooksListParameters();
+
+        $this->assertNull($hooksListParameters->getMeetingID());
+
+        // Test setters that are ignored by the constructor
+        $hooksListParameters->setMeetingID($meetingId = $this->faker->uuid);
+        $this->assertEquals($meetingId, $hooksListParameters->getMeetingID());
     }
 }
