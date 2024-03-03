@@ -111,5 +111,11 @@ final class GetRecordingsResponseTest extends TestCase
 
         $this->assertEquals('Welcome to', $previews[0]->getAlt());
         $this->assertEquals('https://demo.bigbluebutton.org/presentation/ffbfc4cc24428694e8b53a4e144f414052431693-1530718721124/presentation/d2d9a672040fbde2a47a10bf6c37b6a4b5ae187f-1530718721134/thumbnails/thumb-1.png', $previews[0]->getUrl());
+        $this->assertEquals(176, $previews[0]->getWidth());
+        $this->assertEquals(136, $previews[0]->getHeight());
+
+        // Load previews again, check if same instance is returned (caching)
+        $newPreviews = $formats[1]->getImagePreviews();
+        $this->assertTrue($previews[0] === $newPreviews[0]);
     }
 }

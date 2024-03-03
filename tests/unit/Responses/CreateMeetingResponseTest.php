@@ -40,7 +40,10 @@ final class CreateMeetingResponseTest extends TestCase
 
     public function testCreateMeetingResponseContent()
     {
+        $this->assertTrue($this->meeting->success());
+        $this->assertFalse($this->meeting->failed());
         $this->assertEquals('SUCCESS', $this->meeting->getReturnCode());
+
         $this->assertEquals('random-1665177', $this->meeting->getMeetingId());
         $this->assertEquals('1a6938c707cdf5d052958672d66c219c30690c47-1524212045514', $this->meeting->getInternalMeetingId());
         $this->assertEquals('bbb-none', $this->meeting->getParentMeetingId());
@@ -54,7 +57,10 @@ final class CreateMeetingResponseTest extends TestCase
         $this->assertEquals(20, $this->meeting->getDuration());
         $this->assertFalse($this->meeting->hasBeenForciblyEnded());
         $this->assertEquals('duplicateWarning', $this->meeting->getMessageKey());
+        $this->assertTrue($this->meeting->isDuplicate());
         $this->assertEquals('This conference was already in existence and may currently be in progress.', $this->meeting->getMessage());
+
+        $this->assertFalse($this->meeting->isIdNotUnique());
     }
 
     public function testCreateMeetingResponseTypes()
@@ -64,5 +70,18 @@ final class CreateMeetingResponseTest extends TestCase
         $this->assertEachGetterValueIsDouble($this->meeting, ['getCreationTime']);
         $this->assertEachGetterValueIsInteger($this->meeting, ['getDuration', 'getVoiceBridge']);
         $this->assertEachGetterValueIsBoolean($this->meeting, ['hasUserJoined', 'hasBeenForciblyEnded']);
+    }
+
+    public function testIdNotUnique()
+    {
+        $xml = $this->loadXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'create_meeting_not_unique_error.xml');
+
+        $meeting = new CreateMeetingResponse($xml);
+
+        $this->assertFalse($meeting->success());
+        $this->assertTrue($meeting->failed());
+        $this->assertEquals('FAILED', $meeting->getReturnCode());
+
+        $this->assertTrue($meeting->isIdNotUnique());
     }
 }
