@@ -23,7 +23,7 @@ use BigBlueButton\TestCase;
 
 final class HooksListParametersTest extends TestCase
 {
-    public function testHooksListParameters()
+    public function testHooksListParameters(): void
     {
         $hooksListParameters = new HooksListParameters();
 
