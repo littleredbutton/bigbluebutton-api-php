@@ -24,8 +24,15 @@ namespace BigBlueButton\Responses;
  */
 class PublishRecordingsResponse extends BaseResponse
 {
+    public const KEY_NOT_FOUND = 'notFound';
+
     public function isPublished(): bool
     {
         return $this->rawXml->published->__toString() === 'true';
+    }
+
+    public function isNotFound(): bool
+    {
+        return $this->getMessageKey() === self::KEY_NOT_FOUND;
     }
 }
