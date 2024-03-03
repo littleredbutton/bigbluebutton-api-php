@@ -50,7 +50,7 @@ final class UpdateRecordingsResponseTest extends TestCase
         $this->assertEachGetterValueIsBoolean($this->update, ['isUpdated']);
     }
 
-    public function testNotFoundError()
+    public function testNotFoundError(): void
     {
         $xml = $this->loadXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'not_found_error.xml');
 

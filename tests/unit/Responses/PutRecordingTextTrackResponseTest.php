@@ -24,7 +24,7 @@ use BigBlueButton\TestCase;
 
 final class PutRecordingTextTrackResponseTest extends TestCase
 {
-    public function testUploadSuccess()
+    public function testUploadSuccess(): void
     {
         $json = '{
               "response": {
@@ -42,7 +42,7 @@ final class PutRecordingTextTrackResponseTest extends TestCase
         $this->assertTrue($response->isUploadTrackSuccess());
     }
 
-    public function testUploadFailed()
+    public function testUploadFailed(): void
     {
         $json = '{
               "response": {
@@ -60,7 +60,7 @@ final class PutRecordingTextTrackResponseTest extends TestCase
         $this->assertTrue($response->isUploadTrackFailed());
     }
 
-    public function testUploadEmpty()
+    public function testUploadEmpty(): void
     {
         $json = '{
               "response": {
@@ -76,7 +76,7 @@ final class PutRecordingTextTrackResponseTest extends TestCase
         $this->assertTrue($response->isUploadTrackEmpty());
     }
 
-    public function testNoRecordings()
+    public function testNoRecordings(): void
     {
         $json = '{
               "response": {
@@ -92,7 +92,7 @@ final class PutRecordingTextTrackResponseTest extends TestCase
         $this->assertTrue($response->isNoRecordings());
     }
 
-    public function testInvalidLang()
+    public function testInvalidLang(): void
     {
         $json = '{
               "response": {
@@ -108,7 +108,7 @@ final class PutRecordingTextTrackResponseTest extends TestCase
         $this->assertTrue($response->isInvalidLang());
     }
 
-    public function testInvalidKind()
+    public function testInvalidKind(): void
     {
         $json = '{
               "response": {
@@ -124,7 +124,7 @@ final class PutRecordingTextTrackResponseTest extends TestCase
         $this->assertTrue($response->isInvalidKind());
     }
 
-    public function testHandleMissingJsonKeys()
+    public function testHandleMissingJsonKeys(): void
     {
         $json = '{}';
 
