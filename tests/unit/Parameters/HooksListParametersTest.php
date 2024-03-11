@@ -17,22 +17,20 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Responses;
+namespace BigBlueButton\Parameters;
 
-/**
- * Class UpdateRecordingsResponse.
- */
-class UpdateRecordingsResponse extends BaseResponse
+use BigBlueButton\TestCase;
+
+final class HooksListParametersTest extends TestCase
 {
-    public const KEY_NOT_FOUND = 'notFound';
-
-    public function isUpdated(): bool
+    public function testHooksListParameters(): void
     {
-        return $this->rawXml->updated->__toString() === 'true';
-    }
+        $hooksListParameters = new HooksListParameters();
 
-    public function isNotFound(): bool
-    {
-        return $this->getMessageKey() === self::KEY_NOT_FOUND;
+        $this->assertNull($hooksListParameters->getMeetingID());
+
+        // Test setters that are ignored by the constructor
+        $hooksListParameters->setMeetingID($meetingId = $this->faker->uuid);
+        $this->assertEquals($meetingId, $hooksListParameters->getMeetingID());
     }
 }

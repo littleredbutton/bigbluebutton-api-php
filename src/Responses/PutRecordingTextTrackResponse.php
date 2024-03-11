@@ -27,11 +27,14 @@ class PutRecordingTextTrackResponse extends BaseResponseAsJson
     public const KEY_SUCCESS = 'upload_text_track_success';
     public const KEY_FAILED = 'upload_text_track_failed';
     public const KEY_EMPTY = 'empty_uploaded_text_track';
+    public const KEY_NO_RECORDINGS = 'noRecordings';
+    public const KEY_INVALID_KIND = 'invalidKind';
+    public const KEY_INVALID_LANG = 'invalidLang';
     public const KEY_PARAM_ERROR = 'paramError';
 
     public function getRecordID(): string
     {
-        return $this->data->response->recordId;
+        return $this->data->response->recordId ?? '';
     }
 
     public function isUploadTrackSuccess(): bool
@@ -47,6 +50,21 @@ class PutRecordingTextTrackResponse extends BaseResponseAsJson
     public function isUploadTrackEmpty(): bool
     {
         return $this->getMessageKey() === self::KEY_EMPTY;
+    }
+
+    public function isNoRecordings(): bool
+    {
+        return $this->getMessageKey() === self::KEY_NO_RECORDINGS;
+    }
+
+    public function isInvalidLang(): bool
+    {
+        return $this->getMessageKey() === self::KEY_INVALID_LANG;
+    }
+
+    public function isInvalidKind(): bool
+    {
+        return $this->getMessageKey() === self::KEY_INVALID_KIND;
     }
 
     public function isKeyParamError(): bool

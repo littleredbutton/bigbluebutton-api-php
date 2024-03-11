@@ -24,8 +24,21 @@ namespace BigBlueButton\Responses;
  */
 class HooksDestroyResponse extends BaseResponse
 {
+    public const KEY_MISSING_HOOK = 'destroyMissingHook';
+    public const KEY_HOOK_ERROR = 'destroyHookError';
+
     public function removed(): bool
     {
         return $this->rawXml->removed->__toString() === 'true';
+    }
+
+    public function isMissingHook(): bool
+    {
+        return $this->getMessageKey() === self::KEY_MISSING_HOOK;
+    }
+
+    public function isHookError(): bool
+    {
+        return $this->getMessageKey() === self::KEY_HOOK_ERROR;
     }
 }

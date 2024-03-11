@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0']
+        php-versions: ['8.1', '8.2']
         experimental: [false]
 
     steps:
@@ -37,13 +37,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4','8.0']
+        php-versions: ['8.1', '8.2']
         experimental: [false]
         include:
-          - php-versions: '8.1'
-            experimental: true
-          - php-versions: '8.2'
-            experimental: true
           - php-versions: '8.3'
             experimental: true
     steps:
@@ -73,5 +69,5 @@ jobs:
     - name: Coveralls
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: ${{ matrix.php-versions == '7.4' && env.COVERALLS_REPO_TOKEN != null }}
+      if: ${{ matrix.php-versions == '8.1' && env.COVERALLS_REPO_TOKEN != null }}
       run: tools/php-coveralls --coverage_clover=build/logs/coverage.xml -v

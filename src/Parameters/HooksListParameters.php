@@ -17,22 +17,18 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Responses;
+namespace BigBlueButton\Parameters;
 
 /**
- * Class UpdateRecordingsResponse.
+ * Class HooksListParameters.
+ *
+ * @method string getMeetingID()
+ * @method $this  setMeetingID(string $id)
  */
-class UpdateRecordingsResponse extends BaseResponse
+final class HooksListParameters extends MetaParameters
 {
-    public const KEY_NOT_FOUND = 'notFound';
-
-    public function isUpdated(): bool
-    {
-        return $this->rawXml->updated->__toString() === 'true';
-    }
-
-    public function isNotFound(): bool
-    {
-        return $this->getMessageKey() === self::KEY_NOT_FOUND;
-    }
+    /**
+     * @var string
+     */
+    protected $meetingID;
 }

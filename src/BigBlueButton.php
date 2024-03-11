@@ -36,6 +36,7 @@ use BigBlueButton\Parameters\GetRecordingsParameters;
 use BigBlueButton\Parameters\GetRecordingTextTracksParameters;
 use BigBlueButton\Parameters\HooksCreateParameters;
 use BigBlueButton\Parameters\HooksDestroyParameters;
+use BigBlueButton\Parameters\HooksListParameters;
 use BigBlueButton\Parameters\InsertDocumentParameters;
 use BigBlueButton\Parameters\IsMeetingRunningParameters;
 use BigBlueButton\Parameters\JoinMeetingParameters;
@@ -418,14 +419,24 @@ class BigBlueButton
         return new HooksCreateResponse($xml);
     }
 
-    public function getHooksListUrl(): string
+    public function getHooksListUrl(?HooksListParameters $hooksListParameters = null): string
     {
-        return $this->urlBuilder->buildUrl(ApiMethod::HOOKS_LIST);
+        if ($hooksListParameters === null) {
+            @trigger_error(sprintf('Not passing the $hooksListParameters parameter to "%s::getHooksListUrl()" is deprecated since 5.4 and will be required in 6.0.', self::class), \E_USER_DEPRECATED);
+            $hooksListParameters = new HooksListParameters();
+        }
+
+        return $this->urlBuilder->buildUrl(ApiMethod::HOOKS_LIST, $hooksListParameters->getHTTPQuery());
     }
 
-    public function hooksList(): HooksListResponse
+    public function hooksList(?HooksListParameters $hooksListParameters = null): HooksListResponse
     {
-        $xml = $this->processXmlResponse($this->getHooksListUrl());
+        if ($hooksListParameters === null) {
+            @trigger_error(sprintf('Not passing the $hooksListParameters parameter to "%s::hooksList()" is deprecated since 5.4 and will be required in 6.0.', self::class), \E_USER_DEPRECATED);
+            $hooksListParameters = new HooksListParameters();
+        }
+
+        $xml = $this->processXmlResponse($this->getHooksListUrl($hooksListParameters));
 
         return new HooksListResponse($xml);
     }

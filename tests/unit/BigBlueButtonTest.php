@@ -30,6 +30,9 @@ use BigBlueButton\Http\Transport\TransportResponse;
 use BigBlueButton\Parameters\DeleteRecordingsParameters;
 use BigBlueButton\Parameters\GetRecordingsParameters;
 use BigBlueButton\Parameters\GetRecordingTextTracksParameters;
+use BigBlueButton\Parameters\HooksCreateParameters;
+use BigBlueButton\Parameters\HooksDestroyParameters;
+use BigBlueButton\Parameters\HooksListParameters;
 use BigBlueButton\Parameters\InsertDocumentParameters;
 use BigBlueButton\Parameters\PublishRecordingsParameters;
 use BigBlueButton\Parameters\PutRecordingTextTrackParameters;
@@ -448,9 +451,153 @@ final class BigBlueButtonTest extends TestCase
         $response = $this->bbb->putRecordingTextTrack($params);
 
         $this->assertTrue($response->success());
-        $this->assertNull($response->getMessageKey());
-        $this->assertNull($response->getMessage());
+        $this->assertEquals('upload_text_track_success', $response->getMessageKey());
+        $this->assertEquals('Text track uploaded successfully', $response->getMessage());
         $this->assertSame('baz', $response->getRecordID());
         $this->assertSame('SUCCESS', $response->getReturnCode());
+    }
+
+    public function testHooksCreate(): void
+    {
+        $params = new HooksCreateParameters($this->faker->url);
+
+        $xml = '<response>
+          <returncode>SUCCESS</returncode>
+          <hookID>1</hookID>
+          <permanentHook>false</permanentHook>
+          <rawData>false</rawData>
+        </response>';
+
+        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
+
+        $response = $this->bbb->hooksCreate($params);
+
+        $this->assertTrue($response->success());
+        $this->assertSame(1, $response->getHookId());
+        $this->assertFalse($response->isPermanentHook());
+        $this->assertFalse($response->hasRawData());
+    }
+
+    public function testHooksList(): void
+    {
+        $params = new HooksListParameters();
+
+        $xml = '<response>
+          <returncode>SUCCESS</returncode>
+          <hooks>
+            <hook>
+              <hookID>1</hookID>
+              <callbackURL><![CDATA[http://postcatcher.in/catchers/abcdefghijk]]></callbackURL>
+              <meetingID><![CDATA[my-meeting]]></meetingID>
+              <permanentHook>false</permanentHook>
+              <rawData>false</rawData>
+            </hook>
+            <hook>
+              <hookID>2</hookID>
+              <callbackURL><![CDATA[http://postcatcher.in/catchers/1234567890]]></callbackURL>
+              <permanentHook>false</permanentHook>
+              <rawData>false</rawData>
+            </hook>
+          </hooks>
+        </response>';
+
+        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
+
+        $response = $this->bbb->hooksList($params);
+
+        $this->assertTrue($response->success());
+        $this->assertCount(2, $response->getHooks());
+
+        // Hook for a single meeting
+        $meetingHook = $response->getHooks()[0];
+        $this->assertSame(1, $meetingHook->getHookId());
+        $this->assertSame('http://postcatcher.in/catchers/abcdefghijk', $meetingHook->getCallbackURL());
+        $this->assertSame('my-meeting', $meetingHook->getMeetingID());
+        $this->assertFalse($meetingHook->isPermanentHook());
+        $this->assertFalse($meetingHook->hasRawData());
+
+        // Global hook
+        $globalHook = $response->getHooks()[1];
+        $this->assertSame(2, $globalHook->getHookId());
+        $this->assertSame('http://postcatcher.in/catchers/1234567890', $globalHook->getCallbackURL());
+        $this->assertFalse($globalHook->isPermanentHook());
+        $this->assertFalse($globalHook->hasRawData());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testHooksListWithoutParameter(): void
+    {
+        $xml = '<response>
+          <returncode>SUCCESS</returncode>
+          <hooks>
+            <hook>
+              <hookID>1</hookID>
+              <callbackURL><![CDATA[http://postcatcher.in/catchers/abcdefghijk]]></callbackURL>
+              <meetingID><![CDATA[my-meeting]]></meetingID>
+              <permanentHook>false</permanentHook>
+              <rawData>false</rawData>
+            </hook>
+            <hook>
+              <hookID>2</hookID>
+              <callbackURL><![CDATA[http://postcatcher.in/catchers/1234567890]]></callbackURL>
+              <permanentHook>false</permanentHook>
+              <rawData>false</rawData>
+            </hook>
+          </hooks>
+        </response>';
+
+        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
+
+        $response = $this->bbb->hooksList();
+
+        $this->assertTrue($response->success());
+        $this->assertCount(2, $response->getHooks());
+    }
+
+    public function testHooksListUrl(): void
+    {
+        // Test without meeting ID
+        $params = new HooksListParameters();
+        $url = $this->bbb->getHooksListUrl($params);
+
+        $this->assertStringContainsString(ApiMethod::HOOKS_LIST, $url);
+        $this->assertStringNotContainsString('meetingID=', $url);
+
+        // Test with meeting ID
+        $params = new HooksListParameters();
+        $params->setMeetingID('foobar');
+        $url = $this->bbb->getHooksListUrl($params);
+
+        $this->assertStringContainsString('meetingID=foobar', $url);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testHooksListUrlWithoutParameter(): void
+    {
+        $url = $this->bbb->getHooksListUrl();
+
+        $this->assertStringContainsString(ApiMethod::HOOKS_LIST, $url);
+        $this->assertStringNotContainsString('meetingID=', $url);
+    }
+
+    public function testHookDestroy(): void
+    {
+        $params = new HooksDestroyParameters(1);
+
+        $xml = '<response>
+          <returncode>SUCCESS</returncode>
+          <removed>true</removed>
+        </response>';
+
+        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
+
+        $response = $this->bbb->hooksDestroy($params);
+
+        $this->assertTrue($response->success());
+        $this->assertTrue($response->removed());
     }
 }

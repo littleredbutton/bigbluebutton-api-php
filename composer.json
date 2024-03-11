@@ -58,7 +58,7 @@
     "docs": "https://github.com/littleredbutton/bigbluebutton-api-php/blob/master/README.md"
   },
   "require": {
-    "php": ">=7.4",
+    "php": ">=8.1",
     "ext-curl": "*",
     "ext-simplexml": "*",
     "ext-mbstring": "*",
@@ -75,10 +75,10 @@
     "psr/http-client": "^1.0",
     "psr/http-factory": "^1.0",
     "psr/http-message": "^1.0",
-    "symfony/dotenv": "^3.4|^4.0|^5.0",
+    "symfony/dotenv": "^5.4|^6.4|^7.0",
     "symfony/http-client-contracts": "^1.1|^2.0",
-    "symfony/http-client": "^4.4|^5.0",
-    "symfony/process": "^3.4|^4.0|^5.0",
+    "symfony/http-client": "^5.4|^6.4|^7.0",
+    "symfony/process": "^5.4|^6.4|^7.0",
     "nyholm/psr7": "^1.4"
   },
   "autoload": {

@@ -101,6 +101,27 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($newId, $createMeetingParams->getMeetingID());
     }
 
+    public function testMetaParameters(): void
+    {
+        $params = $this->generateCreateParams();
+        $createMeetingParams = $this->getCreateMock($params);
+        $createMeetingParams->addMeta('userdata-bbb_hide_presentation_on_join', true);
+        $createMeetingParams->addMeta('userdata-bbb_show_participants_on_login', false);
+        $createMeetingParams->addMeta('userdata-bbb_fullaudio_bridge', 'fullaudio');
+
+        // Test getters
+        $this->assertTrue($createMeetingParams->getMeta('userdata-bbb_hide_presentation_on_join'));
+        $this->assertFalse($createMeetingParams->getMeta('userdata-bbb_show_participants_on_login'));
+        $this->assertEquals('fullaudio', $createMeetingParams->getMeta('userdata-bbb_fullaudio_bridge'));
+
+        $params = urldecode($createMeetingParams->getHTTPQuery());
+
+        // Test HTTP query
+        $this->assertStringContainsString('meta_userdata-bbb_hide_presentation_on_join=true', $params);
+        $this->assertStringContainsString('meta_userdata-bbb_show_participants_on_login=false', $params);
+        $this->assertStringContainsString('meta_userdata-bbb_fullaudio_bridge=fullaudio', $params);
+    }
+
     public function testDisabledFeatures(): void
     {
         $params = $this->generateCreateParams();
