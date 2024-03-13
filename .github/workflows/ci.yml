@@ -66,8 +66,6 @@ jobs:
       if: ${{ matrix.experimental }}
       run: tools/phpunit --testsuite="BigBlueButton unit test suite,BigBlueButton integration test suite"
       continue-on-error: true
-    - name: Coveralls
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: ${{ matrix.php-versions == '8.1' && env.COVERALLS_REPO_TOKEN != null }}
-      run: tools/php-coveralls --coverage_clover=build/logs/coverage.xml -v
+    - name: Upload coverage
+      if: ${{ matrix.php-versions == '8.1' }}
+      uses: codecov/codecov-action@v3
