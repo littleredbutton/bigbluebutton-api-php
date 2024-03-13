@@ -99,8 +99,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'lockSettingsLockOnJoinConfigurable' => $this->faker->boolean(50),
             'allowModsToUnmuteUsers' => $this->faker->boolean(50),
             'allowModsToEjectCameras' => $this->faker->boolean(50),
-            'disabledFeatures' => $this->faker->randomElements(Feature::getValues(), 3),
-            'disabledFeaturesExclude' => $this->faker->randomElements(Feature::getValues(), 2),
+            'disabledFeatures' => $this->faker->randomElements(Feature::cases(), 3),
+            'disabledFeaturesExclude' => $this->faker->randomElements(Feature::cases(), 2),
             'meta_presenter' => $this->faker->name,
             'meta_endCallbackUrl' => $this->faker->url,
             'meta_bbb-recording-ready-url' => $this->faker->url,
@@ -247,7 +247,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         return ['meetingID' => $this->faker->uuid,
                 'fullName' => $this->faker->name,
-                'role' => $this->faker->randomElement(Role::getValues()),
+                'role' => $this->faker->randomElement(Role::cases()),
                 'userID' => $this->faker->numberBetween(1, 1000),
                 'webVoiceConf' => $this->faker->word,
                 'createTime' => $this->faker->unixTime,
@@ -386,6 +386,10 @@ class TestCase extends \PHPUnit\Framework\TestCase
         foreach ($parameters as $parameter) {
             if (\is_bool($parameter)) {
                 $parameter = $parameter ? 'true' : 'false';
+            }
+
+            if ($parameter instanceof \BackedEnum) {
+                $parameter = $parameter->value;
             }
 
             if (!\is_array($parameter)) {

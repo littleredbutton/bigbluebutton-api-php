@@ -19,6 +19,8 @@
 
 namespace BigBlueButton\Util;
 
+use BigBlueButton\Enum\HashingAlgorithm;
+
 /**
  * Class UrlBuilder.
  *
@@ -35,12 +37,9 @@ final class UrlBuilder
      */
     private $bbbServerBaseUrl;
 
-    /**
-     * @var string
-     */
-    private $hashingAlgorithm;
+    private HashingAlgorithm $hashingAlgorithm;
 
-    public function __construct(string $secret, string $serverBaseUrl, string $hashingAlgorithm)
+    public function __construct(string $secret, string $serverBaseUrl, HashingAlgorithm $hashingAlgorithm)
     {
         $this->securitySalt = $secret;
         $this->bbbServerBaseUrl = $serverBaseUrl;
@@ -67,6 +66,6 @@ final class UrlBuilder
             $checksumParam = 'checksum=';
         }
 
-        return $params.$checksumParam.hash($this->hashingAlgorithm, $method.$params.$this->securitySalt);
+        return $params.$checksumParam.hash($this->hashingAlgorithm->value, $method.$params.$this->securitySalt);
     }
 }

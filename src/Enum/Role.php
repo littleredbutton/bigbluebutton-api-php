@@ -23,8 +23,8 @@ namespace BigBlueButton\Enum;
 /**
  * @psalm-immutable
  */
-class Role extends Enum
+enum Role: String
 {
-    public const MODERATOR = 'MODERATOR';
-    public const VIEWER = 'VIEWER';
+    case MODERATOR = 'MODERATOR';
+    case VIEWER = 'VIEWER';
 }

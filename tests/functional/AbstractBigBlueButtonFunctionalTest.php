@@ -369,6 +369,11 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
             if (\is_bool($value)) {
                 $value = $value ? 'true' : 'false';
             }
+
+            if ($value instanceof \BackedEnum) {
+                $value = $value->value;
+            }
+
             $this->assertStringContainsString('='.rawurlencode($value), $url);
         }
     }
