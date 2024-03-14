@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -20,7 +21,6 @@
 namespace BigBlueButton\Tests\Functional;
 
 use BigBlueButton\BigBlueButton;
-use BigBlueButton\Core\ApiMethod;
 use BigBlueButton\Http\Transport\TransportInterface;
 use BigBlueButton\Parameters\DeleteRecordingsParameters;
 use BigBlueButton\Parameters\EndMeetingParameters;
@@ -100,17 +100,6 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
     /* Create Meeting */
 
     /**
-     * Test create meeting URL.
-     */
-    public function testCreateMeetingUrl(): void
-    {
-        $params = $this->generateCreateParams();
-        $url = $this->bbb->getCreateMeetingUrl($this->getCreateMock($params));
-
-        $this->assertUrlContainsAllRequestParameters($url, $params);
-    }
-
-    /**
      * Test create meeting.
      */
     public function testCreateMeeting()
@@ -120,7 +109,7 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertTrue($result->success());
 
         // Cleanup
-        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId()));
     }
 
     /**
@@ -138,7 +127,7 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertTrue($result->success());
 
         // Cleanup
-        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId()));
     }
 
     /**
@@ -156,7 +145,7 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertTrue($result->success());
 
         // Cleanup
-        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId()));
     }
 
     /**
@@ -174,7 +163,7 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertTrue($result->success());
 
         // Cleanup
-        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId()));
     }
 
     /**
@@ -193,23 +182,10 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertTrue($result->success());
 
         // Cleanup
-        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId()));
     }
 
     /* Join Meeting */
-
-    /**
-     * Test create join meeting URL.
-     */
-    public function testCreateJoinMeetingUrl(): void
-    {
-        $joinMeetingParams = $this->generateJoinMeetingParams();
-        $joinMeetingMock = $this->getJoinMeetingMock($joinMeetingParams);
-
-        $url = $this->bbb->getJoinMeetingURL($joinMeetingMock);
-
-        $this->assertUrlContainsAllRequestParameters($url, $joinMeetingParams);
-    }
 
     public function testJoinMeeting()
     {
@@ -219,8 +195,8 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertEquals('SUCCESS', $result->getReturnCode(), 'Create meeting');
         $creationTime = $result->getCreationTime();
 
-        $joinMeetingParams = $this->generateJoinMeetingParams();
-        $joinMeetingParams = new JoinMeetingParameters($result->getMeetingId(), 'Foobar', $result->getAttendeePassword());
+        $params = $this->generateJoinMeetingParams();
+        $joinMeetingParams = new JoinMeetingParameters($result->getMeetingId(), $params['fullName'], $params['role']);
         $joinMeetingParams->setRedirect(false);
         $joinMeetingParams->setCreateTime(sprintf('%.0f', $creationTime));
 
@@ -234,27 +210,16 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertNotEmpty($joinMeeting->getUrl());
 
         // Cleanup
-        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId(), $result->getModeratorPassword()));
+        $this->bbb->endMeeting(new EndMeetingParameters($result->getMeetingId()));
     }
 
     /* End Meeting */
-
-    /**
-     * Test generate end meeting URL.
-     */
-    public function testCreateEndMeetingUrl(): void
-    {
-        $params = $this->generateEndMeetingParams();
-        $url = $this->bbb->getEndMeetingURL($this->getEndMeetingMock($params));
-
-        $this->assertUrlContainsAllRequestParameters($url, $params);
-    }
 
     public function testEndMeeting()
     {
         $meeting = $this->createRealMeeting($this->bbb);
 
-        $endMeeting = new EndMeetingParameters($meeting->getMeetingId(), $meeting->getModeratorPassword());
+        $endMeeting = new EndMeetingParameters($meeting->getMeetingId());
         $result = $this->bbb->endMeeting($endMeeting);
         $this->assertEquals('SUCCESS', $result->getReturnCode());
         $this->assertTrue($result->success());
@@ -280,12 +245,6 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
 
     /* Get Meetings */
 
-    public function testGetMeetingsUrl(): void
-    {
-        $url = $this->bbb->getMeetingsUrl();
-        $this->assertStringContainsString(ApiMethod::GET_MEETINGS, $url);
-    }
-
     public function testGetMeetings()
     {
         $meeting = $this->createRealMeeting($this->bbb);
@@ -294,7 +253,7 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertNotEmpty($result->getMeetings());
 
         // Cleanup
-        $this->bbb->endMeeting(new EndMeetingParameters($meeting->getMeetingId(), $meeting->getModeratorPassword()));
+        $this->bbb->endMeeting(new EndMeetingParameters($meeting->getMeetingId()));
     }
 
     /* Get meeting info */
@@ -307,25 +266,19 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertStringContainsString('='.rawurlencode($meeting->getMeetingId()), $url);
 
         // Cleanup
-        $this->bbb->endMeeting(new EndMeetingParameters($meeting->getMeetingId(), $meeting->getModeratorPassword()));
+        $this->bbb->endMeeting(new EndMeetingParameters($meeting->getMeetingId()));
     }
 
     public function testGetMeetingInfo()
     {
         $meeting = $this->createRealMeeting($this->bbb);
 
-        $result = $this->bbb->getMeetingInfo(new GetMeetingInfoParameters($meeting->getMeetingId(), $meeting->getModeratorPassword()));
+        $result = $this->bbb->getMeetingInfo(new GetMeetingInfoParameters($meeting->getMeetingId()));
         $this->assertEquals('SUCCESS', $result->getReturnCode());
         $this->assertTrue($result->success());
 
         // Cleanup
-        $this->bbb->endMeeting(new EndMeetingParameters($meeting->getMeetingId(), $meeting->getModeratorPassword()));
-    }
-
-    public function testGetRecordingsUrl(): void
-    {
-        $url = $this->bbb->getRecordingsUrl(new GetRecordingsParameters());
-        $this->assertStringContainsString(ApiMethod::GET_RECORDINGS, $url);
+        $this->bbb->endMeeting(new EndMeetingParameters($meeting->getMeetingId()));
     }
 
     public function testGetRecordings()
@@ -335,12 +288,6 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertTrue($result->success());
     }
 
-    public function testPublishRecordingsUrl(): void
-    {
-        $url = $this->bbb->getPublishRecordingsUrl(new PublishRecordingsParameters($this->faker->sha1, true));
-        $this->assertStringContainsString(ApiMethod::PUBLISH_RECORDINGS, $url);
-    }
-
     public function testPublishRecordings()
     {
         $result = $this->bbb->publishRecordings(new PublishRecordingsParameters('non-existing-id-'.$this->faker->sha1, true));
@@ -348,34 +295,11 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $this->assertTrue($result->failed());
     }
 
-    public function testDeleteRecordingsUrl(): void
-    {
-        $url = $this->bbb->getDeleteRecordingsUrl(new DeleteRecordingsParameters($this->faker->sha1));
-        $this->assertStringContainsString(ApiMethod::DELETE_RECORDINGS, $url);
-    }
-
     public function testDeleteRecordings()
     {
         $result = $this->bbb->deleteRecordings(new DeleteRecordingsParameters('non-existing-id-'.$this->faker->sha1));
         $this->assertEquals('FAILED', $result->getReturnCode());
         $this->assertTrue($result->failed());
-    }
-
-    public function testUpdateRecordingsUrl(): void
-    {
-        $params = $this->generateUpdateRecordingsParams();
-        $url = $this->bbb->getUpdateRecordingsUrl($this->getUpdateRecordingsParamsMock($params));
-        foreach ($params as $key => $value) {
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-
-            if ($value instanceof \BackedEnum) {
-                $value = $value->value;
-            }
-
-            $this->assertStringContainsString('='.rawurlencode($value), $url);
-        }
     }
 
     public function testUpdateRecordings()

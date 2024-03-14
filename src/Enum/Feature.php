@@ -46,14 +46,4 @@ enum Feature: String
     case DOWNLOAD_PRESENTATION_ORIGINAL_FILE = 'downloadPresentationOriginalFile';
     case DOWNLOAD_PRESENTATION_CONVERTED_TO_PDF = 'downloadPresentationConvertedToPdf';
     case TIMER = 'timer';
-
-    /**
-     * @deprecated Use Feature::IMPORT_PRESENTATION_WITH_ANNOTATIONS_FROM_BREAKOUT_ROOMS instead
-     */
-    public const IMPORT_PRESENTATION_WITHANNOTATIONS_FROM_BREAKOUTROOMS = Feature::IMPORT_PRESENTATION_WITH_ANNOTATIONS_FROM_BREAKOUT_ROOMS;
-
-    /**
-     * @deprecated Use Feature::IMPORT_SHARED_NOTES_FROM_BREAKOUT_ROOMS instead
-     */
-    public const IMPORT_SHARED_NOTES_FROM_BREAKOUTROOMS = Feature::IMPORT_SHARED_NOTES_FROM_BREAKOUT_ROOMS;
 }

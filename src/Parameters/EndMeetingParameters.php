@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -32,42 +33,8 @@ class EndMeetingParameters extends BaseParameters
      */
     protected $meetingID;
 
-    /**
-     * @var string|null
-     */
-    protected $password;
-
-    public function __construct(string $meetingID, ?string $password = null)
+    public function __construct(string $meetingID)
     {
-        if (\func_num_args() === 2) {
-            @trigger_error(sprintf('Passing $password parameter to constructor of "%s" is deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter to end a meeting.', self::class), \E_USER_DEPRECATED);
-        }
-
-        $this->password = $password;
         $this->meetingID = $meetingID;
-    }
-
-    /**
-     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
-     */
-    public function getPassword(): string
-    {
-        if (null === $this->password) {
-            throw new \RuntimeException(sprintf('Password was not passed to "%s".', self::class));
-        }
-
-        return $this->password;
-    }
-
-    /**
-     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
-     *
-     * @return $this
-     */
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
     }
 }

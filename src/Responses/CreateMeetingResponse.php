@@ -44,22 +44,6 @@ class CreateMeetingResponse extends BaseResponse
     }
 
     /**
-     * @deprecated and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter in api requests.
-     */
-    public function getAttendeePassword(): string
-    {
-        return $this->rawXml->attendeePW->__toString();
-    }
-
-    /**
-     * @deprecated and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter in api requests.
-     */
-    public function getModeratorPassword(): string
-    {
-        return $this->rawXml->moderatorPW->__toString();
-    }
-
-    /**
      * Creation timestamp.
      *
      * @return float|int
