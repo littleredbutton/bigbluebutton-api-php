@@ -23,7 +23,7 @@ namespace BigBlueButton\Enum;
 /**
  * @psalm-immutable
  */
-enum Feature: String
+enum Feature: string
 {
     case BREAKOUT_ROOMS = 'breakoutRooms';
     case CAPTIONS = 'captions';

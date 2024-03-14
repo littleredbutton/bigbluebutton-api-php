@@ -23,7 +23,7 @@ namespace BigBlueButton\Enum;
 /**
  * @psalm-immutable
  */
-enum Role: String
+enum Role: string
 {
     case MODERATOR = 'MODERATOR';
     case VIEWER = 'VIEWER';

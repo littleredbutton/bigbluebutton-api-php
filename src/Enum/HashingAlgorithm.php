@@ -23,7 +23,7 @@ namespace BigBlueButton\Enum;
 /**
  * @psalm-immutable
  */
-enum HashingAlgorithm: String
+enum HashingAlgorithm: string
 {
     case SHA_1 = 'sha1';
     case SHA_256 = 'sha256';
