@@ -420,11 +420,29 @@ final class BigBlueButtonTest extends TestCase
         $this->assertEquals('SAT- Writing-Humanities (All participants)', $recording->getName());
     }
 
+    /* Publish recordings */
+
     public function testPublishRecordingsUrl(): void
     {
         $url = $this->bbb->getPublishRecordingsUrl(new PublishRecordingsParameters($this->faker->sha1, true));
         $this->assertStringContainsString(ApiMethod::PUBLISH_RECORDINGS, $url);
     }
+
+    public function testPublishRecordings(): void
+    {
+        $xml = '<response>
+            <returncode>SUCCESS</returncode>
+            <published>true</published>
+        </response>';
+
+        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
+
+        $result = $this->bbb->publishRecordings(new PublishRecordingsParameters($this->faker->sha1, true));
+
+        $this->assertTrue($result->isPublished());
+    }
+
+    /* Delete recordings */
 
     public function testDeleteRecordingsUrl(): void
     {
@@ -432,16 +450,44 @@ final class BigBlueButtonTest extends TestCase
         $this->assertStringContainsString(ApiMethod::DELETE_RECORDINGS, $url);
     }
 
+    public function testDeleteRecordings(): void
+    {
+        $xml = '<response>
+            <returncode>SUCCESS</returncode>
+            <deleted>true</deleted>
+        </response>';
+
+        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
+
+        $result = $this->bbb->deleteRecordings(new DeleteRecordingsParameters($this->faker->sha1));
+
+        $this->assertTrue($result->isDeleted());
+    }
+
+    /* Update recordings */
+
     public function testUpdateRecordingsUrl(): void
     {
         $params = $this->generateUpdateRecordingsParams();
         $url = $this->bbb->getUpdateRecordingsUrl($this->getUpdateRecordingsParamsMock($params));
-        foreach ($params as $key => $value) {
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-            $this->assertStringContainsString(rawurlencode($key).'='.rawurlencode($value), $url);
-        }
+
+        $this->assertUrlContainsAllRequestParameters($url, $params);
+    }
+
+    public function testUpdateRecordings(): void
+    {
+        $params = $this->generateUpdateRecordingsParams();
+
+        $xml = '<response>
+            <returncode>SUCCESS</returncode>
+            <updated>true</updated>
+        </response>';
+
+        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
+
+        $result = $this->bbb->updateRecordings($this->getUpdateRecordingsParamsMock($params));
+
+        $this->assertTrue($result->isUpdated());
     }
 
     public function testBuildUrl(): void
