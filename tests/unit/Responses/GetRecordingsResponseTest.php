@@ -118,4 +118,18 @@ final class GetRecordingsResponseTest extends TestCase
         $newPreviews = $formats[1]->getImagePreviews();
         $this->assertTrue($previews[0] === $newPreviews[0]);
     }
+
+    public function testHasNoRecordings(): void
+    {
+        $xml = '<response>
+          <returncode>SUCCESS</returncode>
+          <recordings/>
+          <messageKey>noRecordings</messageKey>
+          <message>There are no recordings for the meeting(s).</message>
+        </response>';
+
+        $response = new GetRecordingsResponse(simplexml_load_string($xml));
+
+        $this->assertTrue($response->hasNoRecordings());
+    }
 }
