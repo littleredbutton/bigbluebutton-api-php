@@ -95,6 +95,10 @@ abstract class BaseParameters
                 return $value ? 'true' : 'false';
             }
 
+            if ($value instanceof \BackedEnum) {
+                $value = $value->value;
+            }
+
             return $value;
         }, $properties);
     }

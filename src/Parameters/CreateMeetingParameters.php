@@ -21,6 +21,7 @@
 namespace BigBlueButton\Parameters;
 
 use BigBlueButton\Core\GuestPolicy;
+use BigBlueButton\Enum\Feature;
 
 /**
  * @method string    getName()
@@ -616,14 +617,14 @@ class CreateMeetingParameters extends MetaParameters
         // Add disabled features if any are set
         if (!empty($this->disabledFeatures)) {
             $queries = array_merge($queries, [
-                'disabledFeatures' => implode(',', $this->disabledFeatures),
+                'disabledFeatures' => implode(',', array_map(fn (Feature $disabledFeature): string => $disabledFeature->value, $this->disabledFeatures)),
             ]);
         }
 
         // Add disabled features exclude if any are set
         if (!empty($this->disabledFeaturesExclude)) {
             $queries = array_merge($queries, [
-                'disabledFeaturesExclude' => implode(',', $this->disabledFeaturesExclude),
+                'disabledFeaturesExclude' => implode(',', array_map(fn (Feature $disabledFeatureExclude): string => $disabledFeatureExclude->value, $this->disabledFeaturesExclude)),
             ]);
         }
 

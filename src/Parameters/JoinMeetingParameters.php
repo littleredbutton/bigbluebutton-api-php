@@ -20,6 +20,8 @@
 
 namespace BigBlueButton\Parameters;
 
+use BigBlueButton\Enum\Role;
+
 /**
  * Class JoinMeetingParametersTest.
  *
@@ -120,7 +122,7 @@ class JoinMeetingParameters extends UserDataParameters
      */
     protected $excludeFromDashboard;
 
-    public function __construct(string $meetingID, string $fullName, string $role)
+    public function __construct(string $meetingID, string $fullName, Role $role)
     {
         $this->meetingID = $meetingID;
         $this->fullName = $fullName;

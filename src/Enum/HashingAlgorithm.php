@@ -23,10 +23,10 @@ namespace BigBlueButton\Enum;
 /**
  * @psalm-immutable
  */
-class HashingAlgorithm extends Enum
+enum HashingAlgorithm: string
 {
-    public const SHA_1 = 'sha1';
-    public const SHA_256 = 'sha256';
-    public const SHA_512 = 'sha512';
-    public const SHA_384 = 'sha384';
+    case SHA_1 = 'sha1';
+    case SHA_256 = 'sha256';
+    case SHA_512 = 'sha512';
+    case SHA_384 = 'sha384';
 }
