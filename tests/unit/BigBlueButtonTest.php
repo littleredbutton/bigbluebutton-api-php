@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -312,8 +313,6 @@ final class BigBlueButtonTest extends TestCase
         $this->assertEquals('Tue Jul 10 16:47:38 UTC 2018', $response->getMeetings()[0]->getCreationDate());
         $this->assertEquals('70066', $response->getMeetings()[0]->getVoiceBridge());
         $this->assertEquals('613-555-1234', $response->getMeetings()[0]->getDialNumber());
-        $this->assertEquals('ap', $response->getMeetings()[0]->getAttendeePassword());
-        $this->assertEquals('mp', $response->getMeetings()[0]->getModeratorPassword());
         $this->assertFalse($response->getMeetings()[0]->isRunning());
         $this->assertEquals(0, $response->getMeetings()[0]->getDuration());
         $this->assertFalse($response->getMeetings()[0]->hasUserJoined());
@@ -525,38 +524,6 @@ final class BigBlueButtonTest extends TestCase
         $this->assertFalse($globalHook->hasRawData());
     }
 
-    /**
-     * @group legacy
-     */
-    public function testHooksListWithoutParameter(): void
-    {
-        $xml = '<response>
-          <returncode>SUCCESS</returncode>
-          <hooks>
-            <hook>
-              <hookID>1</hookID>
-              <callbackURL><![CDATA[http://postcatcher.in/catchers/abcdefghijk]]></callbackURL>
-              <meetingID><![CDATA[my-meeting]]></meetingID>
-              <permanentHook>false</permanentHook>
-              <rawData>false</rawData>
-            </hook>
-            <hook>
-              <hookID>2</hookID>
-              <callbackURL><![CDATA[http://postcatcher.in/catchers/1234567890]]></callbackURL>
-              <permanentHook>false</permanentHook>
-              <rawData>false</rawData>
-            </hook>
-          </hooks>
-        </response>';
-
-        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
-
-        $response = $this->bbb->hooksList();
-
-        $this->assertTrue($response->success());
-        $this->assertCount(2, $response->getHooks());
-    }
-
     public function testHooksListUrl(): void
     {
         // Test without meeting ID
@@ -572,17 +539,6 @@ final class BigBlueButtonTest extends TestCase
         $url = $this->bbb->getHooksListUrl($params);
 
         $this->assertStringContainsString('meetingID=foobar', $url);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testHooksListUrlWithoutParameter(): void
-    {
-        $url = $this->bbb->getHooksListUrl();
-
-        $this->assertStringContainsString(ApiMethod::HOOKS_LIST, $url);
-        $this->assertStringNotContainsString('meetingID=', $url);
     }
 
     public function testHookDestroy(): void

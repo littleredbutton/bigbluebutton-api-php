@@ -419,23 +419,13 @@ class BigBlueButton
         return new HooksCreateResponse($xml);
     }
 
-    public function getHooksListUrl(?HooksListParameters $hooksListParameters = null): string
+    public function getHooksListUrl(HooksListParameters $hooksListParameters): string
     {
-        if ($hooksListParameters === null) {
-            @trigger_error(sprintf('Not passing the $hooksListParameters parameter to "%s::getHooksListUrl()" is deprecated since 5.4 and will be required in 6.0.', self::class), \E_USER_DEPRECATED);
-            $hooksListParameters = new HooksListParameters();
-        }
-
         return $this->urlBuilder->buildUrl(ApiMethod::HOOKS_LIST, $hooksListParameters->getHTTPQuery());
     }
 
-    public function hooksList(?HooksListParameters $hooksListParameters = null): HooksListResponse
+    public function hooksList(HooksListParameters $hooksListParameters): HooksListResponse
     {
-        if ($hooksListParameters === null) {
-            @trigger_error(sprintf('Not passing the $hooksListParameters parameter to "%s::hooksList()" is deprecated since 5.4 and will be required in 6.0.', self::class), \E_USER_DEPRECATED);
-            $hooksListParameters = new HooksListParameters();
-        }
-
         $xml = $this->processXmlResponse($this->getHooksListUrl($hooksListParameters));
 
         return new HooksListResponse($xml);

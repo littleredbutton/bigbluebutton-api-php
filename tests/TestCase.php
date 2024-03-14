@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -70,8 +71,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return [
             'name' => $this->faker->name,
             'meetingID' => $this->faker->uuid,
-            'attendeePW' => $this->faker->password,
-            'moderatorPW' => $this->faker->password,
             'autoStartRecording' => $this->faker->boolean(50),
             'dialNumber' => $this->faker->phoneNumber,
             'voiceBridge' => $this->faker->randomNumber(5, true),
@@ -92,7 +91,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'lockSettingsDisableMic' => $this->faker->boolean(50),
             'lockSettingsDisablePrivateChat' => $this->faker->boolean(50),
             'lockSettingsDisablePublicChat' => $this->faker->boolean(50),
-            'lockSettingsDisableNote' => $this->faker->boolean(50),
+            'lockSettingsDisableNotes' => $this->faker->boolean(50),
             'lockSettingsHideUserList' => $this->faker->boolean(50),
             'lockSettingsLockedLayout' => $this->faker->boolean(50),
             'lockSettingsLockOnJoin' => $this->faker->boolean(50),
@@ -110,19 +109,16 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'endWhenNoModerator' => $this->faker->boolean(50),
             'endWhenNoModeratorDelayInMinutes' => $this->faker->numberBetween(1, 100),
             'meetingLayout' => $this->faker->randomElement([
-                                                                MeetingLayout::CUSTOM_LAYOUT,
-                                                                MeetingLayout::SMART_LAYOUT,
-                                                                MeetingLayout::PRESENTATION_FOCUS,
-                                                                MeetingLayout::VIDEO_FOCUS,
-                                                           ]),
-            'learningDashboardEnabled' => $this->faker->boolean(50),
+                MeetingLayout::CUSTOM_LAYOUT,
+                MeetingLayout::SMART_LAYOUT,
+                MeetingLayout::PRESENTATION_FOCUS,
+                MeetingLayout::VIDEO_FOCUS,
+            ]),
             'learningDashboardCleanupDelayInMinutes' => $this->faker->numberBetween(1, 100),
-            'breakoutRoomsEnabled' => $this->faker->boolean(50),
             'breakoutRoomsPrivateChatEnabled' => $this->faker->boolean(50),
             'meetingEndedURL' => $this->faker->url,
             'breakoutRoomsRecord' => $this->faker->boolean(50),
             'allowRequestsWithoutSession' => $this->faker->boolean(50),
-            'virtualBackgroundsDisabled' => $this->faker->boolean(50),
             'userCameraCap' => $this->faker->numberBetween(1, 5),
             'groups' => $this->generateBreakoutRoomsGroups(),
         ];
@@ -185,7 +181,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setLockSettingsDisableMic($params['lockSettingsDisableMic'])
             ->setLockSettingsDisablePrivateChat($params['lockSettingsDisablePrivateChat'])
             ->setLockSettingsDisablePublicChat($params['lockSettingsDisablePublicChat'])
-            ->setLockSettingsDisableNote($params['lockSettingsDisableNote'])
+            ->setLockSettingsDisableNotes($params['lockSettingsDisableNotes'])
             ->setLockSettingsHideUserList($params['lockSettingsHideUserList'])
             ->setLockSettingsLockedLayout($params['lockSettingsLockedLayout'])
             ->setLockSettingsLockOnJoin($params['lockSettingsLockOnJoin'])
@@ -202,25 +198,14 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setMeetingEndedURL($params['meetingEndedURL'])
             ->setMeetingLayout($params['meetingLayout'])
             ->setMeetingKeepEvents($params['meetingKeepEvents'])
-            ->setLearningDashboardEnabled($params['learningDashboardEnabled'])
             ->setLearningDashboardCleanupDelayInMinutes($params['learningDashboardCleanupDelayInMinutes'])
             ->setAllowModsToEjectCameras($params['allowModsToEjectCameras'])
-            ->setBreakoutRoomsEnabled($params['breakoutRoomsEnabled'])
             ->setBreakoutRoomsPrivateChatEnabled($params['breakoutRoomsPrivateChatEnabled'])
             ->setBreakoutRoomsRecord($params['breakoutRoomsRecord'])
             ->setAllowRequestsWithoutSession($params['allowRequestsWithoutSession'])
-            ->setVirtualBackgroundsDisabled($params['virtualBackgroundsDisabled'])
             ->setUserCameraCap($params['userCameraCap'])
             ->setDisabledFeatures($params['disabledFeatures'])
             ->setDisabledFeaturesExclude($params['disabledFeaturesExclude']);
-
-        if (isset($params['moderatorPW'])) {
-            $createMeetingParams->setModeratorPW($params['moderatorPW']);
-        }
-
-        if (isset($params['attendeePW'])) {
-            $createMeetingParams->setAttendeePW($params['attendeePW']);
-        }
 
         foreach ($params['groups'] as $group) {
             $createMeetingParams->addBreakoutRoomsGroup($group['id'], $group['name'], $group['roster']);
@@ -236,8 +221,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         $createMeetingParams = $this->getCreateMock($params);
 
-        return $createMeetingParams->setBreakout($params['isBreakout'])->setParentMeetingID($params['parentMeetingId'])->
-        setSequence($params['sequence'])->setFreeJoin($params['freeJoin']);
+        return $createMeetingParams->setBreakout($params['isBreakout'])->setParentMeetingID($params['parentMeetingId'])->setSequence($params['sequence'])->setFreeJoin($params['freeJoin']);
     }
 
     /**
@@ -245,17 +229,17 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function generateJoinMeetingParams()
     {
-        return ['meetingID' => $this->faker->uuid,
-                'fullName' => $this->faker->name,
-                'role' => $this->faker->randomElement(Role::getValues()),
-                'userID' => $this->faker->numberBetween(1, 1000),
-                'webVoiceConf' => $this->faker->word,
-                'createTime' => $this->faker->unixTime,
-                'configToken' => $this->faker->word,
-                'errorRedirectUrl' => $this->faker->url,
-                'userdata-countrycode' => $this->faker->countryCode,
-                'userdata-email' => $this->faker->email,
-                'userdata-commercial' => false,
+        return [
+            'meetingID' => $this->faker->uuid,
+            'fullName' => $this->faker->name,
+            'role' => $this->faker->randomElement(Role::getValues()),
+            'userID' => $this->faker->numberBetween(1, 1000),
+            'webVoiceConf' => $this->faker->word,
+            'createTime' => $this->faker->unixTime,
+            'errorRedirectUrl' => $this->faker->url,
+            'userdata-countrycode' => $this->faker->countryCode,
+            'userdata-email' => $this->faker->email,
+            'userdata-commercial' => false,
         ];
     }
 
@@ -273,7 +257,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setWebVoiceConf($params['webVoiceConf'])
             ->setCreateTime($params['createTime'])
             ->setErrorRedirectUrl($params['errorRedirectUrl'])
-            ->setConfigToken($params['configToken'])
             ->addUserData('countrycode', $params['userdata-countrycode'])
             ->addUserData('email', $params['userdata-email'])
             ->addUserData('commercial', $params['userdata-commercial']);
@@ -284,8 +267,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function generateEndMeetingParams()
     {
-        return ['meetingID' => $this->faker->uuid,
-                'password' => $this->faker->password, ];
+        return [
+            'meetingID' => $this->faker->uuid,
+        ];
     }
 
     /**
@@ -295,7 +279,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function getEndMeetingMock($params)
     {
-        return new EndMeetingParameters($params['meetingID'], $params['password']);
+        return new EndMeetingParameters($params['meetingID']);
     }
 
     /**

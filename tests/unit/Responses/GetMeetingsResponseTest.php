@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -52,8 +53,6 @@ final class GetMeetingsResponseTest extends TestCase
         $this->assertEquals('Tue Jan 19 08:27:55 EST 2016', $aMeeting->getCreationDate());
         $this->assertEquals(49518, $aMeeting->getVoiceBridge());
         $this->assertEquals('580.124.3937x93615', $aMeeting->getDialNumber());
-        $this->assertEquals('f~kxYJeAV~G?Jb+E:ggn', $aMeeting->getAttendeePassword());
-        $this->assertEquals('n:"zWc##Bi.y,d^s,mMF', $aMeeting->getModeratorPassword());
         $this->assertFalse($aMeeting->hasBeenForciblyEnded());
         $this->assertTrue($aMeeting->isRunning());
         $this->assertEquals(5, $aMeeting->getParticipantCount());
@@ -74,11 +73,12 @@ final class GetMeetingsResponseTest extends TestCase
 
         $aMeeting = $this->meetings->getMeetings()[2];
 
-        $this->assertEachGetterValueIsString($aMeeting, ['getMeetingId', 'getMeetingName', 'getCreationDate', 'getDialNumber',
-            'getAttendeePassword', 'getModeratorPassword', ]);
+        $this->assertEachGetterValueIsString($aMeeting, ['getMeetingId', 'getMeetingName', 'getCreationDate', 'getDialNumber']);
         $this->assertEachGetterValueIsDouble($aMeeting, ['getCreationTime']);
-        $this->assertEachGetterValueIsInteger($aMeeting, ['getVoiceBridge', 'getParticipantCount', 'getListenerCount',
-            'getVoiceParticipantCount', 'getVideoCount', 'getDuration', ]);
+        $this->assertEachGetterValueIsInteger($aMeeting, [
+            'getVoiceBridge', 'getParticipantCount', 'getListenerCount',
+            'getVoiceParticipantCount', 'getVideoCount', 'getDuration',
+        ]);
         $this->assertEachGetterValueIsBoolean($aMeeting, ['hasBeenForciblyEnded', 'isRunning', 'hasUserJoined']);
     }
 

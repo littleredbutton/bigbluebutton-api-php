@@ -63,16 +63,6 @@ class Meeting
     private $dialNumber;
 
     /**
-     * @var string|null
-     */
-    private $attendeePassword;
-
-    /**
-     * @var string|null
-     */
-    private $moderatorPassword;
-
-    /**
      * @var bool
      */
     private $hasBeenForciblyEnded;
@@ -166,8 +156,6 @@ class Meeting
         $this->creationDate = $xml->createDate->__toString();
         $this->voiceBridge = (int) $xml->voiceBridge;
         $this->dialNumber = $xml->dialNumber->__toString();
-        $this->attendeePassword = $xml->attendeePW->__toString();
-        $this->moderatorPassword = $xml->moderatorPW->__toString();
         $this->hasBeenForciblyEnded = $xml->hasBeenForciblyEnded->__toString() === 'true';
         $this->isRunning = $xml->running->__toString() === 'true';
         $this->participantCount = (int) $xml->participantCount;
@@ -213,22 +201,6 @@ class Meeting
     public function getDialNumber(): string
     {
         return $this->dialNumber;
-    }
-
-    /**
-     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
-     */
-    public function getAttendeePassword(): string
-    {
-        return $this->attendeePassword;
-    }
-
-    /**
-     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
-     */
-    public function getModeratorPassword(): string
-    {
-        return $this->moderatorPassword;
     }
 
     public function hasBeenForciblyEnded(): bool
