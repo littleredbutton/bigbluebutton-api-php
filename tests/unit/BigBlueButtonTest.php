@@ -62,7 +62,7 @@ final class BigBlueButtonTest extends TestCase
         $this->bbb = new BigBlueButton('http://localhost/', null, $this->transport);
     }
 
-    public function testMissingUrl()
+    public function testMissingUrl(): void
     {
         $this->expectException(ConfigException::class);
 
@@ -76,7 +76,7 @@ final class BigBlueButtonTest extends TestCase
         }
     }
 
-    public function testNetworkFailure()
+    public function testNetworkFailure(): void
     {
         $this->expectException(NetworkException::class);
 
@@ -87,7 +87,7 @@ final class BigBlueButtonTest extends TestCase
         $this->bbb->createMeeting($this->getCreateMock($params));
     }
 
-    public function testInvalidXMLResponse()
+    public function testInvalidXMLResponse(): void
     {
         $this->expectException(ParsingException::class);
 
@@ -98,7 +98,7 @@ final class BigBlueButtonTest extends TestCase
         $this->bbb->createMeeting($this->getCreateMock($params));
     }
 
-    public function testJSessionId()
+    public function testJSessionId(): void
     {
         $id = 'foobar';
         $this->transport->method('request')->willReturn(new TransportResponse('<x></x>', $id));
@@ -110,7 +110,7 @@ final class BigBlueButtonTest extends TestCase
         $this->assertEquals($id, $this->bbb->getJSessionId());
     }
 
-    public function testApiVersion()
+    public function testApiVersion(): void
     {
         $apiVersion = '2.0';
         $xml = "<response>
@@ -126,7 +126,7 @@ final class BigBlueButtonTest extends TestCase
         $this->assertEquals($apiVersion, $response->getVersion());
     }
 
-    public function testIsConnectionWorking()
+    public function testIsConnectionWorking(): void
     {
         $xmlSuccess = '<response>
             <returncode>SUCCESS</returncode>
@@ -169,7 +169,7 @@ final class BigBlueButtonTest extends TestCase
         $this->assertStringContainsString('='.rawurlencode($meetingId), $url);
     }
 
-    public function testGetMeetingInfo()
+    public function testGetMeetingInfo(): void
     {
         $meetingId = $this->faker->uuid;
 
@@ -219,7 +219,7 @@ final class BigBlueButtonTest extends TestCase
     /**
      * Test create meeting URL.
      */
-    public function testCreateMeetingUrl()
+    public function testCreateMeetingUrl(): void
     {
         $params = $this->generateCreateParams();
         $url = $this->bbb->getCreateMeetingUrl($this->getCreateMock($params));
@@ -232,22 +232,17 @@ final class BigBlueButtonTest extends TestCase
     /**
      * Test create join meeting URL.
      */
-    public function testCreateJoinMeetingUrl()
+    public function testCreateJoinMeetingUrl(): void
     {
         $joinMeetingParams = $this->generateJoinMeetingParams();
         $joinMeetingMock = $this->getJoinMeetingMock($joinMeetingParams);
 
         $url = $this->bbb->getJoinMeetingURL($joinMeetingMock);
 
-        foreach ($joinMeetingParams as $key => $value) {
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-            $this->assertStringContainsString(rawurlencode($key).'='.rawurlencode($value), $url);
-        }
+        $this->assertUrlContainsAllRequestParameters($url, $joinMeetingParams);
     }
 
-    public function testJoinMeeting()
+    public function testJoinMeeting(): void
     {
         $joinMeetingParams = $this->generateJoinMeetingParams();
         $params = $this->getJoinMeetingMock($joinMeetingParams);
@@ -283,19 +278,15 @@ final class BigBlueButtonTest extends TestCase
     /**
      * Test generate end meeting URL.
      */
-    public function testCreateEndMeetingUrl()
+    public function testCreateEndMeetingUrl(): void
     {
         $params = $this->generateEndMeetingParams();
         $url = $this->bbb->getEndMeetingURL($this->getEndMeetingMock($params));
-        foreach ($params as $key => $value) {
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-            $this->assertStringContainsString(rawurlencode($key).'='.rawurlencode($value), $url);
-        }
+
+        $this->assertUrlContainsAllRequestParameters($url, $params);
     }
 
-    public function testEndMeeting()
+    public function testEndMeeting(): void
     {
         $data = $this->generateEndMeetingParams();
         $params = $this->getEndMeetingMock($data);
@@ -315,13 +306,13 @@ final class BigBlueButtonTest extends TestCase
 
     /* Get Meetings */
 
-    public function testGetMeetingsUrl()
+    public function testGetMeetingsUrl(): void
     {
         $url = $this->bbb->getMeetingsUrl();
         $this->assertStringContainsString(ApiMethod::GET_MEETINGS, $url);
     }
 
-    public function testGetMeetings()
+    public function testGetMeetings(): void
     {
         $xml = '<response>
             <returncode>SUCCESS</returncode>
@@ -377,13 +368,13 @@ final class BigBlueButtonTest extends TestCase
 
     /* Get recordings */
 
-    public function testGetRecordingsUrl()
+    public function testGetRecordingsUrl(): void
     {
         $url = $this->bbb->getRecordingsUrl(new GetRecordingsParameters());
         $this->assertStringContainsString(ApiMethod::GET_RECORDINGS, $url);
     }
 
-    public function testGetRecordings()
+    public function testGetRecordings(): void
     {
         $xml = '<response>
             <returncode>SUCCESS</returncode>
@@ -429,19 +420,19 @@ final class BigBlueButtonTest extends TestCase
         $this->assertEquals('SAT- Writing-Humanities (All participants)', $recording->getName());
     }
 
-    public function testPublishRecordingsUrl()
+    public function testPublishRecordingsUrl(): void
     {
         $url = $this->bbb->getPublishRecordingsUrl(new PublishRecordingsParameters($this->faker->sha1, true));
         $this->assertStringContainsString(ApiMethod::PUBLISH_RECORDINGS, $url);
     }
 
-    public function testDeleteRecordingsUrl()
+    public function testDeleteRecordingsUrl(): void
     {
         $url = $this->bbb->getDeleteRecordingsUrl(new DeleteRecordingsParameters($this->faker->sha1));
         $this->assertStringContainsString(ApiMethod::DELETE_RECORDINGS, $url);
     }
 
-    public function testUpdateRecordingsUrl()
+    public function testUpdateRecordingsUrl(): void
     {
         $params = $this->generateUpdateRecordingsParams();
         $url = $this->bbb->getUpdateRecordingsUrl($this->getUpdateRecordingsParamsMock($params));
