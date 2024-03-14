@@ -27,6 +27,7 @@ use BigBlueButton\Exceptions\ParsingException;
 use BigBlueButton\Http\Transport\TransportInterface;
 use BigBlueButton\Http\Transport\TransportResponse;
 use BigBlueButton\Parameters\DeleteRecordingsParameters;
+use BigBlueButton\Parameters\GetMeetingInfoParameters;
 use BigBlueButton\Parameters\GetRecordingsParameters;
 use BigBlueButton\Parameters\GetRecordingTextTracksParameters;
 use BigBlueButton\Parameters\HooksCreateParameters;
@@ -156,6 +157,61 @@ final class BigBlueButtonTest extends TestCase
 
         $this->assertFalse($this->bbb->isConnectionWorking(), 'Connection is not working, because XML is invalid');
         $this->assertEquals(BigBlueButton::CONNECTION_ERROR_BASEURL, $this->bbb->getConnectionError());
+    }
+
+    /* Get meeting info */
+
+    public function testGetMeetingInfoUrl(): void
+    {
+        $meetingId = $this->faker->uuid;
+
+        $url = $this->bbb->getMeetingInfoUrl(new GetMeetingInfoParameters($meetingId));
+        $this->assertStringContainsString('='.rawurlencode($meetingId), $url);
+    }
+
+    public function testGetMeetingInfo()
+    {
+        $meetingId = $this->faker->uuid;
+
+        $xml = '<response>
+            <returncode>SUCCESS</returncode>
+            <meetingName>Demo Meeting</meetingName>
+            <meetingID>'.$meetingId.'</meetingID>
+            <internalMeetingID>79fd9d83ffdfe7d1fcfb19feab08d283ad518e49-1710416871174</internalMeetingID>
+            <createTime>1710416871174</createTime>
+            <createDate>Thu Mar 14 11:47:51 UTC 2024</createDate>
+            <voiceBridge>180621383</voiceBridge>
+            <dialNumber>18632080022</dialNumber>
+            <attendeePW>ap</attendeePW>
+            <moderatorPW>mp</moderatorPW>
+            <running>false</running>
+            <duration>540</duration>
+            <hasUserJoined>false</hasUserJoined>
+            <recording>false</recording>
+            <hasBeenForciblyEnded>false</hasBeenForciblyEnded>
+            <startTime>1710416871176</startTime>
+            <endTime>0</endTime>
+            <participantCount>0</participantCount>
+            <listenerCount>0</listenerCount>
+            <voiceParticipantCount>0</voiceParticipantCount>
+            <videoCount>0</videoCount>
+            <maxUsers>0</maxUsers>
+            <moderatorCount>0</moderatorCount>
+            <attendees></attendees>
+            <metadata></metadata>
+            <isBreakout>false</isBreakout>
+        </response>';
+
+        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
+
+        $result = $this->bbb->getMeetingInfo(new GetMeetingInfoParameters($meetingId));
+        $this->assertEquals('SUCCESS', $result->getReturnCode());
+        $this->assertTrue($result->success());
+
+        $meeting = $result->getMeeting();
+
+        $this->assertEquals($meetingId, $meeting->getMeetingId());
+        $this->assertEquals('Demo Meeting', $meeting->getMeetingName());
     }
 
     /* Create Meeting */
@@ -319,12 +375,58 @@ final class BigBlueButtonTest extends TestCase
         $this->assertFalse($response->getMeetings()[0]->hasUserJoined());
     }
 
-    /* Get meeting info */
+    /* Get recordings */
 
     public function testGetRecordingsUrl()
     {
         $url = $this->bbb->getRecordingsUrl(new GetRecordingsParameters());
         $this->assertStringContainsString(ApiMethod::GET_RECORDINGS, $url);
+    }
+
+    public function testGetRecordings()
+    {
+        $xml = '<response>
+            <returncode>SUCCESS</returncode>
+            <recordings>
+                <recording>
+                    <recordID>f71d810b6e90a4a34ae02b8c7143e8733178578e-1462807897120</recordID>
+                    <meetingID>9d287cf50490ca856ca5273bd303a7e321df6051-4-119</meetingID>
+                    <name><![CDATA[SAT- Writing-Humanities (All participants)]]></name>
+                    <published>true</published>
+                    <state>published</state>
+                    <startTime>1462807897120</startTime>
+                    <endTime>1462812873004</endTime>
+                    <metadata>
+                        <bbb-context><![CDATA[SAT Score Booster Program-Main]]></bbb-context>
+                        <bbb-origin-version><![CDATA[2.7.7+ (Build: 20150319)]]></bbb-origin-version>
+                        <bn-origin><![CDATA[Moodle]]></bn-origin>
+                        <bbb-origin-tag><![CDATA[moodle-mod_bigbluebuttonbn (2015080611)]]></bbb-origin-tag>
+                        <bbb-origin-server-common-name><![CDATA[]]></bbb-origin-server-common-name>
+                        <bbb-origin-server-name><![CDATA[planetinteractive.us]]></bbb-origin-server-name>
+                        <bbb-recording-description><![CDATA[]]></bbb-recording-description>
+                        <bbb-recording-name><![CDATA[SAT- Writing-Humanities (All participants)]]></bbb-recording-name>
+                        <bbb-recording-tags><![CDATA[]]></bbb-recording-tags>
+                    </metadata>
+                    <playback>
+                        <format>
+                            <type>presentation</type>
+                            <url>http://test-install.blindsidenetworks.com/playback/presentation/0.9.0/playback.html?meetingId=f71d810b6e90a4a34ae02b8c7143e8733178578e-1462807897120</url>
+                            <length>44</length>
+                        </format>
+                    </playback>
+                </recording>
+            </recordings>
+        </response>';
+
+        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
+
+        $response = $this->bbb->getRecordings(new GetRecordingsParameters());
+
+        $this->assertCount(1, $response->getRecords());
+        $recording = $response->getRecords()[0];
+        $this->assertEquals('f71d810b6e90a4a34ae02b8c7143e8733178578e-1462807897120', $recording->getRecordID());
+        $this->assertEquals('9d287cf50490ca856ca5273bd303a7e321df6051-4-119', $recording->getMeetingID());
+        $this->assertEquals('SAT- Writing-Humanities (All participants)', $recording->getName());
     }
 
     public function testPublishRecordingsUrl()
