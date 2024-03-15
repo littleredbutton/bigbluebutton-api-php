@@ -29,10 +29,8 @@ use PHPUnit\Framework\TestCase;
  */
 final class ArrayHelperTest extends TestCase
 {
-    /**
-     * @return iterable<array{0: array<mixed>, 1: array<mixed>, 2: bool, 3: array<mixed>}>
-     */
-    public static function provideArrays(): iterable
+    /** @return iterable<array<mixed>> */
+    public function provideArrays(): iterable
     {
         yield 'simple flat arrays' => [
             ['foo' => 'bar', 'foo2' => 'bar2'],
@@ -63,9 +61,9 @@ final class ArrayHelperTest extends TestCase
     /**
      * @dataProvider provideArrays
      *
-     * @param array<mixed> $input1
-     * @param array<mixed> $input2
-     * @param array<mixed> $output
+     * @param array<string|array-key,string> $input1
+     * @param array<string|array-key,string> $input2
+     * @param array<string|array-key,string> $output
      */
     public function testMergeRecursive(array $input1, array $input2, bool $reorderNested, array $output): void
     {

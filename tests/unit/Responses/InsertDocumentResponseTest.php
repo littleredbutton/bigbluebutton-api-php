@@ -41,7 +41,12 @@ final class InsertDocumentResponseTest extends TestCase
     {
         $this->assertEquals('SUCCESS', $this->running->getReturnCode());
 
-        $this->assertEquals('<?xmlversion="1.0"?><response><returncode>SUCCESS</returncode></response>', $this->minifyString($this->running->getRawXml()->asXML()));
+        $xml = $this->running->getRawXml()->asXML();
+        $this->assertIsString($xml);
+
+        $this->assertEquals('<?xmlversion="1.0"?><response><returncode>SUCCESS</returncode></response>', $this->minifyString(
+            $xml
+        ));
     }
 
     public function testIsMeetingRunningResponseTypes(): void

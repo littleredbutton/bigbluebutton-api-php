@@ -294,12 +294,22 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function loadXmlFile(string $path): \SimpleXMLElement
     {
-        return simplexml_load_string(file_get_contents($path));
+        $content = file_get_contents($path);
+        $this->assertIsString($content);
+
+        $xml = simplexml_load_string($content);
+
+        $this->assertNotFalse($xml);
+
+        return $xml;
     }
 
     protected function loadJsonFile(string $path): string
     {
-        return file_get_contents($path);
+        $content = file_get_contents($path);
+        $this->assertIsString($content);
+
+        return $content;
     }
 
     protected function minifyString(string $string): string

@@ -36,7 +36,7 @@ use BigBlueButton\Tests\Common\TestCase;
 /**
  * Class BigBlueButtonIntegrationTest.
  */
-abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
+abstract class BigBlueButtonFunctionalTestAbstract extends TestCase
 {
     private BigBlueButton $bbb;
 
@@ -153,7 +153,11 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
     public function testCreateMeetingWithDocumentEmbedded(): void
     {
         $params = $this->getCreateMock($this->generateCreateParams());
-        $params->addPresentation('bbb_logo.png', file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'bbb_logo.png'));
+
+        $content = file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'bbb_logo.png');
+        $this->assertIsString($content);
+
+        $params->addPresentation('bbb_logo.png', $content);
 
         $result = $this->bbb->createMeeting($params);
 
@@ -172,7 +176,11 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
     {
         $params = $this->getCreateMock($this->generateCreateParams());
         $params->addPresentation('https://picsum.photos/3840/2160/?random', null, 'presentation.png');
-        $params->addPresentation('logo.png', file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'bbb_logo.png'));
+
+        $content = file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'bbb_logo.png');
+        $this->assertIsString($content);
+
+        $params->addPresentation('logo.png', $content);
 
         $result = $this->bbb->createMeeting($params);
 

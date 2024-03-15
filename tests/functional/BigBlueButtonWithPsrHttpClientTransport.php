@@ -27,7 +27,7 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Symfony\Component\HttpClient\CurlHttpClient;
 use Symfony\Component\HttpClient\Psr18Client;
 
-final class BigBlueButtonWithPsrHttpClientTransport extends AbstractBigBlueButtonFunctionalTest
+final class BigBlueButtonWithPsrHttpClientTransport extends BigBlueButtonFunctionalTestAbstract
 {
     protected static function createTransport(): TransportInterface
     {

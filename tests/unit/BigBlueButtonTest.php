@@ -292,6 +292,8 @@ final class BigBlueButtonTest extends TestCase
                 $payload = $request->getPayload();
                 $xml = simplexml_load_string($payload);
 
+                self::assertNotFalse($xml);
+
                 $presentations = $xml->module[0];
                 $clientSettingsOverride = $xml->module[1];
 

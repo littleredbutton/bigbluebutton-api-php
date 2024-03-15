@@ -128,7 +128,10 @@ final class GetRecordingsResponseTest extends TestCase
           <message>There are no recordings for the meeting(s).</message>
         </response>';
 
-        $response = new GetRecordingsResponse(simplexml_load_string($xml));
+        $xml = simplexml_load_string($xml);
+        $this->assertInstanceOf(\SimpleXMLElement::class, $xml);
+
+        $response = new GetRecordingsResponse($xml);
 
         $this->assertTrue($response->hasNoRecordings());
     }
