@@ -27,15 +27,9 @@ class Hook
 {
     private readonly int $hookId;
 
-    /**
-     * @var string
-     */
-    private $meetingId;
+    private readonly string $meetingId;
 
-    /**
-     * @var string
-     */
-    private $callbackUrl;
+    private readonly string $callbackUrl;
 
     private readonly bool $permanentHook;
 

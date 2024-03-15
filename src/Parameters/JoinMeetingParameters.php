@@ -48,7 +48,7 @@ use BigBlueButton\Enum\Role;
  * @method bool|null isGuest()
  * @method $this     setGuest(bool $guest)
  * @method string    getRole()
- * @method $this     setRole(string $role)
+ * @method $this     setRole(Role $role)
  * @method bool|null isExcludeFromDashboard()
  * @method $this     setExcludeFromDashboard(bool $excludeFromDashboard)
  */

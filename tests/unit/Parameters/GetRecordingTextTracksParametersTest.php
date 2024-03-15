@@ -18,9 +18,10 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
-use BigBlueButton\TestCase;
+use BigBlueButton\Parameters\GetRecordingTextTracksParameters;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class GetRecordingTextTracksParametersTest extends TestCase
 {

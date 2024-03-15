@@ -313,10 +313,7 @@ class CreateMeetingParameters extends MetaParameters
      */
     protected $lockSettingsHideViewersCursor;
 
-    /**
-     * @var string
-     */
-    protected $guestPolicy = GuestPolicy::ALWAYS_ACCEPT;
+    protected GuestPolicy $guestPolicy;
 
     /**
      * @var bool
@@ -440,6 +437,8 @@ class CreateMeetingParameters extends MetaParameters
 
     public function __construct(protected string $meetingID, protected string $name)
     {
+        $this->guestPolicy = GuestPolicy::ALWAYS_ACCEPT;
+
         $this->ignoreProperties = ['disabledFeatures', 'disabledFeaturesExclude'];
     }
 

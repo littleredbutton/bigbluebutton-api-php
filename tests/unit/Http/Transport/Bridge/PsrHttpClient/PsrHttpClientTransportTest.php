@@ -19,10 +19,11 @@ declare(strict_types=1);
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Http\Transport\Bridge\PsrHttpClient;
+namespace BigBlueButton\Tests\Unit\Http\Transport\Bridge\PsrHttpClient;
 
 use BigBlueButton\Exceptions\NetworkException;
 use BigBlueButton\Exceptions\RuntimeException;
+use BigBlueButton\Http\Transport\Bridge\PsrHttpClient\PsrHttpClientTransport;
 use BigBlueButton\Http\Transport\TransportRequest;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

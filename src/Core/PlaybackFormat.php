@@ -23,11 +23,9 @@ namespace BigBlueButton\Core;
 
 class PlaybackFormat
 {
-    /** @var string */
-    private $type;
+    private readonly string $type;
 
-    /** @var string */
-    private $url;
+    private readonly string $url;
 
     private readonly int $processingTime;
 
@@ -36,8 +34,7 @@ class PlaybackFormat
     /** @var ImagePreview[] */
     private ?array $imagePreviews = null;
 
-    /** @var \SimpleXMLElement */
-    private $imagePreviewsRaw;
+    private \SimpleXMLElement $imagePreviewsRaw;
 
     public function __construct(\SimpleXMLElement $xml)
     {

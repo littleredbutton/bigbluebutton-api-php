@@ -24,11 +24,11 @@ namespace BigBlueButton\Core;
  */
 class Record
 {
-    private $recordId;
-    private $meetingId;
-    private $name;
+    private string $recordId;
+    private string $meetingId;
+    private string $name;
     private readonly bool $isPublished;
-    private $state;
+    private string $state;
     private readonly float $startTime;
     private readonly float $endTime;
     private readonly int $participantCount;
@@ -36,9 +36,6 @@ class Record
 
     /** @var PlaybackFormat[] */
     private array $playbackFormats = [];
-    private $playbackType;
-    private $playbackUrl;
-    private readonly int $playbackLength;
 
     public function __construct(\SimpleXMLElement $xml)
     {
@@ -50,9 +47,6 @@ class Record
         $this->startTime = (float) $xml->startTime->__toString();
         $this->endTime = (float) $xml->endTime->__toString();
         $this->participantCount = (int) $xml->participants->__toString();
-        $this->playbackType = $xml->playback->format->type->__toString();
-        $this->playbackUrl = $xml->playback->format->url->__toString();
-        $this->playbackLength = (int) $xml->playback->format->length->__toString();
 
         foreach ($xml->playback->children() as $format) {
             $this->playbackFormats[] = new PlaybackFormat($format);

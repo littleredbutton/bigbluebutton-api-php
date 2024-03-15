@@ -27,29 +27,17 @@ use BigBlueButton\Enum\Role;
  */
 class Meeting
 {
-    /**
-     * @var string
-     */
-    private $meetingId;
+    private readonly string $meetingId;
 
-    /**
-     * @var string
-     */
-    private $meetingName;
+    private readonly string $meetingName;
 
     private readonly float $creationTime;
 
-    /**
-     * @var string
-     */
-    private $creationDate;
+    private readonly string $creationDate;
 
     private readonly int $voiceBridge;
 
-    /**
-     * @var string
-     */
-    private $dialNumber;
+    private readonly string $dialNumber;
 
     private readonly bool $hasBeenForciblyEnded;
 
@@ -67,10 +55,7 @@ class Meeting
 
     private readonly bool $hasUserJoined;
 
-    /**
-     * @var string
-     */
-    private $internalMeetingId;
+    private string $internalMeetingId;
 
     private readonly bool $isRecording;
 
@@ -240,7 +225,7 @@ class Meeting
     {
         $attendees = $this->getAttendees();
 
-        $moderators = array_filter($attendees, fn ($attendee) => $attendee->getRole() === Role::MODERATOR->value);
+        $moderators = array_filter($attendees, static fn ($attendee) => $attendee->getRole() === Role::MODERATOR->value);
 
         return array_values($moderators);
     }
@@ -254,7 +239,7 @@ class Meeting
     {
         $attendees = $this->getAttendees();
 
-        $viewers = array_filter($attendees, fn ($attendee) => $attendee->getRole() === Role::VIEWER->value);
+        $viewers = array_filter($attendees, static fn ($attendee) => $attendee->getRole() === Role::VIEWER->value);
 
         return array_values($viewers);
     }

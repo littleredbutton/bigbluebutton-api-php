@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BigBlueButton\Http;
+namespace BigBlueButton\Tests\Unit\Http;
 
 /**
  * This file is part of littleredbutton/bigbluebutton-api-php.
@@ -21,7 +21,7 @@ namespace BigBlueButton\Http;
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Http;
+namespace BigBlueButton\Tests\Unit\Http;
 
 use BigBlueButton\Http\Transport\Header;
 use PHPUnit\Framework\TestCase;

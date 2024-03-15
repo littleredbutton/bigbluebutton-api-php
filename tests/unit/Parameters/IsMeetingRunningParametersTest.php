@@ -17,9 +17,10 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
-use BigBlueButton\TestCase;
+use BigBlueButton\Parameters\IsMeetingRunningParameters;
+use BigBlueButton\Tests\Common\TestCase;
 
 /**
  * Class IsMeetingRunningParametersTest.

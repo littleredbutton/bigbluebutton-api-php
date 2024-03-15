@@ -18,11 +18,12 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
 use BigBlueButton\Core\GuestPolicy;
 use BigBlueButton\Enum\Feature;
-use BigBlueButton\TestCase;
+use BigBlueButton\Parameters\CreateMeetingParameters;
+use BigBlueButton\Tests\Common\TestCase;
 
 /**
  * Class CreateMeetingParametersTest.
@@ -161,7 +162,7 @@ final class CreateMeetingParametersTest extends TestCase
 
         $this->assertStringContainsString('isBreakout='.rawurlencode($createBreakoutMeetingParams->isBreakout() ? 'true' : 'false'), $params);
         $this->assertStringContainsString('parentMeetingID='.rawurlencode($createBreakoutMeetingParams->getParentMeetingID()), $params);
-        $this->assertStringContainsString('sequence='.rawurlencode($createBreakoutMeetingParams->getSequence()), $params);
+        $this->assertStringContainsString('sequence='.rawurlencode((string) $createBreakoutMeetingParams->getSequence()), $params);
         $this->assertStringContainsString('freeJoin='.rawurlencode($createBreakoutMeetingParams->isFreeJoin() ? 'true' : 'false'), $params);
     }
 
@@ -179,6 +180,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->expectException(\BadFunctionCallException::class);
 
         $params = new CreateMeetingParameters($this->faker->uuid, $this->faker->name);
+        /* @phpstan-ignore-next-line */
         $params->getFoobar();
     }
 
@@ -187,6 +189,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->expectException(\BadFunctionCallException::class);
 
         $params = new CreateMeetingParameters($this->faker->uuid, $this->faker->name);
+        /* @phpstan-ignore-next-line */
         $params->getname();
     }
 

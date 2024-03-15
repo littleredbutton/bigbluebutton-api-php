@@ -19,24 +19,24 @@
 
 namespace BigBlueButton\Core;
 
-final class ApiMethod
+enum ApiMethod: string
 {
-    public const CREATE = 'create';
-    public const JOIN = 'join';
-    public const ENTER = 'enter';
-    public const END = 'end';
-    public const IS_MEETING_RUNNING = 'isMeetingRunning';
-    public const GET_MEETING_INFO = 'getMeetingInfo';
-    public const GET_MEETINGS = 'getMeetings';
-    public const SIGN_OUT = 'signOut';
-    public const GET_RECORDINGS = 'getRecordings';
-    public const PUBLISH_RECORDINGS = 'publishRecordings';
-    public const DELETE_RECORDINGS = 'deleteRecordings';
-    public const UPDATE_RECORDINGS = 'updateRecordings';
-    public const GET_RECORDING_TEXT_TRACKS = 'getRecordingTextTracks';
-    public const PUT_RECORDING_TEXT_TRACK = 'putRecordingTextTrack';
-    public const HOOKS_CREATE = 'hooks/create';
-    public const HOOKS_LIST = 'hooks/list';
-    public const HOOKS_DESTROY = 'hooks/destroy';
-    public const INSERT_DOCUMENT = 'insertDocument';
+    case CREATE = 'create';
+    case JOIN = 'join';
+    case ENTER = 'enter';
+    case END = 'end';
+    case IS_MEETING_RUNNING = 'isMeetingRunning';
+    case GET_MEETING_INFO = 'getMeetingInfo';
+    case GET_MEETINGS = 'getMeetings';
+    case SIGN_OUT = 'signOut';
+    case GET_RECORDINGS = 'getRecordings';
+    case PUBLISH_RECORDINGS = 'publishRecordings';
+    case DELETE_RECORDINGS = 'deleteRecordings';
+    case UPDATE_RECORDINGS = 'updateRecordings';
+    case GET_RECORDING_TEXT_TRACKS = 'getRecordingTextTracks';
+    case PUT_RECORDING_TEXT_TRACK = 'putRecordingTextTrack';
+    case HOOKS_CREATE = 'hooks/create';
+    case HOOKS_LIST = 'hooks/list';
+    case HOOKS_DESTROY = 'hooks/destroy';
+    case INSERT_DOCUMENT = 'insertDocument';
 }

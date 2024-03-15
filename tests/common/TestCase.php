@@ -18,8 +18,9 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton;
+namespace BigBlueButton\Tests\Common;
 
+use BigBlueButton\BigBlueButton;
 use BigBlueButton\Core\GuestPolicy;
 use BigBlueButton\Core\MeetingLayout;
 use BigBlueButton\Enum\Feature;
@@ -36,24 +37,16 @@ use Faker\Generator;
 /**
  * Class TestCase.
  */
-class TestCase extends \PHPUnit\Framework\TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var Generator
-     */
-    protected $faker;
+    protected Generator $faker;
 
     protected function setUp(): void
     {
         $this->faker = Faker::create();
     }
 
-    /**
-     * @param $bbb BigBlueButton
-     *
-     * @return CreateMeetingResponse
-     */
-    protected function createRealMeeting($bbb)
+    protected function createRealMeeting(BigBlueButton $bbb): CreateMeetingResponse
     {
         $createMeetingParams = $this->generateCreateParams();
         $createMeetingMock = $this->getCreateMock($createMeetingParams);
@@ -61,10 +54,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return $bbb->createMeeting($createMeetingMock);
     }
 
-    /**
-     * @return array
-     */
-    protected function generateCreateParams()
+    protected function generateCreateParams(): array
     {
         return [
             'name' => $this->faker->name,
@@ -102,7 +92,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'meta_endCallbackUrl' => $this->faker->url,
             'meta_bbb-recording-ready-url' => $this->faker->url,
             'bannerText' => $this->faker->sentence,
-            'bannerColor' => $this->faker->hexcolor,
+            'bannerColor' => $this->faker->hexColor,
             'meetingKeepEvents' => $this->faker->boolean(50),
             'endWhenNoModerator' => $this->faker->boolean(50),
             'endWhenNoModeratorDelayInMinutes' => $this->faker->numberBetween(1, 100),
@@ -136,10 +126,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return $groups;
     }
 
-    /**
-     * @return array
-     */
-    protected function generateBreakoutCreateParams($createParams)
+    protected function generateBreakoutCreateParams(array $createParams): array
     {
         return array_merge($createParams, [
             'isBreakout' => true,
@@ -149,12 +136,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
         ]);
     }
 
-    /**
-     * @param $params array
-     *
-     * @return CreateMeetingParameters
-     */
-    protected function getCreateMock($params)
+    protected function getCreateMock(array $params): CreateMeetingParameters
     {
         $createMeetingParams = new CreateMeetingParameters($params['meetingID'], $params['name']);
 
@@ -212,20 +194,14 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return $createMeetingParams;
     }
 
-    /**
-     * @return CreateMeetingParameters
-     */
-    protected function getBreakoutCreateMock($params)
+    protected function getBreakoutCreateMock(array $params): CreateMeetingParameters
     {
         $createMeetingParams = $this->getCreateMock($params);
 
         return $createMeetingParams->setBreakout($params['isBreakout'])->setParentMeetingID($params['parentMeetingId'])->setSequence($params['sequence'])->setFreeJoin($params['freeJoin']);
     }
 
-    /**
-     * @return array
-     */
-    protected function generateJoinMeetingParams()
+    protected function generateJoinMeetingParams(): array
     {
         return ['meetingID' => $this->faker->uuid,
                 'fullName' => $this->faker->name,
@@ -240,16 +216,11 @@ class TestCase extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @param $params array
-     *
-     * @return JoinMeetingParameters
-     */
-    protected function getJoinMeetingMock($params)
+    protected function getJoinMeetingMock(array $params): JoinMeetingParameters
     {
         $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName'], $params['role']);
 
-        return $joinMeetingParams
+        $joinMeetingParams
             ->setUserID($params['userID'])
             ->setWebVoiceConf($params['webVoiceConf'])
             ->setCreateTime($params['createTime'])
@@ -257,34 +228,23 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->addUserData('countrycode', $params['userdata-countrycode'])
             ->addUserData('email', $params['userdata-email'])
             ->addUserData('commercial', $params['userdata-commercial']);
+
+        return $joinMeetingParams;
     }
 
-    /**
-     * @return array
-     */
-    protected function generateEndMeetingParams()
+    protected function generateEndMeetingParams(): array
     {
         return [
             'meetingID' => $this->faker->uuid,
         ];
     }
 
-    /**
-     * @param $params array
-     *
-     * @return EndMeetingParameters
-     */
-    protected function getEndMeetingMock($params)
+    protected function getEndMeetingMock(array $params): EndMeetingParameters
     {
         return new EndMeetingParameters($params['meetingID']);
     }
 
-    /**
-     * @param $bbb BigBlueButton
-     *
-     * @return UpdateRecordingsResponse
-     */
-    protected function updateRecordings($bbb)
+    protected function updateRecordings(BigBlueButton $bbb): UpdateRecordingsResponse
     {
         $updateRecordingsParams = $this->generateUpdateRecordingsParams();
         $updateRecordingsMock = $this->getUpdateRecordingsParamsMock($updateRecordingsParams);
@@ -292,10 +252,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return $bbb->updateRecordings($updateRecordingsMock);
     }
 
-    /**
-     * @return array
-     */
-    protected function generateUpdateRecordingsParams()
+    protected function generateUpdateRecordingsParams(): array
     {
         return [
             'recordID' => $this->faker->uuid,
@@ -303,59 +260,67 @@ class TestCase extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @param $params array
-     *
-     * @return UpdateRecordingsParameters
-     */
-    protected function getUpdateRecordingsParamsMock($params)
+    protected function getUpdateRecordingsParamsMock(array $params): UpdateRecordingsParameters
     {
-        $updateRecordingsParams = new UpdateRecordingsParameters($params['recordID']);
+        $updateRecordingParameters = new UpdateRecordingsParameters($params['recordID']);
+        $updateRecordingParameters->addMeta('presenter', $params['meta_presenter']);
 
-        return $updateRecordingsParams->addMeta('presenter', $params['meta_presenter']);
+        return $updateRecordingParameters;
     }
 
     // Load fixtures
 
-    protected function loadXmlFile($path)
+    protected function loadXmlFile(string $path): \SimpleXMLElement
     {
         return simplexml_load_string(file_get_contents($path));
     }
 
-    protected function loadJsonFile($path)
+    protected function loadJsonFile(string $path): string
     {
         return file_get_contents($path);
     }
 
-    protected function minifyString($string)
+    protected function minifyString(string $string): string
     {
         return str_replace(["\r\n", "\r", "\n", "\t", ' '], '', (string) $string);
     }
 
     // Additional assertions
 
-    public function assertEachGetterValueIsString($obj, $getters): void
+    /**
+     * @param array<string> $getters
+     */
+    public function assertEachGetterValueIsString(object $obj, array $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsString($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of a string for property -> '.$getterName);
         }
     }
 
-    public function assertEachGetterValueIsInteger($obj, $getters): void
+    /**
+     * @param array<string> $getters
+     */
+    public function assertEachGetterValueIsInteger(object $obj, array $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsInt($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of an integer for property -> '.$getterName);
         }
     }
 
-    public function assertEachGetterValueIsDouble($obj, $getters): void
+    /**
+     * @param array<string> $getters
+     */
+    public function assertEachGetterValueIsDouble(object $obj, array $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsFloat($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of a double for property -> '.$getterName);
         }
     }
 
-    public function assertEachGetterValueIsBoolean($obj, $getters): void
+    /**
+     * @param array<string> $getters
+     */
+    public function assertEachGetterValueIsBoolean(object $obj, array $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsBool($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of a boolean for property -> '.$getterName);

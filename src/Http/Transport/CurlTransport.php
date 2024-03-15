@@ -88,6 +88,7 @@ final class CurlTransport implements TransportInterface
 
         $ch = curl_init();
         // @codeCoverageIgnoreStart
+        /* @phpstan-ignore-next-line */
         if (!$ch) {
             throw new RuntimeException('Could not create curl instance. Error: '.curl_error($ch));
         }

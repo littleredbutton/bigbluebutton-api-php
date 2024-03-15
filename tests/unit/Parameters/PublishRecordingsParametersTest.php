@@ -17,9 +17,10 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
-use BigBlueButton\TestCase;
+use BigBlueButton\Parameters\PublishRecordingsParameters;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class PublishRecordingsParametersTest extends TestCase
 {
@@ -33,7 +34,7 @@ final class PublishRecordingsParametersTest extends TestCase
         $this->assertEquals($publish, $publishRecording->isPublish());
 
         // Test setters that are ignored by the constructor
-        $publishRecording->setRecordID($newRecordingId = !$this->faker->uuid);
+        $publishRecording->setRecordID($newRecordingId = $this->faker->uuid);
         $publishRecording->setPublish($publish = !$publish);
         $this->assertEquals($newRecordingId, $publishRecording->getRecordID());
         $this->assertEquals($publish, $publishRecording->isPublish());

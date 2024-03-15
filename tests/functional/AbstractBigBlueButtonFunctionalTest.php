@@ -29,7 +29,7 @@ use BigBlueButton\Parameters\GetRecordingsParameters;
 use BigBlueButton\Parameters\IsMeetingRunningParameters;
 use BigBlueButton\Parameters\JoinMeetingParameters;
 use BigBlueButton\Parameters\PublishRecordingsParameters;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 /**
  * Class BigBlueButtonIntegrationTest.

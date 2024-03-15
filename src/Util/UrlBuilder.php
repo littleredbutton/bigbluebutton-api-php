@@ -19,6 +19,7 @@
 
 namespace BigBlueButton\Util;
 
+use BigBlueButton\Core\ApiMethod;
 use BigBlueButton\Enum\HashingAlgorithm;
 
 /**
@@ -35,8 +36,12 @@ final class UrlBuilder
     /**
      * Builds an API method URL that includes the url + params + its generated checksum.
      */
-    public function buildUrl(string $method = '', string $params = '', bool $append = true): string
+    public function buildUrl(string|ApiMethod $method = '', string $params = '', bool $append = true): string
     {
+        if ($method instanceof ApiMethod) {
+            $method = $method->value;
+        }
+
         return $this->bbbServerBaseUrl.'api/'.$method.($append ? '?'.$this->buildQs($method, $params) : '');
     }
 

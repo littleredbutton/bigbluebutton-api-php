@@ -19,8 +19,9 @@ declare(strict_types=1);
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Util;
+namespace BigBlueButton\Tests\Unit\Util;
 
+use BigBlueButton\Util\ArrayHelper;
 use PHPUnit\Framework\TestCase;
 
 /**

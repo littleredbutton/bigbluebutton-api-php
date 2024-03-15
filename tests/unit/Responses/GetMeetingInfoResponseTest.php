@@ -2,7 +2,7 @@
 
 use BigBlueButton\Core\Meeting;
 use BigBlueButton\Responses\GetMeetingInfoResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.

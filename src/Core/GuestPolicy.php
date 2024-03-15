@@ -22,10 +22,10 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Core;
 
-final class GuestPolicy
+enum GuestPolicy: string
 {
-    public const ALWAYS_ACCEPT = 'ALWAYS_ACCEPT';
-    public const ALWAYS_DENY = 'ALWAYS_DENY';
-    public const ASK_MODERATOR = 'ASK_MODERATOR';
-    public const ALWAYS_ACCEPT_AUTH = 'ALWAYS_ACCEPT_AUTH';
+    case ALWAYS_ACCEPT = 'ALWAYS_ACCEPT';
+    case ALWAYS_DENY = 'ALWAYS_DENY';
+    case ASK_MODERATOR = 'ASK_MODERATOR';
+    case ALWAYS_ACCEPT_AUTH = 'ALWAYS_ACCEPT_AUTH';
 }

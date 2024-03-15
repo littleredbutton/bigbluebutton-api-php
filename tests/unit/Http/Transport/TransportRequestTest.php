@@ -19,7 +19,7 @@ declare(strict_types=1);
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Http;
+namespace BigBlueButton\Tests\Unit\Http;
 
 use BigBlueButton\Http\Transport\TransportRequest;
 use PHPUnit\Framework\TestCase;

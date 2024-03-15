@@ -19,8 +19,9 @@ declare(strict_types=1);
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
+use BigBlueButton\Parameters\BaseParameters;
 use PHPUnit\Framework\TestCase;
 
 final class BaseParametersTest extends TestCase

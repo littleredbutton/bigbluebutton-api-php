@@ -24,8 +24,9 @@ declare(strict_types=1);
  * THE SOFTWARE.
  */
 
-namespace BigBlueButton\Http;
+namespace BigBlueButton\Tests\Unit\Http;
 
+use BigBlueButton\Http\SetCookie;
 use PHPUnit\Framework\TestCase;
 
 /**

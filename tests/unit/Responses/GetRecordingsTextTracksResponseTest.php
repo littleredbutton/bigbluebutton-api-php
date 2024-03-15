@@ -1,9 +1,9 @@
 <?php
 
-namespace BigBlueButton\Tests\Unit\Responses;
+namespace BigBlueButton\Tests\Unit\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\GetRecordingTextTracksResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class GetRecordingsTextTracksResponseTest extends TestCase
 {

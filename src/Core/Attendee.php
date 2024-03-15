@@ -21,20 +21,11 @@ namespace BigBlueButton\Core;
 
 class Attendee
 {
-    /**
-     * @var string
-     */
-    private $userId;
+    private readonly string $userId;
 
-    /**
-     * @var string
-     */
-    private $fullName;
+    private readonly string $fullName;
 
-    /**
-     * @var string
-     */
-    private $role;
+    private readonly string $role;
 
     private readonly bool $isPresenter;
 
@@ -46,10 +37,7 @@ class Attendee
 
     private array $customData = [];
 
-    /**
-     * @var string
-     */
-    private $clientType;
+    private readonly string $clientType;
 
     public function __construct(\SimpleXMLElement $xml)
     {

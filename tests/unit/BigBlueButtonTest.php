@@ -18,8 +18,9 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton;
+namespace BigBlueButton\Tests\Unit;
 
+use BigBlueButton\BigBlueButton;
 use BigBlueButton\Core\ApiMethod;
 use BigBlueButton\Enum\HashingAlgorithm;
 use BigBlueButton\Exceptions\ConfigException;
@@ -37,6 +38,7 @@ use BigBlueButton\Parameters\HooksListParameters;
 use BigBlueButton\Parameters\InsertDocumentParameters;
 use BigBlueButton\Parameters\PublishRecordingsParameters;
 use BigBlueButton\Parameters\PutRecordingTextTrackParameters;
+use BigBlueButton\Tests\Common\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -44,7 +46,6 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 final class BigBlueButtonTest extends TestCase
 {
-    /** @var (\PHPUnit\Framework\MockObject\MockObject&\MockObject) */
     private MockObject $transport;
 
     private BigBlueButton $bbb;
@@ -307,7 +308,7 @@ final class BigBlueButtonTest extends TestCase
     public function testGetMeetingsUrl(): void
     {
         $url = $this->bbb->getMeetingsUrl();
-        $this->assertStringContainsString(ApiMethod::GET_MEETINGS, $url);
+        $this->assertStringContainsString(ApiMethod::GET_MEETINGS->value, $url);
     }
 
     public function testGetMeetings(): void
@@ -367,7 +368,7 @@ final class BigBlueButtonTest extends TestCase
     public function testGetRecordingsUrl(): void
     {
         $url = $this->bbb->getRecordingsUrl(new GetRecordingsParameters());
-        $this->assertStringContainsString(ApiMethod::GET_RECORDINGS, $url);
+        $this->assertStringContainsString(ApiMethod::GET_RECORDINGS->value, $url);
     }
 
     public function testGetRecordings(): void
@@ -421,7 +422,7 @@ final class BigBlueButtonTest extends TestCase
     public function testPublishRecordingsUrl(): void
     {
         $url = $this->bbb->getPublishRecordingsUrl(new PublishRecordingsParameters($this->faker->sha1, true));
-        $this->assertStringContainsString(ApiMethod::PUBLISH_RECORDINGS, $url);
+        $this->assertStringContainsString(ApiMethod::PUBLISH_RECORDINGS->value, $url);
     }
 
     public function testPublishRecordings(): void
@@ -443,7 +444,7 @@ final class BigBlueButtonTest extends TestCase
     public function testDeleteRecordingsUrl(): void
     {
         $url = $this->bbb->getDeleteRecordingsUrl(new DeleteRecordingsParameters($this->faker->sha1));
-        $this->assertStringContainsString(ApiMethod::DELETE_RECORDINGS, $url);
+        $this->assertStringContainsString(ApiMethod::DELETE_RECORDINGS->value, $url);
     }
 
     public function testDeleteRecordings(): void
@@ -666,7 +667,7 @@ final class BigBlueButtonTest extends TestCase
         $params = new HooksListParameters();
         $url = $this->bbb->getHooksListUrl($params);
 
-        $this->assertStringContainsString(ApiMethod::HOOKS_LIST, $url);
+        $this->assertStringContainsString(ApiMethod::HOOKS_LIST->value, $url);
         $this->assertStringNotContainsString('meetingID=', $url);
 
         // Test with meeting ID
@@ -679,7 +680,7 @@ final class BigBlueButtonTest extends TestCase
 
     public function testHookDestroy(): void
     {
-        $params = new HooksDestroyParameters(1);
+        $params = new HooksDestroyParameters('1');
 
         $xml = '<response>
           <returncode>SUCCESS</returncode>

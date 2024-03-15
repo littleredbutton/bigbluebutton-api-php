@@ -26,7 +26,7 @@ declare(strict_types=1);
  * THE SOFTWARE.
  */
 
-namespace BigBlueButton\Http\Transport;
+namespace BigBlueButton\Tests\Integration\Http\Transport;
 
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
