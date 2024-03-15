@@ -61,12 +61,12 @@ abstract class BaseResponse
         return $this->rawXml->message->__toString();
     }
 
-    public function success()
+    public function success(): bool
     {
         return $this->getReturnCode() === self::SUCCESS;
     }
 
-    public function failed()
+    public function failed(): bool
     {
         return $this->getReturnCode() === self::FAILED;
     }

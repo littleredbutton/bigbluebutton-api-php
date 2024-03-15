@@ -26,10 +26,7 @@ use BigBlueButton\Core\Meeting;
  */
 class GetMeetingInfoResponse extends BaseResponse
 {
-    /**
-     * @var Meeting
-     */
-    private $meeting;
+    private ?Meeting $meeting = null;
 
     public function getMeeting(): Meeting
     {

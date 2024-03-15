@@ -25,10 +25,7 @@ use BigBlueButton\TestCase;
 
 final class GetMeetingsResponseTest extends TestCase
 {
-    /**
-     * @var GetMeetingsResponse
-     */
-    private $meetings;
+    private GetMeetingsResponse $meetings;
 
     protected function setUp(): void
     {
@@ -39,7 +36,7 @@ final class GetMeetingsResponseTest extends TestCase
         $this->meetings = new GetMeetingsResponse($xml);
     }
 
-    public function testGetMeetingsResponseContent()
+    public function testGetMeetingsResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->meetings->getReturnCode());
 
@@ -67,7 +64,7 @@ final class GetMeetingsResponseTest extends TestCase
         $this->assertEquals('http://www.muller.biz/autem-dolor-aut-nam-doloribus-molestiae', $aMeeting->getMetas()['endcallbackurl']);
     }
 
-    public function testGetMeetingsResponseTypes()
+    public function testGetMeetingsResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->meetings, ['getReturnCode']);
 
@@ -82,7 +79,7 @@ final class GetMeetingsResponseTest extends TestCase
         $this->assertEachGetterValueIsBoolean($aMeeting, ['hasBeenForciblyEnded', 'isRunning', 'hasUserJoined']);
     }
 
-    public function testGetMeetingsNoMeetings()
+    public function testGetMeetingsNoMeetings(): void
     {
         // scalelite response no meetings
         $xml = simplexml_load_string('<response><returncode>SUCCESS</returncode><messageKey>noMeetings</messageKey><message>No meetings were found on this server.</message></response>');

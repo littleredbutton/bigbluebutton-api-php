@@ -29,14 +29,12 @@ class PlaybackFormat
     /** @var string */
     private $url;
 
-    /** @var int */
-    private $processingTime;
+    private readonly int $processingTime;
 
-    /** @var int */
-    private $length;
+    private readonly int $length;
 
     /** @var ImagePreview[] */
-    private $imagePreviews;
+    private ?array $imagePreviews = null;
 
     /** @var \SimpleXMLElement */
     private $imagePreviewsRaw;

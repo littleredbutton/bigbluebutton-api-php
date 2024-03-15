@@ -32,12 +32,9 @@ namespace BigBlueButton\Http;
  *
  * @internal
  */
-final class SetCookie
+final class SetCookie implements \Stringable
 {
-    /**
-     * @var array
-     */
-    private static $defaults = [
+    private static array $defaults = [
         'Name' => null,
         'Value' => null,
         'Domain' => null,
@@ -66,7 +63,7 @@ final class SetCookie
         // Explode the cookie string using a series of semicolons
         $pieces = array_filter(array_map('trim', explode(';', $cookie)));
         // The name of the cookie (first kvp) must exist and include an equal sign.
-        if (!isset($pieces[0]) || strpos($pieces[0], '=') === false) {
+        if (!isset($pieces[0]) || !str_contains($pieces[0], '=')) {
             return new self($data);
         }
 
@@ -120,7 +117,7 @@ final class SetCookie
         }
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         $str = $this->data['Name'].'='.$this->data['Value'].'; ';
         foreach ($this->data as $k => $v) {
@@ -330,12 +327,12 @@ final class SetCookie
         }
 
         // Ensure that the cookie-path is a prefix of the request path.
-        if (0 !== strpos($requestPath, $cookiePath)) {
+        if (!str_starts_with($requestPath, $cookiePath)) {
             return false;
         }
 
         // Match if the last character of the cookie-path is "/"
-        if (substr($cookiePath, -1, 1) === '/') {
+        if (str_ends_with($cookiePath, '/')) {
             return true;
         }
 

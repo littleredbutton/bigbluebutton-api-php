@@ -27,18 +27,18 @@ class Record
     private $recordId;
     private $meetingId;
     private $name;
-    private $isPublished;
+    private readonly bool $isPublished;
     private $state;
-    private $startTime;
-    private $endTime;
-    private $participantCount;
-    private $metas = [];
+    private readonly float $startTime;
+    private readonly float $endTime;
+    private readonly int $participantCount;
+    private array $metas = [];
 
     /** @var PlaybackFormat[] */
-    private $playbackFormats = [];
+    private array $playbackFormats = [];
     private $playbackType;
     private $playbackUrl;
-    private $playbackLength;
+    private readonly int $playbackLength;
 
     public function __construct(\SimpleXMLElement $xml)
     {

@@ -24,10 +24,7 @@ use BigBlueButton\TestCase;
 
 final class DeleteRecordingsResponseTest extends TestCase
 {
-    /**
-     * @var DeleteRecordingsResponse
-     */
-    private $delete;
+    private DeleteRecordingsResponse $delete;
 
     protected function setUp(): void
     {
@@ -38,13 +35,13 @@ final class DeleteRecordingsResponseTest extends TestCase
         $this->delete = new DeleteRecordingsResponse($xml);
     }
 
-    public function testDeleteRecordingsResponseContent()
+    public function testDeleteRecordingsResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->delete->getReturnCode());
         $this->assertTrue($this->delete->isDeleted());
     }
 
-    public function testDeleteRecordingsResponseTypes()
+    public function testDeleteRecordingsResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->delete, ['getReturnCode']);
         $this->assertEachGetterValueIsBoolean($this->delete, ['isDeleted']);

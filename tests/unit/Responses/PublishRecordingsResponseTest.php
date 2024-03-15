@@ -24,10 +24,7 @@ use BigBlueButton\TestCase;
 
 final class PublishRecordingsResponseTest extends TestCase
 {
-    /**
-     * @var PublishRecordingsResponse
-     */
-    private $publish;
+    private PublishRecordingsResponse $publish;
 
     protected function setUp(): void
     {
@@ -38,13 +35,13 @@ final class PublishRecordingsResponseTest extends TestCase
         $this->publish = new PublishRecordingsResponse($xml);
     }
 
-    public function testPublishRecordingsResponseContent()
+    public function testPublishRecordingsResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->publish->getReturnCode());
         $this->assertTrue($this->publish->isPublished());
     }
 
-    public function testPublishRecordingsResponseTypes()
+    public function testPublishRecordingsResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->publish, ['getReturnCode']);
         $this->assertEachGetterValueIsBoolean($this->publish, ['isPublished']);

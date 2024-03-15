@@ -1,5 +1,8 @@
 <?php
 
+use BigBlueButton\TestCase;
+use BigBlueButton\Responses\GetMeetingInfoResponse;
+use BigBlueButton\Core\Meeting;
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,12 +20,9 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
-final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
+final class GetMeetingInfoResponseTest extends TestCase
 {
-    /**
-     * @var BigBlueButton\Responses\GetMeetingInfoResponse
-     */
-    private $meetingInfo;
+    private GetMeetingInfoResponse $meetingInfo;
 
     protected function setUp(): void
     {
@@ -30,12 +30,12 @@ final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
 
         $xml = $this->loadXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'get_meeting_info.xml');
 
-        $this->meetingInfo = new BigBlueButton\Responses\GetMeetingInfoResponse($xml);
+        $this->meetingInfo = new GetMeetingInfoResponse($xml);
     }
 
-    public function testGetMeetingInfoResponseContent()
+    public function testGetMeetingInfoResponseContent(): void
     {
-        $this->assertInstanceOf('BigBlueButton\Core\Meeting', $this->meetingInfo->getMeeting());
+        $this->assertInstanceOf(Meeting::class, $this->meetingInfo->getMeeting());
         $this->assertCount(4, $this->meetingInfo->getMeeting()->getAttendees());
         $this->assertEquals('SUCCESS', $this->meetingInfo->getReturnCode());
 
@@ -64,7 +64,7 @@ final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
         $this->assertTrue($info->isBreakout());
     }
 
-    public function testMeetingAttendeeContent()
+    public function testMeetingAttendeeContent(): void
     {
         $this->assertCount(4, $this->meetingInfo->getMeeting()->getAttendees());
 
@@ -116,7 +116,7 @@ final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
         $this->assertEquals('VIEWER', $secondViewer->getRole());
     }
 
-    public function testGetMeetingInfoResponseTypes()
+    public function testGetMeetingInfoResponseTypes(): void
     {
         $info = $this->meetingInfo->getMeeting();
 
@@ -140,7 +140,7 @@ final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
         $this->assertEachGetterValueIsBoolean($anAttendee, ['isPresenter', 'isListeningOnly', 'hasJoinedVoice', 'hasVideo']);
     }
 
-    public function testGetMeetingInfoMetadataContent()
+    public function testGetMeetingInfoMetadataContent(): void
     {
         $metas = $this->meetingInfo->getMeeting()->getMetas();
 

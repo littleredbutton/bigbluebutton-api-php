@@ -23,7 +23,7 @@ use BigBlueButton\TestCase;
 
 final class HooksCreateParametersTest extends TestCase
 {
-    public function testHooksCreateParameters()
+    public function testHooksCreateParameters(): void
     {
         $hooksCreateParameters = new HooksCreateParameters($callBackUrl = $this->faker->url);
 

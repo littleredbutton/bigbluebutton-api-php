@@ -56,11 +56,6 @@ final class CurlTransport implements TransportInterface
     private const DEFAULT_TIMEOUT = 30;
 
     /**
-     * @var mixed[]
-     */
-    private $curlOptions;
-
-    /**
      * Allows to inject custom cURL options used on dispatching request to BBB.
      * Please note that you must ensure on your own that the usage of custom options does not break the transport.
      *
@@ -69,9 +64,8 @@ final class CurlTransport implements TransportInterface
      *
      * @param mixed[] $curlOptions A list of cURL options to pass to the cURL handle. Option name as key, option value as value.
      */
-    public function __construct(array $curlOptions = [])
+    public function __construct(private readonly array $curlOptions = [])
     {
-        $this->curlOptions = $curlOptions;
     }
 
     /**
@@ -137,7 +131,7 @@ final class CurlTransport implements TransportInterface
             $options[\CURLOPT_POSTFIELDS] = $payload;
             $options[\CURLOPT_HTTPHEADER] = [
                 'Content-type: '.$request->getContentType(),
-                'Content-length: '.mb_strlen($payload),
+                'Content-length: '.mb_strlen((string) $payload),
             ];
         }
 
@@ -185,11 +179,13 @@ final class CurlTransport implements TransportInterface
      *
      * @param \CurlHandle|resource $curlHandle
      *
-     * @return array{0:             string, 1: string[]} First key headers, second key is content
+     * @return (string|string[][])[] First key headers, second key is content
      *
      * @throws NetworkException
      *
      * @see https://stackoverflow.com/questions/10589889/returning-header-as-array-using-curl
+     *
+     * @psalm-return array{0: array<string, non-empty-list<string>>, 1: string}
      */
     private static function getHeadersAndContentFromCurlHandle($curlHandle): array
     {
@@ -199,7 +195,7 @@ final class CurlTransport implements TransportInterface
             /* @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection */
             throw new \InvalidArgumentException(sprintf('$curlHandle must be "%s". "%s" given.', \CurlHandle::class, get_debug_type($curlHandle)));
         } elseif (\PHP_VERSION_ID < 80000 && !\is_resource($curlHandle)) {
-            throw new \InvalidArgumentException(sprintf('$curlHandle must be resource. "%s" given.', \is_object($curlHandle) ? \get_class($curlHandle) : \gettype($curlHandle)));
+            throw new \InvalidArgumentException(sprintf('$curlHandle must be resource. "%s" given.', get_debug_type($curlHandle)));
         }
         // @codeCoverageIgnoreEnd
 

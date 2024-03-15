@@ -170,7 +170,7 @@ class BigBlueButton
             }
 
             // HTTP exception or XML parse
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
 
         $this->connectionError = self::CONNECTION_ERROR_BASEURL;

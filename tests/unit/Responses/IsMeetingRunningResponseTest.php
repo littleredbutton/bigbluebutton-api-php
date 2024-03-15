@@ -24,10 +24,7 @@ use BigBlueButton\TestCase;
 
 final class IsMeetingRunningResponseTest extends TestCase
 {
-    /**
-     * @var IsMeetingRunningResponse
-     */
-    private $running;
+    private IsMeetingRunningResponse $running;
 
     protected function setUp(): void
     {
@@ -38,7 +35,7 @@ final class IsMeetingRunningResponseTest extends TestCase
         $this->running = new IsMeetingRunningResponse($xml);
     }
 
-    public function testIsMeetingRunningResponseContent()
+    public function testIsMeetingRunningResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->running->getReturnCode());
         $this->assertTrue($this->running->isRunning());
@@ -46,7 +43,7 @@ final class IsMeetingRunningResponseTest extends TestCase
         $this->assertEquals('<?xmlversion="1.0"?><response><returncode>SUCCESS</returncode><running>true</running></response>', $this->minifyString($this->running->getRawXml()->asXML()));
     }
 
-    public function testIsMeetingRunningResponseTypes()
+    public function testIsMeetingRunningResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->running, ['getReturnCode']);
         $this->assertEachGetterValueIsBoolean($this->running, ['isRunning']);

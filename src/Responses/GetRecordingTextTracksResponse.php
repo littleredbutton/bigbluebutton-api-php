@@ -29,7 +29,7 @@ class GetRecordingTextTracksResponse extends BaseResponseAsJson
     /**
      * @var Track[]
      */
-    private $tracks;
+    private ?array $tracks = null;
 
     /**
      * @return Track[]

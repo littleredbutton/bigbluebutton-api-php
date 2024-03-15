@@ -28,22 +28,8 @@ use BigBlueButton\Enum\HashingAlgorithm;
  */
 final class UrlBuilder
 {
-    /**
-     * @var string
-     */
-    private $securitySalt;
-    /**
-     * @var string
-     */
-    private $bbbServerBaseUrl;
-
-    private HashingAlgorithm $hashingAlgorithm;
-
-    public function __construct(string $secret, string $serverBaseUrl, HashingAlgorithm $hashingAlgorithm)
+    public function __construct(private readonly string $securitySalt, private readonly string $bbbServerBaseUrl, private readonly HashingAlgorithm $hashingAlgorithm)
     {
-        $this->securitySalt = $secret;
-        $this->bbbServerBaseUrl = $serverBaseUrl;
-        $this->hashingAlgorithm = $hashingAlgorithm;
     }
 
     /**

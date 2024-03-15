@@ -36,30 +36,15 @@ class Attendee
      */
     private $role;
 
-    /**
-     * @var bool
-     */
-    private $isPresenter;
+    private readonly bool $isPresenter;
 
-    /**
-     * @var bool
-     */
-    private $isListeningOnly;
+    private readonly bool $isListeningOnly;
 
-    /**
-     * @var bool
-     */
-    private $hasJoinedVoice;
+    private readonly bool $hasJoinedVoice;
 
-    /**
-     * @var bool
-     */
-    private $hasVideo;
+    private readonly bool $hasVideo;
 
-    /**
-     * @var array
-     */
-    private $customData = [];
+    private array $customData = [];
 
     /**
      * @var string

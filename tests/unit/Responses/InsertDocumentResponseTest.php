@@ -21,15 +21,16 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Parameters;
 
+use BigBlueButton\Responses\IsMeetingRunningResponse;
 use BigBlueButton\Responses\InsertDocumentResponse;
 use BigBlueButton\TestCase;
 
 final class InsertDocumentResponseTest extends TestCase
 {
     /**
-     * @var \BigBlueButton\Responses\IsMeetingRunningResponse
+     * @var IsMeetingRunningResponse
      */
-    private $running;
+    private InsertDocumentResponse $running;
 
     protected function setUp(): void
     {

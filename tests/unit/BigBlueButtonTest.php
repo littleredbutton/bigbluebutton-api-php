@@ -47,10 +47,7 @@ final class BigBlueButtonTest extends TestCase
     /** @var MockObject */
     private $transport;
 
-    /**
-     * @var BigBlueButton
-     */
-    private $bbb;
+    private BigBlueButton $bbb;
 
     /**
      * Setup test class.
@@ -167,7 +164,7 @@ final class BigBlueButtonTest extends TestCase
         $meetingId = $this->faker->uuid;
 
         $url = $this->bbb->getMeetingInfoUrl(new GetMeetingInfoParameters($meetingId));
-        $this->assertStringContainsString('='.rawurlencode($meetingId), $url);
+        $this->assertStringContainsString('='.rawurlencode((string) $meetingId), $url);
     }
 
     public function testGetMeetingInfo(): void

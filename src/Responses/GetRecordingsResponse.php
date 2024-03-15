@@ -31,7 +31,7 @@ class GetRecordingsResponse extends BaseResponse
     /**
      * @var Record[]
      */
-    private $records;
+    private ?array $records = null;
 
     /**
      * @return Record[]

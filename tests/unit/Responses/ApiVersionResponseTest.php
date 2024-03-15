@@ -24,10 +24,7 @@ use BigBlueButton\TestCase;
 
 final class ApiVersionResponseTest extends TestCase
 {
-    /**
-     * @var ApiVersionResponse
-     */
-    private $version;
+    private ApiVersionResponse $version;
 
     protected function setUp(): void
     {
@@ -38,7 +35,7 @@ final class ApiVersionResponseTest extends TestCase
         $this->version = new ApiVersionResponse($xml);
     }
 
-    public function testApiVersionResponseContent()
+    public function testApiVersionResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->version->getReturnCode());
         $this->assertEquals('2.0', $this->version->getVersion());
@@ -46,7 +43,7 @@ final class ApiVersionResponseTest extends TestCase
         $this->assertEquals('2.4-rc-7', $this->version->getBbbVersion());
     }
 
-    public function testApiVersionResponseTypes()
+    public function testApiVersionResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->version, ['getReturnCode', 'getVersion', 'getApiVersion', 'getBbbVersion']);
     }

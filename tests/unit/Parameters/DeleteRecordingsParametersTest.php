@@ -23,7 +23,7 @@ use BigBlueButton\TestCase;
 
 final class DeleteRecordingsParametersTest extends TestCase
 {
-    public function testDeleteRecordingParameter()
+    public function testDeleteRecordingParameter(): void
     {
         $recordingId = $this->faker->uuid;
         $deleteRecording = new DeleteRecordingsParameters($recordingId);

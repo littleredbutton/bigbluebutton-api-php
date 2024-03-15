@@ -30,10 +30,7 @@ class Hook
      */
     protected $rawXml;
 
-    /**
-     * @var int
-     */
-    private $hookId;
+    private readonly int $hookId;
 
     /**
      * @var string
@@ -45,15 +42,9 @@ class Hook
      */
     private $callbackUrl;
 
-    /**
-     * @var bool
-     */
-    private $permanentHook;
+    private readonly bool $permanentHook;
 
-    /**
-     * @var bool
-     */
-    private $rawData;
+    private readonly bool $rawData;
 
     public function __construct(\SimpleXMLElement $xml)
     {

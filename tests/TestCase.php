@@ -45,8 +45,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->faker = Faker::create();
     }
 
@@ -331,33 +329,33 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function minifyString($string)
     {
-        return str_replace(["\r\n", "\r", "\n", "\t", ' '], '', $string);
+        return str_replace(["\r\n", "\r", "\n", "\t", ' '], '', (string) $string);
     }
 
     // Additional assertions
 
-    public function assertEachGetterValueIsString($obj, $getters)
+    public function assertEachGetterValueIsString($obj, $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsString($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of a string for property -> '.$getterName);
         }
     }
 
-    public function assertEachGetterValueIsInteger($obj, $getters)
+    public function assertEachGetterValueIsInteger($obj, $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsInt($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of an integer for property -> '.$getterName);
         }
     }
 
-    public function assertEachGetterValueIsDouble($obj, $getters)
+    public function assertEachGetterValueIsDouble($obj, $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsFloat($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of a double for property -> '.$getterName);
         }
     }
 
-    public function assertEachGetterValueIsBoolean($obj, $getters)
+    public function assertEachGetterValueIsBoolean($obj, $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsBool($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of a boolean for property -> '.$getterName);

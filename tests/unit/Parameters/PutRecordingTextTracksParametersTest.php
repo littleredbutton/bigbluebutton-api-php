@@ -24,7 +24,7 @@ use BigBlueButton\TestCase;
 
 final class PutRecordingTextTracksParametersTest extends TestCase
 {
-    public function testPutRecordingTextTracksParameters()
+    public function testPutRecordingTextTracksParameters(): void
     {
         $getRecordingTextTracksParams = new PutRecordingTextTrackParameters(
             $recordId = $this->faker->uuid,

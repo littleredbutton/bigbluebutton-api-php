@@ -23,7 +23,7 @@ use BigBlueButton\TestCase;
 
 final class GetMeetingInfoParametersTest extends TestCase
 {
-    public function testGetMeetingInfoParameters()
+    public function testGetMeetingInfoParameters(): void
     {
         $getMeetingInfoParams = new GetMeetingInfoParameters($meetingId = $this->faker->uuid);
 

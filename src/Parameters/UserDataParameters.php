@@ -24,10 +24,7 @@ namespace BigBlueButton\Parameters;
  */
 abstract class UserDataParameters extends BaseParameters
 {
-    /**
-     * @var array
-     */
-    private $userData = [];
+    private array $userData = [];
 
     /**
      * @return string|bool

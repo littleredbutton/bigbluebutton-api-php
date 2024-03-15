@@ -24,10 +24,7 @@ namespace BigBlueButton\Parameters;
  */
 abstract class MetaParameters extends BaseParameters
 {
-    /**
-     * @var array
-     */
-    private $meta = [];
+    private array $meta = [];
 
     /**
      * @return string|bool

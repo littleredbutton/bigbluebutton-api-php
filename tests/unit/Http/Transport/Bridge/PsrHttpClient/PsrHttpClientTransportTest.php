@@ -43,24 +43,21 @@ use Psr\Http\Message\StreamInterface;
  */
 final class PsrHttpClientTransportTest extends TestCase
 {
-    /**
-     * @var PsrHttpClientTransport
-     */
-    private $transport;
+    private PsrHttpClientTransport $transport;
 
     /**
      * @var MockObject&ClientInterface
      */
-    private $httpClientMock;
+    private ?MockObject $httpClientMock = null;
     /**
      * @var MockObject&RequestFactoryInterface
      */
-    private $requestFactoryMock;
+    private ?MockObject $requestFactoryMock = null;
 
     /**
      * @var MockObject&StreamFactoryInterface
      */
-    private $streamFactoryMock;
+    private ?MockObject $streamFactoryMock = null;
 
     protected function setUp(): void
     {

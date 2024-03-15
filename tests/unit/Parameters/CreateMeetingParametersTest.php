@@ -29,7 +29,7 @@ use BigBlueButton\TestCase;
  */
 final class CreateMeetingParametersTest extends TestCase
 {
-    public function testCreateMeetingParameters()
+    public function testCreateMeetingParameters(): void
     {
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
@@ -148,7 +148,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertStringContainsString('disabledFeaturesExclude=chat,polls', $params);
     }
 
-    public function testCreateBreakoutMeeting()
+    public function testCreateBreakoutMeeting(): void
     {
         $params = $this->generateBreakoutCreateParams($this->generateCreateParams());
         $createBreakoutMeetingParams = $this->getBreakoutCreateMock($params);

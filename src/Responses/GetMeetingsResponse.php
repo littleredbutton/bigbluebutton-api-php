@@ -29,7 +29,7 @@ class GetMeetingsResponse extends BaseResponse
     /**
      * @var Meeting[]
      */
-    private $meetings;
+    private ?array $meetings = null;
 
     /**
      * @return Meeting[]

@@ -34,11 +34,11 @@ abstract class BaseParameters
         if (!preg_match('/^(get|is|set)[A-Z]/', $name)) {
             throw new \BadFunctionCallException($name.' does not exist');
         }
-        if (strpos($name, 'get') === 0) {
+        if (str_starts_with($name, 'get')) {
             return $this->getter(lcfirst(substr($name, 3)));
-        } elseif (strpos($name, 'is') === 0) {
+        } elseif (str_starts_with($name, 'is')) {
             return $this->booleanGetter(lcfirst(substr($name, 2)));
-        } elseif (strpos($name, 'set') === 0) {
+        } elseif (str_starts_with($name, 'set')) {
             return $this->setter(lcfirst(substr($name, 3)), $arguments);
         }
 
@@ -78,17 +78,13 @@ abstract class BaseParameters
 
     protected function getProperties(): array
     {
-        return array_filter(get_object_vars($this), function ($name) {
-            return $name !== 'ignoreProperties' && !\in_array($name, $this->ignoreProperties);
-        }, \ARRAY_FILTER_USE_KEY);
+        return array_filter(get_object_vars($this), fn($name) => $name !== 'ignoreProperties' && !\in_array($name, $this->ignoreProperties), \ARRAY_FILTER_USE_KEY);
     }
 
     protected function getHTTPQueryArray(): array
     {
         $properties = $this->getProperties();
-        $properties = array_filter($properties, function ($value) {
-            return $value !== null;
-        });
+        $properties = array_filter($properties, fn($value) => $value !== null);
 
         return array_map(function ($value) {
             if (\is_bool($value)) {

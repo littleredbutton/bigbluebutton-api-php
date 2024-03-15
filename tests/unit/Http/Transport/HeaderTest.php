@@ -84,7 +84,7 @@ final class HeaderTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
             'Non-string header with type "%s" passed.',
-            \is_object($badHeader) ? \get_class($badHeader) : \gettype($badHeader)
+            get_debug_type($badHeader)
         ));
 
         Header::mergeCurlHeaders([$badHeader]);

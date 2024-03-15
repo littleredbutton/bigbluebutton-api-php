@@ -23,7 +23,7 @@ use BigBlueButton\TestCase;
 
 final class GetRecordingsParametersTest extends TestCase
 {
-    public function testGetRecordingsParameters()
+    public function testGetRecordingsParameters(): void
     {
         $getRecordings = new GetRecordingsParameters();
         $getRecordings->setMeetingID($meetingId = $this->faker->uuid);

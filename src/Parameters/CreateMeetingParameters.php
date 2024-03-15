@@ -376,7 +376,7 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @var array<array{id: string, name: string|null, roster: array}>
      */
-    private $breakoutRoomsGroups = [];
+    private array $breakoutRoomsGroups = [];
 
     /**
      * @var array
@@ -582,7 +582,10 @@ class CreateMeetingParameters extends MetaParameters
         return $this->presentations;
     }
 
-    public function getPresentationsAsXML()
+    /**
+     * @return false|string
+     */
+    public function getPresentationsAsXML(): string|false
     {
         $result = '';
 
@@ -592,7 +595,7 @@ class CreateMeetingParameters extends MetaParameters
             $module->addAttribute('name', 'presentation');
 
             foreach ($this->presentations as $nameOrUrl => $content) {
-                if (strpos($nameOrUrl, 'http') === 0) {
+                if (str_starts_with($nameOrUrl, 'http')) {
                     $presentation = $module->addChild('document');
                     $presentation->addAttribute('url', $nameOrUrl);
                     if (\is_string($content)) {
@@ -648,8 +651,6 @@ class CreateMeetingParameters extends MetaParameters
 
     private function filterBreakoutRelatedQueries(array $queries): array
     {
-        return array_filter($queries, function ($query) {
-            return !\in_array($query, ['isBreakout', 'parentMeetingID', 'sequence', 'freeJoin']);
-        });
+        return array_filter($queries, fn($query) => !\in_array($query, ['isBreakout', 'parentMeetingID', 'sequence', 'freeJoin']));
     }
 }

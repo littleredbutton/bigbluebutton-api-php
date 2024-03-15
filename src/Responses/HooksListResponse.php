@@ -29,7 +29,7 @@ class HooksListResponse extends BaseResponse
     /**
      * @var Hook[]
      */
-    private $hooks;
+    private ?array $hooks = null;
 
     /**
      * @return Hook[]

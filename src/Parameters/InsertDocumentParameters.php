@@ -27,19 +27,10 @@ namespace BigBlueButton\Parameters;
  */
 final class InsertDocumentParameters extends MetaParameters
 {
-    /**
-     * @var string
-     */
-    protected $meetingID;
+    private array $presentations = [];
 
-    /**
-     * @var array
-     */
-    private $presentations = [];
-
-    public function __construct(string $meetingID)
+    public function __construct(protected string $meetingID)
     {
-        $this->meetingID = $meetingID;
     }
 
     public function addPresentation(string $url, string $filename, ?bool $downloadable = null, ?bool $removable = null): self
@@ -60,7 +51,10 @@ final class InsertDocumentParameters extends MetaParameters
         return $this;
     }
 
-    public function getPresentationsAsXML()
+    /**
+     * @return false|string
+     */
+    public function getPresentationsAsXML(): string|false
     {
         $result = '';
 

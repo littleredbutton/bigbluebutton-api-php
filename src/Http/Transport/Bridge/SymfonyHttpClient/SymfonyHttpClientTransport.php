@@ -54,29 +54,11 @@ if (!interface_exists(HttpClientInterface::class)) {
 final class SymfonyHttpClientTransport implements TransportInterface
 {
     /**
-     * @var HttpClientInterface
-     */
-    private $httpClient;
-
-    /**
-     * @var string[]
-     */
-    private $defaultHeaders;
-
-    /**
-     * @var mixed[]
-     */
-    private $defaultOptions;
-
-    /**
      * @param string[] $defaultHeaders additional HTTP headers to pass on each request
      * @param mixed[]  $defaultOptions Options for Symfony HTTP client passed on every request. See {@link https://symfony.com/doc/current/http_client.html} for details.
      */
-    public function __construct(HttpClientInterface $httpClient, array $defaultHeaders = [], array $defaultOptions = [])
+    public function __construct(private readonly HttpClientInterface $httpClient, private array $defaultHeaders = [], private readonly array $defaultOptions = [])
     {
-        $this->httpClient = $httpClient;
-        $this->defaultHeaders = $defaultHeaders;
-        $this->defaultOptions = $defaultOptions;
     }
 
     /**

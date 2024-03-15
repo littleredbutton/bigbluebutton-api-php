@@ -38,7 +38,7 @@ use Symfony\Component\Process\Process;
  */
 final class TestHttpServer
 {
-    private static $process = [];
+    private static array $process = [];
 
     public static function start(int $port = 8057)
     {

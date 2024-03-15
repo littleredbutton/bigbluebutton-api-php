@@ -24,10 +24,7 @@ use BigBlueButton\TestCase;
 
 final class GetRecordingsResponseTest extends TestCase
 {
-    /**
-     * @var GetRecordingsResponse
-     */
-    private $records;
+    private GetRecordingsResponse $records;
 
     protected function setUp(): void
     {
@@ -38,7 +35,7 @@ final class GetRecordingsResponseTest extends TestCase
         $this->records = new GetRecordingsResponse($xml);
     }
 
-    public function testGetRecordingResponseContent()
+    public function testGetRecordingResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->records->getReturnCode());
 
@@ -60,14 +57,14 @@ final class GetRecordingsResponseTest extends TestCase
         $this->assertEquals(9, \count($aRecord->getMetas()));
     }
 
-    public function testRecordMetadataContent()
+    public function testRecordMetadataContent(): void
     {
         $metas = $this->records->getRecords()[4]->getMetas();
 
         $this->assertEquals('moodle-mod_bigbluebuttonbn (2015080611)', $metas['bbb-origin-tag']);
     }
 
-    public function testGetRecordingResponseTypes()
+    public function testGetRecordingResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->records, ['getReturnCode']);
 

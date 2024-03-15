@@ -42,110 +42,59 @@ class Meeting
      */
     private $meetingName;
 
-    /**
-     * @var float
-     */
-    private $creationTime;
+    private readonly float $creationTime;
 
     /**
      * @var string
      */
     private $creationDate;
 
-    /**
-     * @var int
-     */
-    private $voiceBridge;
+    private readonly int $voiceBridge;
 
     /**
      * @var string
      */
     private $dialNumber;
 
-    /**
-     * @var bool
-     */
-    private $hasBeenForciblyEnded;
+    private readonly bool $hasBeenForciblyEnded;
 
-    /**
-     * @var bool
-     */
-    private $isRunning;
+    private readonly bool $isRunning;
 
-    /**
-     * @var int
-     */
-    private $participantCount;
+    private readonly int $participantCount;
 
-    /**
-     * @var int
-     */
-    private $listenerCount;
+    private readonly int $listenerCount;
 
-    /**
-     * @var int
-     */
-    private $voiceParticipantCount;
+    private readonly int $voiceParticipantCount;
 
-    /**
-     * @var int
-     */
-    private $videoCount;
+    private readonly int $videoCount;
 
-    /**
-     * @var int
-     */
-    private $duration;
+    private readonly int $duration;
 
-    /**
-     * @var bool
-     */
-    private $hasUserJoined;
+    private readonly bool $hasUserJoined;
 
     /**
      * @var string
      */
     private $internalMeetingId;
 
-    /**
-     * @var bool
-     */
-    private $isRecording;
+    private readonly bool $isRecording;
 
-    /**
-     * @var float
-     */
-    private $startTime;
+    private readonly float $startTime;
 
-    /**
-     * @var float
-     */
-    private $endTime;
+    private readonly float $endTime;
 
-    /**
-     * @var int
-     */
-    private $maxUsers;
+    private readonly int $maxUsers;
 
-    /**
-     * @var int
-     */
-    private $moderatorCount;
+    private readonly int $moderatorCount;
 
     /**
      * @var Attendee[]
      */
-    private $attendees;
+    private ?array $attendees = null;
 
-    /**
-     * @var array
-     */
-    private $metas;
+    private ?array $metas = null;
 
-    /**
-     * @var bool
-     */
-    private $isBreakout;
+    private readonly bool $isBreakout;
 
     public function __construct(\SimpleXMLElement $xml)
     {
@@ -297,9 +246,7 @@ class Meeting
     {
         $attendees = $this->getAttendees();
 
-        $moderators = array_filter($attendees, function ($attendee) {
-            return $attendee->getRole() === Role::MODERATOR->value;
-        });
+        $moderators = array_filter($attendees, fn($attendee) => $attendee->getRole() === Role::MODERATOR->value);
 
         return array_values($moderators);
     }
@@ -313,9 +260,7 @@ class Meeting
     {
         $attendees = $this->getAttendees();
 
-        $viewers = array_filter($attendees, function ($attendee) {
-            return $attendee->getRole() === Role::VIEWER->value;
-        });
+        $viewers = array_filter($attendees, fn($attendee) => $attendee->getRole() === Role::VIEWER->value);
 
         return array_values($viewers);
     }

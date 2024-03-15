@@ -402,7 +402,7 @@ final class SetCookieTest extends TestCase
 
             if (isset($p['Expires'])) {
                 $delta = 40;
-                $parsedExpires = is_numeric($parsed['Expires']) ? $parsed['Expires'] : strtotime($parsed['Expires']);
+                $parsedExpires = is_numeric($parsed['Expires']) ? $parsed['Expires'] : strtotime((string) $parsed['Expires']);
                 self::assertLessThan($delta, abs($p['Expires'] - $parsedExpires), 'Comparing Expires '.var_export($p['Expires'], true).' : '.var_export($parsed, true).' | '.var_export($p, true));
                 unset($p['Expires']);
                 unset($parsed['Expires']);
