@@ -24,7 +24,7 @@ namespace BigBlueButton\Tests\Functional;
 use BigBlueButton\Http\Transport\CurlTransport;
 use BigBlueButton\Http\Transport\TransportInterface;
 
-final class BigBlueButtonWithCurlTransportTest extends AbstractBigBlueButtonFunctionalTest
+final class BigBlueButtonWithCurlTransportTest extends BigBlueButtonFunctionalTestAbstract
 {
     protected static function createTransport(): TransportInterface
     {
