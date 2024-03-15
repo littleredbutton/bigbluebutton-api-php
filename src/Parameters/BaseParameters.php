@@ -32,6 +32,7 @@ abstract class BaseParameters
 
     /**
      * @param array<mixed> $arguments
+     *
      * @return $this|bool|mixed|null
      */
     public function __call(string $name, array $arguments)
@@ -98,10 +99,10 @@ abstract class BaseParameters
     protected function getProperties(): array
     {
         return array_filter(get_object_vars($this), fn ($name) => $name !== 'ignoreProperties' && !\in_array(
-                $name,
-                $this->ignoreProperties,
-                true
-            ), \ARRAY_FILTER_USE_KEY);
+            $name,
+            $this->ignoreProperties,
+            true
+        ), \ARRAY_FILTER_USE_KEY);
     }
 
     /** @return array<string,string> */

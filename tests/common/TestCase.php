@@ -131,6 +131,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * @param array<string,mixed> $createParams
+     *
      * @return array<string,mixed>
      */
     protected function generateBreakoutCreateParams(array $createParams): array
@@ -216,7 +217,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return ['meetingID' => $this->faker->uuid,
                 'fullName' => $this->faker->name,
                 'role' => $this->faker->randomElement(Role::cases()),
-                'userID' => $this->faker->numberBetween(1, 1000),
+                'userID' => (string) $this->faker->numberBetween(1, 1000),
                 'webVoiceConf' => $this->faker->word,
                 'createTime' => $this->faker->unixTime,
                 'errorRedirectUrl' => $this->faker->url,

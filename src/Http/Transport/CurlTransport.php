@@ -154,6 +154,7 @@ final class CurlTransport implements TransportInterface
      *                                     The CURLOPT_HTTPHEADER will be treated in a special
      *                                     way and merged instead, but on values with same header name
      *                                     only the header from the first option set will be preserved.
+     *
      * @return array<int,mixed>
      */
     private static function mergeCurlOptions(array ...$options): array

@@ -32,7 +32,8 @@ final class ArrayHelper
      * @see https://www.php.net/manual/en/function.array-merge-recursive.php
      *
      * @param array<mixed> $arrays
-     * @param bool $reorderNested reorder nested array starting from the second level instead of merging them
+     * @param bool         $reorderNested reorder nested array starting from the second level instead of merging them
+     *
      * @return array<mixed>
      */
     public static function mergeRecursive(bool $reorderNested, array ...$arrays): array
@@ -56,6 +57,7 @@ final class ArrayHelper
     /**
      * @param array<mixed> $array1
      * @param array<mixed> $array2
+     *
      * @return array<mixed>
      */
     private static function mergeArrays(array $array1, array $array2): array

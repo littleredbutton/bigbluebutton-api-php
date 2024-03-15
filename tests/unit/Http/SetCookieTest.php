@@ -398,7 +398,7 @@ final class SetCookieTest extends TestCase
      * @dataProvider cookieParserDataProvider
      *
      * @param array<mixed>|string $cookie
-     * @param array<mixed> $parsed
+     * @param array<mixed>        $parsed
      */
     public function testParseCookie(array|string $cookie, array $parsed): void
     {

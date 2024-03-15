@@ -114,6 +114,9 @@
     "psalm": "tools/psalm --threads=1",
     "psalm-clear": "tools/psalm --clear-cache && tools/psalm --clear-global-cache",
     "psalm-fix": "tools/psalm --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType",
+    "phpstan": "tools/phpstan analyse",
+    "rector": "tools/rector process --dry-run",
+    "rector-fix": "tools/rector process",
     "post-install-cmd": "tools/composer-git-hooks add --ignore-lock",
     "post-update-cmd": "tools/composer-git-hooks update"
   },
@@ -124,7 +127,9 @@
       ],
       "pre-push": [
         "tools/phpunit --testsuite=\"BigBlueButton unit test suite,BigBlueButton integration test suite\"",
-        "tools/psalm --threads=1"
+        "tools/psalm --threads=1",
+        "tools/phpstan analyse",
+        "tools/rector process --dry-run"
       ],
       "post-merge": "composer install",
       "post-checkout": "composer install"
