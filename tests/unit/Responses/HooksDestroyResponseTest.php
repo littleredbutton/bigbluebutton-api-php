@@ -53,6 +53,7 @@ final class HooksDestroyResponseTest extends TestCase
     public function testHookDestroyMissingHook(): void
     {
         $xml = simplexml_load_string('<response><returncode>FAILED</returncode><messageKey>destroyMissingHook</messageKey><message>The hook informed was not found.</message></response>');
+        $this->assertInstanceOf(\SimpleXMLElement::class, $xml);
 
         $destroyResponse = new HooksDestroyResponse($xml);
         $this->assertTrue($destroyResponse->failed());
@@ -62,6 +63,7 @@ final class HooksDestroyResponseTest extends TestCase
     public function testHookDestroyHookError(): void
     {
         $xml = simplexml_load_string('<response><returncode>FAILED</returncode><messageKey>destroyHookError</messageKey><message>An error happened while removing your hook. Check the logs.</message></response>');
+        $this->assertInstanceOf(\SimpleXMLElement::class, $xml);
 
         $destroyResponse = new HooksDestroyResponse($xml);
         $this->assertTrue($destroyResponse->failed());

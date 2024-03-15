@@ -85,12 +85,16 @@ final class GetMeetingsResponseTest extends TestCase
     {
         // scalelite response no meetings
         $xml = simplexml_load_string('<response><returncode>SUCCESS</returncode><messageKey>noMeetings</messageKey><message>No meetings were found on this server.</message></response>');
+        $this->assertInstanceOf(\SimpleXMLElement::class, $xml);
+
         $this->meetings = new GetMeetingsResponse($xml);
         $this->assertEquals('SUCCESS', $this->meetings->getReturnCode());
         $this->assertCount(0, $this->meetings->getMeetings());
 
         // normal bbb response no meetings
         $xml = simplexml_load_string('<response><returncode>SUCCESS</returncode><meetings/><messageKey>noMeetings</messageKey><message>No meetings were found on this server.</message></response>');
+        $this->assertInstanceOf(\SimpleXMLElement::class, $xml);
+
         $this->meetings = new GetMeetingsResponse($xml);
         $this->assertEquals('SUCCESS', $this->meetings->getReturnCode());
         $this->assertCount(0, $this->meetings->getMeetings());
