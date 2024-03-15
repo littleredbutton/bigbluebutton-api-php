@@ -71,6 +71,14 @@ abstract class BaseParameters
             throw new \BadFunctionCallException($name.' is not a valid property');
         }
 
+        $property = new \ReflectionProperty($this, $name);
+        $type = $property->getType();
+
+        // Construct enum on demand
+        if ($type instanceof \ReflectionNamedType && enum_exists($type->getName()) && !\is_object($arguments[0])) {
+            /* @phpstan-ignore-next-line */
+            $arguments[0] = ($type->getName())::from($arguments[0]);
+        }
         $this->$name = $arguments[0];
 
         return $this;

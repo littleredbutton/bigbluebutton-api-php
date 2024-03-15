@@ -45,6 +45,3 @@ if (method_exists($dotenv, 'loadEnv')) {
 
     $dotenv->load(...$files);
 }
-
-// Include custom test class
-require_once __DIR__.'/TestCase.php';

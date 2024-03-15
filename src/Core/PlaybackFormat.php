@@ -34,7 +34,7 @@ class PlaybackFormat
     /** @var ImagePreview[] */
     private ?array $imagePreviews = null;
 
-    private \SimpleXMLElement $imagePreviewsRaw;
+    private ?\SimpleXMLElement $imagePreviewsRaw;
 
     public function __construct(\SimpleXMLElement $xml)
     {
