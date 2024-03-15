@@ -44,7 +44,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 final class BigBlueButtonTest extends TestCase
 {
-    /** @var (\PHPUnit\Framework\MockObject\MockObject & \MockObject) */
+    /** @var (\PHPUnit\Framework\MockObject\MockObject&\MockObject) */
     private MockObject $transport;
 
     private BigBlueButton $bbb;

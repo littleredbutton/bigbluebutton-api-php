@@ -76,14 +76,8 @@ class BigBlueButton
 
     protected string $bbbServerBaseUrl;
 
-    /**
-     * @var UrlBuilder
-     */
     protected UrlBuilder $urlBuilder;
 
-    /**
-     * @var string|null
-     */
     protected ?string $jSessionId = null;
 
     /**
