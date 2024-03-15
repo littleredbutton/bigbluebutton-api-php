@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -18,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\GetMeetingsResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class GetMeetingsResponseTest extends TestCase
 {
-    /**
-     * @var GetMeetingsResponse
-     */
-    private $meetings;
+    private GetMeetingsResponse $meetings;
 
     protected function setUp(): void
     {
@@ -39,7 +38,7 @@ final class GetMeetingsResponseTest extends TestCase
         $this->meetings = new GetMeetingsResponse($xml);
     }
 
-    public function testGetMeetingsResponseContent()
+    public function testGetMeetingsResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->meetings->getReturnCode());
 
@@ -67,7 +66,7 @@ final class GetMeetingsResponseTest extends TestCase
         $this->assertEquals('http://www.muller.biz/autem-dolor-aut-nam-doloribus-molestiae', $aMeeting->getMetas()['endcallbackurl']);
     }
 
-    public function testGetMeetingsResponseTypes()
+    public function testGetMeetingsResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->meetings, ['getReturnCode']);
 
@@ -82,7 +81,7 @@ final class GetMeetingsResponseTest extends TestCase
         $this->assertEachGetterValueIsBoolean($aMeeting, ['hasBeenForciblyEnded', 'isRunning', 'hasUserJoined']);
     }
 
-    public function testGetMeetingsNoMeetings()
+    public function testGetMeetingsNoMeetings(): void
     {
         // scalelite response no meetings
         $xml = simplexml_load_string('<response><returncode>SUCCESS</returncode><messageKey>noMeetings</messageKey><message>No meetings were found on this server.</message></response>');

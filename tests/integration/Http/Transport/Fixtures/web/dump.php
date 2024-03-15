@@ -38,7 +38,7 @@ $input = file_get_contents('php://input');
 foreach ($_SERVER as $k => $v) {
     switch ($k) {
         default:
-            if (0 !== strpos($k, 'HTTP_')) {
+            if (!str_starts_with($k, 'HTTP_')) {
                 continue 2;
             }
             // no break

@@ -19,9 +19,10 @@ declare(strict_types=1);
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
-use BigBlueButton\TestCase;
+use BigBlueButton\Parameters\InsertDocumentParameters;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class InsertDocumentParametersTest extends TestCase
 {

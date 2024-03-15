@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -27,13 +30,7 @@ namespace BigBlueButton\Parameters;
  */
 class IsMeetingRunningParameters extends BaseParameters
 {
-    /**
-     * @var string
-     */
-    protected $meetingID;
-
-    public function __construct(string $meetingID)
+    public function __construct(protected string $meetingID)
     {
-        $this->meetingID = $meetingID;
     }
 }

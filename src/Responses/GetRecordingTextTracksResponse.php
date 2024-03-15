@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -29,7 +32,7 @@ class GetRecordingTextTracksResponse extends BaseResponseAsJson
     /**
      * @var Track[]
      */
-    private $tracks;
+    private ?array $tracks = null;
 
     /**
      * @return Track[]

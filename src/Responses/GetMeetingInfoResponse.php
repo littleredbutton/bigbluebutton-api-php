@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -26,10 +29,7 @@ use BigBlueButton\Core\Meeting;
  */
 class GetMeetingInfoResponse extends BaseResponse
 {
-    /**
-     * @var Meeting
-     */
-    private $meeting;
+    private ?Meeting $meeting = null;
 
     public function getMeeting(): Meeting
     {

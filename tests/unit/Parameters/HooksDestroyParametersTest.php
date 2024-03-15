@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,15 +20,16 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
-use BigBlueButton\TestCase;
+use BigBlueButton\Parameters\HooksDestroyParameters;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class HooksDestroyParametersTest extends TestCase
 {
     public function testHooksDestroyParameters(): void
     {
-        $hooksCreateParameters = new HooksDestroyParameters($hookId = $this->faker->numberBetween(1, 50));
+        $hooksCreateParameters = new HooksDestroyParameters((string) $hookId = $this->faker->numberBetween(1, 50));
 
         $this->assertEquals($hookId, $hooksCreateParameters->getHookID());
     }

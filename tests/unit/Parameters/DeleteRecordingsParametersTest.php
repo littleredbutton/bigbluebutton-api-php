@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,13 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
-use BigBlueButton\TestCase;
+use BigBlueButton\Parameters\DeleteRecordingsParameters;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class DeleteRecordingsParametersTest extends TestCase
 {
-    public function testDeleteRecordingParameter()
+    public function testDeleteRecordingParameter(): void
     {
         $recordingId = $this->faker->uuid;
         $deleteRecording = new DeleteRecordingsParameters($recordingId);

@@ -26,20 +26,8 @@ namespace BigBlueButton\Http\Transport;
  */
 class TransportResponse
 {
-    /**
-     * @var string
-     */
-    private $body;
-
-    /**
-     * @var string|null
-     */
-    private $sessionId;
-
-    public function __construct(string $body, ?string $sessionId)
+    public function __construct(private readonly string $body, private readonly ?string $sessionId)
     {
-        $this->body = $body;
-        $this->sessionId = $sessionId;
     }
 
     public function getBody(): string

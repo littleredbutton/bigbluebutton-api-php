@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -24,23 +27,15 @@ namespace BigBlueButton\Parameters;
  */
 abstract class MetaParameters extends BaseParameters
 {
-    /**
-     * @var array
-     */
-    private $meta = [];
+    /** @var array<string,bool|string> */
+    private array $meta = [];
 
-    /**
-     * @return string|bool
-     */
-    public function getMeta(string $key)
+    public function getMeta(string $key): string|bool
     {
         return $this->meta[$key];
     }
 
-    /**
-     * @param string|bool $value
-     */
-    public function addMeta(string $key, $value): self
+    public function addMeta(string $key, bool|string $value): static
     {
         $this->meta[$key] = $value;
 

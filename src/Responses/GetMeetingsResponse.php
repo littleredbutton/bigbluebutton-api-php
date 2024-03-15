@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -29,7 +32,7 @@ class GetMeetingsResponse extends BaseResponse
     /**
      * @var Meeting[]
      */
-    private $meetings;
+    private ?array $meetings = null;
 
     /**
      * @return Meeting[]

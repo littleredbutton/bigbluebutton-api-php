@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\ApiVersionResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class ApiVersionResponseTest extends TestCase
 {
-    /**
-     * @var ApiVersionResponse
-     */
-    private $version;
+    private ApiVersionResponse $version;
 
     protected function setUp(): void
     {
@@ -38,7 +38,7 @@ final class ApiVersionResponseTest extends TestCase
         $this->version = new ApiVersionResponse($xml);
     }
 
-    public function testApiVersionResponseContent()
+    public function testApiVersionResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->version->getReturnCode());
         $this->assertEquals('2.0', $this->version->getVersion());
@@ -46,7 +46,7 @@ final class ApiVersionResponseTest extends TestCase
         $this->assertEquals('2.4-rc-7', $this->version->getBbbVersion());
     }
 
-    public function testApiVersionResponseTypes()
+    public function testApiVersionResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->version, ['getReturnCode', 'getVersion', 'getApiVersion', 'getBbbVersion']);
     }

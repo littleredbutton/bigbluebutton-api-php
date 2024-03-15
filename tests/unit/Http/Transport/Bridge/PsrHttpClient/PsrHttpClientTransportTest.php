@@ -19,10 +19,11 @@ declare(strict_types=1);
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Http\Transport\Bridge\PsrHttpClient;
+namespace BigBlueButton\Tests\Unit\Http\Transport\Bridge\PsrHttpClient;
 
 use BigBlueButton\Exceptions\NetworkException;
 use BigBlueButton\Exceptions\RuntimeException;
+use BigBlueButton\Http\Transport\Bridge\PsrHttpClient\PsrHttpClientTransport;
 use BigBlueButton\Http\Transport\TransportRequest;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -43,24 +44,21 @@ use Psr\Http\Message\StreamInterface;
  */
 final class PsrHttpClientTransportTest extends TestCase
 {
-    /**
-     * @var PsrHttpClientTransport
-     */
-    private $transport;
+    private PsrHttpClientTransport $transport;
 
     /**
      * @var MockObject&ClientInterface
      */
-    private $httpClientMock;
+    private ?MockObject $httpClientMock = null;
     /**
      * @var MockObject&RequestFactoryInterface
      */
-    private $requestFactoryMock;
+    private ?MockObject $requestFactoryMock = null;
 
     /**
      * @var MockObject&StreamFactoryInterface
      */
-    private $streamFactoryMock;
+    private ?MockObject $streamFactoryMock = null;
 
     protected function setUp(): void
     {
@@ -200,6 +198,7 @@ final class PsrHttpClientTransportTest extends TestCase
         $this->transport->request($request);
     }
 
+    /** @return iterable<string,array<int>> */
     public function provideBadResponseCodes(): iterable
     {
         foreach (range(100, 199) as $badCode) {

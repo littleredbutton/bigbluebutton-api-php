@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\JoinMeetingResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class JoinMeetingResponseTest extends TestCase
 {
-    /**
-     * @var JoinMeetingResponse
-     */
-    private $joinMeeting;
+    private JoinMeetingResponse $joinMeeting;
 
     protected function setUp(): void
     {
@@ -38,7 +38,7 @@ final class JoinMeetingResponseTest extends TestCase
         $this->joinMeeting = new JoinMeetingResponse($xml);
     }
 
-    public function testJoinMeetingResponseContent()
+    public function testJoinMeetingResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->joinMeeting->getReturnCode());
         $this->assertEquals('successfullyJoined', $this->joinMeeting->getMessageKey());
@@ -51,7 +51,7 @@ final class JoinMeetingResponseTest extends TestCase
         $this->assertEquals('https://bigblubutton-server.sample/client/BigBlueButton.html?sessionToken=0wzsph6uaelwc68z', $this->joinMeeting->getUrl());
     }
 
-    public function testJoinMeetingResponseTypes()
+    public function testJoinMeetingResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->joinMeeting, ['getReturnCode', 'getMessageKey', 'getMessage', 'getMeetingId', 'getUserId', 'getAuthToken', 'getSessionToken', 'getGuestStatus', 'getUrl']);
     }

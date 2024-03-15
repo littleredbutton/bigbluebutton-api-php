@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -45,6 +48,3 @@ if (method_exists($dotenv, 'loadEnv')) {
 
     $dotenv->load(...$files);
 }
-
-// Include custom test class
-require_once __DIR__.'/TestCase.php';
