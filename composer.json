@@ -78,7 +78,7 @@
     "symfony/dotenv": "^5.4|^6.4|^7.0",
     "symfony/http-client-contracts": "^1.1|^2.0",
     "symfony/http-client": "^5.4|^6.4|^7.0",
-    "symfony/process": "^7.0",
+    "symfony/process": "^5.4|^6.4|^7.0",
     "nyholm/psr7": "^1.4"
   },
   "autoload": {
