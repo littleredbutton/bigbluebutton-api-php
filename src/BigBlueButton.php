@@ -83,10 +83,7 @@ class BigBlueButton
 
     protected ?string $jSessionId = null;
 
-    /**
-     * @var int|null
-     */
-    protected $connectionError;
+    protected ?int $connectionError = null;
 
     protected TransportInterface $transport;
 
@@ -100,8 +97,23 @@ class BigBlueButton
     public function __construct(?string $baseUrl = null, ?string $secret = null, ?TransportInterface $transport = null, protected HashingAlgorithm $hashingAlgorithm = HashingAlgorithm::SHA_1)
     {
         // Keeping backward compatibility with older deployed versions
-        $this->securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
-        $this->bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
+        $securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
+
+        if (false === $securitySecret) {
+            @trigger_error(sprintf('Constructing "%s" without passing a secret is deprecated since 6.0 and will throw an exception in 7.0.', self::class), \E_USER_DEPRECATED);
+            $this->securitySecret = ''; // previous behaviour
+        } else {
+            $this->securitySecret = $securitySecret;
+        }
+
+        $bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
+
+        if (false === $bbbServerBaseUrl) {
+            @trigger_error(sprintf('Constructing "%s" without passing a server base URL is deprecated since 6.0 and will throw an exception 7.0.', self::class), \E_USER_DEPRECATED);
+            $this->bbbServerBaseUrl = ''; // previous behaviour
+        } else {
+            $this->bbbServerBaseUrl = $bbbServerBaseUrl;
+        }
 
         if (empty($this->bbbServerBaseUrl)) {
             throw new ConfigException('Base url required');
