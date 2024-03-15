@@ -73,8 +73,8 @@ jobs:
       if: ${{ matrix.php-versions == '8.1' }}
       run: tools/rector process --dry-run
     - name: Run psalm
-    - if: ${{ matrix.php-versions == '8.1' }}
+      if: ${{ matrix.php-versions == '8.1' }}
       run: tools/psalm
     - name: Run phpstan
-    - if: ${{ matrix.php-versions == '8.1' }}
+      if: ${{ matrix.php-versions == '8.1' }}
       run: tools/phpstan
