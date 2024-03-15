@@ -51,9 +51,6 @@ final class InsertDocumentParameters extends MetaParameters
         return $this;
     }
 
-    /**
-     * @return false|string
-     */
     public function getPresentationsAsXML(): string|false
     {
         $result = '';

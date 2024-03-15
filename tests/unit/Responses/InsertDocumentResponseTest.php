@@ -21,8 +21,8 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Parameters;
 
-use BigBlueButton\Responses\IsMeetingRunningResponse;
 use BigBlueButton\Responses\InsertDocumentResponse;
+use BigBlueButton\Responses\IsMeetingRunningResponse;
 use BigBlueButton\TestCase;
 
 final class InsertDocumentResponseTest extends TestCase

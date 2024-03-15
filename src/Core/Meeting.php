@@ -246,7 +246,7 @@ class Meeting
     {
         $attendees = $this->getAttendees();
 
-        $moderators = array_filter($attendees, fn($attendee) => $attendee->getRole() === Role::MODERATOR->value);
+        $moderators = array_filter($attendees, fn ($attendee) => $attendee->getRole() === Role::MODERATOR->value);
 
         return array_values($moderators);
     }
@@ -260,7 +260,7 @@ class Meeting
     {
         $attendees = $this->getAttendees();
 
-        $viewers = array_filter($attendees, fn($attendee) => $attendee->getRole() === Role::VIEWER->value);
+        $viewers = array_filter($attendees, fn ($attendee) => $attendee->getRole() === Role::VIEWER->value);
 
         return array_values($viewers);
     }

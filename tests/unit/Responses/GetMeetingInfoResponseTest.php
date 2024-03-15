@@ -1,8 +1,9 @@
 <?php
 
-use BigBlueButton\TestCase;
-use BigBlueButton\Responses\GetMeetingInfoResponse;
 use BigBlueButton\Core\Meeting;
+use BigBlueButton\Responses\GetMeetingInfoResponse;
+use BigBlueButton\TestCase;
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *

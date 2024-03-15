@@ -582,9 +582,6 @@ class CreateMeetingParameters extends MetaParameters
         return $this->presentations;
     }
 
-    /**
-     * @return false|string
-     */
     public function getPresentationsAsXML(): string|false
     {
         $result = '';
@@ -651,6 +648,6 @@ class CreateMeetingParameters extends MetaParameters
 
     private function filterBreakoutRelatedQueries(array $queries): array
     {
-        return array_filter($queries, fn($query) => !\in_array($query, ['isBreakout', 'parentMeetingID', 'sequence', 'freeJoin']));
+        return array_filter($queries, fn ($query) => !\in_array($query, ['isBreakout', 'parentMeetingID', 'sequence', 'freeJoin']));
     }
 }

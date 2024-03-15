@@ -78,13 +78,13 @@ abstract class BaseParameters
 
     protected function getProperties(): array
     {
-        return array_filter(get_object_vars($this), fn($name) => $name !== 'ignoreProperties' && !\in_array($name, $this->ignoreProperties), \ARRAY_FILTER_USE_KEY);
+        return array_filter(get_object_vars($this), fn ($name) => $name !== 'ignoreProperties' && !\in_array($name, $this->ignoreProperties), \ARRAY_FILTER_USE_KEY);
     }
 
     protected function getHTTPQueryArray(): array
     {
         $properties = $this->getProperties();
-        $properties = array_filter($properties, fn($value) => $value !== null);
+        $properties = array_filter($properties, fn ($value) => $value !== null);
 
         return array_map(function ($value) {
             if (\is_bool($value)) {
