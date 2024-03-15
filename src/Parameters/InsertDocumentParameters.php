@@ -72,7 +72,7 @@ final class InsertDocumentParameters extends MetaParameters
         return $this;
     }
 
-    public function getPresentationsAsXML(): string|false
+    public function getPresentationsAsXML(): string
     {
         $result = '';
 
@@ -85,6 +85,10 @@ final class InsertDocumentParameters extends MetaParameters
                 $content->addDocumentToXML($module);
             }
             $result = $xml->asXML();
+        }
+
+        if (false === $result) {
+            throw new \LogicException('Could not generate XML.');
         }
 
         return $result;
