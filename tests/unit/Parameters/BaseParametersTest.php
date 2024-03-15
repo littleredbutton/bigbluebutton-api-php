@@ -55,6 +55,18 @@ final class BaseParametersTest extends TestCase
 
         $params->setInvalid('foobar');
     }
+
+    public function testEnum(): void
+    {
+        $params = new TestEnumParameters();
+
+        $params->setEnum('one');
+        $this->assertSame(TestEnum::ONE, $params->getEnum());
+
+        $params->setEnum('two');
+        $this->assertSame(TestEnum::TWO, $params->getEnum());
+
+    }
 }
 
 /**
@@ -67,4 +79,21 @@ final class BaseParametersTest extends TestCase
 final class TestParameters extends BaseParameters
 {
     protected $notABool = 'string';
+}
+
+/**
+ * @internal
+ *
+ * @method self setEnum(TestEnum|string $enum)
+ * @method TestEnum getEnum()
+ */
+final class TestEnumParameters extends BaseParameters
+{
+    protected ?TestEnum $enum = null;
+}
+
+enum TestEnum : string
+{
+    case ONE = 'one';
+    case TWO = 'two';
 }
