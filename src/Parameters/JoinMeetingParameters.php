@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -48,7 +50,7 @@ use BigBlueButton\Enum\Role;
  * @method bool|null isGuest()
  * @method $this     setGuest(bool $guest)
  * @method string    getRole()
- * @method $this     setRole(string $role)
+ * @method $this     setRole(Role $role)
  * @method bool|null isExcludeFromDashboard()
  * @method $this     setExcludeFromDashboard(bool $excludeFromDashboard)
  */
@@ -57,75 +59,18 @@ class JoinMeetingParameters extends UserDataParameters
     public const MODERATOR = 'MODERATOR';
     public const VIEWER = 'VIEWER';
 
-    /**
-     * @var string
-     */
-    protected $fullName;
+    protected ?int $createTime = null;
+    protected ?string $userID = null;
+    protected ?string $webVoiceConf = null;
+    protected ?string $defaultLayout = null;
+    protected ?string $avatarURL = null;
+    protected ?bool $redirect = null;
+    protected ?string $errorRedirectUrl = null;
+    protected ?string $clientURL = null;
+    protected ?bool $guest = null;
+    protected ?bool $excludeFromDashboard = null;
 
-    /**
-     * @var string
-     */
-    protected $meetingID;
-
-    /**
-     * @var int
-     */
-    protected $createTime;
-
-    /**
-     * @var string
-     */
-    protected $userID;
-
-    /**
-     * @var string
-     */
-    protected $webVoiceConf;
-
-    /**
-     * @var string
-     */
-    protected $defaultLayout;
-
-    /**
-     * @var string
-     */
-    protected $avatarURL;
-
-    /**
-     * @var bool
-     */
-    protected $redirect;
-
-    /**
-     * @var string
-     */
-    protected $errorRedirectUrl;
-
-    /**
-     * @var string
-     */
-    protected $clientURL;
-
-    /**
-     * @var bool
-     */
-    protected $guest;
-
-    /**
-     * @var string
-     */
-    protected $role;
-
-    /**
-     * @var bool
-     */
-    protected $excludeFromDashboard;
-
-    public function __construct(string $meetingID, string $fullName, Role $role)
+    public function __construct(protected string $meetingID, protected string $fullName, protected Role $role)
     {
-        $this->meetingID = $meetingID;
-        $this->fullName = $fullName;
-        $this->role = $role;
     }
 }

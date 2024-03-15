@@ -26,7 +26,7 @@ declare(strict_types=1);
  * THE SOFTWARE.
  */
 
-namespace BigBlueButton\Http\Transport;
+namespace BigBlueButton\Tests\Integration\Http\Transport;
 
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
@@ -38,9 +38,10 @@ use Symfony\Component\Process\Process;
  */
 final class TestHttpServer
 {
-    private static $process = [];
+    /** @var array<int,Process> */
+    private static array $process = [];
 
-    public static function start(int $port = 8057)
+    public static function start(int $port = 8057): Process
     {
         if (isset(self::$process[$port])) {
             self::$process[$port]->stop();

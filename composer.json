@@ -91,8 +91,17 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "BigBlueButton\\Tests\\Common\\": [
+        "tests/common"
+      ],
       "BigBlueButton\\Tests\\Functional\\": [
         "tests/functional"
+      ],
+      "BigBlueButton\\Tests\\Integration\\": [
+        "tests/integration"
+      ],
+      "BigBlueButton\\Tests\\Unit\\": [
+        "tests/unit"
       ]
     }
   },
@@ -128,8 +137,10 @@
         }
       },
       "friendsofphp/php-cs-fixer": "^3.3",
+      "phpstan/phpstan": "^1.10",
       "phpunit/phpunit": "^9",
-      "vimeo/psalm": "^4.22"
+      "rector/rector": "^1.0",
+      "vimeo/psalm": "^5.23"
     }
   }
 }

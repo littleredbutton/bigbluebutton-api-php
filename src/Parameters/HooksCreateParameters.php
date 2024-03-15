@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -31,28 +34,11 @@ namespace BigBlueButton\Parameters;
  */
 class HooksCreateParameters extends BaseParameters
 {
-    /**
-     * @var string
-     */
-    protected $callbackURL;
+    protected ?string $meetingID = null;
+    protected ?string $eventID = null;
+    protected ?bool $getRaw = null;
 
-    /**
-     * @var string
-     */
-    protected $meetingID;
-
-    /**
-     * @var string
-     */
-    protected $eventID;
-
-    /**
-     * @var bool
-     */
-    protected $getRaw;
-
-    public function __construct(string $callbackURL)
+    public function __construct(protected string $callbackURL)
     {
-        $this->callbackURL = $callbackURL;
     }
 }

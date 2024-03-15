@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\IsMeetingRunningResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class IsMeetingRunningResponseTest extends TestCase
 {
-    /**
-     * @var IsMeetingRunningResponse
-     */
-    private $running;
+    private IsMeetingRunningResponse $running;
 
     protected function setUp(): void
     {
@@ -38,15 +38,20 @@ final class IsMeetingRunningResponseTest extends TestCase
         $this->running = new IsMeetingRunningResponse($xml);
     }
 
-    public function testIsMeetingRunningResponseContent()
+    public function testIsMeetingRunningResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->running->getReturnCode());
         $this->assertTrue($this->running->isRunning());
 
-        $this->assertEquals('<?xmlversion="1.0"?><response><returncode>SUCCESS</returncode><running>true</running></response>', $this->minifyString($this->running->getRawXml()->asXML()));
+        $xml = $this->running->getRawXml()->asXML();
+        $this->assertIsString($xml);
+
+        $this->assertEquals('<?xmlversion="1.0"?><response><returncode>SUCCESS</returncode><running>true</running></response>', $this->minifyString(
+            $xml
+        ));
     }
 
-    public function testIsMeetingRunningResponseTypes()
+    public function testIsMeetingRunningResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->running, ['getReturnCode']);
         $this->assertEachGetterValueIsBoolean($this->running, ['isRunning']);

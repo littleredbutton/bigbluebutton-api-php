@@ -5,7 +5,7 @@ The dependencies are not pulled via the main composer.json to keep the dependenc
 
 ## Structure of the `tools` folder
 
-Each tool has a hidden (dot) folder with it's tool name. For exmaple, PHP-CS-Fixer uses `tools/.php-cs-fixer`:
+Each tool has a hidden (dot) folder with its tool name. For example, PHP-CS-Fixer uses `tools/.php-cs-fixer`:
 
 ~~~
 tools/

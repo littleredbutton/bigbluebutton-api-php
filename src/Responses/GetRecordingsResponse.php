@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -31,7 +34,7 @@ class GetRecordingsResponse extends BaseResponse
     /**
      * @var Record[]
      */
-    private $records;
+    private ?array $records = null;
 
     /**
      * @return Record[]

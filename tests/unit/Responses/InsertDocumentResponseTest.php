@@ -19,17 +19,14 @@ declare(strict_types=1);
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\InsertDocumentResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class InsertDocumentResponseTest extends TestCase
 {
-    /**
-     * @var \BigBlueButton\Responses\IsMeetingRunningResponse
-     */
-    private $running;
+    private InsertDocumentResponse $running;
 
     protected function setUp(): void
     {
@@ -44,7 +41,12 @@ final class InsertDocumentResponseTest extends TestCase
     {
         $this->assertEquals('SUCCESS', $this->running->getReturnCode());
 
-        $this->assertEquals('<?xmlversion="1.0"?><response><returncode>SUCCESS</returncode></response>', $this->minifyString($this->running->getRawXml()->asXML()));
+        $xml = $this->running->getRawXml()->asXML();
+        $this->assertIsString($xml);
+
+        $this->assertEquals('<?xmlversion="1.0"?><response><returncode>SUCCESS</returncode></response>', $this->minifyString(
+            $xml
+        ));
     }
 
     public function testIsMeetingRunningResponseTypes(): void

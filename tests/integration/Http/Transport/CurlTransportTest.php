@@ -19,9 +19,11 @@ declare(strict_types=1);
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Http\Transport;
+namespace BigBlueButton\Tests\Integration\Http\Transport;
 
 use BigBlueButton\Exceptions\NetworkException;
+use BigBlueButton\Http\Transport\CurlTransport;
+use BigBlueButton\Http\Transport\TransportRequest;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -39,6 +41,7 @@ final class CurlTransportTest extends TestCase
         TestHttpServer::start();
     }
 
+    /** @return array<string,array<int>> */
     public function provideBadResponseCodes(): iterable
     {
         // cURL does not understand codes below 200 properly.
@@ -77,6 +80,13 @@ final class CurlTransportTest extends TestCase
         // BEWARE: Never do this in any production code. You have been warned.
         eval('$dump = '.$response->getBody().';');
 
+        $this->assertArrayHasKey('input', $dump);
+        $this->assertArrayHasKey('vars', $dump);
+        $this->assertArrayHasKey('HTTP_CONTENT_LENGTH', $dump['vars']);
+        $this->assertArrayHasKey('HTTP_X_FOO', $dump['vars']);
+        $this->assertArrayHasKey('HTTP_X_BAR', $dump['vars']);
+        $this->assertArrayHasKey('REQUEST_METHOD', $dump['vars']);
+
         $this->assertSame('FOO', $dump['input'], 'input echo is correct');
         $this->assertSame('3', $dump['vars']['HTTP_CONTENT_LENGTH'], 'Content-Length echo is correct');
         $this->assertSame('application/xml', $dump['vars']['HTTP_CONTENT_TYPE'], 'Content-Type echo is correct');
@@ -96,6 +106,11 @@ final class CurlTransportTest extends TestCase
         // BEWARE: Never do this in any production code. You have been warned.
         eval('$dump = '.$response->getBody().';');
 
+        $this->assertArrayHasKey('input', $dump);
+        $this->assertArrayHasKey('vars', $dump);
+        $this->assertArrayHasKey('HTTP_CONTENT_LENGTH', $dump['vars']);
+        $this->assertArrayHasKey('REQUEST_METHOD', $dump['vars']);
+
         $this->assertSame('FOO', $dump['input'], 'input echo is correct');
         $this->assertSame('3', $dump['vars']['HTTP_CONTENT_LENGTH'], 'Content-Length echo is correct');
         $this->assertSame('application/xml', $dump['vars']['HTTP_CONTENT_TYPE'], 'Content-Type echo is correct');
@@ -112,6 +127,10 @@ final class CurlTransportTest extends TestCase
         $dump = [];
         // BEWARE: Never do this in any production code. You have been warned.
         eval('$dump = '.$response->getBody().';');
+
+        $this->assertArrayHasKey('input', $dump);
+        $this->assertArrayHasKey('vars', $dump);
+        $this->assertArrayHasKey('REQUEST_METHOD', $dump['vars']);
 
         $this->assertSame('', $dump['input'], 'input echo is correct');
         $this->assertSame('GET', $dump['vars']['REQUEST_METHOD'], 'request method echo is correct');
@@ -149,6 +168,10 @@ final class CurlTransportTest extends TestCase
         $dump = [];
         // BEWARE: Never do this in any production code. You have been warned.
         eval('$dump = '.$response->getBody().';');
+
+        $this->assertArrayHasKey('input', $dump);
+        $this->assertArrayHasKey('vars', $dump);
+        $this->assertArrayHasKey('HTTP_CONTENT_LENGTH', $dump['vars']);
 
         $this->assertSame('FOO', $dump['input'], 'input echo is correct');
         $this->assertSame('3', $dump['vars']['HTTP_CONTENT_LENGTH'], 'Content-Length echo is correct');

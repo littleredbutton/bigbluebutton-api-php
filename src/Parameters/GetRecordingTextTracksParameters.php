@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -27,13 +30,7 @@ namespace BigBlueButton\Parameters;
  */
 class GetRecordingTextTracksParameters extends MetaParameters
 {
-    /**
-     * @var string
-     */
-    protected $recordID;
-
-    public function __construct(string $recordID)
+    public function __construct(protected string $recordID)
     {
-        $this->recordID = $recordID;
     }
 }

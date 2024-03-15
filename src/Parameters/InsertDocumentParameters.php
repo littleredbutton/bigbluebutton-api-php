@@ -27,19 +27,11 @@ namespace BigBlueButton\Parameters;
  */
 final class InsertDocumentParameters extends MetaParameters
 {
-    /**
-     * @var string
-     */
-    protected $meetingID;
+    /** @var array<string,array{filename: string, downloadable: bool|null, removable: bool|null}> */
+    private array $presentations = [];
 
-    /**
-     * @var array
-     */
-    private $presentations = [];
-
-    public function __construct(string $meetingID)
+    public function __construct(protected string $meetingID)
     {
-        $this->meetingID = $meetingID;
     }
 
     public function addPresentation(string $url, string $filename, ?bool $downloadable = null, ?bool $removable = null): self
@@ -60,7 +52,7 @@ final class InsertDocumentParameters extends MetaParameters
         return $this;
     }
 
-    public function getPresentationsAsXML()
+    public function getPresentationsAsXML(): string
     {
         $result = '';
 
@@ -83,6 +75,10 @@ final class InsertDocumentParameters extends MetaParameters
                 }
             }
             $result = $xml->asXML();
+        }
+
+        if (false === $result) {
+            throw new \LogicException('Could not generate XML.');
         }
 
         return $result;
