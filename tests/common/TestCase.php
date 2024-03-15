@@ -341,7 +341,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             }
 
             if (!\is_array($parameter)) {
-                $this->assertStringContainsString($parameter, urldecode($url));
+                $this->assertStringContainsString((string)$parameter, urldecode($url));
             } else {
                 $this->assertUrlContainsAllRequestParameters($url, $parameter);
             }
