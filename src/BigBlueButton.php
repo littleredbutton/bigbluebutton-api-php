@@ -100,8 +100,10 @@ class BigBlueButton
         $securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
 
         if (false === $securitySecret) {
+            // @codeCoverageIgnoreStart
             @trigger_error(sprintf('Constructing "%s" without passing a secret is deprecated since 6.0 and will throw an exception in 7.0.', self::class), \E_USER_DEPRECATED);
             $this->securitySecret = ''; // previous behaviour
+            // @codeCoverageIgnoreEnd
         } else {
             $this->securitySecret = $securitySecret;
         }
@@ -109,8 +111,10 @@ class BigBlueButton
         $bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
 
         if (false === $bbbServerBaseUrl) {
+            // @codeCoverageIgnoreStart
             @trigger_error(sprintf('Constructing "%s" without passing a server base URL is deprecated since 6.0 and will throw an exception 7.0.', self::class), \E_USER_DEPRECATED);
             $this->bbbServerBaseUrl = ''; // previous behaviour
+            // @codeCoverageIgnoreEnd
         } else {
             $this->bbbServerBaseUrl = $bbbServerBaseUrl;
         }
