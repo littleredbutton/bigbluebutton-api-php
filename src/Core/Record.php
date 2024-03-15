@@ -24,11 +24,11 @@ namespace BigBlueButton\Core;
  */
 class Record
 {
-    private string $recordId;
-    private string $meetingId;
-    private string $name;
+    private readonly string $recordId;
+    private readonly string $meetingId;
+    private readonly string $name;
     private readonly bool $isPublished;
-    private string $state;
+    private readonly string $state;
     private readonly float $startTime;
     private readonly float $endTime;
     private readonly int $participantCount;

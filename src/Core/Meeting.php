@@ -55,7 +55,7 @@ class Meeting
 
     private readonly bool $hasUserJoined;
 
-    private string $internalMeetingId;
+    private readonly string $internalMeetingId;
 
     private readonly bool $isRecording;
 
