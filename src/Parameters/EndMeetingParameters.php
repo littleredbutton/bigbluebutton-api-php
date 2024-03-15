@@ -28,13 +28,7 @@ namespace BigBlueButton\Parameters;
  */
 class EndMeetingParameters extends BaseParameters
 {
-    /**
-     * @var string
-     */
-    protected $meetingID;
-
-    public function __construct(string $meetingID)
+    public function __construct(protected string $meetingID)
     {
-        $this->meetingID = $meetingID;
     }
 }

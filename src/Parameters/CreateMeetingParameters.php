@@ -146,16 +146,6 @@ class CreateMeetingParameters extends MetaParameters
     /**
      * @var string
      */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $meetingID;
-
-    /**
-     * @var string
-     */
     protected $welcome;
 
     /**
@@ -448,12 +438,9 @@ class CreateMeetingParameters extends MetaParameters
      */
     private $presentations = [];
 
-    public function __construct(string $meetingID, string $name)
+    public function __construct(protected string $meetingID, protected string $name)
     {
         $this->ignoreProperties = ['disabledFeatures', 'disabledFeaturesExclude'];
-
-        $this->meetingID = $meetingID;
-        $this->name = $name;
     }
 
     public function setEndCallbackUrl(string $endCallbackUrl): self

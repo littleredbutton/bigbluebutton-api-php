@@ -72,40 +72,26 @@ class BigBlueButton
     public const CONNECTION_ERROR_BASEURL = 1;
     public const CONNECTION_ERROR_SECRET = 2;
 
-    /**
-     * @var string
-     */
-    protected $securitySecret;
+    protected string $securitySecret;
 
-    /**
-     * @var string
-     */
-    protected $bbbServerBaseUrl;
-
-    /**
-     * @var string
-     */
-    protected $hashingAlgorithm;
+    protected string $bbbServerBaseUrl;
 
     /**
      * @var UrlBuilder
      */
-    protected $urlBuilder;
+    protected UrlBuilder $urlBuilder;
 
     /**
      * @var string|null
      */
-    protected $jSessionId;
+    protected ?string $jSessionId = null;
 
     /**
      * @var int|null
      */
     protected $connectionError;
 
-    /**
-     * @var TransportInterface
-     */
-    protected $transport;
+    protected TransportInterface $transport;
 
     /**
      * @param string|null             $baseUrl   (optional) If not given, it will be retrieved from the environment
@@ -114,13 +100,11 @@ class BigBlueButton
      *
      * @throws ConfigException
      */
-    public function __construct(?string $baseUrl = null, ?string $secret = null, ?TransportInterface $transport = null, HashingAlgorithm $hashingAlgorithm = HashingAlgorithm::SHA_1)
+    public function __construct(?string $baseUrl = null, ?string $secret = null, ?TransportInterface $transport = null, protected HashingAlgorithm $hashingAlgorithm = HashingAlgorithm::SHA_1)
     {
         // Keeping backward compatibility with older deployed versions
         $this->securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
         $this->bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
-
-        $this->hashingAlgorithm = $hashingAlgorithm;
 
         if (empty($this->bbbServerBaseUrl)) {
             throw new ConfigException('Base url required');

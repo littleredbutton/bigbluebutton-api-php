@@ -28,11 +28,6 @@ use BigBlueButton\Enum\Role;
 class Meeting
 {
     /**
-     * @var \SimpleXMLElement
-     */
-    protected $rawXml;
-
-    /**
      * @var string
      */
     private $meetingId;
@@ -96,30 +91,29 @@ class Meeting
 
     private readonly bool $isBreakout;
 
-    public function __construct(\SimpleXMLElement $xml)
+    public function __construct(protected \SimpleXMLElement $rawXml)
     {
-        $this->rawXml = $xml;
-        $this->meetingId = $xml->meetingID->__toString();
-        $this->meetingName = $xml->meetingName->__toString();
-        $this->creationTime = (float) $xml->createTime;
-        $this->creationDate = $xml->createDate->__toString();
-        $this->voiceBridge = (int) $xml->voiceBridge;
-        $this->dialNumber = $xml->dialNumber->__toString();
-        $this->hasBeenForciblyEnded = $xml->hasBeenForciblyEnded->__toString() === 'true';
-        $this->isRunning = $xml->running->__toString() === 'true';
-        $this->participantCount = (int) $xml->participantCount;
-        $this->listenerCount = (int) $xml->listenerCount;
-        $this->voiceParticipantCount = (int) $xml->voiceParticipantCount;
-        $this->videoCount = (int) $xml->videoCount;
-        $this->duration = (int) $xml->duration;
-        $this->hasUserJoined = $xml->hasUserJoined->__toString() === 'true';
-        $this->internalMeetingId = $xml->internalMeetingID->__toString();
-        $this->isRecording = $xml->recording->__toString() === 'true';
-        $this->startTime = (float) $xml->startTime;
-        $this->endTime = (float) $xml->endTime;
-        $this->maxUsers = (int) $xml->maxUsers->__toString();
-        $this->moderatorCount = (int) $xml->moderatorCount->__toString();
-        $this->isBreakout = $xml->isBreakout->__toString() === 'true';
+        $this->meetingId = $this->rawXml->meetingID->__toString();
+        $this->meetingName = $this->rawXml->meetingName->__toString();
+        $this->creationTime = (float) $this->rawXml->createTime;
+        $this->creationDate = $this->rawXml->createDate->__toString();
+        $this->voiceBridge = (int) $this->rawXml->voiceBridge;
+        $this->dialNumber = $this->rawXml->dialNumber->__toString();
+        $this->hasBeenForciblyEnded = $this->rawXml->hasBeenForciblyEnded->__toString() === 'true';
+        $this->isRunning = $this->rawXml->running->__toString() === 'true';
+        $this->participantCount = (int) $this->rawXml->participantCount;
+        $this->listenerCount = (int) $this->rawXml->listenerCount;
+        $this->voiceParticipantCount = (int) $this->rawXml->voiceParticipantCount;
+        $this->videoCount = (int) $this->rawXml->videoCount;
+        $this->duration = (int) $this->rawXml->duration;
+        $this->hasUserJoined = $this->rawXml->hasUserJoined->__toString() === 'true';
+        $this->internalMeetingId = $this->rawXml->internalMeetingID->__toString();
+        $this->isRecording = $this->rawXml->recording->__toString() === 'true';
+        $this->startTime = (float) $this->rawXml->startTime;
+        $this->endTime = (float) $this->rawXml->endTime;
+        $this->maxUsers = (int) $this->rawXml->maxUsers->__toString();
+        $this->moderatorCount = (int) $this->rawXml->moderatorCount->__toString();
+        $this->isBreakout = $this->rawXml->isBreakout->__toString() === 'true';
     }
 
     public function getMeetingId(): string

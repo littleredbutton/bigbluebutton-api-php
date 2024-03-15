@@ -58,16 +58,6 @@ class JoinMeetingParameters extends UserDataParameters
     public const VIEWER = 'VIEWER';
 
     /**
-     * @var string
-     */
-    protected $fullName;
-
-    /**
-     * @var string
-     */
-    protected $meetingID;
-
-    /**
      * @var int
      */
     protected $createTime;
@@ -113,19 +103,11 @@ class JoinMeetingParameters extends UserDataParameters
     protected $guest;
 
     /**
-     * @var string
-     */
-    protected $role;
-
-    /**
      * @var bool
      */
     protected $excludeFromDashboard;
 
-    public function __construct(string $meetingID, string $fullName, Role $role)
+    public function __construct(protected string $meetingID, protected string $fullName, protected Role $role)
     {
-        $this->meetingID = $meetingID;
-        $this->fullName = $fullName;
-        $this->role = $role;
     }
 }

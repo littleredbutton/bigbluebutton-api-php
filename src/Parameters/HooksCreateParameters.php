@@ -34,11 +34,6 @@ class HooksCreateParameters extends BaseParameters
     /**
      * @var string
      */
-    protected $callbackURL;
-
-    /**
-     * @var string
-     */
     protected $meetingID;
 
     /**
@@ -51,8 +46,7 @@ class HooksCreateParameters extends BaseParameters
      */
     protected $getRaw;
 
-    public function __construct(string $callbackURL)
+    public function __construct(protected string $callbackURL)
     {
-        $this->callbackURL = $callbackURL;
     }
 }

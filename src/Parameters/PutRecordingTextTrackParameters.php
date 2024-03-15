@@ -40,26 +40,6 @@ class PutRecordingTextTrackParameters extends BaseParameters
     /**
      * @var string
      */
-    protected $recordID;
-
-    /**
-     * @var string
-     */
-    protected $kind;
-
-    /**
-     * @var string
-     */
-    protected $lang;
-
-    /**
-     * @var string
-     */
-    protected $label;
-
-    /**
-     * @var string
-     */
     protected $contentType;
 
     protected $file;
@@ -67,13 +47,8 @@ class PutRecordingTextTrackParameters extends BaseParameters
     /**
      * GetRecordingTextTracksParameters constructor.
      */
-    public function __construct(string $recordID, string $kind, string $lang, string $label)
+    public function __construct(protected string $recordID, protected string $kind, protected string $lang, protected string $label)
     {
         $this->ignoreProperties = ['contentType', 'file'];
-
-        $this->recordID = $recordID;
-        $this->kind = $kind;
-        $this->lang = $lang;
-        $this->label = $label;
     }
 }

@@ -29,16 +29,10 @@ abstract class BaseResponse
     public const CHECKSUM_ERROR = 'checksumError';
 
     /**
-     * @var \SimpleXMLElement
-     */
-    protected $rawXml;
-
-    /**
      * BaseResponse constructor.
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public function __construct(protected \SimpleXMLElement $rawXml)
     {
-        $this->rawXml = $xml;
     }
 
     public function getRawXml(): \SimpleXMLElement
