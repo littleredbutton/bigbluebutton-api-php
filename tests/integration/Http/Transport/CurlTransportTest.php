@@ -41,6 +41,7 @@ final class CurlTransportTest extends TestCase
         TestHttpServer::start();
     }
 
+    /** @return array<string,array<int>> */
     public function provideBadResponseCodes(): iterable
     {
         // cURL does not understand codes below 200 properly.

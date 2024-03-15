@@ -30,8 +30,5 @@ namespace BigBlueButton\Parameters;
  */
 final class HooksListParameters extends MetaParameters
 {
-    /**
-     * @var string
-     */
-    protected $meetingID;
+    protected ?string $meetingID = null;
 }

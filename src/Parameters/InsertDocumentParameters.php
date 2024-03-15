@@ -27,6 +27,7 @@ namespace BigBlueButton\Parameters;
  */
 final class InsertDocumentParameters extends MetaParameters
 {
+    /** @var array<string,array{filename: string, downloadable: bool|null, removable: bool|null}> */
     private array $presentations = [];
 
     public function __construct(protected string $meetingID)

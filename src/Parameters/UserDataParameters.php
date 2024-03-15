@@ -27,20 +27,15 @@ namespace BigBlueButton\Parameters;
  */
 abstract class UserDataParameters extends BaseParameters
 {
+    /** @var array<string,string|bool> */
     private array $userData = [];
 
-    /**
-     * @return string|bool
-     */
-    public function getUserData(string $key)
+    public function getUserData(string $key): bool|string
     {
         return $this->userData[$key];
     }
 
-    /**
-     * @param string|bool $value
-     */
-    public function addUserData(string $key, $value): self
+    public function addUserData(string $key, bool|string $value): self
     {
         $this->userData[$key] = $value;
 

@@ -77,7 +77,7 @@ final class BaseParametersTest extends TestCase
  */
 final class TestParameters extends BaseParameters
 {
-    protected $notABool = 'string';
+    protected string $notABool = 'string';
 }
 
 /**

@@ -34,6 +34,7 @@ namespace BigBlueButton\Http;
  */
 final class SetCookie implements \Stringable
 {
+    /** @var array<string,string|bool|int|null> */
     private static array $defaults = [
         'Name' => null,
         'Value' => null,
@@ -47,9 +48,9 @@ final class SetCookie implements \Stringable
     ];
 
     /**
-     * @var array Cookie data
+     * @var array<string,string|bool|int|null> Cookie data
      */
-    private $data;
+    private ?array $data;
 
     /**
      * Create a new SetCookie object from a string.
@@ -95,19 +96,11 @@ final class SetCookie implements \Stringable
     }
 
     /**
-     * @param array $data Array of cookie data provided by a Cookie parser
+     * @param array<string,string|int> $data Array of cookie data provided by a Cookie parser
      */
     public function __construct(array $data = [])
     {
-        /** @var array|null $replaced will be null in case of replace error */
-        $replaced = array_replace(self::$defaults, $data);
-        // @codeCoverageIgnoreStart
-        if ($replaced === null) {
-            throw new \InvalidArgumentException('Unable to replace the default values for the Cookie.');
-        }
-        // @codeCoverageIgnoreEnd
-
-        $this->data = $replaced;
+        $this->data = array_replace(self::$defaults, $data);
         // Extract the Expires value and turn it into a UNIX timestamp if needed
         if (!$this->getExpires() && $this->getMaxAge()) {
             // Calculate the Expires date
@@ -123,7 +116,7 @@ final class SetCookie implements \Stringable
         foreach ($this->data as $k => $v) {
             if ($k !== 'Name' && $k !== 'Value' && $v !== null && $v !== false) {
                 if ($k === 'Expires') {
-                    $str .= 'Expires='.gmdate('D, d M Y H:i:s \G\M\T', $v).'; ';
+                    $str .= 'Expires='.gmdate('D, d M Y H:i:s \G\M\T', (int)$v).'; ';
                 } else {
                     $str .= ($v === true ? $k : "{$k}={$v}").'; ';
                 }
@@ -133,6 +126,7 @@ final class SetCookie implements \Stringable
         return rtrim($str, '; ');
     }
 
+    /** @return array<string,string|bool|int|null> */
     public function toArray(): array
     {
         return $this->data;
@@ -213,7 +207,7 @@ final class SetCookie implements \Stringable
      */
     public function getMaxAge(): ?int
     {
-        return $this->data['Max-Age'] == null ? null : (int) $this->data['Max-Age'];
+        return $this->data['Max-Age'] === null ? null : (int) $this->data['Max-Age'];
     }
 
     /**
@@ -228,10 +222,8 @@ final class SetCookie implements \Stringable
 
     /**
      * The UNIX timestamp when the cookie Expires.
-     *
-     * @return string|int|null
      */
-    public function getExpires()
+    public function getExpires(): int|string|null
     {
         return $this->data['Expires'];
     }
@@ -241,7 +233,7 @@ final class SetCookie implements \Stringable
      *
      * @param int|string $timestamp unix timestamp or any English textual datetime description
      */
-    public function setExpires($timestamp): void
+    public function setExpires(int|string $timestamp): void
     {
         $this->data['Expires'] = is_numeric($timestamp)
             ? (int) $timestamp
@@ -322,7 +314,7 @@ final class SetCookie implements \Stringable
         $cookiePath = $this->getPath();
 
         // Match on exact matches or when path is the default empty "/"
-        if ($cookiePath === '/' || $cookiePath == $requestPath) {
+        if ($cookiePath === '/' || $cookiePath === $requestPath) {
             return true;
         }
 
@@ -337,7 +329,7 @@ final class SetCookie implements \Stringable
         }
 
         // Match if the first character not included in cookie path is "/"
-        return substr($requestPath, \strlen($cookiePath), 1) === '/';
+        return $requestPath[\strlen($cookiePath)] === '/';
     }
 
     /**
@@ -383,7 +375,7 @@ final class SetCookie implements \Stringable
      *
      * @return bool|string Returns true if valid or an error message if invalid
      */
-    public function validate()
+    public function validate(): bool|string
     {
         $name = $this->getName();
         if ($name === '') {

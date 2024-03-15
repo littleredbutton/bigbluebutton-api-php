@@ -38,6 +38,7 @@ class Attendee
 
     private readonly bool $hasVideo;
 
+    /** @var array<string,string> */
     private array $customData = [];
 
     private readonly string $clientType;
@@ -100,6 +101,7 @@ class Attendee
         return $this->clientType;
     }
 
+    /** @return array<string,string> */
     public function getCustomData(): array
     {
         return $this->customData;

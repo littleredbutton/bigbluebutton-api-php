@@ -38,9 +38,10 @@ use Symfony\Component\Process\Process;
  */
 final class TestHttpServer
 {
+    /** @var array<int,Process> */
     private static array $process = [];
 
-    public static function start(int $port = 8057)
+    public static function start(int $port = 8057): Process
     {
         if (isset(self::$process[$port])) {
             self::$process[$port]->stop();

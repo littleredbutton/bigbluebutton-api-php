@@ -34,20 +34,9 @@ namespace BigBlueButton\Parameters;
  */
 class HooksCreateParameters extends BaseParameters
 {
-    /**
-     * @var string
-     */
-    protected $meetingID;
-
-    /**
-     * @var string
-     */
-    protected $eventID;
-
-    /**
-     * @var bool
-     */
-    protected $getRaw;
+    protected ?string $meetingID = null;
+    protected ?string $eventID = null;
+    protected ?bool $getRaw = null;
 
     public function __construct(protected string $callbackURL)
     {

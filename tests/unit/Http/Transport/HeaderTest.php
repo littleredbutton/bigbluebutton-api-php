@@ -21,7 +21,7 @@ namespace BigBlueButton\Tests\Unit\Http;
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Tests\Unit\Http;
+namespace BigBlueButton\Tests\Unit\Http\Transport;
 
 use BigBlueButton\Http\Transport\Header;
 use PHPUnit\Framework\TestCase;
@@ -79,7 +79,7 @@ final class HeaderTest extends TestCase
     /**
      * @dataProvider provideNonStringHeaders
      */
-    public function testMergeCurlHeadersWithNonStringHeaders($badHeader): void
+    public function testMergeCurlHeadersWithNonStringHeaders(mixed $badHeader): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(

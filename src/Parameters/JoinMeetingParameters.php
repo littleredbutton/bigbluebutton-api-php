@@ -59,55 +59,16 @@ class JoinMeetingParameters extends UserDataParameters
     public const MODERATOR = 'MODERATOR';
     public const VIEWER = 'VIEWER';
 
-    /**
-     * @var int
-     */
-    protected $createTime;
-
-    /**
-     * @var string
-     */
-    protected $userID;
-
-    /**
-     * @var string
-     */
-    protected $webVoiceConf;
-
-    /**
-     * @var string
-     */
-    protected $defaultLayout;
-
-    /**
-     * @var string
-     */
-    protected $avatarURL;
-
-    /**
-     * @var bool
-     */
-    protected $redirect;
-
-    /**
-     * @var string
-     */
-    protected $errorRedirectUrl;
-
-    /**
-     * @var string
-     */
-    protected $clientURL;
-
-    /**
-     * @var bool
-     */
-    protected $guest;
-
-    /**
-     * @var bool
-     */
-    protected $excludeFromDashboard;
+    protected ?int $createTime = null;
+    protected ?string $userID = null;
+    protected ?string $webVoiceConf = null;
+    protected ?string $defaultLayout = null;
+    protected ?string $avatarURL = null;
+    protected ?bool $redirect = null;
+    protected ?string $errorRedirectUrl = null;
+    protected ?string $clientURL = null;
+    protected ?bool $guest = null;
+    protected ?bool $excludeFromDashboard = null;
 
     public function __construct(protected string $meetingID, protected string $fullName, protected Role $role)
     {

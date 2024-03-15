@@ -145,297 +145,83 @@ use BigBlueButton\Enum\Feature;
  */
 class CreateMeetingParameters extends MetaParameters
 {
-    /**
-     * @var string
-     */
-    protected $welcome;
-
-    /**
-     * @var string
-     */
-    protected $dialNumber;
-
-    /**
-     * @var string
-     */
-    protected $voiceBridge;
-
-    /**
-     * @var string
-     */
-    protected $webVoice;
-
-    /**
-     * @var int
-     */
-    protected $maxParticipants;
-
-    /**
-     * @var string
-     */
-    protected $logoutURL;
-
-    /**
-     * @var bool
-     */
-    protected $record;
-
-    /**
-     * @var int
-     */
-    protected $duration;
-
-    /**
-     * @var bool
-     */
-    protected $isBreakout;
-
-    /**
-     * @var string
-     */
-    protected $parentMeetingID;
-
-    /**
-     * @var int
-     */
-    protected $sequence;
-
-    /**
-     * @var bool
-     */
-    protected $freeJoin;
-
-    /**
-     * @var bool
-     */
-    protected $breakoutRoomsPrivateChatEnabled;
-
-    /**
-     * @var bool
-     */
-    protected $breakoutRoomsRecord;
-
-    /**
-     * @var string
-     */
-    protected $moderatorOnlyMessage;
-
-    /**
-     * @var bool
-     */
-    protected $autoStartRecording;
-
-    /**
-     * @var bool
-     */
-    protected $allowStartStopRecording;
-
-    /**
-     * @var bool
-     */
-    protected $webcamsOnlyForModerator;
-
-    /**
-     * @var string
-     */
-    protected $logo;
-
-    /**
-     * @var string
-     */
-    protected $bannerText;
-
-    /**
-     * @var string
-     */
-    protected $bannerColor;
-
-    /**
-     * @var string
-     */
-    protected $copyright;
-
-    /**
-     * @var bool
-     */
-    protected $muteOnStart;
-
-    /**
-     * @var bool
-     */
-    protected $allowModsToUnmuteUsers;
-
-    /**
-     * @var bool
-     */
-    protected $lockSettingsDisableCam;
-
-    /**
-     * @var bool
-     */
-    protected $lockSettingsDisableMic;
-
-    /**
-     * @var bool
-     */
-    protected $lockSettingsDisablePrivateChat;
-
-    /**
-     * @var bool
-     */
-    protected $lockSettingsDisablePublicChat;
-
-    /**
-     * @var bool
-     */
-    protected $lockSettingsDisableNotes;
-
-    /**
-     * @var bool
-     */
-    protected $lockSettingsLockedLayout;
-
-    /**
-     * @var bool
-     */
-    protected $lockSettingsHideUserList;
-
-    /**
-     * @var bool
-     */
-    protected $lockSettingsLockOnJoin;
-
-    /**
-     * @var bool
-     */
-    protected $lockSettingsLockOnJoinConfigurable;
-
-    /**
-     * @var bool
-     */
-    protected $lockSettingsHideViewersCursor;
-
+    protected ?string $welcome = null;
+    protected ?string $dialNumber = null;
+    protected ?string $voiceBridge = null;
+    protected ?string $webVoice = null;
+    protected ?int $maxParticipants = null;
+    protected ?string $logoutURL = null;
+    protected ?bool $record = null;
+    protected ?int $duration = null;
+    protected ?bool $isBreakout = null;
+    protected ?string $parentMeetingID = null;
+    protected ?int $sequence = null;
+    protected ?bool $freeJoin = null;
+    protected ?bool $breakoutRoomsPrivateChatEnabled = null;
+    protected ?bool $breakoutRoomsRecord = null;
+    protected ?string $moderatorOnlyMessage = null;
+    protected ?bool $autoStartRecording = null;
+    protected ?bool $allowStartStopRecording = null;
+    protected ?bool $webcamsOnlyForModerator = null;
+    protected ?string $logo = null;
+    protected ?string $bannerText = null;
+    protected ?string $bannerColor = null;
+    protected ?string $copyright = null;
+    protected ?bool $muteOnStart = null;
+    protected ?bool $allowModsToUnmuteUsers = null;
+    protected ?bool $lockSettingsDisableCam = null;
+    protected ?bool $lockSettingsDisableMic = null;
+    protected ?bool $lockSettingsDisablePrivateChat = null;
+    protected ?bool $lockSettingsDisablePublicChat = null;
+    protected ?bool $lockSettingsDisableNotes = null;
+    protected ?bool $lockSettingsLockedLayout = null;
+    protected ?bool $lockSettingsHideUserList = null;
+    protected ?bool $lockSettingsLockOnJoin = null;
+    protected ?bool $lockSettingsLockOnJoinConfigurable = null;
+    protected ?bool $lockSettingsHideViewersCursor = null;
     protected GuestPolicy $guestPolicy;
+    protected ?bool $meetingKeepEvents = null;
+    protected ?bool $endWhenNoModerator = null;
+    protected int $endWhenNoModeratorDelayInMinutes;
+
+    protected ?string $meetingLayout = null;
+    protected ?string $meetingEndedURL = null;
+    protected ?int $learningDashboardCleanupDelayInMinutes = null;
+    protected ?bool $allowModsToEjectCameras = null;
+    protected ?bool $allowRequestsWithoutSession = null;
+    protected ?int $userCameraCap = null;
 
     /**
-     * @var bool
-     */
-    protected $meetingKeepEvents;
-
-    /**
-     * @var bool
-     */
-    protected $endWhenNoModerator;
-
-    /**
-     * @var int
-     */
-    protected $endWhenNoModeratorDelayInMinutes;
-
-    /**
-     * @var string
-     */
-    protected $meetingLayout;
-
-    /**
-     * @var string
-     */
-    protected $meetingEndedURL;
-
-    /**
-     * @var int
-     */
-    protected $learningDashboardCleanupDelayInMinutes;
-
-    /**
-     * @var bool
-     */
-    protected $allowModsToEjectCameras;
-
-    /**
-     * @var bool
-     */
-    protected $allowRequestsWithoutSession;
-
-    /**
-     * @var int
-     */
-    protected $userCameraCap;
-
-    /**
-     * @var array<array{id: string, name: string|null, roster: array}>
+     * @var array<array{id: string, name: string|null, roster: array<mixed>}>
      */
     private array $breakoutRoomsGroups = [];
 
     /**
-     * @var array
+     * @var array<Feature>
      */
-    protected $disabledFeatures = [];
+    protected array $disabledFeatures = [];
 
     /**
-     * @var array
+     * @var array<Feature>
      */
-    protected $disabledFeaturesExclude = [];
+    protected array $disabledFeaturesExclude = [];
+
+    protected ?int $meetingCameraCap = null;
+    protected ?int $meetingExpireIfNoUserJoinedInMinutes = null;
+    protected ?int $meetingExpireWhenLastUserLeftInMinutes = null;
+    protected ?bool $preUploadedPresentationOverrideDefault = null;
+    protected ?string $preUploadedPresentation = null;
+    protected ?string $preUploadedPresentationName = null;
+    protected ?bool $notifyRecordingIsOn = null;
+    protected ?bool $remindRecordingIsOn = null;
+    protected ?bool $recordFullDurationMedia = null;
+    protected ?string $presentationUploadExternalUrl = null;
+    protected ?string $presentationUploadExternalDescription = null;
 
     /**
-     * @var int
+     * @var array<string,string>
      */
-    protected $meetingCameraCap;
-
-    /**
-     * @var int
-     */
-    protected $meetingExpireIfNoUserJoinedInMinutes;
-
-    /**
-     * @var int
-     */
-    protected $meetingExpireWhenLastUserLeftInMinutes;
-
-    /**
-     * @var bool
-     */
-    protected $preUploadedPresentationOverrideDefault;
-
-    /**
-     * @var string
-     */
-    protected $preUploadedPresentation;
-
-    /**
-     * @var string
-     */
-    protected $preUploadedPresentationName;
-
-    /**
-     * @var bool
-     */
-    protected $notifyRecordingIsOn;
-
-    /**
-     * @var bool
-     */
-    protected $remindRecordingIsOn;
-
-    /**
-     * @var bool
-     */
-    protected $recordFullDurationMedia;
-
-    /**
-     * @var string
-     */
-    protected $presentationUploadExternalUrl;
-
-    /**
-     * @var string
-     */
-    protected $presentationUploadExternalDescription;
-
-    /**
-     * @var array
-     */
-    private $presentations = [];
+    private array $presentations = [];
 
     public function __construct(protected string $meetingID, protected string $name)
     {
@@ -548,7 +334,7 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @return array<array{id: string, name: string|null, roster: array}>
+     * @return array<array{id: string, name: string|null, roster: array<mixed>}>
      */
     public function getBreakoutRoomsGroups(): array
     {
@@ -556,6 +342,7 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
+     * @param array<mixed> $roster
      * @return $this
      */
     public function addBreakoutRoomsGroup(string $id, ?string $name, array $roster): self
@@ -565,6 +352,7 @@ class CreateMeetingParameters extends MetaParameters
         return $this;
     }
 
+    /** @return array<string,string> */
     public function getPresentations(): array
     {
         return $this->presentations;
@@ -589,6 +377,7 @@ class CreateMeetingParameters extends MetaParameters
                 } else {
                     $document = $module->addChild('document');
                     $document->addAttribute('name', $nameOrUrl);
+                    /** @phpstan-ignore-next-line */
                     $document[0] = $content;
                 }
             }
@@ -634,8 +423,12 @@ class CreateMeetingParameters extends MetaParameters
         return http_build_query($queries, '', '&', \PHP_QUERY_RFC3986);
     }
 
+    /**
+     * @param array<string> $queries
+     * @return array<string>
+     */
     private function filterBreakoutRelatedQueries(array $queries): array
     {
-        return array_filter($queries, fn ($query) => !\in_array($query, ['isBreakout', 'parentMeetingID', 'sequence', 'freeJoin']));
+        return array_filter($queries, static fn ($query) => !\in_array($query, ['isBreakout', 'parentMeetingID', 'sequence', 'freeJoin']));
     }
 }

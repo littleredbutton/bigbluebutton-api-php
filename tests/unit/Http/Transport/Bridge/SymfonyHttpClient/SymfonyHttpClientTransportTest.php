@@ -201,6 +201,7 @@ final class SymfonyHttpClientTransportTest extends TestCase
         }
     }
 
+    /** @return iterable<string,array<int>> */
     public function provideBadResponseCodes(): iterable
     {
         foreach (range(100, 199) as $badCode) {
@@ -242,6 +243,7 @@ final class SymfonyHttpClientTransportTest extends TestCase
         }
     }
 
+    /** @return iterable<string,array<int|FakeClientException|FakeServerException|FakeRedirectionException>> */
     public function provideBadResponseExceptions(): iterable
     {
         yield 'Client exception' => [new FakeClientException(), 400];

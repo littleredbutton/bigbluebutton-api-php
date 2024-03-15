@@ -198,6 +198,7 @@ final class PsrHttpClientTransportTest extends TestCase
         $this->transport->request($request);
     }
 
+    /** @return iterable<string,array<int>> */
     public function provideBadResponseCodes(): iterable
     {
         foreach (range(100, 199) as $badCode) {

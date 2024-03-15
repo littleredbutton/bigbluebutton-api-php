@@ -27,9 +27,11 @@ namespace BigBlueButton\Parameters;
  */
 abstract class BaseParameters
 {
-    protected $ignoreProperties = [];
+    /** @var array<string> */
+    protected array $ignoreProperties = [];
 
     /**
+     * @param array<mixed> $arguments
      * @return $this|bool|mixed|null
      */
     public function __call(string $name, array $arguments)
@@ -39,22 +41,26 @@ abstract class BaseParameters
         }
         if (str_starts_with($name, 'get')) {
             return $this->getter(lcfirst(substr($name, 3)));
-        } elseif (str_starts_with($name, 'is')) {
+        }
+
+        if (str_starts_with($name, 'is')) {
             return $this->booleanGetter(lcfirst(substr($name, 2)));
-        } elseif (str_starts_with($name, 'set')) {
+        }
+
+        if (str_starts_with($name, 'set')) {
             return $this->setter(lcfirst(substr($name, 3)), $arguments);
         }
 
         return null;
     }
 
-    protected function getter(string $name)
+    protected function getter(string $name): mixed
     {
         if (property_exists($this, $name)) {
             return $this->$name;
-        } else {
-            throw new \BadFunctionCallException($name.' is not a valid property');
         }
+
+        throw new \BadFunctionCallException($name.' is not a valid property');
     }
 
     protected function booleanGetter(string $name): ?bool
@@ -68,7 +74,8 @@ abstract class BaseParameters
         return $value;
     }
 
-    protected function setter(string $name, array $arguments): self
+    /** @param array<mixed> $arguments */
+    protected function setter(string $name, array $arguments): static
     {
         if (!property_exists($this, $name)) {
             throw new \BadFunctionCallException($name.' is not a valid property');
@@ -87,17 +94,23 @@ abstract class BaseParameters
         return $this;
     }
 
+    /** @return array<string,mixed> */
     protected function getProperties(): array
     {
-        return array_filter(get_object_vars($this), fn ($name) => $name !== 'ignoreProperties' && !\in_array($name, $this->ignoreProperties), \ARRAY_FILTER_USE_KEY);
+        return array_filter(get_object_vars($this), fn ($name) => $name !== 'ignoreProperties' && !\in_array(
+                $name,
+                $this->ignoreProperties,
+                true
+            ), \ARRAY_FILTER_USE_KEY);
     }
 
+    /** @return array<string,string> */
     protected function getHTTPQueryArray(): array
     {
         $properties = $this->getProperties();
         $properties = array_filter($properties, fn ($value) => $value !== null);
 
-        return array_map(function ($value) {
+        return array_map(static function ($value) {
             if (\is_bool($value)) {
                 return $value ? 'true' : 'false';
             }

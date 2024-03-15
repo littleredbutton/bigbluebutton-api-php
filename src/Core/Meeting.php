@@ -74,6 +74,7 @@ class Meeting
      */
     private ?array $attendees = null;
 
+    /** @var array<string,string>|null */
     private ?array $metas = null;
 
     private readonly bool $isBreakout;
@@ -246,6 +247,7 @@ class Meeting
         return array_values($viewers);
     }
 
+    /** @return array<string,string> */
     public function getMetas(): array
     {
         if ($this->metas === null) {

@@ -36,16 +36,12 @@ namespace BigBlueButton\Parameters;
  * @method string getContentType()
  * @method $this  set(string $contentType)
  * @method mixed  getFile()
- * @method $this  setFile(mixed $file)
+ * @method $this  setFile(string $file)
  */
 class PutRecordingTextTrackParameters extends BaseParameters
 {
-    /**
-     * @var string
-     */
-    protected $contentType;
-
-    protected $file;
+    protected ?string $contentType = null;
+    protected ?string $file = null;
 
     /**
      * GetRecordingTextTracksParameters constructor.

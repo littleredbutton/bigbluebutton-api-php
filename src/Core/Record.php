@@ -35,6 +35,7 @@ class Record
     private readonly float $startTime;
     private readonly float $endTime;
     private readonly int $participantCount;
+    /** @var array<string,string> */
     private array $metas = [];
 
     /** @var PlaybackFormat[] */
@@ -100,6 +101,7 @@ class Record
         return $this->participantCount;
     }
 
+    /** @return array<string,string> */
     public function getMetas(): array
     {
         return $this->metas;

@@ -27,6 +27,7 @@ namespace BigBlueButton\Parameters;
  */
 abstract class MetaParameters extends BaseParameters
 {
+    /** @var array<string,bool|string> */
     private array $meta = [];
 
     public function getMeta(string $key): string|bool

@@ -56,6 +56,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return $bbb->createMeeting($createMeetingMock);
     }
 
+    /** @return array<string,mixed> */
     protected function generateCreateParams(): array
     {
         return [
@@ -115,7 +116,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array<array{id: string, name: string, roster: array}>
+     * @return array<array{id: string, name: string, roster: array<mixed>}>
      */
     protected function generateBreakoutRoomsGroups(): array
     {
@@ -128,6 +129,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return $groups;
     }
 
+    /**
+     * @param array<string,mixed> $createParams
+     * @return array<string,mixed>
+     */
     protected function generateBreakoutCreateParams(array $createParams): array
     {
         return array_merge($createParams, [
@@ -138,6 +143,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         ]);
     }
 
+    /** @param array<string,mixed> $params */
     protected function getCreateMock(array $params): CreateMeetingParameters
     {
         $createMeetingParams = new CreateMeetingParameters($params['meetingID'], $params['name']);
@@ -196,6 +202,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return $createMeetingParams;
     }
 
+    /** @param array<string,mixed> $params */
     protected function getBreakoutCreateMock(array $params): CreateMeetingParameters
     {
         $createMeetingParams = $this->getCreateMock($params);
@@ -203,6 +210,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return $createMeetingParams->setBreakout($params['isBreakout'])->setParentMeetingID($params['parentMeetingId'])->setSequence($params['sequence'])->setFreeJoin($params['freeJoin']);
     }
 
+    /** @return array<string,mixed> */
     protected function generateJoinMeetingParams(): array
     {
         return ['meetingID' => $this->faker->uuid,
@@ -218,6 +226,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    /** @param array<string,mixed> $params */
     protected function getJoinMeetingMock(array $params): JoinMeetingParameters
     {
         $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName'], $params['role']);
@@ -234,6 +243,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return $joinMeetingParams;
     }
 
+    /** @return array<string,mixed> */
     protected function generateEndMeetingParams(): array
     {
         return [
@@ -241,6 +251,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    /** @param  array<string,mixed> $params */
     protected function getEndMeetingMock(array $params): EndMeetingParameters
     {
         return new EndMeetingParameters($params['meetingID']);
@@ -254,6 +265,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return $bbb->updateRecordings($updateRecordingsMock);
     }
 
+    /** @return array<string,mixed> */
     protected function generateUpdateRecordingsParams(): array
     {
         return [
@@ -262,6 +274,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    /** @param array<string,mixed> $params */
     protected function getUpdateRecordingsParamsMock(array $params): UpdateRecordingsParameters
     {
         $updateRecordingParameters = new UpdateRecordingsParameters($params['recordID']);
@@ -329,6 +342,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         }
     }
 
+    /** @param array<mixed> $parameters */
     public function assertUrlContainsAllRequestParameters(string $url, array $parameters): void
     {
         foreach ($parameters as $parameter) {

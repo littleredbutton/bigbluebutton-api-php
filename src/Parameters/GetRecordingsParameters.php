@@ -34,18 +34,7 @@ namespace BigBlueButton\Parameters;
  */
 class GetRecordingsParameters extends MetaParameters
 {
-    /**
-     * @var string
-     */
-    protected $meetingID;
-
-    /**
-     * @var string
-     */
-    protected $recordID;
-
-    /**
-     * @var string
-     */
-    protected $state;
+    protected ?string $meetingID = null;
+    protected ?string $recordID = null;
+    protected ?string $state = null;
 }
