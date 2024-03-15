@@ -10,6 +10,7 @@ use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRect
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromStrictConstructorRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromStrictSetUpRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -19,6 +20,7 @@ return RectorConfig::configure()
     ->withPhpSets()
     ->withRules([
         AddVoidReturnTypeWhereNoReturnRector::class,
+        DeclareStrictTypesRector::class,
         RemoveUnusedVariableAssignRector::class,
         RemoveUselessParamTagRector::class,
         RemoveUselessReturnTagRector::class,

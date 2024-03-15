@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use BigBlueButton\Core\Meeting;
 use BigBlueButton\Responses\GetMeetingInfoResponse;
 use BigBlueButton\Tests\Common\TestCase;

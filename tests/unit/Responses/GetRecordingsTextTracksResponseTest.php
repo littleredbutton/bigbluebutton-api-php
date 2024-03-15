@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BigBlueButton\Tests\Unit\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\GetRecordingTextTracksResponse;

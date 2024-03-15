@@ -65,7 +65,6 @@ final class BaseParametersTest extends TestCase
 
         $params->setEnum('two');
         $this->assertSame(TestEnum::TWO, $params->getEnum());
-
     }
 }
 
@@ -84,7 +83,7 @@ final class TestParameters extends BaseParameters
 /**
  * @internal
  *
- * @method self setEnum(TestEnum|string $enum)
+ * @method self     setEnum(TestEnum|string $enum)
  * @method TestEnum getEnum()
  */
 final class TestEnumParameters extends BaseParameters
@@ -92,7 +91,7 @@ final class TestEnumParameters extends BaseParameters
     protected ?TestEnum $enum = null;
 }
 
-enum TestEnum : string
+enum TestEnum: string
 {
     case ONE = 'one';
     case TWO = 'two';
