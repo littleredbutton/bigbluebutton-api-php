@@ -116,6 +116,14 @@ class BigBlueButton
      */
     public function __construct(?string $baseUrl = null, ?string $secret = null, ?TransportInterface $transport = null, string $hashingAlgorithm = HashingAlgorithm::SHA_1)
     {
+        if (empty($baseUrl)) {
+            @trigger_error(sprintf('Constructing "%s" without passing a server base URL is deprecated and will throw an exception 6.0.', self::class), \E_USER_DEPRECATED);
+        }
+
+        if (empty($secret)) {
+            @trigger_error(sprintf('Constructing "%s" without passing a secret is deprecated and will throw an exception 6.0.', self::class), \E_USER_DEPRECATED);
+        }
+
         // Keeping backward compatibility with older deployed versions
         $this->securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
         $this->bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
