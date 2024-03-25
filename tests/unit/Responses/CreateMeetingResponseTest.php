@@ -66,7 +66,7 @@ final class CreateMeetingResponseTest extends TestCase
     public function testCreateMeetingResponseTypes()
     {
         $this->assertEachGetterValueIsString($this->meeting, ['getReturnCode', 'getInternalMeetingId', 'getParentMeetingId',
-                                                              'getAttendeePassword', 'getModeratorPassword', 'getDialNumber', 'getCreationDate', ]);
+            'getAttendeePassword', 'getModeratorPassword', 'getDialNumber', 'getCreationDate', ]);
         $this->assertEachGetterValueIsDouble($this->meeting, ['getCreationTime']);
         $this->assertEachGetterValueIsInteger($this->meeting, ['getDuration', 'getVoiceBridge']);
         $this->assertEachGetterValueIsBoolean($this->meeting, ['hasUserJoined', 'hasBeenForciblyEnded']);

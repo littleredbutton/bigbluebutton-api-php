@@ -110,11 +110,11 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'endWhenNoModerator' => $this->faker->boolean(50),
             'endWhenNoModeratorDelayInMinutes' => $this->faker->numberBetween(1, 100),
             'meetingLayout' => $this->faker->randomElement([
-                                                                MeetingLayout::CUSTOM_LAYOUT,
-                                                                MeetingLayout::SMART_LAYOUT,
-                                                                MeetingLayout::PRESENTATION_FOCUS,
-                                                                MeetingLayout::VIDEO_FOCUS,
-                                                           ]),
+                MeetingLayout::CUSTOM_LAYOUT,
+                MeetingLayout::SMART_LAYOUT,
+                MeetingLayout::PRESENTATION_FOCUS,
+                MeetingLayout::VIDEO_FOCUS,
+            ]),
             'learningDashboardEnabled' => $this->faker->boolean(50),
             'learningDashboardCleanupDelayInMinutes' => $this->faker->numberBetween(1, 100),
             'breakoutRoomsEnabled' => $this->faker->boolean(50),
@@ -246,16 +246,16 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function generateJoinMeetingParams()
     {
         return ['meetingID' => $this->faker->uuid,
-                'fullName' => $this->faker->name,
-                'role' => $this->faker->randomElement(Role::getValues()),
-                'userID' => $this->faker->numberBetween(1, 1000),
-                'webVoiceConf' => $this->faker->word,
-                'createTime' => $this->faker->unixTime,
-                'configToken' => $this->faker->word,
-                'errorRedirectUrl' => $this->faker->url,
-                'userdata-countrycode' => $this->faker->countryCode,
-                'userdata-email' => $this->faker->email,
-                'userdata-commercial' => false,
+            'fullName' => $this->faker->name,
+            'role' => $this->faker->randomElement(Role::getValues()),
+            'userID' => $this->faker->numberBetween(1, 1000),
+            'webVoiceConf' => $this->faker->word,
+            'createTime' => $this->faker->unixTime,
+            'configToken' => $this->faker->word,
+            'errorRedirectUrl' => $this->faker->url,
+            'userdata-countrycode' => $this->faker->countryCode,
+            'userdata-email' => $this->faker->email,
+            'userdata-commercial' => false,
         ];
     }
 
@@ -285,7 +285,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function generateEndMeetingParams()
     {
         return ['meetingID' => $this->faker->uuid,
-                'password' => $this->faker->password, ];
+            'password' => $this->faker->password, ];
     }
 
     /**
