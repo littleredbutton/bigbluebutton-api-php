@@ -120,7 +120,7 @@ class BigBlueButton
             @trigger_error(sprintf('Constructing "%s" without passing a server base URL is deprecated and will throw an exception 6.0.', self::class), \E_USER_DEPRECATED);
         }
 
-        if (empty($secret)) {
+        if (null === $secret) {
             @trigger_error(sprintf('Constructing "%s" without passing a secret is deprecated and will throw an exception 6.0.', self::class), \E_USER_DEPRECATED);
         }
 
