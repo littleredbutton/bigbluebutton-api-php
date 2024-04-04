@@ -42,8 +42,6 @@ use BigBlueButton\Enum\Role;
  * @method $this     setRedirect(bool $redirect)
  * @method string    getErrorRedirectUrl()
  * @method $this     setErrorRedirectUrl(string $errorRedirectUrl)
- * @method string    getClientURL()
- * @method $this     setClientURL(string $clientURL)
  * @method bool|null isGuest()
  * @method $this     setGuest(bool $guest)
  * @method string    getRole()
@@ -187,6 +185,26 @@ class JoinMeetingParameters extends UserDataParameters
     public function setConfigToken(string $configToken): self
     {
         $this->configToken = $configToken;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated and will be removed in 6.0. Old BigBlueButton flash client parameter.
+     */
+    public function getClientURL(): ?string
+    {
+        return $this->clientURL;
+    }
+
+    /**
+     * @deprecated and will be removed in 6.0. Old BigBlueButton flash client parameter.
+     *
+     * @return $this
+     */
+    public function setClientURL(string $clientURL): self
+    {
+        $this->clientURL = $clientURL;
 
         return $this;
     }
