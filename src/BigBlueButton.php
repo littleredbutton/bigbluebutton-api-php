@@ -124,6 +124,14 @@ class BigBlueButton
             @trigger_error(sprintf('Constructing "%s" without passing a secret is deprecated and will throw an exception 6.0.', self::class), \E_USER_DEPRECATED);
         }
 
+        if (getenv('BBB_SECURITY_SALT') !== false || getenv('BBB_SECRET') !== false) {
+            @trigger_error('Using BBB_SECURITY_SALT or BBB_SECRET environment variables is deprecated for security reasons and will be removed in 6.0. Use the constructor parameters instead.', \E_USER_DEPRECATED);
+        }
+
+        if (getenv('BBB_SERVER_BASE_URL') !== false) {
+            @trigger_error('Using BBB_SERVER_BASE_URL environment variable is deprecated for security reasons and will be removed in 6.0. Use the constructor parameters instead.', \E_USER_DEPRECATED);
+        }
+
         // Keeping backward compatibility with older deployed versions
         $this->securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
         $this->bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
