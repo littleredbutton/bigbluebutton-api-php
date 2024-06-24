@@ -99,6 +99,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'lockSettingsLockOnJoinConfigurable' => $this->faker->boolean(50),
             'allowModsToUnmuteUsers' => $this->faker->boolean(50),
             'allowModsToEjectCameras' => $this->faker->boolean(50),
+            'allowPromoteGuestToModerator' => $this->faker->boolean(50),
             'disabledFeatures' => $this->faker->randomElements(Feature::getValues(), 3),
             'disabledFeaturesExclude' => $this->faker->randomElements(Feature::getValues(), 2),
             'meta_presenter' => $this->faker->name,
@@ -209,6 +210,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setBreakoutRoomsPrivateChatEnabled($params['breakoutRoomsPrivateChatEnabled'])
             ->setBreakoutRoomsRecord($params['breakoutRoomsRecord'])
             ->setAllowRequestsWithoutSession($params['allowRequestsWithoutSession'])
+            ->setAllowPromoteGuestToModerator($params['allowPromoteGuestToModerator'])
             ->setVirtualBackgroundsDisabled($params['virtualBackgroundsDisabled'])
             ->setUserCameraCap($params['userCameraCap'])
             ->setDisabledFeatures($params['disabledFeatures'])

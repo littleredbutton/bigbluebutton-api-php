@@ -120,6 +120,8 @@ use BigBlueButton\Enum\GuestPolicy;
  * @method $this     setAllowModsToEjectCameras(bool $isAllowModsToEjectCameras)
  * @method bool|null isAllowRequestsWithoutSession()
  * @method $this     setAllowRequestsWithoutSession(bool $isAllowRequestsWithoutSession)
+ * @method bool|null isAllowPromoteGuestToModerator()
+ * @method $this     setAllowPromoteGuestToModerator(bool $isAllowPromoteGuestToModerator)
  * @method int       getUserCameraCap()
  * @method $this     setUserCameraCap(int $cap)
  * @method int       getMeetingCameraCap()
@@ -385,6 +387,11 @@ class CreateMeetingParameters extends MetaParameters
      * @var bool
      */
     protected $allowRequestsWithoutSession;
+
+    /**
+     * @var bool
+     */
+    protected $allowPromoteGuestToModerator;
 
     /**
      * @var bool
