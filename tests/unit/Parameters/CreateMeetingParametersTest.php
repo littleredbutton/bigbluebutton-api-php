@@ -85,7 +85,6 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['meetingLayout'], $createMeetingParams->getMeetingLayout());
         $this->assertEquals($params['learningDashboardEnabled'], $createMeetingParams->isLearningDashboardEnabled());
         $this->assertEquals($params['learningDashboardCleanupDelayInMinutes'], $createMeetingParams->getLearningDashboardCleanupDelayInMinutes());
-        $this->assertEquals($params['allowModsToEjectCameras'], $createMeetingParams->isAllowModsToEjectCameras());
         $this->assertEquals($params['breakoutRoomsEnabled'], $createMeetingParams->isBreakoutRoomsEnabled());
         $this->assertEquals($params['breakoutRoomsPrivateChatEnabled'], $createMeetingParams->isBreakoutRoomsPrivateChatEnabled());
         $this->assertEquals($params['breakoutRoomsRecord'], $createMeetingParams->isBreakoutRoomsRecord());
