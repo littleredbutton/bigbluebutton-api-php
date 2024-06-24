@@ -43,4 +43,5 @@ class ApiMethod extends Enum
     public const HOOKS_LIST = 'hooks/list';
     public const HOOKS_DESTROY = 'hooks/destroy';
     public const INSERT_DOCUMENT = 'insertDocument';
+    public const SEND_CHAT_MESSAGE = 'sendChatMessage';
 }
