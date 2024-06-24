@@ -19,7 +19,7 @@
 
 namespace BigBlueButton\Parameters;
 
-use BigBlueButton\Core\GuestPolicy;
+use BigBlueButton\Enum\GuestPolicy;
 
 /**
  * @method string    getName()
@@ -513,7 +513,7 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @deprecated use disabledFeatures instead
+     * @deprecated and will be removed in 6.0. Use disabledFeatures instead
      * Backwards compatibility for the old method name with the missing 's' at the end
      */
     public function setLockSettingsDisableNote(bool $isLockSettingsDisableNote): self
@@ -524,7 +524,7 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @deprecated use disabledFeatures instead
+     * @deprecated and will be removed in 6.0. Use disabledFeatures instead
      * Backwards compatibility for the old method name with the missing 's' at the end
      */
     public function isLockSettingsDisableNote(): bool
@@ -533,7 +533,7 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @deprecated Use disabledFeatures instead
+     * @deprecated and will be removed in 6.0. Use disabledFeatures instead
      */
     public function setLearningDashboardEnabled(bool $learningDashboardEnabled): self
     {
@@ -543,7 +543,7 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @deprecated Use disabledFeatures instead
+     * @deprecated and will be removed in 6.0. Use disabledFeatures instead
      */
     public function isLearningDashboardEnabled(): bool
     {
@@ -551,7 +551,7 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @deprecated Use disabledFeatures instead
+     * @deprecated and will be removed in 6.0. Use disabledFeatures instead
      */
     public function setVirtualBackgroundsDisabled(bool $virtualBackgroundsDisabled): self
     {
@@ -561,7 +561,7 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @deprecated Use disabledFeatures instead
+     * @deprecated and will be removed in 6.0. Use disabledFeatures instead
      */
     public function isVirtualBackgroundsDisabled(): bool
     {
@@ -569,7 +569,7 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @deprecated Use disabledFeatures instead
+     * @deprecated and will be removed in 6.0. Use disabledFeatures instead
      */
     public function setBreakoutRoomsEnabled(bool $breakoutRoomsEnabled): self
     {
@@ -579,7 +579,7 @@ class CreateMeetingParameters extends MetaParameters
     }
 
     /**
-     * @deprecated Use disabledFeatures instead
+     * @deprecated and will be removed in 6.0. Use disabledFeatures instead
      */
     public function isBreakoutRoomsEnabled(): bool
     {

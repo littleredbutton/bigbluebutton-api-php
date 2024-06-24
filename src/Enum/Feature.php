@@ -48,12 +48,12 @@ class Feature extends Enum
     public const TIMER = 'timer';
 
     /**
-     * @deprecated Use Feature::IMPORT_PRESENTATION_WITH_ANNOTATIONS_FROM_BREAKOUT_ROOMS instead
+     * @deprecated and will be removed in 6.0. Use Feature::IMPORT_PRESENTATION_WITH_ANNOTATIONS_FROM_BREAKOUT_ROOMS instead
      */
     public const IMPORT_PRESENTATION_WITHANNOTATIONS_FROM_BREAKOUTROOMS = 'importPresentationWithAnnotationsFromBreakoutRooms';
 
     /**
-     * @deprecated Use Feature::IMPORT_SHARED_NOTES_FROM_BREAKOUT_ROOMS instead
+     * @deprecated and will be removed in 6.0. Use Feature::IMPORT_SHARED_NOTES_FROM_BREAKOUT_ROOMS instead
      */
     public const IMPORT_SHARED_NOTES_FROM_BREAKOUTROOMS = 'importSharedNotesFromBreakoutRooms';
 }

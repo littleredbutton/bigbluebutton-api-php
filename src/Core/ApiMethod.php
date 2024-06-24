@@ -19,24 +19,23 @@
 
 namespace BigBlueButton\Core;
 
+/* @deprecated and will be removed in 6.0. Use \BigBlueButton\Enum\ApiMethod instead */
 final class ApiMethod
 {
-    public const CREATE = 'create';
-    public const JOIN = 'join';
-    public const ENTER = 'enter';
-    public const END = 'end';
-    public const IS_MEETING_RUNNING = 'isMeetingRunning';
-    public const GET_MEETING_INFO = 'getMeetingInfo';
-    public const GET_MEETINGS = 'getMeetings';
-    public const SIGN_OUT = 'signOut';
-    public const GET_RECORDINGS = 'getRecordings';
-    public const PUBLISH_RECORDINGS = 'publishRecordings';
-    public const DELETE_RECORDINGS = 'deleteRecordings';
-    public const UPDATE_RECORDINGS = 'updateRecordings';
-    public const GET_RECORDING_TEXT_TRACKS = 'getRecordingTextTracks';
-    public const PUT_RECORDING_TEXT_TRACK = 'putRecordingTextTrack';
-    public const HOOKS_CREATE = 'hooks/create';
-    public const HOOKS_LIST = 'hooks/list';
-    public const HOOKS_DESTROY = 'hooks/destroy';
-    public const INSERT_DOCUMENT = 'insertDocument';
+    public const CREATE = \BigBlueButton\Enum\ApiMethod::CREATE;
+    public const JOIN = \BigBlueButton\Enum\ApiMethod::JOIN;
+    public const END = \BigBlueButton\Enum\ApiMethod::END;
+    public const IS_MEETING_RUNNING = \BigBlueButton\Enum\ApiMethod::IS_MEETING_RUNNING;
+    public const GET_MEETING_INFO = \BigBlueButton\Enum\ApiMethod::GET_MEETING_INFO;
+    public const GET_MEETINGS = \BigBlueButton\Enum\ApiMethod::GET_MEETINGS;
+    public const GET_RECORDINGS = \BigBlueButton\Enum\ApiMethod::GET_RECORDINGS;
+    public const PUBLISH_RECORDINGS = \BigBlueButton\Enum\ApiMethod::PUBLISH_RECORDINGS;
+    public const DELETE_RECORDINGS = \BigBlueButton\Enum\ApiMethod::DELETE_RECORDINGS;
+    public const UPDATE_RECORDINGS = \BigBlueButton\Enum\ApiMethod::UPDATE_RECORDINGS;
+    public const GET_RECORDING_TEXT_TRACKS = \BigBlueButton\Enum\ApiMethod::GET_RECORDING_TEXT_TRACKS;
+    public const PUT_RECORDING_TEXT_TRACK = \BigBlueButton\Enum\ApiMethod::PUT_RECORDING_TEXT_TRACK;
+    public const HOOKS_CREATE = \BigBlueButton\Enum\ApiMethod::HOOKS_CREATE;
+    public const HOOKS_LIST = \BigBlueButton\Enum\ApiMethod::HOOKS_LIST;
+    public const HOOKS_DESTROY = \BigBlueButton\Enum\ApiMethod::HOOKS_DESTROY;
+    public const INSERT_DOCUMENT = \BigBlueButton\Enum\ApiMethod::INSERT_DOCUMENT;
 }

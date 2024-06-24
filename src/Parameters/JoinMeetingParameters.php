@@ -51,8 +51,11 @@ use BigBlueButton\Enum\Role;
  */
 class JoinMeetingParameters extends UserDataParameters
 {
-    public const MODERATOR = 'MODERATOR';
-    public const VIEWER = 'VIEWER';
+    /* @deprecated and will be removed in 6.0. Use BigBlueButton\Enum\Role::MODERATOR instead */
+    public const MODERATOR = Role::MODERATOR;
+
+    /* @deprecated and will be removed in 6.0. Use BigBlueButton\Enum\Role::VIEWER instead */
+    public const VIEWER = Role::VIEWER;
 
     /**
      * @var string

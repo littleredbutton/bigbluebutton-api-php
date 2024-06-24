@@ -19,8 +19,8 @@
 
 namespace BigBlueButton\Parameters;
 
-use BigBlueButton\Core\GuestPolicy;
 use BigBlueButton\Enum\Feature;
+use BigBlueButton\Enum\GuestPolicy;
 use BigBlueButton\TestCase;
 
 /**
