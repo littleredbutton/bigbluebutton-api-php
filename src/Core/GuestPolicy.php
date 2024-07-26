@@ -22,10 +22,11 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Core;
 
+/* @deprecated and will be removed in 6.0. Use \BigBlueButton\Enum\GuestPolicy instead */
 final class GuestPolicy
 {
-    public const ALWAYS_ACCEPT = 'ALWAYS_ACCEPT';
-    public const ALWAYS_DENY = 'ALWAYS_DENY';
-    public const ASK_MODERATOR = 'ASK_MODERATOR';
-    public const ALWAYS_ACCEPT_AUTH = 'ALWAYS_ACCEPT_AUTH';
+    public const ALWAYS_ACCEPT = \BigBlueButton\Enum\GuestPolicy::ALWAYS_ACCEPT;
+    public const ALWAYS_DENY = \BigBlueButton\Enum\GuestPolicy::ALWAYS_DENY;
+    public const ASK_MODERATOR = \BigBlueButton\Enum\GuestPolicy::ASK_MODERATOR;
+    public const ALWAYS_ACCEPT_AUTH = \BigBlueButton\Enum\GuestPolicy::ALWAYS_ACCEPT_AUTH;
 }

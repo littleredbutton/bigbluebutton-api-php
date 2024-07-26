@@ -20,8 +20,8 @@
 
 namespace BigBlueButton\Parameters;
 
-use BigBlueButton\Core\GuestPolicy;
 use BigBlueButton\Enum\Feature;
+use BigBlueButton\Enum\GuestPolicy;
 use BigBlueButton\TestCase;
 
 /**
@@ -62,6 +62,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['lockSettingsLockOnJoinConfigurable'], $createMeetingParams->isLockSettingsLockOnJoinConfigurable());
         $this->assertEquals($params['allowModsToUnmuteUsers'], $createMeetingParams->isAllowModsToUnmuteUsers());
         $this->assertEquals($params['allowModsToEjectCameras'], $createMeetingParams->isAllowModsToEjectCameras());
+        $this->assertEquals($params['allowPromoteGuestToModerator'], $createMeetingParams->isAllowPromoteGuestToModerator());
         $this->assertEquals($params['guestPolicy'], $createMeetingParams->getGuestPolicy());
         $this->assertEquals($params['endWhenNoModerator'], $createMeetingParams->isEndWhenNoModerator());
         $this->assertEquals($params['endWhenNoModeratorDelayInMinutes'], $createMeetingParams->getEndWhenNoModeratorDelayInMinutes());
@@ -81,6 +82,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['meetingLayout'], $createMeetingParams->getMeetingLayout());
         $this->assertEquals($params['learningDashboardCleanupDelayInMinutes'], $createMeetingParams->getLearningDashboardCleanupDelayInMinutes());
         $this->assertEquals($params['allowModsToEjectCameras'], $createMeetingParams->isAllowModsToEjectCameras());
+        $this->assertEquals($params['breakoutRoomsEnabled'], $createMeetingParams->isBreakoutRoomsEnabled());
         $this->assertEquals($params['breakoutRoomsPrivateChatEnabled'], $createMeetingParams->isBreakoutRoomsPrivateChatEnabled());
         $this->assertEquals($params['breakoutRoomsRecord'], $createMeetingParams->isBreakoutRoomsRecord());
         $this->assertEquals($params['allowRequestsWithoutSession'], $createMeetingParams->isAllowRequestsWithoutSession());

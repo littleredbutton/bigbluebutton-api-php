@@ -20,7 +20,7 @@
 
 namespace BigBlueButton;
 
-use BigBlueButton\Core\ApiMethod;
+use BigBlueButton\Enum\ApiMethod;
 use BigBlueButton\Enum\HashingAlgorithm;
 use BigBlueButton\Exceptions\ConfigException;
 use BigBlueButton\Exceptions\NetworkException;

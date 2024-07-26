@@ -20,9 +20,9 @@
 
 namespace BigBlueButton;
 
-use BigBlueButton\Core\GuestPolicy;
-use BigBlueButton\Core\MeetingLayout;
 use BigBlueButton\Enum\Feature;
+use BigBlueButton\Enum\GuestPolicy;
+use BigBlueButton\Enum\MeetingLayout;
 use BigBlueButton\Enum\Role;
 use BigBlueButton\Parameters\CreateMeetingParameters;
 use BigBlueButton\Parameters\EndMeetingParameters;
@@ -100,6 +100,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'allowModsToEjectCameras' => $this->faker->boolean(50),
             'disabledFeatures' => $this->faker->randomElements(Feature::cases(), 3),
             'disabledFeaturesExclude' => $this->faker->randomElements(Feature::cases(), 2),
+            'allowPromoteGuestToModerator' => $this->faker->boolean(50),
+            'disabledFeatures' => $this->faker->randomElements(Feature::getValues(), 3),
+            'disabledFeaturesExclude' => $this->faker->randomElements(Feature::getValues(), 2),
             'meta_presenter' => $this->faker->name,
             'meta_endCallbackUrl' => $this->faker->url,
             'meta_bbb-recording-ready-url' => $this->faker->url,
@@ -115,10 +118,12 @@ class TestCase extends \PHPUnit\Framework\TestCase
                 MeetingLayout::VIDEO_FOCUS,
             ]),
             'learningDashboardCleanupDelayInMinutes' => $this->faker->numberBetween(1, 100),
+            'breakoutRoomsEnabled' => $this->faker->boolean(50),
             'breakoutRoomsPrivateChatEnabled' => $this->faker->boolean(50),
             'meetingEndedURL' => $this->faker->url,
             'breakoutRoomsRecord' => $this->faker->boolean(50),
             'allowRequestsWithoutSession' => $this->faker->boolean(50),
+            'virtualBackgroundsDisabled' => $this->faker->boolean(50),
             'userCameraCap' => $this->faker->numberBetween(1, 5),
             'groups' => $this->generateBreakoutRoomsGroups(),
         ];
@@ -198,11 +203,15 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setMeetingEndedURL($params['meetingEndedURL'])
             ->setMeetingLayout($params['meetingLayout'])
             ->setMeetingKeepEvents($params['meetingKeepEvents'])
+            ->setLearningDashboardEnabled($params['learningDashboardEnabled'])
             ->setLearningDashboardCleanupDelayInMinutes($params['learningDashboardCleanupDelayInMinutes'])
             ->setAllowModsToEjectCameras($params['allowModsToEjectCameras'])
+            ->setBreakoutRoomsEnabled($params['breakoutRoomsEnabled'])
             ->setBreakoutRoomsPrivateChatEnabled($params['breakoutRoomsPrivateChatEnabled'])
             ->setBreakoutRoomsRecord($params['breakoutRoomsRecord'])
             ->setAllowRequestsWithoutSession($params['allowRequestsWithoutSession'])
+            ->setAllowPromoteGuestToModerator($params['allowPromoteGuestToModerator'])
+            ->setVirtualBackgroundsDisabled($params['virtualBackgroundsDisabled'])
             ->setUserCameraCap($params['userCameraCap'])
             ->setDisabledFeatures($params['disabledFeatures'])
             ->setDisabledFeaturesExclude($params['disabledFeaturesExclude']);
@@ -230,15 +239,15 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function generateJoinMeetingParams()
     {
         return ['meetingID' => $this->faker->uuid,
-                'fullName' => $this->faker->name,
-                'role' => $this->faker->randomElement(Role::cases()),
-                'userID' => $this->faker->numberBetween(1, 1000),
-                'webVoiceConf' => $this->faker->word,
-                'createTime' => $this->faker->unixTime,
-                'errorRedirectUrl' => $this->faker->url,
-                'userdata-countrycode' => $this->faker->countryCode,
-                'userdata-email' => $this->faker->email,
-                'userdata-commercial' => false,
+            'fullName' => $this->faker->name,
+            'role' => $this->faker->randomElement(Role::cases()),
+            'userID' => $this->faker->numberBetween(1, 1000),
+            'webVoiceConf' => $this->faker->word,
+            'createTime' => $this->faker->unixTime,
+            'errorRedirectUrl' => $this->faker->url,
+            'userdata-countrycode' => $this->faker->countryCode,
+            'userdata-email' => $this->faker->email,
+            'userdata-commercial' => false,
         ];
     }
 

@@ -108,6 +108,11 @@ class Meeting
     private $internalMeetingId;
 
     /**
+     * @var string
+     */
+    private $parentMeetingID;
+
+    /**
      * @var bool
      */
     private $isRecording;
@@ -165,6 +170,7 @@ class Meeting
         $this->duration = (int) $xml->duration;
         $this->hasUserJoined = $xml->hasUserJoined->__toString() === 'true';
         $this->internalMeetingId = $xml->internalMeetingID->__toString();
+        $this->parentMeetingID = $xml->parentMeetingID->__toString();
         $this->isRecording = $xml->recording->__toString() === 'true';
         $this->startTime = (float) $xml->startTime;
         $this->endTime = (float) $xml->endTime;
@@ -246,6 +252,11 @@ class Meeting
     public function getInternalMeetingId(): string
     {
         return $this->internalMeetingId;
+    }
+
+    public function getParentMeetingID(): string
+    {
+        return $this->parentMeetingID;
     }
 
     public function isRecording(): bool
