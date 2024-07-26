@@ -128,7 +128,7 @@ class BigBlueButton
 
         if (false === $bbbServerBaseUrl) {
             // @codeCoverageIgnoreStart
-            @trigger_error(\sprintf('Constructing "%s" without passing a server base URL is deprecated since 6.0 and will throw an exception 7.0.', self::class), \E_USER_DEPRECATED);
+            @trigger_error(\sprintf('Constructing "%s" without passing a server base URL is deprecated since 6.0 and will throw an exception in 7.0.', self::class), \E_USER_DEPRECATED);
             $this->bbbServerBaseUrl = ''; // previous behaviour
         // @codeCoverageIgnoreEnd
         } else {
