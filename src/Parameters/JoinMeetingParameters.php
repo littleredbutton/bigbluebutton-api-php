@@ -45,8 +45,6 @@ use BigBlueButton\Enum\Role;
  * @method $this     setRedirect(bool $redirect)
  * @method string    getErrorRedirectUrl()
  * @method $this     setErrorRedirectUrl(string $errorRedirectUrl)
- * @method string    getClientURL()
- * @method $this     setClientURL(string $clientURL)
  * @method bool|null isGuest()
  * @method $this     setGuest(bool $guest)
  * @method string    getRole()
@@ -56,8 +54,11 @@ use BigBlueButton\Enum\Role;
  */
 class JoinMeetingParameters extends UserDataParameters
 {
-    public const MODERATOR = 'MODERATOR';
-    public const VIEWER = 'VIEWER';
+    /* @deprecated and will be removed in 6.0. Use BigBlueButton\Enum\Role::MODERATOR instead */
+    public const MODERATOR = Role::MODERATOR;
+
+    /* @deprecated and will be removed in 6.0. Use BigBlueButton\Enum\Role::VIEWER instead */
+    public const VIEWER = Role::VIEWER;
 
     protected ?int $createTime = null;
     protected ?string $userID = null;
@@ -72,5 +73,25 @@ class JoinMeetingParameters extends UserDataParameters
 
     public function __construct(protected string $meetingID, protected string $fullName, protected Role $role)
     {
+    }
+
+    /**
+     * @deprecated and will be removed in 6.0. Old BigBlueButton flash client parameter.
+     */
+    public function getClientURL(): ?string
+    {
+        return $this->clientURL;
+    }
+
+    /**
+     * @deprecated and will be removed in 6.0. Old BigBlueButton flash client parameter.
+     *
+     * @return $this
+     */
+    public function setClientURL(string $clientURL): self
+    {
+        $this->clientURL = $clientURL;
+
+        return $this;
     }
 }

@@ -23,9 +23,9 @@ declare(strict_types=1);
 namespace BigBlueButton\Tests\Common;
 
 use BigBlueButton\BigBlueButton;
-use BigBlueButton\Core\GuestPolicy;
-use BigBlueButton\Core\MeetingLayout;
 use BigBlueButton\Enum\Feature;
+use BigBlueButton\Enum\GuestPolicy;
+use BigBlueButton\Enum\MeetingLayout;
 use BigBlueButton\Enum\Role;
 use BigBlueButton\Parameters\CreateMeetingParameters;
 use BigBlueButton\Parameters\EndMeetingParameters;
@@ -45,6 +45,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->faker = Faker::create();
     }
 
@@ -91,6 +93,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             'allowModsToEjectCameras' => $this->faker->boolean(50),
             'disabledFeatures' => $this->faker->randomElements(Feature::cases(), 3),
             'disabledFeaturesExclude' => $this->faker->randomElements(Feature::cases(), 2),
+            'allowPromoteGuestToModerator' => $this->faker->boolean(50),
             'meta_presenter' => $this->faker->name,
             'meta_endCallbackUrl' => $this->faker->url,
             'meta_bbb-recording-ready-url' => $this->faker->url,
@@ -106,10 +109,12 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
                 MeetingLayout::VIDEO_FOCUS,
             ]),
             'learningDashboardCleanupDelayInMinutes' => $this->faker->numberBetween(1, 100),
+            'breakoutRoomsEnabled' => $this->faker->boolean(50),
             'breakoutRoomsPrivateChatEnabled' => $this->faker->boolean(50),
             'meetingEndedURL' => $this->faker->url,
             'breakoutRoomsRecord' => $this->faker->boolean(50),
             'allowRequestsWithoutSession' => $this->faker->boolean(50),
+            'virtualBackgroundsDisabled' => $this->faker->boolean(50),
             'userCameraCap' => $this->faker->numberBetween(1, 5),
             'groups' => $this->generateBreakoutRoomsGroups(),
         ];
@@ -192,6 +197,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             ->setBreakoutRoomsPrivateChatEnabled($params['breakoutRoomsPrivateChatEnabled'])
             ->setBreakoutRoomsRecord($params['breakoutRoomsRecord'])
             ->setAllowRequestsWithoutSession($params['allowRequestsWithoutSession'])
+            ->setAllowPromoteGuestToModerator($params['allowPromoteGuestToModerator'])
             ->setUserCameraCap($params['userCameraCap'])
             ->setDisabledFeatures($params['disabledFeatures'])
             ->setDisabledFeaturesExclude($params['disabledFeaturesExclude']);
@@ -215,15 +221,15 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected function generateJoinMeetingParams(): array
     {
         return ['meetingID' => $this->faker->uuid,
-                'fullName' => $this->faker->name,
-                'role' => $this->faker->randomElement(Role::cases()),
-                'userID' => (string) $this->faker->numberBetween(1, 1000),
-                'webVoiceConf' => $this->faker->word,
-                'createTime' => $this->faker->unixTime,
-                'errorRedirectUrl' => $this->faker->url,
-                'userdata-countrycode' => $this->faker->countryCode,
-                'userdata-email' => $this->faker->email,
-                'userdata-commercial' => false,
+            'fullName' => $this->faker->name,
+            'role' => $this->faker->randomElement(Role::cases()),
+            'userID' => (string) $this->faker->numberBetween(1, 1000),
+            'webVoiceConf' => $this->faker->word,
+            'createTime' => $this->faker->unixTime,
+            'errorRedirectUrl' => $this->faker->url,
+            'userdata-countrycode' => $this->faker->countryCode,
+            'userdata-email' => $this->faker->email,
+            'userdata-commercial' => false,
         ];
     }
 

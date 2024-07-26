@@ -22,8 +22,8 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Tests\Unit\Parameters;
 
-use BigBlueButton\Core\GuestPolicy;
 use BigBlueButton\Enum\Feature;
+use BigBlueButton\Enum\GuestPolicy;
 use BigBlueButton\Parameters\CreateMeetingParameters;
 use BigBlueButton\Tests\Common\TestCase;
 
@@ -65,6 +65,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['lockSettingsLockOnJoinConfigurable'], $createMeetingParams->isLockSettingsLockOnJoinConfigurable());
         $this->assertEquals($params['allowModsToUnmuteUsers'], $createMeetingParams->isAllowModsToUnmuteUsers());
         $this->assertEquals($params['allowModsToEjectCameras'], $createMeetingParams->isAllowModsToEjectCameras());
+        $this->assertEquals($params['allowPromoteGuestToModerator'], $createMeetingParams->isAllowPromoteGuestToModerator());
         $this->assertEquals($params['guestPolicy'], $createMeetingParams->getGuestPolicy());
         $this->assertEquals($params['endWhenNoModerator'], $createMeetingParams->isEndWhenNoModerator());
         $this->assertEquals($params['endWhenNoModeratorDelayInMinutes'], $createMeetingParams->getEndWhenNoModeratorDelayInMinutes());

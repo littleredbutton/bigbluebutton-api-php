@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -20,8 +18,11 @@ declare(strict_types=1);
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Core;
+namespace BigBlueButton\Enum;
 
+/**
+ * @psalm-immutable
+ */
 enum ApiMethod: string
 {
     case CREATE = 'create';

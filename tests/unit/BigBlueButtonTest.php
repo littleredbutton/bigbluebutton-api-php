@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace BigBlueButton\Tests\Unit;
 
 use BigBlueButton\BigBlueButton;
-use BigBlueButton\Core\ApiMethod;
+use BigBlueButton\Enum\ApiMethod;
 use BigBlueButton\Enum\HashingAlgorithm;
 use BigBlueButton\Exceptions\ConfigException;
 use BigBlueButton\Exceptions\NetworkException;
@@ -49,7 +49,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 final class BigBlueButtonTest extends TestCase
 {
     private MockObject $transport;
-
     private BigBlueButton $bbb;
 
     /**

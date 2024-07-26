@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Util;
 
-use BigBlueButton\Core\ApiMethod;
+use BigBlueButton\Enum\ApiMethod;
 use BigBlueButton\Enum\HashingAlgorithm;
 
 /**
@@ -32,8 +32,11 @@ use BigBlueButton\Enum\HashingAlgorithm;
  */
 final class UrlBuilder
 {
-    public function __construct(private readonly string $securitySalt, private readonly string $bbbServerBaseUrl, private readonly HashingAlgorithm $hashingAlgorithm)
-    {
+    public function __construct(
+        private readonly string $securitySalt,
+        private readonly string $bbbServerBaseUrl,
+        private readonly HashingAlgorithm $hashingAlgorithm
+    ) {
     }
 
     /**

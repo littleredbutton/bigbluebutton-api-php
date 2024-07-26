@@ -34,7 +34,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 
 // @codeCoverageIgnoreStart
 if (!interface_exists(ClientInterface::class)) {
-    throw new \LogicException(sprintf(
+    throw new \LogicException(\sprintf(
         'The "%s" interface was not found. '.
             'You cannot use "%s" without it.'.
             'Try running "composer require" for a package which provides psr/http-client-implementation.',
@@ -44,7 +44,7 @@ if (!interface_exists(ClientInterface::class)) {
 }
 
 if (!interface_exists(RequestFactoryInterface::class)) {
-    throw new \LogicException(sprintf(
+    throw new \LogicException(\sprintf(
         'The "%s" interface was not found. '.
             'You cannot use "%s" without it.'.
             'Try running "composer require" for a package which provides psr/http-factory-implementation.',
@@ -54,7 +54,7 @@ if (!interface_exists(RequestFactoryInterface::class)) {
 }
 
 if (!interface_exists(StreamFactoryInterface::class)) {
-    throw new \LogicException(sprintf(
+    throw new \LogicException(\sprintf(
         'The "%s" interface was not found. '.
         'You cannot use "%s" without it.'.
         'Try running "composer require" for a package which provides psr/http-factory-implementation.',
@@ -93,7 +93,7 @@ final class PsrHttpClientTransport implements TransportInterface
         try {
             $psrResponse = $this->httpClient->sendRequest($psrRequest);
         } catch (ClientExceptionInterface $e) {
-            throw new RuntimeException(sprintf('HTTP request failed: %s', $e->getMessage()), 0, $e);
+            throw new RuntimeException(\sprintf('HTTP request failed: %s', $e->getMessage()), 0, $e);
         }
 
         if ($psrResponse->getStatusCode() < 200 || $psrResponse->getStatusCode() >= 300) {

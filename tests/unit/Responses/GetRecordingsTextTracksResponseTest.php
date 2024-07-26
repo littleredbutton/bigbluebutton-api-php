@@ -40,12 +40,12 @@ final class GetRecordingsTextTracksResponseTest extends TestCase
         $secondTracks = $this->tracks->getTracks()[1];
 
         $this->assertEachGetterValueIsString($secondTracks, [
-                'getHref',
-                'getKind',
-                'getLabel',
-                'getLang',
-                'getSource',
-            ]
+            'getHref',
+            'getKind',
+            'getLabel',
+            'getLang',
+            'getSource',
+        ]
         );
     }
 

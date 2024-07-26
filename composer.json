@@ -74,7 +74,7 @@
   "require-dev": {
     "psr/http-client": "^1.0",
     "psr/http-factory": "^1.0",
-    "psr/http-message": "^1.0",
+    "psr/http-message": "^1.0 || ^2.0",
     "symfony/dotenv": "^5.4|^6.4|^7.0",
     "symfony/http-client-contracts": "^1.1|^2.0",
     "symfony/http-client": "^5.4|^6.4|^7.0",

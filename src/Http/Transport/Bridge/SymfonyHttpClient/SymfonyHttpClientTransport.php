@@ -38,7 +38,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 // @codeCoverageIgnoreStart
 if (!interface_exists(HttpClientInterface::class)) {
-    throw new \LogicException(sprintf(
+    throw new \LogicException(\sprintf(
         'The "%s" interface was not found. '.
         'You cannot use "%s" without it.'.
         'Try running "composer require" for a package which provides symfony/http-client-implementation.',
@@ -71,7 +71,7 @@ final class SymfonyHttpClientTransport implements TransportInterface
     {
         // @codeCoverageIgnoreStart
         if (!class_exists(HttpClient::class)) {
-            throw new \LogicException(sprintf(
+            throw new \LogicException(\sprintf(
                 'Cannot create an instance of "%s" when Symfony HttpClient is not installed. '.
                     'Either instantiate the class by yourself and pass a proper implementation or '.
                     'try to run "composer require symfony/http-client".',
@@ -113,7 +113,7 @@ final class SymfonyHttpClientTransport implements TransportInterface
 
             return new TransportResponse($symfonyResponse->getContent(), self::extractJsessionCookie($symfonyResponse));
         } catch (TransportExceptionInterface $e) {
-            throw new RuntimeException(sprintf('HTTP request failed: %s', $e->getMessage()), 0, $e);
+            throw new RuntimeException(\sprintf('HTTP request failed: %s', $e->getMessage()), 0, $e);
         } catch (ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {
             throw new NetworkException('Bad response.', $e->getCode(), $e);
         }

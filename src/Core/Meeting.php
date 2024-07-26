@@ -62,6 +62,7 @@ class Meeting
     private readonly bool $isRecording;
 
     private readonly float $startTime;
+    private readonly string $parentMeetingID;
 
     private readonly float $endTime;
 
@@ -96,6 +97,7 @@ class Meeting
         $this->duration = (int) $this->rawXml->duration;
         $this->hasUserJoined = $this->rawXml->hasUserJoined->__toString() === 'true';
         $this->internalMeetingId = $this->rawXml->internalMeetingID->__toString();
+        $this->parentMeetingID = $this->rawXml->parentMeetingID->__toString();
         $this->isRecording = $this->rawXml->recording->__toString() === 'true';
         $this->startTime = (float) $this->rawXml->startTime;
         $this->endTime = (float) $this->rawXml->endTime;
@@ -177,6 +179,11 @@ class Meeting
     public function getInternalMeetingId(): string
     {
         return $this->internalMeetingId;
+    }
+
+    public function getParentMeetingID(): string
+    {
+        return $this->parentMeetingID;
     }
 
     public function isRecording(): bool
