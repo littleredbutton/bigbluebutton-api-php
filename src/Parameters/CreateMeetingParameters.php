@@ -20,8 +20,8 @@
 
 namespace BigBlueButton\Parameters;
 
-use BigBlueButton\Enum\GuestPolicy;
 use BigBlueButton\Enum\Feature;
+use BigBlueButton\Enum\GuestPolicy;
 
 /**
  * @method string    getName()

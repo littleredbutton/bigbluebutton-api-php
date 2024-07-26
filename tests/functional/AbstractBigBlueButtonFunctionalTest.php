@@ -198,7 +198,7 @@ abstract class AbstractBigBlueButtonFunctionalTest extends TestCase
         $params = $this->generateJoinMeetingParams();
         $joinMeetingParams = new JoinMeetingParameters($result->getMeetingId(), $params['fullName'], $params['role']);
         $joinMeetingParams->setRedirect(false);
-        $joinMeetingParams->setCreateTime(sprintf('%.0f', $creationTime));
+        $joinMeetingParams->setCreateTime(\sprintf('%.0f', $creationTime));
 
         $joinMeeting = $this->bbb->joinMeeting($joinMeetingParams);
         $this->assertEquals('SUCCESS', $joinMeeting->getReturnCode(), 'Join meeting');

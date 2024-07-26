@@ -197,9 +197,9 @@ final class CurlTransport implements TransportInterface
         // @codeCoverageIgnoreStart
         if (\PHP_VERSION_ID >= 80000 && !$curlHandle instanceof \CurlHandle) {
             /* @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection */
-            throw new \InvalidArgumentException(sprintf('$curlHandle must be "%s". "%s" given.', \CurlHandle::class, get_debug_type($curlHandle)));
+            throw new \InvalidArgumentException(\sprintf('$curlHandle must be "%s". "%s" given.', \CurlHandle::class, get_debug_type($curlHandle)));
         } elseif (\PHP_VERSION_ID < 80000 && !\is_resource($curlHandle)) {
-            throw new \InvalidArgumentException(sprintf('$curlHandle must be resource. "%s" given.', \is_object($curlHandle) ? \get_class($curlHandle) : \gettype($curlHandle)));
+            throw new \InvalidArgumentException(\sprintf('$curlHandle must be resource. "%s" given.', \is_object($curlHandle) ? \get_class($curlHandle) : \gettype($curlHandle)));
         }
         // @codeCoverageIgnoreEnd
 
@@ -231,7 +231,7 @@ final class CurlTransport implements TransportInterface
                 $splitHeader = explode(': ', $line, 2);
                 // @codeCoverageIgnoreStart
                 if (!isset($splitHeader[0], $splitHeader[1])) {
-                    throw new \InvalidArgumentException(sprintf('Header value "%s" is invalid. Expected format is "Header-Name: value".', $line));
+                    throw new \InvalidArgumentException(\sprintf('Header value "%s" is invalid. Expected format is "Header-Name: value".', $line));
                 }
                 // @codeCoverageIgnoreEnd
 

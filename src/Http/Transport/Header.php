@@ -43,7 +43,7 @@ final class Header
         foreach ($headers as $headerSet) {
             foreach ($headerSet as $header) {
                 if (!\is_string($header)) {
-                    throw new \InvalidArgumentException(sprintf(
+                    throw new \InvalidArgumentException(\sprintf(
                         'Non-string header with type "%s" passed.',
                         \is_object($header) ? \get_class($header) : \gettype($header)
                     ));
@@ -51,7 +51,7 @@ final class Header
 
                 $splitHeader = explode(': ', $header, 2);
                 if (!isset($splitHeader[0], $splitHeader[1])) {
-                    throw new \InvalidArgumentException(sprintf('Header value "%s" is invalid. Expected format is "Header-Name: value".', $header));
+                    throw new \InvalidArgumentException(\sprintf('Header value "%s" is invalid. Expected format is "Header-Name: value".', $header));
                 }
 
                 // Enforce lower case for header names to avoid duplicates in mixed case. The case of header names should
@@ -62,7 +62,7 @@ final class Header
 
         $result = [];
         foreach ($mergedHeaders as $header => $value) {
-            $result[] = sprintf('%s: %s', $header, $value);
+            $result[] = \sprintf('%s: %s', $header, $value);
         }
 
         return $result;
