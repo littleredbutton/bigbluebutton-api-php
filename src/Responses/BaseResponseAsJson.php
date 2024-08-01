@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -28,7 +31,7 @@ abstract class BaseResponseAsJson
     public const FAILED = 'FAILED';
     public const CHECKSUM_ERROR = 'checksumError';
 
-    protected $data;
+    protected mixed $data;
 
     /**
      * BaseResponseAsJson constructor.
@@ -45,6 +48,9 @@ abstract class BaseResponseAsJson
         return json_encode($this->data);
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getRawArray(): array
     {
         return json_decode(json_encode($this->data), true);

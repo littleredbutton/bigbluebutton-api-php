@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -25,44 +27,23 @@ namespace BigBlueButton\Core;
  */
 class Hook
 {
-    /**
-     * @var \SimpleXMLElement
-     */
-    protected $rawXml;
+    private readonly int $hookId;
 
-    /**
-     * @var int
-     */
-    private $hookId;
+    private readonly string $meetingId;
 
-    /**
-     * @var string
-     */
-    private $meetingId;
+    private readonly string $callbackUrl;
 
-    /**
-     * @var string
-     */
-    private $callbackUrl;
+    private readonly bool $permanentHook;
 
-    /**
-     * @var bool
-     */
-    private $permanentHook;
+    private readonly bool $rawData;
 
-    /**
-     * @var bool
-     */
-    private $rawData;
-
-    public function __construct(\SimpleXMLElement $xml)
+    public function __construct(protected \SimpleXMLElement $rawXml)
     {
-        $this->rawXml = $xml;
-        $this->hookId = (int) $xml->hookID->__toString();
-        $this->callbackUrl = $xml->callbackURL->__toString();
-        $this->meetingId = $xml->meetingID->__toString();
-        $this->permanentHook = $xml->permanentHook->__toString() === 'true';
-        $this->rawData = $xml->rawData->__toString() === 'true';
+        $this->hookId = (int) $this->rawXml->hookID->__toString();
+        $this->callbackUrl = $this->rawXml->callbackURL->__toString();
+        $this->meetingId = $this->rawXml->meetingID->__toString();
+        $this->permanentHook = $this->rawXml->permanentHook->__toString() === 'true';
+        $this->rawData = $this->rawXml->rawData->__toString() === 'true';
     }
 
     public function getHookId(): int

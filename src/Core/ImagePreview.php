@@ -23,24 +23,12 @@ namespace BigBlueButton\Core;
 
 class ImagePreview
 {
-    /** @var int */
-    private $width;
-
-    /** @var int */
-    private $height;
-
-    /** @var string */
-    private $alt;
-
-    /** @var string */
-    private $url;
-
-    public function __construct(int $width, int $height, string $alt, string $url)
-    {
-        $this->width = $width;
-        $this->height = $height;
-        $this->alt = $alt;
-        $this->url = $url;
+    public function __construct(
+        private readonly int $width,
+        private readonly int $height,
+        private readonly string $alt,
+        private readonly string $url,
+    ) {
     }
 
     public function getWidth(): int

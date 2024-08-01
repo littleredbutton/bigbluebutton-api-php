@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -18,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\CreateMeetingResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class CreateMeetingResponseTest extends TestCase
 {
-    /**
-     * @var CreateMeetingResponse
-     */
-    private $meeting;
+    private CreateMeetingResponse $meeting;
 
     protected function setUp(): void
     {
@@ -39,7 +38,7 @@ final class CreateMeetingResponseTest extends TestCase
         $this->meeting = new CreateMeetingResponse($xml);
     }
 
-    public function testCreateMeetingResponseContent()
+    public function testCreateMeetingResponseContent(): void
     {
         $this->assertTrue($this->meeting->success());
         $this->assertFalse($this->meeting->failed());
@@ -62,7 +61,7 @@ final class CreateMeetingResponseTest extends TestCase
         $this->assertFalse($this->meeting->isIdNotUnique());
     }
 
-    public function testCreateMeetingResponseTypes()
+    public function testCreateMeetingResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->meeting, [
             'getReturnCode', 'getInternalMeetingId', 'getParentMeetingId',
@@ -73,7 +72,7 @@ final class CreateMeetingResponseTest extends TestCase
         $this->assertEachGetterValueIsBoolean($this->meeting, ['hasUserJoined', 'hasBeenForciblyEnded']);
     }
 
-    public function testIdNotUnique()
+    public function testIdNotUnique(): void
     {
         $xml = $this->loadXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'create_meeting_not_unique_error.xml');
 

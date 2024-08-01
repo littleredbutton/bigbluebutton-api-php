@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -24,21 +27,19 @@ namespace BigBlueButton\Core;
  */
 class Record
 {
-    private $recordId;
-    private $meetingId;
-    private $name;
-    private $isPublished;
-    private $state;
-    private $startTime;
-    private $endTime;
-    private $participantCount;
-    private $metas = [];
+    private readonly string $recordId;
+    private readonly string $meetingId;
+    private readonly string $name;
+    private readonly bool $isPublished;
+    private readonly string $state;
+    private readonly float $startTime;
+    private readonly float $endTime;
+    private readonly int $participantCount;
+    /** @var array<string,string> */
+    private array $metas = [];
 
     /** @var PlaybackFormat[] */
-    private $playbackFormats = [];
-    private $playbackType;
-    private $playbackUrl;
-    private $playbackLength;
+    private array $playbackFormats = [];
 
     public function __construct(\SimpleXMLElement $xml)
     {
@@ -50,9 +51,6 @@ class Record
         $this->startTime = (float) $xml->startTime->__toString();
         $this->endTime = (float) $xml->endTime->__toString();
         $this->participantCount = (int) $xml->participants->__toString();
-        $this->playbackType = $xml->playback->format->type->__toString();
-        $this->playbackUrl = $xml->playback->format->url->__toString();
-        $this->playbackLength = (int) $xml->playback->format->length->__toString();
 
         foreach ($xml->playback->children() as $format) {
             $this->playbackFormats[] = new PlaybackFormat($format);
@@ -103,6 +101,7 @@ class Record
         return $this->participantCount;
     }
 
+    /** @return array<string,string> */
     public function getMetas(): array
     {
         return $this->metas;

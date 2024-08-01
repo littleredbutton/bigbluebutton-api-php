@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -19,6 +22,7 @@
 
 namespace BigBlueButton\Util;
 
+use BigBlueButton\Enum\ApiMethod;
 use BigBlueButton\Enum\HashingAlgorithm;
 
 /**
@@ -28,29 +32,22 @@ use BigBlueButton\Enum\HashingAlgorithm;
  */
 final class UrlBuilder
 {
-    /**
-     * @var string
-     */
-    private $securitySalt;
-    /**
-     * @var string
-     */
-    private $bbbServerBaseUrl;
-
-    private HashingAlgorithm $hashingAlgorithm;
-
-    public function __construct(string $secret, string $serverBaseUrl, HashingAlgorithm $hashingAlgorithm)
-    {
-        $this->securitySalt = $secret;
-        $this->bbbServerBaseUrl = $serverBaseUrl;
-        $this->hashingAlgorithm = $hashingAlgorithm;
+    public function __construct(
+        private readonly string $securitySalt,
+        private readonly string $bbbServerBaseUrl,
+        private readonly HashingAlgorithm $hashingAlgorithm
+    ) {
     }
 
     /**
      * Builds an API method URL that includes the url + params + its generated checksum.
      */
-    public function buildUrl(string $method = '', string $params = '', bool $append = true): string
+    public function buildUrl(string|ApiMethod $method = '', string $params = '', bool $append = true): string
     {
+        if ($method instanceof ApiMethod) {
+            $method = $method->value;
+        }
+
         return $this->bbbServerBaseUrl.'api/'.$method.($append ? '?'.$this->buildQs($method, $params) : '');
     }
 

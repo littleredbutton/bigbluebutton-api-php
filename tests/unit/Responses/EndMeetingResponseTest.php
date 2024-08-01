@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\EndMeetingResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class EndMeetingResponseTest extends TestCase
 {
-    /**
-     * @var EndMeetingResponse
-     */
-    private $end;
+    private EndMeetingResponse $end;
 
     protected function setUp(): void
     {
@@ -38,14 +38,14 @@ final class EndMeetingResponseTest extends TestCase
         $this->end = new EndMeetingResponse($xml);
     }
 
-    public function testEndMeetingResponseContent()
+    public function testEndMeetingResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->end->getReturnCode());
         $this->assertEquals('sentEndMeetingRequest', $this->end->getMessageKey());
         $this->assertEquals('A request to end the meeting was sent. Please wait a few seconds, and then use the getMeetingInfo or isMeetingRunning API calls to verify that it was ended.', $this->end->getMessage());
     }
 
-    public function testEndMeetingResponseTypes()
+    public function testEndMeetingResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->end, ['getReturnCode', 'getMessageKey', 'getMessage']);
     }

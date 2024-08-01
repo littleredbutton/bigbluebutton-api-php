@@ -56,11 +56,6 @@ final class CurlTransport implements TransportInterface
     private const DEFAULT_TIMEOUT = 30;
 
     /**
-     * @var mixed[]
-     */
-    private $curlOptions;
-
-    /**
      * Allows to inject custom cURL options used on dispatching request to BBB.
      * Please note that you must ensure on your own that the usage of custom options does not break the transport.
      *
@@ -69,9 +64,8 @@ final class CurlTransport implements TransportInterface
      *
      * @param mixed[] $curlOptions A list of cURL options to pass to the cURL handle. Option name as key, option value as value.
      */
-    public function __construct(array $curlOptions = [])
+    public function __construct(private readonly array $curlOptions = [])
     {
-        $this->curlOptions = $curlOptions;
     }
 
     /**
@@ -94,6 +88,7 @@ final class CurlTransport implements TransportInterface
 
         $ch = curl_init();
         // @codeCoverageIgnoreStart
+        /* @phpstan-ignore-next-line */
         if (!$ch) {
             throw new RuntimeException('Could not create curl instance. Error: '.curl_error($ch));
         }
@@ -127,6 +122,7 @@ final class CurlTransport implements TransportInterface
         return new TransportResponse($data, $sessionId);
     }
 
+    /** @return array<int,mixed> */
     private static function buildPostOptions(TransportRequest $request): array
     {
         $options = [];
@@ -137,13 +133,14 @@ final class CurlTransport implements TransportInterface
             $options[\CURLOPT_POSTFIELDS] = $payload;
             $options[\CURLOPT_HTTPHEADER] = [
                 'Content-type: '.$request->getContentType(),
-                'Content-length: '.mb_strlen($payload),
+                'Content-length: '.mb_strlen((string) $payload),
             ];
         }
 
         return $options;
     }
 
+    /** @return array<int,string> */
     private static function buildUrlOptions(TransportRequest $request): array
     {
         return [
@@ -157,6 +154,8 @@ final class CurlTransport implements TransportInterface
      *                                     The CURLOPT_HTTPHEADER will be treated in a special
      *                                     way and merged instead, but on values with same header name
      *                                     only the header from the first option set will be preserved.
+     *
+     * @return array<int,mixed>
      */
     private static function mergeCurlOptions(array ...$options): array
     {
@@ -183,26 +182,16 @@ final class CurlTransport implements TransportInterface
     /**
      * A raw response as returned from cURL will contain the headers followed by "\r\n\r\n" and the content.
      *
-     * @param \CurlHandle|resource $curlHandle
-     *
-     * @return array{0:             string, 1: string[]} First key headers, second key is content
+     * @return (string|string[][])[] First key headers, second key is content
      *
      * @throws NetworkException
      *
      * @see https://stackoverflow.com/questions/10589889/returning-header-as-array-using-curl
+     *
+     * @psalm-return array{0: array<string, non-empty-list<string>>, 1: string}
      */
-    private static function getHeadersAndContentFromCurlHandle($curlHandle): array
+    private static function getHeadersAndContentFromCurlHandle(\CurlHandle $curlHandle): array
     {
-        /* @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection */
-        // @codeCoverageIgnoreStart
-        if (\PHP_VERSION_ID >= 80000 && !$curlHandle instanceof \CurlHandle) {
-            /* @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection */
-            throw new \InvalidArgumentException(\sprintf('$curlHandle must be "%s". "%s" given.', \CurlHandle::class, get_debug_type($curlHandle)));
-        } elseif (\PHP_VERSION_ID < 80000 && !\is_resource($curlHandle)) {
-            throw new \InvalidArgumentException(\sprintf('$curlHandle must be resource. "%s" given.', \is_object($curlHandle) ? \get_class($curlHandle) : \gettype($curlHandle)));
-        }
-        // @codeCoverageIgnoreEnd
-
         $headers = [];
 
         curl_setopt($curlHandle, \CURLOPT_HEADER, 1);

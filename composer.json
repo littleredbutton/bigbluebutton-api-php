@@ -91,8 +91,17 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "BigBlueButton\\Tests\\Common\\": [
+        "tests/common"
+      ],
       "BigBlueButton\\Tests\\Functional\\": [
         "tests/functional"
+      ],
+      "BigBlueButton\\Tests\\Integration\\": [
+        "tests/integration"
+      ],
+      "BigBlueButton\\Tests\\Unit\\": [
+        "tests/unit"
       ]
     }
   },
@@ -105,6 +114,9 @@
     "psalm": "tools/psalm --threads=1",
     "psalm-clear": "tools/psalm --clear-cache && tools/psalm --clear-global-cache",
     "psalm-fix": "tools/psalm --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType",
+    "phpstan": "tools/phpstan analyse",
+    "rector": "tools/rector process --dry-run src/ tests/",
+    "rector-fix": "tools/rector process src/ tests/",
     "post-install-cmd": "tools/composer-git-hooks add --ignore-lock",
     "post-update-cmd": "tools/composer-git-hooks update"
   },
@@ -115,7 +127,9 @@
       ],
       "pre-push": [
         "tools/phpunit --testsuite=\"BigBlueButton unit test suite,BigBlueButton integration test suite\"",
-        "tools/psalm --threads=1"
+        "tools/psalm --threads=1",
+        "tools/phpstan analyse",
+        "tools/rector process --dry-run src/ tests/"
       ],
       "post-merge": "composer install",
       "post-checkout": "composer install"
@@ -128,8 +142,10 @@
         }
       },
       "friendsofphp/php-cs-fixer": "^3.3",
+      "phpstan/phpstan": "^1.10",
       "phpunit/phpunit": "^9",
-      "vimeo/psalm": "^4.22"
+      "rector/rector": "^1.0",
+      "vimeo/psalm": "^5.23"
     }
   }
 }

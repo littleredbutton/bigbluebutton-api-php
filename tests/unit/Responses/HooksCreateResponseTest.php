@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\HooksCreateResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class HooksCreateResponseTest extends TestCase
 {
-    /**
-     * @var HooksCreateResponse
-     */
-    private $createResponse;
+    private HooksCreateResponse $createResponse;
 
     protected function setUp(): void
     {
@@ -38,7 +38,7 @@ final class HooksCreateResponseTest extends TestCase
         $this->createResponse = new HooksCreateResponse($xml);
     }
 
-    public function testHooksCreateResponseContent()
+    public function testHooksCreateResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->createResponse->getReturnCode());
         $this->assertEquals(1, $this->createResponse->getHookId());
@@ -46,7 +46,7 @@ final class HooksCreateResponseTest extends TestCase
         $this->assertFalse($this->createResponse->hasRawData());
     }
 
-    public function testHooksCreateResponseTypes()
+    public function testHooksCreateResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->createResponse, ['getReturnCode']);
         $this->assertEachGetterValueIsInteger($this->createResponse, ['getHookId']);

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -33,47 +36,18 @@ namespace BigBlueButton\Parameters;
  * @method string getContentType()
  * @method $this  set(string $contentType)
  * @method mixed  getFile()
- * @method $this  setFile(mixed $file)
+ * @method $this  setFile(string $file)
  */
 class PutRecordingTextTrackParameters extends BaseParameters
 {
-    /**
-     * @var string
-     */
-    protected $recordID;
-
-    /**
-     * @var string
-     */
-    protected $kind;
-
-    /**
-     * @var string
-     */
-    protected $lang;
-
-    /**
-     * @var string
-     */
-    protected $label;
-
-    /**
-     * @var string
-     */
-    protected $contentType;
-
-    protected $file;
+    protected ?string $contentType = null;
+    protected ?string $file = null;
 
     /**
      * GetRecordingTextTracksParameters constructor.
      */
-    public function __construct(string $recordID, string $kind, string $lang, string $label)
+    public function __construct(protected string $recordID, protected string $kind, protected string $lang, protected string $label)
     {
         $this->ignoreProperties = ['contentType', 'file'];
-
-        $this->recordID = $recordID;
-        $this->kind = $kind;
-        $this->lang = $lang;
-        $this->label = $label;
     }
 }

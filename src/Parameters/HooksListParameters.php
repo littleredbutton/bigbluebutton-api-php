@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -27,8 +30,5 @@ namespace BigBlueButton\Parameters;
  */
 final class HooksListParameters extends MetaParameters
 {
-    /**
-     * @var string
-     */
-    protected $meetingID;
+    protected ?string $meetingID = null;
 }

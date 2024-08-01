@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\DeleteRecordingsResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class DeleteRecordingsResponseTest extends TestCase
 {
-    /**
-     * @var DeleteRecordingsResponse
-     */
-    private $delete;
+    private DeleteRecordingsResponse $delete;
 
     protected function setUp(): void
     {
@@ -38,13 +38,13 @@ final class DeleteRecordingsResponseTest extends TestCase
         $this->delete = new DeleteRecordingsResponse($xml);
     }
 
-    public function testDeleteRecordingsResponseContent()
+    public function testDeleteRecordingsResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->delete->getReturnCode());
         $this->assertTrue($this->delete->isDeleted());
     }
 
-    public function testDeleteRecordingsResponseTypes()
+    public function testDeleteRecordingsResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->delete, ['getReturnCode']);
         $this->assertEachGetterValueIsBoolean($this->delete, ['isDeleted']);

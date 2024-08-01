@@ -45,7 +45,7 @@ final class Header
                 if (!\is_string($header)) {
                     throw new \InvalidArgumentException(\sprintf(
                         'Non-string header with type "%s" passed.',
-                        \is_object($header) ? \get_class($header) : \gettype($header)
+                        get_debug_type($header)
                     ));
                 }
 

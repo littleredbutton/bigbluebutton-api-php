@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -18,18 +20,19 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
 use BigBlueButton\Enum\Feature;
 use BigBlueButton\Enum\GuestPolicy;
-use BigBlueButton\TestCase;
+use BigBlueButton\Parameters\CreateMeetingParameters;
+use BigBlueButton\Tests\Common\TestCase;
 
 /**
  * Class CreateMeetingParametersTest.
  */
 final class CreateMeetingParametersTest extends TestCase
 {
-    public function testCreateMeetingParameters()
+    public function testCreateMeetingParameters(): void
     {
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
@@ -82,7 +85,6 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['meetingLayout'], $createMeetingParams->getMeetingLayout());
         $this->assertEquals($params['learningDashboardCleanupDelayInMinutes'], $createMeetingParams->getLearningDashboardCleanupDelayInMinutes());
         $this->assertEquals($params['allowModsToEjectCameras'], $createMeetingParams->isAllowModsToEjectCameras());
-        $this->assertEquals($params['breakoutRoomsEnabled'], $createMeetingParams->isBreakoutRoomsEnabled());
         $this->assertEquals($params['breakoutRoomsPrivateChatEnabled'], $createMeetingParams->isBreakoutRoomsPrivateChatEnabled());
         $this->assertEquals($params['breakoutRoomsRecord'], $createMeetingParams->isBreakoutRoomsRecord());
         $this->assertEquals($params['allowRequestsWithoutSession'], $createMeetingParams->isAllowRequestsWithoutSession());
@@ -150,7 +152,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertStringContainsString('disabledFeaturesExclude=chat,polls', $params);
     }
 
-    public function testCreateBreakoutMeeting()
+    public function testCreateBreakoutMeeting(): void
     {
         $params = $this->generateBreakoutCreateParams($this->generateCreateParams());
         $createBreakoutMeetingParams = $this->getBreakoutCreateMock($params);
@@ -163,7 +165,7 @@ final class CreateMeetingParametersTest extends TestCase
 
         $this->assertStringContainsString('isBreakout='.rawurlencode($createBreakoutMeetingParams->isBreakout() ? 'true' : 'false'), $params);
         $this->assertStringContainsString('parentMeetingID='.rawurlencode($createBreakoutMeetingParams->getParentMeetingID()), $params);
-        $this->assertStringContainsString('sequence='.rawurlencode($createBreakoutMeetingParams->getSequence()), $params);
+        $this->assertStringContainsString('sequence='.rawurlencode((string) $createBreakoutMeetingParams->getSequence()), $params);
         $this->assertStringContainsString('freeJoin='.rawurlencode($createBreakoutMeetingParams->isFreeJoin() ? 'true' : 'false'), $params);
     }
 
@@ -181,6 +183,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->expectException(\BadFunctionCallException::class);
 
         $params = new CreateMeetingParameters($this->faker->uuid, $this->faker->name);
+        /* @phpstan-ignore-next-line */
         $params->getFoobar();
     }
 
@@ -189,6 +192,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->expectException(\BadFunctionCallException::class);
 
         $params = new CreateMeetingParameters($this->faker->uuid, $this->faker->name);
+        /* @phpstan-ignore-next-line */
         $params->getname();
     }
 

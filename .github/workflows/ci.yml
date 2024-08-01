@@ -69,3 +69,12 @@ jobs:
     - name: Upload coverage
       if: ${{ matrix.php-versions == '8.1' }}
       uses: codecov/codecov-action@v3
+    - name: Run rector
+      if: ${{ matrix.php-versions == '8.1' }}
+      run: tools/rector process --dry-run
+    - name: Run psalm
+      if: ${{ matrix.php-versions == '8.1' }}
+      run: tools/psalm
+    - name: Run phpstan
+      if: ${{ matrix.php-versions == '8.1' }}
+      run: tools/phpstan

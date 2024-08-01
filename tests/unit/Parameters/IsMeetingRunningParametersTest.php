@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,16 +20,17 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
-use BigBlueButton\TestCase;
+use BigBlueButton\Parameters\IsMeetingRunningParameters;
+use BigBlueButton\Tests\Common\TestCase;
 
 /**
  * Class IsMeetingRunningParametersTest.
  */
 final class IsMeetingRunningParametersTest extends TestCase
 {
-    public function testIsMeetingRunningParameters()
+    public function testIsMeetingRunningParameters(): void
     {
         $meetingId = $this->faker->uuid;
         $isRunningParams = new IsMeetingRunningParameters($meetingId);
