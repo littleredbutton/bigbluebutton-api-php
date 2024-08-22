@@ -29,6 +29,7 @@ class Record
 {
     private readonly string $recordId;
     private readonly string $meetingId;
+    private readonly string $internalMeetingId;
     private readonly string $name;
     private readonly bool $isPublished;
     private readonly string $state;
@@ -45,6 +46,7 @@ class Record
     {
         $this->recordId = $xml->recordID->__toString();
         $this->meetingId = $xml->meetingID->__toString();
+        $this->internalMeetingId = $xml->internalMeetingID->__toString();
         $this->name = $xml->name->__toString();
         $this->isPublished = $xml->published->__toString() === 'true';
         $this->state = $xml->state->__toString();
@@ -69,6 +71,11 @@ class Record
     public function getMeetingId(): string
     {
         return $this->meetingId;
+    }
+
+    public function getInternalMeetingId(): string
+    {
+        return $this->internalMeetingId;
     }
 
     public function getName(): string
