@@ -19,8 +19,9 @@ declare(strict_types=1);
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Http\Transport;
+namespace BigBlueButton\Tests\Unit\Http\Transport;
 
+use BigBlueButton\Http\Transport\Cookie;
 use PHPUnit\Framework\TestCase;
 
 /**

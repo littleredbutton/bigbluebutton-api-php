@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -23,10 +25,10 @@ namespace BigBlueButton\Enum;
 /**
  * @psalm-immutable
  */
-class GuestPolicy extends Enum
+enum GuestPolicy: string
 {
-    public const ALWAYS_ACCEPT = 'ALWAYS_ACCEPT';
-    public const ALWAYS_DENY = 'ALWAYS_DENY';
-    public const ASK_MODERATOR = 'ASK_MODERATOR';
-    public const ALWAYS_ACCEPT_AUTH = 'ALWAYS_ACCEPT_AUTH';
+    case ALWAYS_ACCEPT = 'ALWAYS_ACCEPT';
+    case ALWAYS_DENY = 'ALWAYS_DENY';
+    case ASK_MODERATOR = 'ASK_MODERATOR';
+    case ALWAYS_ACCEPT_AUTH = 'ALWAYS_ACCEPT_AUTH';
 }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,8 +20,9 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton;
+namespace BigBlueButton\Tests\Common;
 
+use BigBlueButton\BigBlueButton;
 use BigBlueButton\Enum\Feature;
 use BigBlueButton\Enum\GuestPolicy;
 use BigBlueButton\Enum\MeetingLayout;
@@ -35,26 +39,16 @@ use Faker\Generator;
 /**
  * Class TestCase.
  */
-class TestCase extends \PHPUnit\Framework\TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var Generator
-     */
-    protected $faker;
+    protected Generator $faker;
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->faker = Faker::create();
     }
 
-    /**
-     * @param $bbb BigBlueButton
-     *
-     * @return CreateMeetingResponse
-     */
-    protected function createRealMeeting($bbb)
+    protected function createRealMeeting(BigBlueButton $bbb): CreateMeetingResponse
     {
         $createMeetingParams = $this->generateCreateParams();
         $createMeetingMock = $this->getCreateMock($createMeetingParams);
@@ -62,16 +56,12 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return $bbb->createMeeting($createMeetingMock);
     }
 
-    /**
-     * @return array
-     */
-    protected function generateCreateParams()
+    /** @return array<string,mixed> */
+    protected function generateCreateParams(): array
     {
         return [
             'name' => $this->faker->name,
             'meetingID' => $this->faker->uuid,
-            'attendeePW' => $this->faker->password,
-            'moderatorPW' => $this->faker->password,
             'autoStartRecording' => $this->faker->boolean(50),
             'dialNumber' => $this->faker->phoneNumber,
             'voiceBridge' => $this->faker->randomNumber(5, true),
@@ -92,21 +82,21 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'lockSettingsDisableMic' => $this->faker->boolean(50),
             'lockSettingsDisablePrivateChat' => $this->faker->boolean(50),
             'lockSettingsDisablePublicChat' => $this->faker->boolean(50),
-            'lockSettingsDisableNote' => $this->faker->boolean(50),
+            'lockSettingsDisableNotes' => $this->faker->boolean(50),
             'lockSettingsHideUserList' => $this->faker->boolean(50),
             'lockSettingsLockedLayout' => $this->faker->boolean(50),
             'lockSettingsLockOnJoin' => $this->faker->boolean(50),
             'lockSettingsLockOnJoinConfigurable' => $this->faker->boolean(50),
             'allowModsToUnmuteUsers' => $this->faker->boolean(50),
             'allowModsToEjectCameras' => $this->faker->boolean(50),
+            'disabledFeatures' => $this->faker->randomElements(Feature::cases(), 3),
+            'disabledFeaturesExclude' => $this->faker->randomElements(Feature::cases(), 2),
             'allowPromoteGuestToModerator' => $this->faker->boolean(50),
-            'disabledFeatures' => $this->faker->randomElements(Feature::getValues(), 3),
-            'disabledFeaturesExclude' => $this->faker->randomElements(Feature::getValues(), 2),
             'meta_presenter' => $this->faker->name,
             'meta_endCallbackUrl' => $this->faker->url,
             'meta_bbb-recording-ready-url' => $this->faker->url,
             'bannerText' => $this->faker->sentence,
-            'bannerColor' => $this->faker->hexcolor,
+            'bannerColor' => $this->faker->hexColor,
             'meetingKeepEvents' => $this->faker->boolean(50),
             'endWhenNoModerator' => $this->faker->boolean(50),
             'endWhenNoModeratorDelayInMinutes' => $this->faker->numberBetween(1, 100),
@@ -116,7 +106,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
                 MeetingLayout::PRESENTATION_FOCUS,
                 MeetingLayout::VIDEO_FOCUS,
             ]),
-            'learningDashboardEnabled' => $this->faker->boolean(50),
             'learningDashboardCleanupDelayInMinutes' => $this->faker->numberBetween(1, 100),
             'breakoutRoomsEnabled' => $this->faker->boolean(50),
             'breakoutRoomsPrivateChatEnabled' => $this->faker->boolean(50),
@@ -130,7 +119,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array<array{id: string, name: string, roster: array}>
+     * @return array<array{id: string, name: string, roster: array<mixed>}>
      */
     protected function generateBreakoutRoomsGroups(): array
     {
@@ -144,9 +133,11 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array
+     * @param array<string,mixed> $createParams
+     *
+     * @return array<string,mixed>
      */
-    protected function generateBreakoutCreateParams($createParams)
+    protected function generateBreakoutCreateParams(array $createParams): array
     {
         return array_merge($createParams, [
             'isBreakout' => true,
@@ -156,12 +147,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
         ]);
     }
 
-    /**
-     * @param $params array
-     *
-     * @return CreateMeetingParameters
-     */
-    protected function getCreateMock($params)
+    /** @param array<string,mixed> $params */
+    protected function getCreateMock(array $params): CreateMeetingParameters
     {
         $createMeetingParams = new CreateMeetingParameters($params['meetingID'], $params['name']);
 
@@ -186,7 +173,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setLockSettingsDisableMic($params['lockSettingsDisableMic'])
             ->setLockSettingsDisablePrivateChat($params['lockSettingsDisablePrivateChat'])
             ->setLockSettingsDisablePublicChat($params['lockSettingsDisablePublicChat'])
-            ->setLockSettingsDisableNote($params['lockSettingsDisableNote'])
+            ->setLockSettingsDisableNotes($params['lockSettingsDisableNotes'])
             ->setLockSettingsHideUserList($params['lockSettingsHideUserList'])
             ->setLockSettingsLockedLayout($params['lockSettingsLockedLayout'])
             ->setLockSettingsLockOnJoin($params['lockSettingsLockOnJoin'])
@@ -203,26 +190,15 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ->setMeetingEndedURL($params['meetingEndedURL'])
             ->setMeetingLayout($params['meetingLayout'])
             ->setMeetingKeepEvents($params['meetingKeepEvents'])
-            ->setLearningDashboardEnabled($params['learningDashboardEnabled'])
             ->setLearningDashboardCleanupDelayInMinutes($params['learningDashboardCleanupDelayInMinutes'])
             ->setAllowModsToEjectCameras($params['allowModsToEjectCameras'])
-            ->setBreakoutRoomsEnabled($params['breakoutRoomsEnabled'])
             ->setBreakoutRoomsPrivateChatEnabled($params['breakoutRoomsPrivateChatEnabled'])
             ->setBreakoutRoomsRecord($params['breakoutRoomsRecord'])
             ->setAllowRequestsWithoutSession($params['allowRequestsWithoutSession'])
             ->setAllowPromoteGuestToModerator($params['allowPromoteGuestToModerator'])
-            ->setVirtualBackgroundsDisabled($params['virtualBackgroundsDisabled'])
             ->setUserCameraCap($params['userCameraCap'])
             ->setDisabledFeatures($params['disabledFeatures'])
             ->setDisabledFeaturesExclude($params['disabledFeaturesExclude']);
-
-        if (isset($params['moderatorPW'])) {
-            $createMeetingParams->setModeratorPW($params['moderatorPW']);
-        }
-
-        if (isset($params['attendeePW'])) {
-            $createMeetingParams->setAttendeePW($params['attendeePW']);
-        }
 
         foreach ($params['groups'] as $group) {
             $createMeetingParams->addBreakoutRoomsGroup($group['id'], $group['name'], $group['roster']);
@@ -231,29 +207,23 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return $createMeetingParams;
     }
 
-    /**
-     * @return CreateMeetingParameters
-     */
-    protected function getBreakoutCreateMock($params)
+    /** @param array<string,mixed> $params */
+    protected function getBreakoutCreateMock(array $params): CreateMeetingParameters
     {
         $createMeetingParams = $this->getCreateMock($params);
 
-        return $createMeetingParams->setBreakout($params['isBreakout'])->setParentMeetingID($params['parentMeetingId'])->
-        setSequence($params['sequence'])->setFreeJoin($params['freeJoin']);
+        return $createMeetingParams->setBreakout($params['isBreakout'])->setParentMeetingID($params['parentMeetingId'])->setSequence($params['sequence'])->setFreeJoin($params['freeJoin']);
     }
 
-    /**
-     * @return array
-     */
-    protected function generateJoinMeetingParams()
+    /** @return array<string,mixed> */
+    protected function generateJoinMeetingParams(): array
     {
         return ['meetingID' => $this->faker->uuid,
             'fullName' => $this->faker->name,
-            'role' => $this->faker->randomElement(Role::getValues()),
-            'userID' => $this->faker->numberBetween(1, 1000),
+            'role' => $this->faker->randomElement(Role::cases()),
+            'userID' => (string) $this->faker->numberBetween(1, 1000),
             'webVoiceConf' => $this->faker->word,
             'createTime' => $this->faker->unixTime,
-            'configToken' => $this->faker->word,
             'errorRedirectUrl' => $this->faker->url,
             'userdata-countrycode' => $this->faker->countryCode,
             'userdata-email' => $this->faker->email,
@@ -261,51 +231,38 @@ class TestCase extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @param $params array
-     *
-     * @return JoinMeetingParameters
-     */
-    protected function getJoinMeetingMock($params)
+    /** @param array<string,mixed> $params */
+    protected function getJoinMeetingMock(array $params): JoinMeetingParameters
     {
         $joinMeetingParams = new JoinMeetingParameters($params['meetingID'], $params['fullName'], $params['role']);
 
-        return $joinMeetingParams
+        $joinMeetingParams
             ->setUserID($params['userID'])
             ->setWebVoiceConf($params['webVoiceConf'])
             ->setCreateTime($params['createTime'])
             ->setErrorRedirectUrl($params['errorRedirectUrl'])
-            ->setConfigToken($params['configToken'])
             ->addUserData('countrycode', $params['userdata-countrycode'])
             ->addUserData('email', $params['userdata-email'])
             ->addUserData('commercial', $params['userdata-commercial']);
+
+        return $joinMeetingParams;
     }
 
-    /**
-     * @return array
-     */
-    protected function generateEndMeetingParams()
+    /** @return array<string,mixed> */
+    protected function generateEndMeetingParams(): array
     {
-        return ['meetingID' => $this->faker->uuid,
-            'password' => $this->faker->password, ];
+        return [
+            'meetingID' => $this->faker->uuid,
+        ];
     }
 
-    /**
-     * @param $params array
-     *
-     * @return EndMeetingParameters
-     */
-    protected function getEndMeetingMock($params)
+    /** @param  array<string,mixed> $params */
+    protected function getEndMeetingMock(array $params): EndMeetingParameters
     {
-        return new EndMeetingParameters($params['meetingID'], $params['password']);
+        return new EndMeetingParameters($params['meetingID']);
     }
 
-    /**
-     * @param $bbb BigBlueButton
-     *
-     * @return UpdateRecordingsResponse
-     */
-    protected function updateRecordings($bbb)
+    protected function updateRecordings(BigBlueButton $bbb): UpdateRecordingsResponse
     {
         $updateRecordingsParams = $this->generateUpdateRecordingsParams();
         $updateRecordingsMock = $this->getUpdateRecordingsParamsMock($updateRecordingsParams);
@@ -313,10 +270,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return $bbb->updateRecordings($updateRecordingsMock);
     }
 
-    /**
-     * @return array
-     */
-    protected function generateUpdateRecordingsParams()
+    /** @return array<string,mixed> */
+    protected function generateUpdateRecordingsParams(): array
     {
         return [
             'recordID' => $this->faker->uuid,
@@ -324,65 +279,75 @@ class TestCase extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @param $params array
-     *
-     * @return UpdateRecordingsParameters
-     */
-    protected function getUpdateRecordingsParamsMock($params)
+    /** @param array<string,mixed> $params */
+    protected function getUpdateRecordingsParamsMock(array $params): UpdateRecordingsParameters
     {
-        $updateRecordingsParams = new UpdateRecordingsParameters($params['recordID']);
+        $updateRecordingParameters = new UpdateRecordingsParameters($params['recordID']);
+        $updateRecordingParameters->addMeta('presenter', $params['meta_presenter']);
 
-        return $updateRecordingsParams->addMeta('presenter', $params['meta_presenter']);
+        return $updateRecordingParameters;
     }
 
     // Load fixtures
 
-    protected function loadXmlFile($path)
+    protected function loadXmlFile(string $path): \SimpleXMLElement
     {
         return simplexml_load_string(file_get_contents($path));
     }
 
-    protected function loadJsonFile($path)
+    protected function loadJsonFile(string $path): string
     {
         return file_get_contents($path);
     }
 
-    protected function minifyString($string)
+    protected function minifyString(string $string): string
     {
-        return str_replace(["\r\n", "\r", "\n", "\t", ' '], '', $string);
+        return str_replace(["\r\n", "\r", "\n", "\t", ' '], '', (string) $string);
     }
 
     // Additional assertions
 
-    public function assertEachGetterValueIsString($obj, $getters)
+    /**
+     * @param array<string> $getters
+     */
+    public function assertEachGetterValueIsString(object $obj, array $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsString($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of a string for property -> '.$getterName);
         }
     }
 
-    public function assertEachGetterValueIsInteger($obj, $getters)
+    /**
+     * @param array<string> $getters
+     */
+    public function assertEachGetterValueIsInteger(object $obj, array $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsInt($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of an integer for property -> '.$getterName);
         }
     }
 
-    public function assertEachGetterValueIsDouble($obj, $getters)
+    /**
+     * @param array<string> $getters
+     */
+    public function assertEachGetterValueIsDouble(object $obj, array $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsFloat($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of a double for property -> '.$getterName);
         }
     }
 
-    public function assertEachGetterValueIsBoolean($obj, $getters)
+    /**
+     * @param array<string> $getters
+     */
+    public function assertEachGetterValueIsBoolean(object $obj, array $getters): void
     {
         foreach ($getters as $getterName) {
             $this->assertIsBool($obj->$getterName(), 'Got a '.\gettype($obj->$getterName()).' instead of a boolean for property -> '.$getterName);
         }
     }
 
+    /** @param array<mixed> $parameters */
     public function assertUrlContainsAllRequestParameters(string $url, array $parameters): void
     {
         foreach ($parameters as $parameter) {
@@ -390,8 +355,12 @@ class TestCase extends \PHPUnit\Framework\TestCase
                 $parameter = $parameter ? 'true' : 'false';
             }
 
+            if ($parameter instanceof \BackedEnum) {
+                $parameter = $parameter->value;
+            }
+
             if (!\is_array($parameter)) {
-                $this->assertStringContainsString($parameter, urldecode($url));
+                $this->assertStringContainsString((string) $parameter, urldecode($url));
             } else {
                 $this->assertUrlContainsAllRequestParameters($url, $parameter);
             }

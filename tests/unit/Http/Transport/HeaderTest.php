@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BigBlueButton\Http;
+namespace BigBlueButton\Tests\Unit\Http;
 
 /**
  * This file is part of littleredbutton/bigbluebutton-api-php.
@@ -21,7 +21,7 @@ namespace BigBlueButton\Http;
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Http;
+namespace BigBlueButton\Tests\Unit\Http\Transport;
 
 use BigBlueButton\Http\Transport\Header;
 use PHPUnit\Framework\TestCase;
@@ -61,7 +61,7 @@ final class HeaderTest extends TestCase
     public function testMergeCurlHeadersWithBadHeaders(string $badHeader): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('Header value "%s" is invalid. Expected format is "Header-Name: value".', $badHeader));
+        $this->expectExceptionMessage(\sprintf('Header value "%s" is invalid. Expected format is "Header-Name: value".', $badHeader));
 
         Header::mergeCurlHeaders([$badHeader]);
     }
@@ -79,12 +79,12 @@ final class HeaderTest extends TestCase
     /**
      * @dataProvider provideNonStringHeaders
      */
-    public function testMergeCurlHeadersWithNonStringHeaders($badHeader): void
+    public function testMergeCurlHeadersWithNonStringHeaders(mixed $badHeader): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf(
+        $this->expectExceptionMessage(\sprintf(
             'Non-string header with type "%s" passed.',
-            \is_object($badHeader) ? \get_class($badHeader) : \gettype($badHeader)
+            get_debug_type($badHeader)
         ));
 
         Header::mergeCurlHeaders([$badHeader]);

@@ -1,16 +1,15 @@
 <?php
 
-namespace BigBlueButton\Tests\Unit\Responses;
+declare(strict_types=1);
+
+namespace BigBlueButton\Tests\Unit\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\GetRecordingTextTracksResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class GetRecordingsTextTracksResponseTest extends TestCase
 {
-    /**
-     * @var GetRecordingTextTracksResponse
-     */
-    private $tracks;
+    private GetRecordingTextTracksResponse $tracks;
 
     protected function setUp(): void
     {
@@ -22,7 +21,7 @@ final class GetRecordingsTextTracksResponseTest extends TestCase
         $this->tracks = new GetRecordingTextTracksResponse($json);
     }
 
-    public function testGetRecordingTextTracksResponseContent()
+    public function testGetRecordingTextTracksResponseContent(): void
     {
         $this->assertEquals(GetRecordingTextTracksResponse::SUCCESS, $this->tracks->getReturnCode());
         $this->assertTrue($this->tracks->success());
@@ -30,7 +29,7 @@ final class GetRecordingsTextTracksResponseTest extends TestCase
         $this->assertCount(2, $this->tracks->getTracks());
     }
 
-    public function testGetRecordingTextTracksResponseTypes()
+    public function testGetRecordingTextTracksResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->tracks, ['getReturnCode']);
 
@@ -50,7 +49,7 @@ final class GetRecordingsTextTracksResponseTest extends TestCase
         );
     }
 
-    public function testGetRecordingTextTracksResponseValues()
+    public function testGetRecordingTextTracksResponseValues(): void
     {
         $secondTracks = $this->tracks->getTracks()[1];
 

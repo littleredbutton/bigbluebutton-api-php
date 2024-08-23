@@ -19,10 +19,11 @@ declare(strict_types=1);
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Http\Transport\Bridge\SymfonyHttpClient;
+namespace BigBlueButton\Tests\Unit\Http\Transport\Bridge\SymfonyHttpClient;
 
 use BigBlueButton\Exceptions\NetworkException;
 use BigBlueButton\Exceptions\RuntimeException;
+use BigBlueButton\Http\Transport\Bridge\SymfonyHttpClient\SymfonyHttpClientTransport;
 use BigBlueButton\Http\Transport\TransportRequest;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\Exception\TransportException;
@@ -200,6 +201,7 @@ final class SymfonyHttpClientTransportTest extends TestCase
         }
     }
 
+    /** @return iterable<string,array<int>> */
     public function provideBadResponseCodes(): iterable
     {
         foreach (range(100, 199) as $badCode) {
@@ -241,6 +243,7 @@ final class SymfonyHttpClientTransportTest extends TestCase
         }
     }
 
+    /** @return iterable<string,array<int|FakeClientException|FakeServerException|FakeRedirectionException>> */
     public function provideBadResponseExceptions(): iterable
     {
         yield 'Client exception' => [new FakeClientException(), 400];

@@ -1,0 +1,17 @@
+parameters:
+    paths:
+        - src
+        - tests
+    parallel:
+        maximumNumberOfProcesses: 4
+    level: 6
+    inferPrivatePropertyTypeFromConstructor: true
+    bootstrapFiles:
+      - tools/bootstrap.php
+    ignoreErrors:
+        -
+            message: '#^Offset ''input'' does not exist on array\{\}\.$#'
+            path: tests/integration/Http/Transport/CurlTransportTest.php
+        -
+            message: '#^Offset ''vars'' does not exist on array\{\}\.$#'
+            path: tests/integration/Http/Transport/CurlTransportTest.php

@@ -26,26 +26,8 @@ namespace BigBlueButton\Http\Transport;
  */
 class TransportRequest
 {
-    /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @var string
-     */
-    private $payload;
-
-    /**
-     * @var string
-     */
-    private $contentType;
-
-    public function __construct(string $url, string $payload, string $contentType)
+    public function __construct(private readonly string $url, private readonly string $payload, private readonly string $contentType)
     {
-        $this->url = $url;
-        $this->payload = $payload;
-        $this->contentType = $contentType;
     }
 
     public function getUrl(): string

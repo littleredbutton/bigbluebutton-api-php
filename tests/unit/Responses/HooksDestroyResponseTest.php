@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\HooksDestroyResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class HooksDestroyResponseTest extends TestCase
 {
-    /**
-     * @var HooksDestroyResponse
-     */
-    private $destroyResponse;
+    private HooksDestroyResponse $destroyResponse;
 
     protected function setUp(): void
     {
@@ -38,13 +38,13 @@ final class HooksDestroyResponseTest extends TestCase
         $this->destroyResponse = new HooksDestroyResponse($xml);
     }
 
-    public function testHooksDestroyResponseContent()
+    public function testHooksDestroyResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->destroyResponse->getReturnCode());
         $this->assertTrue($this->destroyResponse->removed());
     }
 
-    public function testHooksDestroyResponseTypes()
+    public function testHooksDestroyResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->destroyResponse, ['getReturnCode']);
         $this->assertEachGetterValueIsBoolean($this->destroyResponse, ['removed']);

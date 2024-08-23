@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -74,40 +77,17 @@ class BigBlueButton
     public const CONNECTION_ERROR_BASEURL = 1;
     public const CONNECTION_ERROR_SECRET = 2;
 
-    /**
-     * @var string
-     */
-    protected $securitySecret;
+    protected string $securitySecret;
 
-    /**
-     * @var string
-     */
-    protected $bbbServerBaseUrl;
+    protected string $bbbServerBaseUrl;
 
-    /**
-     * @var string
-     */
-    protected $hashingAlgorithm;
+    protected UrlBuilder $urlBuilder;
 
-    /**
-     * @var UrlBuilder
-     */
-    protected $urlBuilder;
+    protected ?string $jSessionId = null;
 
-    /**
-     * @var string|null
-     */
-    protected $jSessionId;
+    protected ?int $connectionError = null;
 
-    /**
-     * @var int|null
-     */
-    protected $connectionError;
-
-    /**
-     * @var TransportInterface
-     */
-    protected $transport;
+    protected TransportInterface $transport;
 
     /**
      * @param string|null             $baseUrl   (optional) If not given, it will be retrieved from the environment
@@ -116,14 +96,14 @@ class BigBlueButton
      *
      * @throws ConfigException
      */
-    public function __construct(?string $baseUrl = null, ?string $secret = null, ?TransportInterface $transport = null, string $hashingAlgorithm = HashingAlgorithm::SHA_1)
+    public function __construct(?string $baseUrl = null, ?string $secret = null, ?TransportInterface $transport = null, protected HashingAlgorithm $hashingAlgorithm = HashingAlgorithm::SHA_1)
     {
         if (null === $baseUrl) {
-            @trigger_error(sprintf('Constructing "%s" without passing a server base URL is deprecated and will throw an exception 6.0.', self::class), \E_USER_DEPRECATED);
+            @trigger_error(\sprintf('Constructing "%s" without passing a server base URL is deprecated and will throw an exception 6.0.', self::class), \E_USER_DEPRECATED);
         }
 
         if (null === $secret) {
-            @trigger_error(sprintf('Constructing "%s" without passing a secret is deprecated and will throw an exception 6.0.', self::class), \E_USER_DEPRECATED);
+            @trigger_error(\sprintf('Constructing "%s" without passing a secret is deprecated and will throw an exception 6.0.', self::class), \E_USER_DEPRECATED);
         }
 
         if (getenv('BBB_SECURITY_SALT') !== false || getenv('BBB_SECRET') !== false) {
@@ -135,10 +115,27 @@ class BigBlueButton
         }
 
         // Keeping backward compatibility with older deployed versions
-        $this->securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
-        $this->bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
+        $securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
 
-        $this->hashingAlgorithm = $hashingAlgorithm;
+        if (false === $securitySecret) {
+            // @codeCoverageIgnoreStart
+            @trigger_error(\sprintf('Constructing "%s" without passing a secret is deprecated since 6.0 and will throw an exception in 7.0.', self::class), \E_USER_DEPRECATED);
+            $this->securitySecret = ''; // previous behaviour
+        // @codeCoverageIgnoreEnd
+        } else {
+            $this->securitySecret = $securitySecret;
+        }
+
+        $bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
+
+        if (false === $bbbServerBaseUrl) {
+            // @codeCoverageIgnoreStart
+            @trigger_error(\sprintf('Constructing "%s" without passing a server base URL is deprecated since 6.0 and will throw an exception in 7.0.', self::class), \E_USER_DEPRECATED);
+            $this->bbbServerBaseUrl = ''; // previous behaviour
+        // @codeCoverageIgnoreEnd
+        } else {
+            $this->bbbServerBaseUrl = $bbbServerBaseUrl;
+        }
 
         if (empty($this->bbbServerBaseUrl)) {
             throw new ConfigException('Base url required');
@@ -188,7 +185,7 @@ class BigBlueButton
             }
 
             // HTTP exception or XML parse
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
 
         $this->connectionError = self::CONNECTION_ERROR_BASEURL;
@@ -437,23 +434,13 @@ class BigBlueButton
         return new HooksCreateResponse($xml);
     }
 
-    public function getHooksListUrl(?HooksListParameters $hooksListParameters = null): string
+    public function getHooksListUrl(HooksListParameters $hooksListParameters): string
     {
-        if ($hooksListParameters === null) {
-            @trigger_error(sprintf('Not passing the $hooksListParameters parameter to "%s::getHooksListUrl()" is deprecated since 5.4 and will be required in 6.0.', self::class), \E_USER_DEPRECATED);
-            $hooksListParameters = new HooksListParameters();
-        }
-
         return $this->urlBuilder->buildUrl(ApiMethod::HOOKS_LIST, $hooksListParameters->getHTTPQuery());
     }
 
-    public function hooksList(?HooksListParameters $hooksListParameters = null): HooksListResponse
+    public function hooksList(HooksListParameters $hooksListParameters): HooksListResponse
     {
-        if ($hooksListParameters === null) {
-            @trigger_error(sprintf('Not passing the $hooksListParameters parameter to "%s::hooksList()" is deprecated since 5.4 and will be required in 6.0.', self::class), \E_USER_DEPRECATED);
-            $hooksListParameters = new HooksListParameters();
-        }
-
         $xml = $this->processXmlResponse($this->getHooksListUrl($hooksListParameters));
 
         return new HooksListResponse($xml);

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -19,6 +22,9 @@
 
 namespace BigBlueButton\Util;
 
+use BigBlueButton\Enum\ApiMethod;
+use BigBlueButton\Enum\HashingAlgorithm;
+
 /**
  * Class UrlBuilder.
  *
@@ -26,32 +32,22 @@ namespace BigBlueButton\Util;
  */
 final class UrlBuilder
 {
-    /**
-     * @var string
-     */
-    private $securitySalt;
-    /**
-     * @var string
-     */
-    private $bbbServerBaseUrl;
-
-    /**
-     * @var string
-     */
-    private $hashingAlgorithm;
-
-    public function __construct(string $secret, string $serverBaseUrl, string $hashingAlgorithm)
-    {
-        $this->securitySalt = $secret;
-        $this->bbbServerBaseUrl = $serverBaseUrl;
-        $this->hashingAlgorithm = $hashingAlgorithm;
+    public function __construct(
+        private readonly string $securitySalt,
+        private readonly string $bbbServerBaseUrl,
+        private readonly HashingAlgorithm $hashingAlgorithm
+    ) {
     }
 
     /**
      * Builds an API method URL that includes the url + params + its generated checksum.
      */
-    public function buildUrl(string $method = '', string $params = '', bool $append = true): string
+    public function buildUrl(string|ApiMethod $method = '', string $params = '', bool $append = true): string
     {
+        if ($method instanceof ApiMethod) {
+            $method = $method->value;
+        }
+
         return $this->bbbServerBaseUrl.'api/'.$method.($append ? '?'.$this->buildQs($method, $params) : '');
     }
 
@@ -67,6 +63,6 @@ final class UrlBuilder
             $checksumParam = 'checksum=';
         }
 
-        return $params.$checksumParam.hash($this->hashingAlgorithm, $method.$params.$this->securitySalt);
+        return $params.$checksumParam.hash($this->hashingAlgorithm->value, $method.$params.$this->securitySalt);
     }
 }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -25,13 +28,7 @@ namespace BigBlueButton\Parameters;
  */
 class HooksDestroyParameters extends BaseParameters
 {
-    /**
-     * @var string
-     */
-    protected $hookID;
-
-    public function __construct(string $hookID)
+    public function __construct(protected string $hookID)
     {
-        $this->hookID = $hookID;
     }
 }

@@ -24,8 +24,9 @@ declare(strict_types=1);
  * THE SOFTWARE.
  */
 
-namespace BigBlueButton\Http;
+namespace BigBlueButton\Tests\Unit\Http;
 
+use BigBlueButton\Http\SetCookie;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -148,6 +149,7 @@ final class SetCookieTest extends TestCase
         self::assertFalse($cookie->matchesDomain('example.com'));
     }
 
+    /** @return array<array<string|bool>> */
     public function pathMatchProvider(): array
     {
         return [
@@ -179,6 +181,7 @@ final class SetCookieTest extends TestCase
         self::assertSame($isMatch, $cookie->matchesPath($requestPath));
     }
 
+    /** @return array<array<string|bool>> */
     public function cookieValidateProvider(): array
     {
         return [
@@ -234,6 +237,8 @@ final class SetCookieTest extends TestCase
 
     /**
      * Provides the parsed information from a cookie.
+     *
+     * @return array<mixed>
      */
     public function cookieParserDataProvider(): array
     {
@@ -392,9 +397,10 @@ final class SetCookieTest extends TestCase
     /**
      * @dataProvider cookieParserDataProvider
      *
-     * @param string|array $cookie
+     * @param array<mixed>|string $cookie
+     * @param array<mixed>        $parsed
      */
-    public function testParseCookie($cookie, array $parsed): void
+    public function testParseCookie(array|string $cookie, array $parsed): void
     {
         foreach ((array) $cookie as $v) {
             $c = SetCookie::fromString($v);
@@ -402,7 +408,7 @@ final class SetCookieTest extends TestCase
 
             if (isset($p['Expires'])) {
                 $delta = 40;
-                $parsedExpires = is_numeric($parsed['Expires']) ? $parsed['Expires'] : strtotime($parsed['Expires']);
+                $parsedExpires = is_numeric($parsed['Expires']) ? $parsed['Expires'] : strtotime((string) $parsed['Expires']);
                 self::assertLessThan($delta, abs($p['Expires'] - $parsedExpires), 'Comparing Expires '.var_export($p['Expires'], true).' : '.var_export($parsed, true).' | '.var_export($p, true));
                 unset($p['Expires']);
                 unset($parsed['Expires']);
@@ -433,6 +439,8 @@ final class SetCookieTest extends TestCase
 
     /**
      * Provides the data for testing isExpired.
+     *
+     * @return array<array<string|bool>>
      */
     public function isExpiredProvider(): array
     {

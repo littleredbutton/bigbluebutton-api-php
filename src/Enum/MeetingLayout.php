@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -23,10 +25,10 @@ namespace BigBlueButton\Enum;
 /**
  * @psalm-immutable
  */
-class MeetingLayout extends Enum
+enum MeetingLayout: string
 {
-    public const CUSTOM_LAYOUT = 'CUSTOM_LAYOUT';
-    public const SMART_LAYOUT = 'SMART_LAYOUT';
-    public const PRESENTATION_FOCUS = 'PRESENTATION_FOCUS';
-    public const VIDEO_FOCUS = 'VIDEO_FOCUS';
+    case CUSTOM_LAYOUT = 'CUSTOM_LAYOUT';
+    case SMART_LAYOUT = 'SMART_LAYOUT';
+    case PRESENTATION_FOCUS = 'PRESENTATION_FOCUS';
+    case VIDEO_FOCUS = 'VIDEO_FOCUS';
 }

@@ -19,8 +19,10 @@ declare(strict_types=1);
  * along with littleredbutton/bigbluebutton-api-php. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Util;
+namespace BigBlueButton\Tests\Unit\Util;
 
+use BigBlueButton\Enum\HashingAlgorithm;
+use BigBlueButton\Util\UrlBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -31,7 +33,7 @@ final class UrlBuilderTest extends TestCase
     public function testBuildUrl(): void
     {
         // Test with sha1 hash algorithm
-        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', 'sha1');
+        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', HashingAlgorithm::SHA_1);
 
         // echo sha1('getMeetings' . 'foo=bar&baz=bazinga' . 'AFFE');
         $this->assertSame(
@@ -41,7 +43,7 @@ final class UrlBuilderTest extends TestCase
         );
 
         // Test with sha256 hash algorithm
-        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', 'sha256');
+        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', HashingAlgorithm::SHA_256);
 
         // echo hash('sha256', 'getMeetings' . 'foo=bar&baz=bazinga' . 'AFFE');
         $this->assertSame(
@@ -53,7 +55,7 @@ final class UrlBuilderTest extends TestCase
 
     public function testBuildUrlWithEmptyParams(): void
     {
-        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', 'sha1');
+        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', HashingAlgorithm::SHA_1);
 
         // echo sha1('getMeetings' . '' . 'AFFE');
         $this->assertSame(
@@ -65,7 +67,7 @@ final class UrlBuilderTest extends TestCase
 
     public function testBuildUrlWithoutAppend(): void
     {
-        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', 'sha1');
+        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', HashingAlgorithm::SHA_1);
 
         $this->assertSame(
             'https://bbb.example/bigbluebutton/api/getMeetings',
@@ -76,7 +78,7 @@ final class UrlBuilderTest extends TestCase
 
     public function testBuildQs(): void
     {
-        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', 'sha1');
+        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', HashingAlgorithm::SHA_1);
 
         // echo sha1('getMeetings' . 'foo=bar&baz=bazinga' . 'AFFE');
         $this->assertSame(
@@ -88,7 +90,7 @@ final class UrlBuilderTest extends TestCase
 
     public function testBuildQsWithEmptyParams(): void
     {
-        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', 'sha1');
+        $urlBuilder = new UrlBuilder('AFFE', 'https://bbb.example/bigbluebutton/', HashingAlgorithm::SHA_1);
 
         // echo sha1('getMeetings' . '' . 'AFFE');
         $this->assertSame(

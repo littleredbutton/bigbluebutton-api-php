@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,13 +20,13 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class UpdateRecordingsParametersTest extends TestCase
 {
-    public function testUpdateRecordingsParameters()
+    public function testUpdateRecordingsParameters(): void
     {
         $params = $this->generateUpdateRecordingsParams();
         $updateRecordingsParams = $this->getUpdateRecordingsParamsMock($params);

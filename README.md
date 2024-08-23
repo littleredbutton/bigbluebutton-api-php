@@ -1,7 +1,7 @@
 # :tada: Best BigBlueButton API for PHP
 
 The unofficial and easiest to use **BigBlueButton API for PHP**, makes easy for
-developers to use [BigBlueButton API] v2.2+ for **PHP 7.4+**.
+developers to use [BigBlueButton API] v2.2+ for **PHP 8.1+**.
 
 ![Build Status](https://github.com/littleredbutton/bigbluebutton-api-php/workflows/CI/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/littleredbutton/bigbluebutton-api-php/badge.svg?branch=master)](https://coveralls.io/github/littleredbutton/bigbluebutton-api-php?branch=master)
@@ -56,7 +56,7 @@ following advantages:
 - Development is simplified through git hooks and contributor guidelines
 - Documentation is up-to-date and complete
 - API is fixed and extended to exploit the full potential
-- Require at least PHP 7.4, which allows to make the code more efficient and
+- Require at least PHP 8.1, which allows to make the code more efficient and
   readable
 
 ## :gear: Installation and usage
@@ -64,7 +64,7 @@ following advantages:
 In order to use this library you have to make sure to meet the following
 requirements:
 
-- PHP 7.4 or above.
+- PHP 8.1 or above.
 - curl library installed.
 - mbstring library installed.
 - xml library installed.
@@ -89,7 +89,7 @@ $bbb = new BigBlueButton($apiUrl, $apiSecret);
 
 If you didn't use composer before, make sure that you include `vendor/autoload.php`.
 
-In general the usage is closly related to the official [API description](https://docs.bigbluebutton.org/dev/api.html). This means to create a room, you have to create a `CreateMeetingParameters` object and set all required parameters via the related setter method. This means to set the `attendeePW`, you have to call `setAttendeePW` and so on.
+In general the usage is closly related to the official [API description](https://docs.bigbluebutton.org/dev/api.html). This means to create a room, you have to create a `CreateMeetingParameters` object and set all required parameters via the related setter method.
 
 #### Test if API url and secret are valid
 ```php
@@ -126,8 +126,6 @@ $version = $bbb->getApiVersion()->getVersion();
 use BigBlueButton\Parameters\CreateMeetingParameters;
 
 $createMeetingParams = new CreateMeetingParameters($meetingID, $meetingName);
-$createMeetingParams->setAttendeePW($attendee_password);
-$createMeetingParams->setModeratorPW($moderator_password);
 
 $createMeetingResponse = $bbb->createMeeting($createMeetingParams);
 
@@ -155,10 +153,10 @@ $createMeetingParams->setGuestPolicyAlwaysAcceptAuth();
 #### Join a meeting
 ```php
 use BigBlueButton\Parameters\JoinMeetingParameters;
+use BigBlueButton\Enum\Role;
 
-$joinMeetingParams = new JoinMeetingParameters($room->uid, $displayname, $password);
+$joinMeetingParams = new JoinMeetingParameters($room->uid, $displayname, Role::VIEWER);
 $joinMeetingParams->setCreateTime($createMeetingResponse->getCreationTime());
-$joinMeetingParams->setJoinViaHtml5(true);
 $joinMeetingParams->setRedirect(true);
 
 $joinUrl = $bbb->getJoinMeetingURL($joinMeetingParams);
@@ -170,7 +168,7 @@ $joinUrl = $bbb->getJoinMeetingURL($joinMeetingParams);
 ```php
 use BigBlueButton\Parameters\EndMeetingParameters;
 
-$endMeetingParams = new EndMeetingParameters($meetingID, $moderator_password);
+$endMeetingParams = new EndMeetingParameters($meetingID);
 $response = $bbb->endMeeting($endMeetingParams);
 ```
 
@@ -206,7 +204,7 @@ if ($response->success() && $response->isRunning()) {
 ```php
 use BigBlueButton\Parameters\GetMeetingInfoParameters;
 
-$getMeetingInfoParams = new GetMeetingInfoParameters($meetingID, $moderator_password);
+$getMeetingInfoParams = new GetMeetingInfoParameters($meetingID);
 
 $response = $bbb->getMeetingInfo($getMeetingInfoParams);
 
@@ -483,4 +481,3 @@ composer test-integration
 Bugs and feature request are tracked on [GitHub](https://github.com/littleredbutton/bigbluebutton-api-php/issues)
 
 [BigBlueButton API]: https://docs.bigbluebutton.org/dev/api.html
-

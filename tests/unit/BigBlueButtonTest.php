@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,8 +20,9 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton;
+namespace BigBlueButton\Tests\Unit;
 
+use BigBlueButton\BigBlueButton;
 use BigBlueButton\Enum\ApiMethod;
 use BigBlueButton\Enum\HashingAlgorithm;
 use BigBlueButton\Exceptions\ConfigException;
@@ -36,6 +40,7 @@ use BigBlueButton\Parameters\HooksListParameters;
 use BigBlueButton\Parameters\InsertDocumentParameters;
 use BigBlueButton\Parameters\PublishRecordingsParameters;
 use BigBlueButton\Parameters\PutRecordingTextTrackParameters;
+use BigBlueButton\Tests\Common\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -43,13 +48,8 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 final class BigBlueButtonTest extends TestCase
 {
-    /** @var MockObject */
-    private $transport;
-
-    /**
-     * @var BigBlueButton
-     */
-    private $bbb;
+    private MockObject $transport;
+    private BigBlueButton $bbb;
 
     /**
      * Setup test class.
@@ -166,7 +166,7 @@ final class BigBlueButtonTest extends TestCase
         $meetingId = $this->faker->uuid;
 
         $url = $this->bbb->getMeetingInfoUrl(new GetMeetingInfoParameters($meetingId));
-        $this->assertStringContainsString('='.rawurlencode($meetingId), $url);
+        $this->assertStringContainsString('='.rawurlencode((string) $meetingId), $url);
     }
 
     public function testGetMeetingInfo(): void
@@ -309,7 +309,7 @@ final class BigBlueButtonTest extends TestCase
     public function testGetMeetingsUrl(): void
     {
         $url = $this->bbb->getMeetingsUrl();
-        $this->assertStringContainsString(ApiMethod::GET_MEETINGS, $url);
+        $this->assertStringContainsString(ApiMethod::GET_MEETINGS->value, $url);
     }
 
     public function testGetMeetings(): void
@@ -359,8 +359,6 @@ final class BigBlueButtonTest extends TestCase
         $this->assertEquals('Tue Jul 10 16:47:38 UTC 2018', $response->getMeetings()[0]->getCreationDate());
         $this->assertEquals('70066', $response->getMeetings()[0]->getVoiceBridge());
         $this->assertEquals('613-555-1234', $response->getMeetings()[0]->getDialNumber());
-        $this->assertEquals('ap', $response->getMeetings()[0]->getAttendeePassword());
-        $this->assertEquals('mp', $response->getMeetings()[0]->getModeratorPassword());
         $this->assertFalse($response->getMeetings()[0]->isRunning());
         $this->assertEquals(0, $response->getMeetings()[0]->getDuration());
         $this->assertFalse($response->getMeetings()[0]->hasUserJoined());
@@ -371,7 +369,7 @@ final class BigBlueButtonTest extends TestCase
     public function testGetRecordingsUrl(): void
     {
         $url = $this->bbb->getRecordingsUrl(new GetRecordingsParameters());
-        $this->assertStringContainsString(ApiMethod::GET_RECORDINGS, $url);
+        $this->assertStringContainsString(ApiMethod::GET_RECORDINGS->value, $url);
     }
 
     public function testGetRecordings(): void
@@ -425,7 +423,7 @@ final class BigBlueButtonTest extends TestCase
     public function testPublishRecordingsUrl(): void
     {
         $url = $this->bbb->getPublishRecordingsUrl(new PublishRecordingsParameters($this->faker->sha1, true));
-        $this->assertStringContainsString(ApiMethod::PUBLISH_RECORDINGS, $url);
+        $this->assertStringContainsString(ApiMethod::PUBLISH_RECORDINGS->value, $url);
     }
 
     public function testPublishRecordings(): void
@@ -447,7 +445,7 @@ final class BigBlueButtonTest extends TestCase
     public function testDeleteRecordingsUrl(): void
     {
         $url = $this->bbb->getDeleteRecordingsUrl(new DeleteRecordingsParameters($this->faker->sha1));
-        $this->assertStringContainsString(ApiMethod::DELETE_RECORDINGS, $url);
+        $this->assertStringContainsString(ApiMethod::DELETE_RECORDINGS->value, $url);
     }
 
     public function testDeleteRecordings(): void
@@ -664,45 +662,13 @@ final class BigBlueButtonTest extends TestCase
         $this->assertFalse($globalHook->hasRawData());
     }
 
-    /**
-     * @group legacy
-     */
-    public function testHooksListWithoutParameter(): void
-    {
-        $xml = '<response>
-          <returncode>SUCCESS</returncode>
-          <hooks>
-            <hook>
-              <hookID>1</hookID>
-              <callbackURL><![CDATA[http://postcatcher.in/catchers/abcdefghijk]]></callbackURL>
-              <meetingID><![CDATA[my-meeting]]></meetingID>
-              <permanentHook>false</permanentHook>
-              <rawData>false</rawData>
-            </hook>
-            <hook>
-              <hookID>2</hookID>
-              <callbackURL><![CDATA[http://postcatcher.in/catchers/1234567890]]></callbackURL>
-              <permanentHook>false</permanentHook>
-              <rawData>false</rawData>
-            </hook>
-          </hooks>
-        </response>';
-
-        $this->transport->method('request')->willReturn(new TransportResponse($xml, null));
-
-        $response = $this->bbb->hooksList();
-
-        $this->assertTrue($response->success());
-        $this->assertCount(2, $response->getHooks());
-    }
-
     public function testHooksListUrl(): void
     {
         // Test without meeting ID
         $params = new HooksListParameters();
         $url = $this->bbb->getHooksListUrl($params);
 
-        $this->assertStringContainsString(ApiMethod::HOOKS_LIST, $url);
+        $this->assertStringContainsString(ApiMethod::HOOKS_LIST->value, $url);
         $this->assertStringNotContainsString('meetingID=', $url);
 
         // Test with meeting ID
@@ -713,20 +679,9 @@ final class BigBlueButtonTest extends TestCase
         $this->assertStringContainsString('meetingID=foobar', $url);
     }
 
-    /**
-     * @group legacy
-     */
-    public function testHooksListUrlWithoutParameter(): void
-    {
-        $url = $this->bbb->getHooksListUrl();
-
-        $this->assertStringContainsString(ApiMethod::HOOKS_LIST, $url);
-        $this->assertStringNotContainsString('meetingID=', $url);
-    }
-
     public function testHookDestroy(): void
     {
-        $params = new HooksDestroyParameters(1);
+        $params = new HooksDestroyParameters('1');
 
         $xml = '<response>
           <returncode>SUCCESS</returncode>

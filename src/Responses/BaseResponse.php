@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -29,16 +32,10 @@ abstract class BaseResponse
     public const CHECKSUM_ERROR = 'checksumError';
 
     /**
-     * @var \SimpleXMLElement
-     */
-    protected $rawXml;
-
-    /**
      * BaseResponse constructor.
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public function __construct(protected \SimpleXMLElement $rawXml)
     {
-        $this->rawXml = $xml;
     }
 
     public function getRawXml(): \SimpleXMLElement
@@ -61,12 +58,12 @@ abstract class BaseResponse
         return $this->rawXml->message->__toString();
     }
 
-    public function success()
+    public function success(): bool
     {
         return $this->getReturnCode() === self::SUCCESS;
     }
 
-    public function failed()
+    public function failed(): bool
     {
         return $this->getReturnCode() === self::FAILED;
     }
@@ -76,6 +73,6 @@ abstract class BaseResponse
      */
     public function hasChecksumError(): bool
     {
-        return $this->failed() && $this->getMessageKey() == self::CHECKSUM_ERROR;
+        return $this->failed() && $this->getMessageKey() === self::CHECKSUM_ERROR;
     }
 }

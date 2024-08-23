@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,26 +20,25 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Parameters;
 
 use BigBlueButton\Enum\Feature;
 use BigBlueButton\Enum\GuestPolicy;
-use BigBlueButton\TestCase;
+use BigBlueButton\Parameters\CreateMeetingParameters;
+use BigBlueButton\Tests\Common\TestCase;
 
 /**
  * Class CreateMeetingParametersTest.
  */
 final class CreateMeetingParametersTest extends TestCase
 {
-    public function testCreateMeetingParameters()
+    public function testCreateMeetingParameters(): void
     {
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
 
         $this->assertEquals($params['name'], $createMeetingParams->getName());
         $this->assertEquals($params['meetingID'], $createMeetingParams->getMeetingID());
-        $this->assertEquals($params['attendeePW'], $createMeetingParams->getAttendeePW());
-        $this->assertEquals($params['moderatorPW'], $createMeetingParams->getModeratorPW());
         $this->assertEquals($params['autoStartRecording'], $createMeetingParams->isAutoStartRecording());
         $this->assertEquals($params['dialNumber'], $createMeetingParams->getDialNumber());
         $this->assertEquals($params['voiceBridge'], $createMeetingParams->getVoiceBridge());
@@ -56,7 +58,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['lockSettingsDisableMic'], $createMeetingParams->isLockSettingsDisableMic());
         $this->assertEquals($params['lockSettingsDisablePrivateChat'], $createMeetingParams->isLockSettingsDisablePrivateChat());
         $this->assertEquals($params['lockSettingsDisablePublicChat'], $createMeetingParams->isLockSettingsDisablePublicChat());
-        $this->assertEquals($params['lockSettingsDisableNote'], $createMeetingParams->isLockSettingsDisableNote());
+        $this->assertEquals($params['lockSettingsDisableNotes'], $createMeetingParams->isLockSettingsDisableNotes());
         $this->assertEquals($params['lockSettingsLockedLayout'], $createMeetingParams->isLockSettingsLockedLayout());
         $this->assertEquals($params['lockSettingsHideUserList'], $createMeetingParams->isLockSettingsHideUserList());
         $this->assertEquals($params['lockSettingsLockOnJoin'], $createMeetingParams->isLockSettingsLockOnJoin());
@@ -67,9 +69,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['guestPolicy'], $createMeetingParams->getGuestPolicy());
         $this->assertEquals($params['endWhenNoModerator'], $createMeetingParams->isEndWhenNoModerator());
         $this->assertEquals($params['endWhenNoModeratorDelayInMinutes'], $createMeetingParams->getEndWhenNoModeratorDelayInMinutes());
-        $this->assertEquals($params['learningDashboardEnabled'], $createMeetingParams->isLearningDashboardEnabled());
         $this->assertEquals($params['learningDashboardCleanupDelayInMinutes'], $createMeetingParams->getLearningDashboardCleanupDelayInMinutes());
-        $this->assertEquals($params['breakoutRoomsEnabled'], $createMeetingParams->isBreakoutRoomsEnabled());
         $this->assertEquals($params['breakoutRoomsRecord'], $createMeetingParams->isBreakoutRoomsRecord());
         $this->assertEquals($params['breakoutRoomsPrivateChatEnabled'], $createMeetingParams->isBreakoutRoomsPrivateChatEnabled());
         $this->assertEquals($params['meetingEndedURL'], $createMeetingParams->getMeetingEndedURL());
@@ -83,13 +83,11 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['endWhenNoModerator'], $createMeetingParams->isEndWhenNoModerator());
         $this->assertEquals($params['endWhenNoModeratorDelayInMinutes'], $createMeetingParams->getEndWhenNoModeratorDelayInMinutes());
         $this->assertEquals($params['meetingLayout'], $createMeetingParams->getMeetingLayout());
-        $this->assertEquals($params['learningDashboardEnabled'], $createMeetingParams->isLearningDashboardEnabled());
         $this->assertEquals($params['learningDashboardCleanupDelayInMinutes'], $createMeetingParams->getLearningDashboardCleanupDelayInMinutes());
-        $this->assertEquals($params['breakoutRoomsEnabled'], $createMeetingParams->isBreakoutRoomsEnabled());
+        $this->assertEquals($params['allowModsToEjectCameras'], $createMeetingParams->isAllowModsToEjectCameras());
         $this->assertEquals($params['breakoutRoomsPrivateChatEnabled'], $createMeetingParams->isBreakoutRoomsPrivateChatEnabled());
         $this->assertEquals($params['breakoutRoomsRecord'], $createMeetingParams->isBreakoutRoomsRecord());
         $this->assertEquals($params['allowRequestsWithoutSession'], $createMeetingParams->isAllowRequestsWithoutSession());
-        $this->assertEquals($params['virtualBackgroundsDisabled'], $createMeetingParams->isVirtualBackgroundsDisabled());
         $this->assertEquals(json_encode($params['groups']), json_encode($createMeetingParams->getBreakoutRoomsGroups()));
         $this->assertEquals($params['disabledFeatures'], $createMeetingParams->getDisabledFeatures());
         $this->assertEquals($params['disabledFeaturesExclude'], $createMeetingParams->getDisabledFeaturesExclude());
@@ -154,7 +152,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertStringContainsString('disabledFeaturesExclude=chat,polls', $params);
     }
 
-    public function testCreateBreakoutMeeting()
+    public function testCreateBreakoutMeeting(): void
     {
         $params = $this->generateBreakoutCreateParams($this->generateCreateParams());
         $createBreakoutMeetingParams = $this->getBreakoutCreateMock($params);
@@ -167,7 +165,7 @@ final class CreateMeetingParametersTest extends TestCase
 
         $this->assertStringContainsString('isBreakout='.rawurlencode($createBreakoutMeetingParams->isBreakout() ? 'true' : 'false'), $params);
         $this->assertStringContainsString('parentMeetingID='.rawurlencode($createBreakoutMeetingParams->getParentMeetingID()), $params);
-        $this->assertStringContainsString('sequence='.rawurlencode($createBreakoutMeetingParams->getSequence()), $params);
+        $this->assertStringContainsString('sequence='.rawurlencode((string) $createBreakoutMeetingParams->getSequence()), $params);
         $this->assertStringContainsString('freeJoin='.rawurlencode($createBreakoutMeetingParams->isFreeJoin() ? 'true' : 'false'), $params);
     }
 
@@ -185,6 +183,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->expectException(\BadFunctionCallException::class);
 
         $params = new CreateMeetingParameters($this->faker->uuid, $this->faker->name);
+        /* @phpstan-ignore-next-line */
         $params->getFoobar();
     }
 
@@ -193,6 +192,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->expectException(\BadFunctionCallException::class);
 
         $params = new CreateMeetingParameters($this->faker->uuid, $this->faker->name);
+        /* @phpstan-ignore-next-line */
         $params->getname();
     }
 
@@ -270,31 +270,5 @@ final class CreateMeetingParametersTest extends TestCase
         $createMeetingParams->setGuestPolicyAskModerator();
         $this->assertSame(GuestPolicy::ASK_MODERATOR, $createMeetingParams->getGuestPolicy());
         $this->assertTrue($createMeetingParams->isGuestPolicyAskModerator());
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testCreateMeetingParametersWithoutAttendeePassword(): void
-    {
-        $params = $this->generateCreateParams();
-        unset($params['attendeePW']);
-        $createMeetingParams = $this->getCreateMock($params);
-
-        $this->expectException(\RuntimeException::class);
-        $createMeetingParams->getAttendeePW();
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testCreateMeetingParametersWithoutModeratorPassword(): void
-    {
-        $params = $this->generateCreateParams();
-        unset($params['moderatorPW']);
-        $createMeetingParams = $this->getCreateMock($params);
-
-        $this->expectException(\RuntimeException::class);
-        $createMeetingParams->getModeratorPW();
     }
 }

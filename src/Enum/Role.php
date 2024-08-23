@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -23,8 +25,8 @@ namespace BigBlueButton\Enum;
 /**
  * @psalm-immutable
  */
-class Role extends Enum
+enum Role: string
 {
-    public const MODERATOR = 'MODERATOR';
-    public const VIEWER = 'VIEWER';
+    case MODERATOR = 'MODERATOR';
+    case VIEWER = 'VIEWER';
 }

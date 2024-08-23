@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -23,37 +25,27 @@ namespace BigBlueButton\Enum;
 /**
  * @psalm-immutable
  */
-class Feature extends Enum
+enum Feature: string
 {
-    public const BREAKOUT_ROOMS = 'breakoutRooms';
-    public const CAPTIONS = 'captions';
-    public const CHAT = 'chat';
-    public const DOWNLOAD_PRESENTATION_WITH_ANNOTATIONS = 'downloadPresentationWithAnnotations';
-    public const EXTERNAL_VIDEOS = 'externalVideos';
-    public const IMPORT_PRESENTATION_WITH_ANNOTATIONS_FROM_BREAKOUT_ROOMS = 'importPresentationWithAnnotationsFromBreakoutRooms';
-    public const IMPORT_SHARED_NOTES_FROM_BREAKOUT_ROOMS = 'importSharedNotesFromBreakoutRooms';
-    public const LAYOUTS = 'layouts';
-    public const LEARNING_DASHBOARD = 'learningDashboard';
-    public const POLLS = 'polls';
-    public const SCREENSHARE = 'screenshare';
-    public const SHARED_NOTES = 'sharedNotes';
-    public const VIRTUAL_BACKGROUNDS = 'virtualBackgrounds';
-    public const CUSTOM_VIRTUAL_BACKGROUNDS = 'customVirtualBackgrounds';
-    public const LIVE_TRANSCRIPTION = 'liveTranscription';
-    public const PRESENTATION = 'presentation';
-    public const CAMERA_AS_CONTENT = 'cameraAsContent';
-    public const SNAPSHOT_OF_CURRENT_SLIDE = 'snapshotOfCurrentSlide';
-    public const DOWNLOAD_PRESENTATION_ORIGINAL_FILE = 'downloadPresentationOriginalFile';
-    public const DOWNLOAD_PRESENTATION_CONVERTED_TO_PDF = 'downloadPresentationConvertedToPdf';
-    public const TIMER = 'timer';
-
-    /**
-     * @deprecated and will be removed in 6.0. Use Feature::IMPORT_PRESENTATION_WITH_ANNOTATIONS_FROM_BREAKOUT_ROOMS instead
-     */
-    public const IMPORT_PRESENTATION_WITHANNOTATIONS_FROM_BREAKOUTROOMS = 'importPresentationWithAnnotationsFromBreakoutRooms';
-
-    /**
-     * @deprecated and will be removed in 6.0. Use Feature::IMPORT_SHARED_NOTES_FROM_BREAKOUT_ROOMS instead
-     */
-    public const IMPORT_SHARED_NOTES_FROM_BREAKOUTROOMS = 'importSharedNotesFromBreakoutRooms';
+    case BREAKOUT_ROOMS = 'breakoutRooms';
+    case CAPTIONS = 'captions';
+    case CHAT = 'chat';
+    case DOWNLOAD_PRESENTATION_WITH_ANNOTATIONS = 'downloadPresentationWithAnnotations';
+    case EXTERNAL_VIDEOS = 'externalVideos';
+    case IMPORT_PRESENTATION_WITH_ANNOTATIONS_FROM_BREAKOUT_ROOMS = 'importPresentationWithAnnotationsFromBreakoutRooms';
+    case IMPORT_SHARED_NOTES_FROM_BREAKOUT_ROOMS = 'importSharedNotesFromBreakoutRooms';
+    case LAYOUTS = 'layouts';
+    case LEARNING_DASHBOARD = 'learningDashboard';
+    case POLLS = 'polls';
+    case SCREENSHARE = 'screenshare';
+    case SHARED_NOTES = 'sharedNotes';
+    case VIRTUAL_BACKGROUNDS = 'virtualBackgrounds';
+    case CUSTOM_VIRTUAL_BACKGROUNDS = 'customVirtualBackgrounds';
+    case LIVE_TRANSCRIPTION = 'liveTranscription';
+    case PRESENTATION = 'presentation';
+    case CAMERA_AS_CONTENT = 'cameraAsContent';
+    case SNAPSHOT_OF_CURRENT_SLIDE = 'snapshotOfCurrentSlide';
+    case DOWNLOAD_PRESENTATION_ORIGINAL_FILE = 'downloadPresentationOriginalFile';
+    case DOWNLOAD_PRESENTATION_CONVERTED_TO_PDF = 'downloadPresentationConvertedToPdf';
+    case TIMER = 'timer';
 }

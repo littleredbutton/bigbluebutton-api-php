@@ -34,7 +34,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 
 // @codeCoverageIgnoreStart
 if (!interface_exists(ClientInterface::class)) {
-    throw new \LogicException(sprintf(
+    throw new \LogicException(\sprintf(
         'The "%s" interface was not found. '.
             'You cannot use "%s" without it.'.
             'Try running "composer require" for a package which provides psr/http-client-implementation.',
@@ -44,7 +44,7 @@ if (!interface_exists(ClientInterface::class)) {
 }
 
 if (!interface_exists(RequestFactoryInterface::class)) {
-    throw new \LogicException(sprintf(
+    throw new \LogicException(\sprintf(
         'The "%s" interface was not found. '.
             'You cannot use "%s" without it.'.
             'Try running "composer require" for a package which provides psr/http-factory-implementation.',
@@ -54,7 +54,7 @@ if (!interface_exists(RequestFactoryInterface::class)) {
 }
 
 if (!interface_exists(StreamFactoryInterface::class)) {
-    throw new \LogicException(sprintf(
+    throw new \LogicException(\sprintf(
         'The "%s" interface was not found. '.
         'You cannot use "%s" without it.'.
         'Try running "composer require" for a package which provides psr/http-factory-implementation.',
@@ -70,38 +70,10 @@ if (!interface_exists(StreamFactoryInterface::class)) {
 final class PsrHttpClientTransport implements TransportInterface
 {
     /**
-     * @var ClientInterface
-     */
-    private $httpClient;
-
-    /**
-     * @var RequestFactoryInterface
-     */
-    private $requestFactory;
-
-    /**
-     * @var StreamFactoryInterface
-     */
-    private $streamFactory;
-
-    /**
-     * @var string[]
-     */
-    private $defaultHeaders;
-
-    /**
      * @param string[] $defaultHeaders additional headers to pass on each request
      */
-    public function __construct(
-        ClientInterface $httpClient,
-        RequestFactoryInterface $requestFactory,
-        StreamFactoryInterface $streamFactory,
-        array $defaultHeaders = []
-    ) {
-        $this->httpClient = $httpClient;
-        $this->requestFactory = $requestFactory;
-        $this->streamFactory = $streamFactory;
-        $this->defaultHeaders = $defaultHeaders;
+    public function __construct(private readonly ClientInterface $httpClient, private readonly RequestFactoryInterface $requestFactory, private readonly StreamFactoryInterface $streamFactory, private readonly array $defaultHeaders = [])
+    {
     }
 
     public function request(TransportRequest $request): TransportResponse
@@ -121,7 +93,7 @@ final class PsrHttpClientTransport implements TransportInterface
         try {
             $psrResponse = $this->httpClient->sendRequest($psrRequest);
         } catch (ClientExceptionInterface $e) {
-            throw new RuntimeException(sprintf('HTTP request failed: %s', $e->getMessage()), 0, $e);
+            throw new RuntimeException(\sprintf('HTTP request failed: %s', $e->getMessage()), 0, $e);
         }
 
         if ($psrResponse->getStatusCode() < 200 || $psrResponse->getStatusCode() >= 300) {

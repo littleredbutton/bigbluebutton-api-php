@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0']
+        php-versions: ['8.1', '8.2', '8.3']
         experimental: [false]
 
     steps:
@@ -37,15 +37,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4','8.0']
+        php-versions: ['8.1', '8.2', '8.3']
         experimental: [false]
-        include:
-          - php-versions: '8.1'
-            experimental: true
-          - php-versions: '8.2'
-            experimental: true
-          - php-versions: '8.3'
-            experimental: true
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -71,5 +64,14 @@ jobs:
       run: tools/phpunit --testsuite="BigBlueButton unit test suite,BigBlueButton integration test suite"
       continue-on-error: true
     - name: Upload coverage
-      if: ${{ matrix.php-versions == '7.4' }}
+      if: ${{ matrix.php-versions == '8.1' }}
       uses: codecov/codecov-action@v3
+    - name: Run rector
+      if: ${{ matrix.php-versions == '8.1' }}
+      run: tools/rector process --dry-run
+    - name: Run psalm
+      if: ${{ matrix.php-versions == '8.1' }}
+      run: tools/psalm
+    - name: Run phpstan
+      if: ${{ matrix.php-versions == '8.1' }}
+      run: tools/phpstan

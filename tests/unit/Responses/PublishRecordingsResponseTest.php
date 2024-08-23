@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\PublishRecordingsResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class PublishRecordingsResponseTest extends TestCase
 {
-    /**
-     * @var PublishRecordingsResponse
-     */
-    private $publish;
+    private PublishRecordingsResponse $publish;
 
     protected function setUp(): void
     {
@@ -38,13 +38,13 @@ final class PublishRecordingsResponseTest extends TestCase
         $this->publish = new PublishRecordingsResponse($xml);
     }
 
-    public function testPublishRecordingsResponseContent()
+    public function testPublishRecordingsResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->publish->getReturnCode());
         $this->assertTrue($this->publish->isPublished());
     }
 
-    public function testPublishRecordingsResponseTypes()
+    public function testPublishRecordingsResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->publish, ['getReturnCode']);
         $this->assertEachGetterValueIsBoolean($this->publish, ['isPublished']);

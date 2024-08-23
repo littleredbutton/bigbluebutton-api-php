@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+use BigBlueButton\Core\Meeting;
+use BigBlueButton\Responses\GetMeetingInfoResponse;
+use BigBlueButton\Tests\Common\TestCase;
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,12 +23,9 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
-final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
+final class GetMeetingInfoResponseTest extends TestCase
 {
-    /**
-     * @var BigBlueButton\Responses\GetMeetingInfoResponse
-     */
-    private $meetingInfo;
+    private GetMeetingInfoResponse $meetingInfo;
 
     protected function setUp(): void
     {
@@ -30,12 +33,12 @@ final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
 
         $xml = $this->loadXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'get_meeting_info.xml');
 
-        $this->meetingInfo = new BigBlueButton\Responses\GetMeetingInfoResponse($xml);
+        $this->meetingInfo = new GetMeetingInfoResponse($xml);
     }
 
-    public function testGetMeetingInfoResponseContent()
+    public function testGetMeetingInfoResponseContent(): void
     {
-        $this->assertInstanceOf('BigBlueButton\Core\Meeting', $this->meetingInfo->getMeeting());
+        $this->assertInstanceOf(Meeting::class, $this->meetingInfo->getMeeting());
         $this->assertCount(4, $this->meetingInfo->getMeeting()->getAttendees());
         $this->assertEquals('SUCCESS', $this->meetingInfo->getReturnCode());
 
@@ -47,8 +50,6 @@ final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
         $this->assertEquals('Tue Jan 19 07:25:17 EST 2016', $info->getCreationDate());
         $this->assertEquals(70100, $info->getVoiceBridge());
         $this->assertEquals('613-555-1234', $info->getDialNumber());
-        $this->assertEquals('dbfc7207321527bbb870c82028', $info->getAttendeePassword());
-        $this->assertEquals('4bfbbeeb4a65cacaefe3676633', $info->getModeratorPassword());
         $this->assertTrue($info->isRunning());
         $this->assertEquals(20, $info->getDuration());
         $this->assertTrue($info->hasUserJoined());
@@ -66,7 +67,7 @@ final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
         $this->assertTrue($info->isBreakout());
     }
 
-    public function testMeetingAttendeeContent()
+    public function testMeetingAttendeeContent(): void
     {
         $this->assertCount(4, $this->meetingInfo->getMeeting()->getAttendees());
 
@@ -118,15 +119,19 @@ final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
         $this->assertEquals('VIEWER', $secondViewer->getRole());
     }
 
-    public function testGetMeetingInfoResponseTypes()
+    public function testGetMeetingInfoResponseTypes(): void
     {
         $info = $this->meetingInfo->getMeeting();
 
-        $this->assertEachGetterValueIsString($info, ['getMeetingName', 'getMeetingId', 'getInternalMeetingId',
-            'getModeratorPassword', 'getAttendeePassword', 'getCreationDate', 'getDialNumber', ]);
+        $this->assertEachGetterValueIsString($info, [
+            'getMeetingName', 'getMeetingId', 'getInternalMeetingId',
+            'getCreationDate', 'getDialNumber',
+        ]);
 
-        $this->assertEachGetterValueIsInteger($info, ['getVoiceBridge', 'getDuration', 'getParticipantCount',
-            'getListenerCount', 'getVoiceParticipantCount', 'getVideoCount', 'getMaxUsers', 'getModeratorCount', ]);
+        $this->assertEachGetterValueIsInteger($info, [
+            'getVoiceBridge', 'getDuration', 'getParticipantCount',
+            'getListenerCount', 'getVoiceParticipantCount', 'getVideoCount', 'getMaxUsers', 'getModeratorCount',
+        ]);
 
         $this->assertEachGetterValueIsDouble($info, ['getStartTime', 'getEndTime', 'getCreationTime']);
 
@@ -138,7 +143,7 @@ final class GetMeetingInfoResponseTest extends BigBlueButton\TestCase
         $this->assertEachGetterValueIsBoolean($anAttendee, ['isPresenter', 'isListeningOnly', 'hasJoinedVoice', 'hasVideo']);
     }
 
-    public function testGetMeetingInfoMetadataContent()
+    public function testGetMeetingInfoMetadataContent(): void
     {
         $metas = $this->meetingInfo->getMeeting()->getMetas();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -41,22 +43,6 @@ class CreateMeetingResponse extends BaseResponse
     public function getParentMeetingId(): string
     {
         return $this->rawXml->parentMeetingID->__toString();
-    }
-
-    /**
-     * @deprecated and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter in api requests.
-     */
-    public function getAttendeePassword(): string
-    {
-        return $this->rawXml->attendeePW->__toString();
-    }
-
-    /**
-     * @deprecated and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter in api requests.
-     */
-    public function getModeratorPassword(): string
-    {
-        return $this->rawXml->moderatorPW->__toString();
     }
 
     /**

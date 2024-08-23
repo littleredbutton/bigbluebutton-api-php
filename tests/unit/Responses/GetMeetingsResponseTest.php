@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\GetMeetingsResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class GetMeetingsResponseTest extends TestCase
 {
-    /**
-     * @var GetMeetingsResponse
-     */
-    private $meetings;
+    private GetMeetingsResponse $meetings;
 
     protected function setUp(): void
     {
@@ -38,7 +38,7 @@ final class GetMeetingsResponseTest extends TestCase
         $this->meetings = new GetMeetingsResponse($xml);
     }
 
-    public function testGetMeetingsResponseContent()
+    public function testGetMeetingsResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->meetings->getReturnCode());
 
@@ -52,8 +52,6 @@ final class GetMeetingsResponseTest extends TestCase
         $this->assertEquals('Tue Jan 19 08:27:55 EST 2016', $aMeeting->getCreationDate());
         $this->assertEquals(49518, $aMeeting->getVoiceBridge());
         $this->assertEquals('580.124.3937x93615', $aMeeting->getDialNumber());
-        $this->assertEquals('f~kxYJeAV~G?Jb+E:ggn', $aMeeting->getAttendeePassword());
-        $this->assertEquals('n:"zWc##Bi.y,d^s,mMF', $aMeeting->getModeratorPassword());
         $this->assertFalse($aMeeting->hasBeenForciblyEnded());
         $this->assertTrue($aMeeting->isRunning());
         $this->assertEquals(5, $aMeeting->getParticipantCount());
@@ -68,21 +66,22 @@ final class GetMeetingsResponseTest extends TestCase
         $this->assertEquals('http://www.muller.biz/autem-dolor-aut-nam-doloribus-molestiae', $aMeeting->getMetas()['endcallbackurl']);
     }
 
-    public function testGetMeetingsResponseTypes()
+    public function testGetMeetingsResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->meetings, ['getReturnCode']);
 
         $aMeeting = $this->meetings->getMeetings()[2];
 
-        $this->assertEachGetterValueIsString($aMeeting, ['getMeetingId', 'getMeetingName', 'getCreationDate', 'getDialNumber',
-            'getAttendeePassword', 'getModeratorPassword', ]);
+        $this->assertEachGetterValueIsString($aMeeting, ['getMeetingId', 'getMeetingName', 'getCreationDate', 'getDialNumber']);
         $this->assertEachGetterValueIsDouble($aMeeting, ['getCreationTime']);
-        $this->assertEachGetterValueIsInteger($aMeeting, ['getVoiceBridge', 'getParticipantCount', 'getListenerCount',
-            'getVoiceParticipantCount', 'getVideoCount', 'getDuration', ]);
+        $this->assertEachGetterValueIsInteger($aMeeting, [
+            'getVoiceBridge', 'getParticipantCount', 'getListenerCount',
+            'getVoiceParticipantCount', 'getVideoCount', 'getDuration',
+        ]);
         $this->assertEachGetterValueIsBoolean($aMeeting, ['hasBeenForciblyEnded', 'isRunning', 'hasUserJoined']);
     }
 
-    public function testGetMeetingsNoMeetings()
+    public function testGetMeetingsNoMeetings(): void
     {
         // scalelite response no meetings
         $xml = simplexml_load_string('<response><returncode>SUCCESS</returncode><messageKey>noMeetings</messageKey><message>No meetings were found on this server.</message></response>');

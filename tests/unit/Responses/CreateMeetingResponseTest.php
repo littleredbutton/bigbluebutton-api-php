@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -17,17 +20,14 @@
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace BigBlueButton\Parameters;
+namespace BigBlueButton\Tests\Unit\Responses;
 
 use BigBlueButton\Responses\CreateMeetingResponse;
-use BigBlueButton\TestCase;
+use BigBlueButton\Tests\Common\TestCase;
 
 final class CreateMeetingResponseTest extends TestCase
 {
-    /**
-     * @var CreateMeetingResponse
-     */
-    private $meeting;
+    private CreateMeetingResponse $meeting;
 
     protected function setUp(): void
     {
@@ -38,7 +38,7 @@ final class CreateMeetingResponseTest extends TestCase
         $this->meeting = new CreateMeetingResponse($xml);
     }
 
-    public function testCreateMeetingResponseContent()
+    public function testCreateMeetingResponseContent(): void
     {
         $this->assertTrue($this->meeting->success());
         $this->assertFalse($this->meeting->failed());
@@ -47,8 +47,6 @@ final class CreateMeetingResponseTest extends TestCase
         $this->assertEquals('random-1665177', $this->meeting->getMeetingId());
         $this->assertEquals('1a6938c707cdf5d052958672d66c219c30690c47-1524212045514', $this->meeting->getInternalMeetingId());
         $this->assertEquals('bbb-none', $this->meeting->getParentMeetingId());
-        $this->assertEquals('tK6J5cJv3hMLNx5IBePa', $this->meeting->getAttendeePassword());
-        $this->assertEquals('34Heu0uiZYqCZXX9C4m2', $this->meeting->getModeratorPassword());
         $this->assertEquals(1453283819419, $this->meeting->getCreationTime());
         $this->assertEquals(76286, $this->meeting->getVoiceBridge());
         $this->assertEquals('Wed Jan 20 04:56:59 EST 2016', $this->meeting->getCreationDate());
@@ -63,16 +61,18 @@ final class CreateMeetingResponseTest extends TestCase
         $this->assertFalse($this->meeting->isIdNotUnique());
     }
 
-    public function testCreateMeetingResponseTypes()
+    public function testCreateMeetingResponseTypes(): void
     {
-        $this->assertEachGetterValueIsString($this->meeting, ['getReturnCode', 'getInternalMeetingId', 'getParentMeetingId',
-            'getAttendeePassword', 'getModeratorPassword', 'getDialNumber', 'getCreationDate', ]);
+        $this->assertEachGetterValueIsString($this->meeting, [
+            'getReturnCode', 'getInternalMeetingId', 'getParentMeetingId',
+            'getDialNumber', 'getCreationDate',
+        ]);
         $this->assertEachGetterValueIsDouble($this->meeting, ['getCreationTime']);
         $this->assertEachGetterValueIsInteger($this->meeting, ['getDuration', 'getVoiceBridge']);
         $this->assertEachGetterValueIsBoolean($this->meeting, ['hasUserJoined', 'hasBeenForciblyEnded']);
     }
 
-    public function testIdNotUnique()
+    public function testIdNotUnique(): void
     {
         $xml = $this->loadXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'create_meeting_not_unique_error.xml');
 

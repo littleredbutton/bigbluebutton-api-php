@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
@@ -21,50 +24,24 @@ namespace BigBlueButton\Core;
 
 class Attendee
 {
-    /**
-     * @var string
-     */
-    private $userId;
+    private readonly string $userId;
 
-    /**
-     * @var string
-     */
-    private $fullName;
+    private readonly string $fullName;
 
-    /**
-     * @var string
-     */
-    private $role;
+    private readonly string $role;
 
-    /**
-     * @var bool
-     */
-    private $isPresenter;
+    private readonly bool $isPresenter;
 
-    /**
-     * @var bool
-     */
-    private $isListeningOnly;
+    private readonly bool $isListeningOnly;
 
-    /**
-     * @var bool
-     */
-    private $hasJoinedVoice;
+    private readonly bool $hasJoinedVoice;
 
-    /**
-     * @var bool
-     */
-    private $hasVideo;
+    private readonly bool $hasVideo;
 
-    /**
-     * @var array
-     */
-    private $customData = [];
+    /** @var array<string,string> */
+    private array $customData = [];
 
-    /**
-     * @var string
-     */
-    private $clientType;
+    private readonly string $clientType;
 
     public function __construct(\SimpleXMLElement $xml)
     {
@@ -124,6 +101,7 @@ class Attendee
         return $this->clientType;
     }
 
+    /** @return array<string,string> */
     public function getCustomData(): array
     {
         return $this->customData;
