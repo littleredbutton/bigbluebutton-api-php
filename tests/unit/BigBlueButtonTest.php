@@ -380,6 +380,7 @@ final class BigBlueButtonTest extends TestCase
                 <recording>
                     <recordID>f71d810b6e90a4a34ae02b8c7143e8733178578e-1462807897120</recordID>
                     <meetingID>9d287cf50490ca856ca5273bd303a7e321df6051-4-119</meetingID>
+                    <internalMeetingID>c654308ef4b71eeb74eb8436dc52a31415d9a911-1724671588959</internalMeetingID>
                     <name><![CDATA[SAT- Writing-Humanities (All participants)]]></name>
                     <published>true</published>
                     <state>published</state>
@@ -415,6 +416,7 @@ final class BigBlueButtonTest extends TestCase
         $recording = $response->getRecords()[0];
         $this->assertEquals('f71d810b6e90a4a34ae02b8c7143e8733178578e-1462807897120', $recording->getRecordID());
         $this->assertEquals('9d287cf50490ca856ca5273bd303a7e321df6051-4-119', $recording->getMeetingID());
+        $this->assertEquals('c654308ef4b71eeb74eb8436dc52a31415d9a911-1724671588959', $recording->getInternalMeetingID());
         $this->assertEquals('SAT- Writing-Humanities (All participants)', $recording->getName());
     }
 
