@@ -28,7 +28,7 @@ namespace BigBlueButton\Parameters;
  * @method string|null getUserName()
  * @method $this       setUserName(string $userName)
  */
-class SendChatMessageParameters extends BaseParameters
+final class SendChatMessageParameters extends BaseParameters
 {
     /**
      * @var string
