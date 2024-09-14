@@ -35,7 +35,7 @@ final class UrlBuilder
     public function __construct(
         private readonly string $securitySalt,
         private readonly string $bbbServerBaseUrl,
-        private readonly HashingAlgorithm $hashingAlgorithm
+        private readonly HashingAlgorithm $hashingAlgorithm,
     ) {
     }
 
