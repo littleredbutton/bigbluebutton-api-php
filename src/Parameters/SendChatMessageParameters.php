@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of littleredbutton/bigbluebutton-api-php.
  *
@@ -30,25 +33,7 @@ namespace BigBlueButton\Parameters;
  */
 final class SendChatMessageParameters extends BaseParameters
 {
-    /**
-     * @var string
-     */
-    protected $meetingID;
-
-    /**
-     * @var string
-     */
-    protected $message;
-
-    /**
-     * @var string|null
-     */
-    protected $userName;
-
-    public function __construct(string $meetingID, string $message, ?string $userName = null)
+    public function __construct(protected string $meetingID, protected string $message, protected ?string $userName = null)
     {
-        $this->meetingID = $meetingID;
-        $this->message = $message;
-        $this->userName = $userName;
     }
 }
