@@ -45,6 +45,7 @@ use BigBlueButton\Parameters\IsMeetingRunningParameters;
 use BigBlueButton\Parameters\JoinMeetingParameters;
 use BigBlueButton\Parameters\PublishRecordingsParameters;
 use BigBlueButton\Parameters\PutRecordingTextTrackParameters;
+use BigBlueButton\Parameters\SendChatMessageParameters;
 use BigBlueButton\Parameters\UpdateRecordingsParameters;
 use BigBlueButton\Responses\ApiVersionResponse;
 use BigBlueButton\Responses\CreateMeetingResponse;
@@ -62,6 +63,7 @@ use BigBlueButton\Responses\IsMeetingRunningResponse;
 use BigBlueButton\Responses\JoinMeetingResponse;
 use BigBlueButton\Responses\PublishRecordingsResponse;
 use BigBlueButton\Responses\PutRecordingTextTrackResponse;
+use BigBlueButton\Responses\SendChatMessageResponse;
 use BigBlueButton\Responses\UpdateRecordingsResponse;
 use BigBlueButton\Util\UrlBuilder;
 
@@ -476,6 +478,23 @@ class BigBlueButton
         $xml = $this->processXmlResponse($this->getInsertDocumentUrl($insertDocumentParams), $insertDocumentParams->getPresentationsAsXML());
 
         return new InsertDocumentResponse($xml);
+    }
+
+    public function getSendChatMessageUrl(SendChatMessageParameters $sendChatMessageParams): string
+    {
+        return $this->urlBuilder->buildUrl(ApiMethod::SEND_CHAT_MESSAGE, $sendChatMessageParams->getHTTPQuery());
+    }
+
+    /**
+     * @throws NetworkException
+     * @throws ParsingException
+     * @throws RuntimeException
+     */
+    public function getSendChatMessage(SendChatMessageParameters $sendChatMessageParams): SendChatMessageResponse
+    {
+        $xml = $this->processXmlResponse($this->getSendChatMessageUrl($sendChatMessageParams));
+
+        return new SendChatMessageResponse($xml);
     }
 
     /* ____________________ SPECIAL METHODS ___________________ */

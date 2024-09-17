@@ -45,4 +45,5 @@ enum ApiMethod: string
     case HOOKS_LIST = 'hooks/list';
     case HOOKS_DESTROY = 'hooks/destroy';
     case INSERT_DOCUMENT = 'insertDocument';
+    case SEND_CHAT_MESSAGE = 'sendChatMessage';
 }
