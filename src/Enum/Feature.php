@@ -48,4 +48,5 @@ enum Feature: string
     case DOWNLOAD_PRESENTATION_ORIGINAL_FILE = 'downloadPresentationOriginalFile';
     case DOWNLOAD_PRESENTATION_CONVERTED_TO_PDF = 'downloadPresentationConvertedToPdf';
     case TIMER = 'timer';
+    case INFINITE_WHITEBOARD = 'infiniteWhiteboard';
 }
