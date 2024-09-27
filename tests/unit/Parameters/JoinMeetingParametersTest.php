@@ -52,6 +52,7 @@ final class JoinMeetingParametersTest extends TestCase
         $joinMeetingParams->setRedirect($redirect = $this->faker->boolean(50));
         $joinMeetingParams->setErrorRedirectUrl($newErrorRedirectUrl = $this->faker->url);
         $joinMeetingParams->setGuest($guest = $this->faker->boolean(50));
+        $joinMeetingParams->setWebcamBackgroundURL($webcamBackgroundURL = $this->faker->url);
         $this->assertEquals($newId, $joinMeetingParams->getMeetingID());
         $this->assertEquals($newName, $joinMeetingParams->getFullName());
         $this->assertEquals($newRole, $joinMeetingParams->getRole());
@@ -59,5 +60,6 @@ final class JoinMeetingParametersTest extends TestCase
         $this->assertEquals($redirect, $joinMeetingParams->isRedirect());
         $this->assertEquals($newErrorRedirectUrl, $joinMeetingParams->getErrorRedirectUrl());
         $this->assertEquals($guest, $joinMeetingParams->isGuest());
+        $this->assertEquals($webcamBackgroundURL, $joinMeetingParams->getWebcamBackgroundURL());
     }
 }
