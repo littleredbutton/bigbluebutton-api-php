@@ -75,6 +75,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             'moderatorOnlyMessage' => $this->faker->sentence,
             'webcamsOnlyForModerator' => $this->faker->boolean(50),
             'logo' => $this->faker->imageUrl(330, 70),
+            'darklogo' => $this->faker->imageUrl(330, 70),
             'copyright' => $this->faker->text,
             'guestPolicy' => $this->faker->randomElement([GuestPolicy::ALWAYS_ACCEPT, GuestPolicy::ALWAYS_DENY, GuestPolicy::ASK_MODERATOR]),
             'muteOnStart' => $this->faker->boolean(50),
@@ -165,6 +166,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             ->setModeratorOnlyMessage($params['moderatorOnlyMessage'])
             ->setWebcamsOnlyForModerator($params['webcamsOnlyForModerator'])
             ->setLogo($params['logo'])
+            ->setDarklogo($params['darklogo'])
             ->setCopyright($params['copyright'])
             ->setEndCallbackUrl($params['meta_endCallbackUrl'])
             ->setRecordingReadyCallbackUrl($params['meta_bbb-recording-ready-url'])

@@ -73,6 +73,8 @@ use BigBlueButton\Enum\MeetingLayout;
  * @method $this     setWebcamsOnlyForModerator(bool $isWebcamsOnlyForModerator)
  * @method string    getLogo()
  * @method $this     setLogo(string $logo)
+ * @method string    getDarklogo()
+ * @method $this     setDarklogo(string $darklogo)
  * @method string    getBannerText()
  * @method $this     setBannerText(string $bannerText)
  * @method string    getBannerColor()
@@ -167,6 +169,7 @@ class CreateMeetingParameters extends MetaParameters
     protected ?bool $allowStartStopRecording = null;
     protected ?bool $webcamsOnlyForModerator = null;
     protected ?string $logo = null;
+    protected ?string $darklogo = null;
     protected ?string $bannerText = null;
     protected ?string $bannerColor = null;
     protected ?string $copyright = null;
