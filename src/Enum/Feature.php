@@ -36,6 +36,7 @@ enum Feature: string
     case IMPORT_SHARED_NOTES_FROM_BREAKOUT_ROOMS = 'importSharedNotesFromBreakoutRooms';
     case LAYOUTS = 'layouts';
     case LEARNING_DASHBOARD = 'learningDashboard';
+    case LEARNING_DASHBOARD_DOWNLOAD_SESSION_DATA = 'learningDashboardDownloadSessionData';
     case POLLS = 'polls';
     case SCREENSHARE = 'screenshare';
     case SHARED_NOTES = 'sharedNotes';
