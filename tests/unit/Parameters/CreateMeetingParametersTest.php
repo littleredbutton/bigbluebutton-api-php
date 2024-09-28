@@ -51,6 +51,7 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertEquals($params['moderatorOnlyMessage'], $createMeetingParams->getModeratorOnlyMessage());
         $this->assertEquals($params['webcamsOnlyForModerator'], $createMeetingParams->isWebcamsOnlyForModerator());
         $this->assertEquals($params['logo'], $createMeetingParams->getLogo());
+        $this->assertEquals($params['darklogo'], $createMeetingParams->getDarklogo());
         $this->assertEquals($params['copyright'], $createMeetingParams->getCopyright());
         $this->assertEquals($params['muteOnStart'], $createMeetingParams->isMuteOnStart());
         $this->assertEquals($params['guestPolicy'], $createMeetingParams->getGuestPolicy());
