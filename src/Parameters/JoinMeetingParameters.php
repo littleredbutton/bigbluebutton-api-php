@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Parameters;
 
+use BigBlueButton\Enum\MeetingLayout;
 use BigBlueButton\Enum\Role;
 
 /**
@@ -51,6 +52,8 @@ use BigBlueButton\Enum\Role;
  * @method $this     setRole(Role $role)
  * @method bool|null isExcludeFromDashboard()
  * @method $this     setExcludeFromDashboard(bool $excludeFromDashboard)
+ * @method string    getEnforceLayout()
+ * @method $this     setEnforceLayout(MeetingLayout $enforceLayout)
  * @method string    getWebcamBackgroundURL()
  * @method $this     setWebcamBackgroundURL(string $webcamBackgroundURL)
  */
@@ -65,6 +68,7 @@ class JoinMeetingParameters extends UserDataParameters
     protected ?string $errorRedirectUrl = null;
     protected ?bool $guest = null;
     protected ?bool $excludeFromDashboard = null;
+    protected ?MeetingLayout $enforceLayout = null;
     protected ?string $webcamBackgroundURL = null;
 
     public function __construct(protected string $meetingID, protected string $fullName, protected Role $role)
