@@ -217,7 +217,13 @@ final class CreateMeetingParametersTest extends TestCase
     {
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
-        $createMeetingParams->addPresentation('bbb_logo.png', file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'bbb_logo.png'));
+
+        $content = file_get_contents(
+            __DIR__ . \DIRECTORY_SEPARATOR . '..' . \DIRECTORY_SEPARATOR . '..' . \DIRECTORY_SEPARATOR . 'fixtures' . \DIRECTORY_SEPARATOR . 'bbb_logo.png'
+        );
+        $this->assertIsString($content);
+
+        $createMeetingParams->addPresentation('bbb_logo.png', $content);
         $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_embedded_file.xml', $createMeetingParams->getPresentationsAsXML());
     }
 

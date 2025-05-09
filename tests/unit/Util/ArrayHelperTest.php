@@ -29,7 +29,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class ArrayHelperTest extends TestCase
 {
-    /** @return iterable<string,array<string|array-key,string|bool>> */
+    /** @return iterable<array<mixed>> */
     public function provideArrays(): iterable
     {
         yield 'simple flat arrays' => [
