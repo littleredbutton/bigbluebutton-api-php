@@ -202,7 +202,7 @@ final class CreateMeetingParametersTest extends TestCase
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
         $createMeetingParams->addPresentation('http://test-install.blindsidenetworks.com/default.pdf');
-        $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_url.xml', $createMeetingParams->getPresentationsAsXML());
+        $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_url.xml', $createMeetingParams->getModules());
     }
 
     public function testGetPresentationsAsXMLWithUrlAndFilename(): void
@@ -210,7 +210,7 @@ final class CreateMeetingParametersTest extends TestCase
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
         $createMeetingParams->addPresentation('http://test-install.blindsidenetworks.com/default.pdf', null, 'presentation.pdf');
-        $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_filename.xml', $createMeetingParams->getPresentationsAsXML());
+        $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_filename.xml', $createMeetingParams->getModules());
     }
 
     public function testGetPresentationsAsXMLWithFile(): void
@@ -218,7 +218,7 @@ final class CreateMeetingParametersTest extends TestCase
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
         $createMeetingParams->addPresentation('bbb_logo.png', file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'bbb_logo.png'));
-        $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_embedded_file.xml', $createMeetingParams->getPresentationsAsXML());
+        $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_embedded_file.xml', $createMeetingParams->getModules());
     }
 
     public function testUserCameraCap(): void
@@ -271,5 +271,15 @@ final class CreateMeetingParametersTest extends TestCase
         $createMeetingParams->setGuestPolicyAskModerator();
         $this->assertSame(GuestPolicy::ASK_MODERATOR, $createMeetingParams->getGuestPolicy());
         $this->assertTrue($createMeetingParams->isGuestPolicyAskModerator());
+    }
+
+    public function testClientSettingsOverride(): void
+    {
+        $params = $this->generateCreateParams();
+        $createMeetingParams = $this->getCreateMock($params);
+
+        $createMeetingParams->setClientSettingsOverride('{ "public": { "app": { "appName": "Test" } } }');
+
+        $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'client_settings.xml', $createMeetingParams->getModules());
     }
 }
