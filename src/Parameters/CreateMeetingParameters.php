@@ -41,6 +41,8 @@ use BigBlueButton\Enum\MeetingLayout;
  * @method $this     setWebVoice(string $webVoice)
  * @method int       getMaxParticipants()
  * @method $this     setMaxParticipants(int $maxParticipants)
+ * @method string    getLoginURL()
+ * @method $this     setLoginURL(string $loginURL)
  * @method string    getLogoutURL()
  * @method $this     setLogoutURL(string $logoutURL)
  * @method bool|null isRecord()
@@ -147,6 +149,14 @@ use BigBlueButton\Enum\MeetingLayout;
  * @method $this     setPreUploadedPresentation(string $preUploadedPresentation)
  * @method string    getPreUploadedPresentationName()
  * @method $this     setPreUploadedPresentationName(string $preUploadedPresentationName)
+ * @method int|null  getMaxNumPages()
+ * @method $this     setMaxNumPages(int $maxNumPages)
+ * @method string    getPluginManifests()
+ * @method $this     setPluginManifests(string $pluginManifests)
+ * @method string    getPluginManifestsFetchUrl()
+ * @method $this     setPluginManifestsFetchUrl(string $pluginManifestsFetchUrl)
+ * @method bool|null isPresentationConversionCacheEnabled()
+ * @method $this     setPresentationConversionCacheEnabled(bool $presentationConversionCacheEnabled)
  */
 class CreateMeetingParameters extends MetaParameters
 {
@@ -155,6 +165,7 @@ class CreateMeetingParameters extends MetaParameters
     protected ?int $voiceBridge = null;
     protected ?string $webVoice = null;
     protected ?int $maxParticipants = null;
+    protected ?string $loginURL = null;
     protected ?string $logoutURL = null;
     protected ?bool $record = null;
     protected ?int $duration = null;
@@ -224,6 +235,10 @@ class CreateMeetingParameters extends MetaParameters
     protected ?bool $recordFullDurationMedia = null;
     protected ?string $presentationUploadExternalUrl = null;
     protected ?string $presentationUploadExternalDescription = null;
+    protected ?int $maxNumPages = null;
+    protected ?string $pluginManifests = null;
+    protected ?string $pluginManifestsFetchUrl = null;
+    protected ?bool $presentationConversionCacheEnabled = null;
 
     /**
      * @var array<string,string>

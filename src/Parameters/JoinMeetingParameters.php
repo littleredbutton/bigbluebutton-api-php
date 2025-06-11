@@ -58,6 +58,12 @@ use BigBlueButton\Enum\Role;
  * @method $this     setWebcamBackgroundURL(string $webcamBackgroundURL)
  * @method bool|null isBot()
  * @method $this     setBot(bool $bot)
+ * @method string    getLogoutURL()
+ * @method $this     setLogoutURL(string $logoutURL)
+ * @method string    getFirstName()
+ * @method $this     setFirstName(string $firstName)
+ * @method string    getLastName()
+ * @method $this     setLastName(string $lastName)
  */
 class JoinMeetingParameters extends UserDataParameters
 {
@@ -72,6 +78,9 @@ class JoinMeetingParameters extends UserDataParameters
     protected ?bool $excludeFromDashboard = null;
     protected ?MeetingLayout $enforceLayout = null;
     protected ?string $webcamBackgroundURL = null;
+    protected ?string $logoutURL = null;
+    protected ?string $firstName = null;
+    protected ?string $lastName = null;
     protected ?bool $bot = null;
 
     public function __construct(protected string $meetingID, protected string $fullName, protected Role $role)
