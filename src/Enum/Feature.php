@@ -50,4 +50,11 @@ enum Feature: string
     case DOWNLOAD_PRESENTATION_CONVERTED_TO_PDF = 'downloadPresentationConvertedToPdf';
     case TIMER = 'timer';
     case INFINITE_WHITEBOARD = 'infiniteWhiteboard';
+    case DELETE_CHAT_MESSAGE = 'deleteChatMessage';
+    case EDIT_CHAT_MESSAGE = 'editChatMessage';
+    case REPLY_CHAT_MESSAGE = 'replyChatMessage';
+    case chatMessageReactions = 'chatMessageReactions';
+    case raiseHand = 'raiseHand';
+    case userReactions = 'userActions';
+    case chatEmojiPicker = 'chatEmojiPicker';
 }
