@@ -35,6 +35,7 @@ final class InsertDocumentParametersTest extends TestCase
         $params->addPresentation('http://localhost/foobar.png', 'Foobar.png');
         $params->addPresentation('http://localhost/foobar.pdf', 'Foobar.pdf', true);
         $params->addPresentation('http://localhost/foobar.svg', 'Foobar.svg', true, false);
+        $params->addPresentation('http://localhost/foobar.jpg', 'Foobar.jpg', true, true, true);
         $params->addPresentation('http://localhost/demo.pdf', 'Demo.pdf', true);
 
         // Removing presentation
