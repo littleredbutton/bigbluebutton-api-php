@@ -30,6 +30,7 @@ enum Feature: string
     case BREAKOUT_ROOMS = 'breakoutRooms';
     case CAPTIONS = 'captions';
     case CHAT = 'chat';
+    case PRIVATE_CHAT = 'privateChat';
     case DOWNLOAD_PRESENTATION_WITH_ANNOTATIONS = 'downloadPresentationWithAnnotations';
     case EXTERNAL_VIDEOS = 'externalVideos';
     case IMPORT_PRESENTATION_WITH_ANNOTATIONS_FROM_BREAKOUT_ROOMS = 'importPresentationWithAnnotationsFromBreakoutRooms';
@@ -53,8 +54,8 @@ enum Feature: string
     case DELETE_CHAT_MESSAGE = 'deleteChatMessage';
     case EDIT_CHAT_MESSAGE = 'editChatMessage';
     case REPLY_CHAT_MESSAGE = 'replyChatMessage';
-    case chatMessageReactions = 'chatMessageReactions';
-    case raiseHand = 'raiseHand';
-    case userReactions = 'userActions';
-    case chatEmojiPicker = 'chatEmojiPicker';
+    case CHAT_MESSAGE_REACTIONS = 'chatMessageReactions';
+    case RAISE_HAND = 'raiseHand';
+    case USER_ACTIONS = 'userActions';
+    case CHAT_EMOJI_PICKER = 'chatEmojiPicker';
 }
