@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Util;
 
-class SimpleXMLElementExtended extends \SimpleXMLElement
+final class SimpleXMLElementExtended extends \SimpleXMLElement
 {
     /**
      * Adds a child with $value inside CDATA.
