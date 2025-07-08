@@ -25,6 +25,7 @@ namespace BigBlueButton\Parameters;
 use BigBlueButton\Enum\Feature;
 use BigBlueButton\Enum\GuestPolicy;
 use BigBlueButton\Enum\MeetingLayout;
+use BigBlueButton\Util\SimpleXMLElementExtended;
 
 /**
  * @method string    getName()
@@ -157,6 +158,10 @@ use BigBlueButton\Enum\MeetingLayout;
  * @method $this     setPluginManifestsFetchUrl(string $pluginManifestsFetchUrl)
  * @method bool|null isPresentationConversionCacheEnabled()
  * @method $this     setPresentationConversionCacheEnabled(bool $presentationConversionCacheEnabled)
+ * @method bool|null isAllowOverrideClientSettingsOnCreateCall()
+ * @method $this     setAllowOverrideClientSettingsOnCreateCall(bool $allowOverrideClientSettingsOnCreateCall)
+ * @method string    getClientSettingsOverride()
+ * @method $this     setClientSettingsOverride(string $clientSettingsOverride)
  */
 class CreateMeetingParameters extends MetaParameters
 {
@@ -239,6 +244,8 @@ class CreateMeetingParameters extends MetaParameters
     protected ?string $pluginManifests = null;
     protected ?string $pluginManifestsFetchUrl = null;
     protected ?bool $presentationConversionCacheEnabled = null;
+    protected ?bool $allowOverrideClientSettingsOnCreateCall = null;
+    protected ?string $clientSettingsOverride = null;
 
     /**
      * @var array<string,string>
@@ -249,7 +256,7 @@ class CreateMeetingParameters extends MetaParameters
     {
         $this->guestPolicy = GuestPolicy::ALWAYS_ACCEPT;
 
-        $this->ignoreProperties = ['disabledFeatures', 'disabledFeaturesExclude'];
+        $this->ignoreProperties = ['disabledFeatures', 'disabledFeaturesExclude', 'clientSettingsOverride'];
     }
 
     public function setEndCallbackUrl(string $endCallbackUrl): self
@@ -381,12 +388,26 @@ class CreateMeetingParameters extends MetaParameters
         return $this->presentations;
     }
 
-    public function getPresentationsAsXML(): string|false
+    public function getModules(): string
     {
-        $result = '';
+        $xml = new SimpleXMLElementExtended('<?xml version="1.0" encoding="UTF-8"?><modules/>');
+        $this->addPresentationsModule($xml);
+        $this->addClientSettingsOverrideModule($xml);
 
+        return $xml->asXML();
+    }
+
+    public function addClientSettingsOverrideModule(SimpleXMLElementExtended $xml): void
+    {
+        if (!empty($this->clientSettingsOverride)) {
+            $module = $xml->addChildWithCData('module', $this->clientSettingsOverride);
+            $module->addAttribute('name', 'clientSettingsOverride');
+        }
+    }
+
+    public function addPresentationsModule(SimpleXMLElementExtended $xml): void
+    {
         if (!empty($this->presentations)) {
-            $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><modules/>');
             $module = $xml->addChild('module');
             $module->addAttribute('name', 'presentation');
 
@@ -404,10 +425,7 @@ class CreateMeetingParameters extends MetaParameters
                     $document[0] = $content;
                 }
             }
-            $result = $xml->asXML();
         }
-
-        return $result;
     }
 
     public function getHTTPQuery(): string
