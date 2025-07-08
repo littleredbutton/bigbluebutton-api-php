@@ -183,11 +183,11 @@ final class CurlTransport implements TransportInterface
      *
      * @return (string|string[][])[] First key headers, second key is content
      *
-     * @throws NetworkException
-     *
      * @see https://stackoverflow.com/questions/10589889/returning-header-as-array-using-curl
      *
      * @psalm-return array{0: array<string, non-empty-list<string>>, 1: string}
+     *
+     * @throws NetworkException
      */
     private static function getHeadersAndContentFromCurlHandle(\CurlHandle $curlHandle): array
     {
