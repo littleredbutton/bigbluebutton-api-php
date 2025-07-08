@@ -27,19 +27,20 @@ namespace BigBlueButton\Parameters;
  */
 final class InsertDocumentParameters extends MetaParameters
 {
-    /** @var array<string,array{filename: string, downloadable: bool|null, removable: bool|null}> */
+    /** @var array<string,array{filename: string, downloadable: bool|null, removable: bool|null, current: bool|null}> */
     private array $presentations = [];
 
     public function __construct(protected string $meetingID)
     {
     }
 
-    public function addPresentation(string $url, string $filename, ?bool $downloadable = null, ?bool $removable = null): self
+    public function addPresentation(string $url, string $filename, ?bool $downloadable = null, ?bool $removable = null, ?bool $current = null): self
     {
         $this->presentations[$url] = [
             'filename' => $filename,
             'downloadable' => $downloadable,
             'removable' => $removable,
+            'current' => $current,
         ];
 
         return $this;
@@ -72,6 +73,10 @@ final class InsertDocumentParameters extends MetaParameters
 
                 if (\is_bool($content['removable'])) {
                     $presentation->addAttribute('removable', $content['removable'] ? 'true' : 'false');
+                }
+
+                if (\is_bool($content['current'])) {
+                    $presentation->addAttribute('current', $content['current'] ? 'true' : 'false');
                 }
             }
             $result = $xml->asXML();
