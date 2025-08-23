@@ -381,7 +381,7 @@ class CreateMeetingParameters extends MetaParameters
         return $this->presentations;
     }
 
-    public function getPresentationsAsXML(): string|false
+    public function getPresentationsAsXML(): string
     {
         $result = '';
 
@@ -405,6 +405,10 @@ class CreateMeetingParameters extends MetaParameters
                 }
             }
             $result = $xml->asXML();
+        }
+
+        if (false === $result) {
+            throw new \LogicException('Could not generate XML.');
         }
 
         return $result;

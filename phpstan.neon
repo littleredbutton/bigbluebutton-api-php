@@ -4,7 +4,7 @@ parameters:
         - tests
     parallel:
         maximumNumberOfProcesses: 4
-    level: 6
+    level: 7
     inferPrivatePropertyTypeFromConstructor: true
     bootstrapFiles:
       - tools/bootstrap.php
