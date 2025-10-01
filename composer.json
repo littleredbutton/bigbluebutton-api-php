@@ -62,7 +62,8 @@
     "ext-curl": "*",
     "ext-simplexml": "*",
     "ext-mbstring": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-dom": "*"
   },
   "suggest": {
     "psr/http-client-implementation": "To use the PsrHttpClientTransport.",

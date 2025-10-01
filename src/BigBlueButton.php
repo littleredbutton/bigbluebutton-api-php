@@ -222,7 +222,7 @@ class BigBlueButton
      */
     public function createMeeting(CreateMeetingParameters $createMeetingParams): CreateMeetingResponse
     {
-        $xml = $this->processXmlResponse($this->getCreateMeetingUrl($createMeetingParams), $createMeetingParams->getPresentationsAsXML());
+        $xml = $this->processXmlResponse($this->getCreateMeetingUrl($createMeetingParams), $createMeetingParams->getModules());
 
         return new CreateMeetingResponse($xml);
     }
