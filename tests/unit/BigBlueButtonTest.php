@@ -227,6 +227,90 @@ final class BigBlueButtonTest extends TestCase
         $this->assertUrlContainsAllRequestParameters($url, $params);
     }
 
+    /**
+     * Test create meeting without modules.
+     */
+    public function testCreate(): void
+    {
+        $createMeetingParams = $this->generateCreateParams();
+        $params = $this->getCreateMock($createMeetingParams);
+
+        $xml = '<response>
+            <returncode>SUCCESS</returncode>
+            <meetingID>'.$params->getMeetingID().'</meetingID>
+            <internalMeetingID>1a6938c707cdf5d052958672d66c219c30690c47-1524212045514</internalMeetingID>
+            <createTime>1453283819419</createTime>
+            <voiceBridge>'.$params->getVoiceBridge().'</voiceBridge>
+            <dialNumber>613-555-1234</dialNumber>
+            <createDate>Wed Jan 20 04:56:59 EST 2016</createDate>
+            <hasUserJoined>false</hasUserJoined>
+            <duration>20</duration>
+            <hasBeenForciblyEnded>false</hasBeenForciblyEnded>
+        </response>';
+
+        $this->transport->method('request')
+            ->with(self::callback(function ($request) {
+                $payload = $request->getPayload();
+
+                return $payload === '';
+            }))
+            ->willReturn(new TransportResponse($xml, null));
+
+        $response = $this->bbb->createMeeting($params);
+
+        $this->assertTrue($response->success());
+        $this->assertFalse($response->isDuplicate());
+        $this->assertFalse($response->isIdNotUnique());
+    }
+
+    /**
+     * Test create meeting with modules (presentations and clientSettingsOverride).
+     */
+    public function testCreateWithPresentation(): void
+    {
+        $createMeetingParams = $this->generateCreateParams();
+        $params = $this->getCreateMock($createMeetingParams);
+        $params->addPresentation('http://test-install.blindsidenetworks.com/default.pdf', null, 'presentation.pdf');
+        $params->addPresentation('http://test-install.blindsidenetworks.com/file.pdf');
+        $params->setClientSettingsOverride('{ "public": { "app": { "appName": "Test" } } }');
+
+        $xml = '<response>
+            <returncode>SUCCESS</returncode>
+            <meetingID>'.$params->getMeetingID().'</meetingID>
+            <internalMeetingID>1a6938c707cdf5d052958672d66c219c30690c47-1524212045514</internalMeetingID>
+            <createTime>1453283819419</createTime>
+            <voiceBridge>'.$params->getVoiceBridge().'</voiceBridge>
+            <dialNumber>613-555-1234</dialNumber>
+            <createDate>Wed Jan 20 04:56:59 EST 2016</createDate>
+            <hasUserJoined>false</hasUserJoined>
+            <duration>20</duration>
+            <hasBeenForciblyEnded>false</hasBeenForciblyEnded>
+        </response>';
+
+        $this->transport->method('request')
+            ->with(self::callback(function ($request) {
+                $payload = $request->getPayload();
+                $xml = simplexml_load_string($payload);
+
+                $presentations = $xml->module[0];
+                $clientSettingsOverride = $xml->module[1];
+
+                return \count($xml->module) == 2
+                    && $presentations->attributes()['name']->__toString() == 'presentation'
+                    && $clientSettingsOverride->attributes()['name']->__toString() == 'clientSettingsOverride'
+                    && $presentations->children()[0]->attributes()['url']->__toString() == 'http://test-install.blindsidenetworks.com/default.pdf'
+                    && $presentations->children()[0]->attributes()['filename']->__toString() == 'presentation.pdf'
+                    && $presentations->children()[1]->attributes()['url']->__toString() == 'http://test-install.blindsidenetworks.com/file.pdf';
+            }))
+            ->willReturn(new TransportResponse($xml, null));
+
+        $response = $this->bbb->createMeeting($params);
+
+        $this->assertTrue($response->success());
+        $this->assertFalse($response->isDuplicate());
+        $this->assertFalse($response->isIdNotUnique());
+    }
+
     /* Join Meeting */
 
     /**
