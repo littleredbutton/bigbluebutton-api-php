@@ -58,4 +58,5 @@ enum Feature: string
     case RAISE_HAND = 'raiseHand';
     case USER_ACTIONS = 'userActions';
     case CHAT_EMOJI_PICKER = 'chatEmojiPicker';
+    case QUIZZES = 'quizzes';
 }
