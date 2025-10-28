@@ -228,7 +228,7 @@ final class BigBlueButtonTest extends TestCase
     }
 
     /**
-     * Test create meeting URL.
+     * Test create meeting without modules.
      */
     public function testCreate(): void
     {
@@ -252,7 +252,7 @@ final class BigBlueButtonTest extends TestCase
             ->with(self::callback(function ($request) {
                 $payload = $request->getPayload();
 
-                return $payload == '';
+                return $payload === '';
             }))
             ->willReturn(new TransportResponse($xml, null));
 
@@ -263,6 +263,9 @@ final class BigBlueButtonTest extends TestCase
         $this->assertFalse($response->isIdNotUnique());
     }
 
+    /**
+     * Test create meeting with modules (presentations and clientSettingsOverride).
+     */
     public function testCreateWithPresentation(): void
     {
         $createMeetingParams = $this->generateCreateParams();
