@@ -391,10 +391,22 @@ class CreateMeetingParameters extends MetaParameters
     public function getModules(): string
     {
         $xml = new SimpleXMLElementExtended('<?xml version="1.0" encoding="UTF-8"?><modules/>');
+        // Get empty xml as string
+        $emptyXML = $xml->asXML();
+
+        // Add modules
         $this->addPresentationsModule($xml);
         $this->addClientSettingsOverrideModule($xml);
 
-        return $xml->asXML();
+        // Get xml as string after modules have been added
+        $resultXML = $xml->asXML();
+
+        // If xml was not modified (no modules added), return an empty string
+        if ($emptyXML === $resultXML) {
+            return '';
+        }
+
+        return $resultXML;
     }
 
     public function addClientSettingsOverrideModule(SimpleXMLElementExtended $xml): void
