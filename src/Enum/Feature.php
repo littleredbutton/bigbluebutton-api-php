@@ -56,7 +56,9 @@ enum Feature: string
     case REPLY_CHAT_MESSAGE = 'replyChatMessage';
     case CHAT_MESSAGE_REACTIONS = 'chatMessageReactions';
     case RAISE_HAND = 'raiseHand';
+    /** @deprecated BC only. Use Feature::USER_REACTIONS instead. */
     case USER_ACTIONS = 'userActions';
+    case USER_REACTIONS = 'userReactions';
     case CHAT_EMOJI_PICKER = 'chatEmojiPicker';
     case QUIZZES = 'quizzes';
 }
