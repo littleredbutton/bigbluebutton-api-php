@@ -248,7 +248,7 @@ class CreateMeetingParameters extends MetaParameters
     protected ?string $clientSettingsOverride = null;
 
     /**
-     * @var array<string,string>
+     * @var array<string,array<string, string|bool|null>>
      */
     private array $presentations = [];
 
@@ -351,13 +351,14 @@ class CreateMeetingParameters extends MetaParameters
         return $this;
     }
 
-    public function addPresentation(string $nameOrUrl, ?string $content = null, ?string $filename = null): self
+    public function addPresentation(string $nameOrUrl, ?string $content = null, ?string $filename = null, ?bool $downloadable = null, ?bool $removable = null): self
     {
-        if (!$filename) {
-            $this->presentations[$nameOrUrl] = !$content ?: base64_encode($content);
-        } else {
-            $this->presentations[$nameOrUrl] = $filename;
-        }
+        $this->presentations[$nameOrUrl] = [
+            'filename' => $filename,
+            'content' => !$content ?: base64_encode($content),
+            'downloadable' => $downloadable,
+            'removable' => $removable,
+        ];
 
         return $this;
     }
@@ -423,18 +424,27 @@ class CreateMeetingParameters extends MetaParameters
             $module = $xml->addChild('module');
             $module->addAttribute('name', 'presentation');
 
-            foreach ($this->presentations as $nameOrUrl => $content) {
+            foreach ($this->presentations as $nameOrUrl => $data) {
+                $document = $module->addChild('document');
+
                 if (str_starts_with($nameOrUrl, 'http')) {
-                    $presentation = $module->addChild('document');
-                    $presentation->addAttribute('url', $nameOrUrl);
-                    if (\is_string($content)) {
-                        $presentation->addAttribute('filename', $content);
-                    }
+                    $document->addAttribute('url', $nameOrUrl);
                 } else {
-                    $document = $module->addChild('document');
                     $document->addAttribute('name', $nameOrUrl);
                     /* @phpstan-ignore-next-line */
-                    $document[0] = $content;
+                    $document[0] = $data['content'];
+                }
+
+                if (isset($data['filename'])) {
+                    $document->addAttribute('filename', $data['filename']);
+                }
+
+                if (\is_bool($data['downloadable'])) {
+                    $document->addAttribute('downloadable', $data['downloadable'] ? 'true' : 'false');
+                }
+
+                if (\is_bool($data['removable'])) {
+                    $document->addAttribute('removable', $data['removable'] ? 'true' : 'false');
                 }
             }
         }
