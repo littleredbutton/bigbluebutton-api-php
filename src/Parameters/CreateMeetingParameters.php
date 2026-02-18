@@ -447,14 +447,14 @@ class CreateMeetingParameters extends MetaParameters
         // Add disabled features if any are set
         if (!empty($this->disabledFeatures)) {
             $queries = array_merge($queries, [
-                'disabledFeatures' => implode(',', array_map(fn (Feature $disabledFeature): string => $disabledFeature->value, $this->disabledFeatures)),
+                'disabledFeatures' => implode(',', array_map(static fn (Feature $disabledFeature): string => $disabledFeature->value, $this->disabledFeatures)),
             ]);
         }
 
         // Add disabled features exclude if any are set
         if (!empty($this->disabledFeaturesExclude)) {
             $queries = array_merge($queries, [
-                'disabledFeaturesExclude' => implode(',', array_map(fn (Feature $disabledFeatureExclude): string => $disabledFeatureExclude->value, $this->disabledFeaturesExclude)),
+                'disabledFeaturesExclude' => implode(',', array_map(static fn (Feature $disabledFeatureExclude): string => $disabledFeatureExclude->value, $this->disabledFeaturesExclude)),
             ]);
         }
 

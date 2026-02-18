@@ -109,7 +109,7 @@ abstract class BaseParameters
     protected function getHTTPQueryArray(): array
     {
         $properties = $this->getProperties();
-        $properties = array_filter($properties, fn ($value) => $value !== null);
+        $properties = array_filter($properties, static fn ($value) => $value !== null);
 
         return array_map(static function ($value) {
             if (\is_bool($value)) {
