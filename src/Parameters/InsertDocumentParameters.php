@@ -34,10 +34,11 @@ final class InsertDocumentParameters extends MetaParameters
     {
     }
 
-    public function addPresentation(string $url, string $filename, ?bool $downloadable = null, ?bool $removable = null): self
+    public function addPresentation(string $nameOrUrl, ?string $content = null, ?string $filename = null, ?bool $downloadable = null, ?bool $removable = null): self
     {
-        $this->presentations[$url] = [
+        $this->presentations[$nameOrUrl] = [
             'filename' => $filename,
+            'content' => !$content ?: base64_encode($content),
             'downloadable' => $downloadable,
             'removable' => $removable,
         ];
@@ -61,17 +62,27 @@ final class InsertDocumentParameters extends MetaParameters
             $module = $xml->addChild('module');
             $module->addAttribute('name', 'presentation');
 
-            foreach ($this->presentations as $url => $content) {
-                $presentation = $module->addChild('document');
-                $presentation->addAttribute('url', $url);
-                $presentation->addAttribute('filename', $content['filename']);
+            foreach ($this->presentations as $nameOrUrl => $data) {
+                $document = $module->addChild('document');
 
-                if (\is_bool($content['downloadable'])) {
-                    $presentation->addAttribute('downloadable', $content['downloadable'] ? 'true' : 'false');
+                if (str_starts_with($nameOrUrl, 'http')) {
+                    $document->addAttribute('url', $nameOrUrl);
+                } else {
+                    $document->addAttribute('name', $nameOrUrl);
+                    /* @phpstan-ignore-next-line */
+                    $document[0] = $data['content'];
                 }
 
-                if (\is_bool($content['removable'])) {
-                    $presentation->addAttribute('removable', $content['removable'] ? 'true' : 'false');
+                if (isset($data['filename'])) {
+                    $document->addAttribute('filename', $data['filename']);
+                }
+
+                if (\is_bool($data['downloadable'])) {
+                    $document->addAttribute('downloadable', $data['downloadable'] ? 'true' : 'false');
+                }
+
+                if (\is_bool($data['removable'])) {
+                    $document->addAttribute('removable', $data['removable'] ? 'true' : 'false');
                 }
             }
             $result = $xml->asXML();
