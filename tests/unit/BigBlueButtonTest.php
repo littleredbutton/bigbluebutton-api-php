@@ -249,7 +249,7 @@ final class BigBlueButtonTest extends TestCase
         </response>';
 
         $this->transport->method('request')
-            ->with(self::callback(function ($request) {
+            ->with(self::callback(static function ($request) {
                 $payload = $request->getPayload();
 
                 return $payload === '';
@@ -288,7 +288,7 @@ final class BigBlueButtonTest extends TestCase
         </response>';
 
         $this->transport->method('request')
-            ->with(self::callback(function ($request) {
+            ->with(self::callback(static function ($request) {
                 $payload = $request->getPayload();
                 $xml = simplexml_load_string($payload);
 
