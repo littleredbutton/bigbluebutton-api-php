@@ -20,6 +20,9 @@ return $config
         'increment_style' => false,
         'modernize_strpos' => false,
         'get_class_to_class_keyword' => false,
+        'declare_strict_types' => [
+            'strategy' => 'enforce'
+        ]
     ])
     ->setRiskyAllowed(true)
     ->setFinder($finder);
