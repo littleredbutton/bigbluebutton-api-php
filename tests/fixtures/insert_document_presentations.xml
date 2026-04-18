@@ -4,5 +4,6 @@
         <document url="http://localhost/foobar.png" filename="Foobar.png"/>
         <document url="http://localhost/foobar.pdf" filename="Foobar.pdf" downloadable="true"/>
         <document url="http://localhost/foobar.svg" filename="Foobar.svg" downloadable="true" removable="false"/>
+        <document url="http://localhost/foobar.jpg" filename="Foobar.jpg" downloadable="true" removable="true" current="true"/>
     </module>
 </modules>
