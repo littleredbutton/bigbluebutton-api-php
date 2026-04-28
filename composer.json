@@ -139,12 +139,12 @@
       "brainmaestro/composer-git-hooks": "^2.8",
       "extensions": {
         "phpunit/phpunit": {
-          "fakerphp/faker": "1.20.*"
+          "fakerphp/faker": "1.24.*"
         }
       },
       "friendsofphp/php-cs-fixer": "^3.3",
       "phpstan/phpstan": "^1.10",
-      "phpunit/phpunit": "^9",
+      "phpunit/phpunit": "^10",
       "rector/rector": "^1.0",
       "vimeo/psalm": "^5.23"
     }

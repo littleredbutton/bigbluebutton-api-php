@@ -42,7 +42,7 @@ final class CurlTransportTest extends TestCase
     }
 
     /** @return array<string,array<int>> */
-    public function provideBadResponseCodes(): iterable
+    public static function provideBadResponseCodes(): iterable
     {
         // cURL does not understand codes below 200 properly.
         //        foreach (range(100, 199) as $badCode) {

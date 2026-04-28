@@ -30,7 +30,7 @@ use PHPUnit\Framework\TestCase;
 final class ArrayHelperTest extends TestCase
 {
     /** @return iterable<string,array<string|array-key,string|bool>> */
-    public function provideArrays(): iterable
+    public static function provideArrays(): iterable
     {
         yield 'simple flat arrays' => [
             ['foo' => 'bar', 'foo2' => 'bar2'],

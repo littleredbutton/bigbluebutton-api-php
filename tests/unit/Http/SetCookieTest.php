@@ -150,7 +150,7 @@ final class SetCookieTest extends TestCase
     }
 
     /** @return array<array<string|bool>> */
-    public function pathMatchProvider(): array
+    public static function pathMatchProvider(): array
     {
         return [
             ['/foo', '/foo', true],
@@ -182,7 +182,7 @@ final class SetCookieTest extends TestCase
     }
 
     /** @return array<array<string|bool>> */
-    public function cookieValidateProvider(): array
+    public static function cookieValidateProvider(): array
     {
         return [
             ['foo', 'baz', 'bar', true],
@@ -240,7 +240,7 @@ final class SetCookieTest extends TestCase
      *
      * @return array<mixed>
      */
-    public function cookieParserDataProvider(): array
+    public static function cookieParserDataProvider(): array
     {
         return [
             [
@@ -442,7 +442,7 @@ final class SetCookieTest extends TestCase
      *
      * @return array<array<string|bool>>
      */
-    public function isExpiredProvider(): array
+    public static function isExpiredProvider(): array
     {
         return [
             [
