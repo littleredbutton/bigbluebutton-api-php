@@ -49,7 +49,7 @@ final class HeaderTest extends TestCase
     /**
      * @return iterable<string[]>
      */
-    public function provideBadlyFormattedHeaders(): iterable
+    public static function provideBadlyFormattedHeaders(): iterable
     {
         yield ['This is not valid.'];
         yield ['Foo:Bar'];
@@ -69,7 +69,7 @@ final class HeaderTest extends TestCase
     /**
      * @return iterable<mixed>
      */
-    public function provideNonStringHeaders(): iterable
+    public static function provideNonStringHeaders(): iterable
     {
         yield [123];
         yield [false];

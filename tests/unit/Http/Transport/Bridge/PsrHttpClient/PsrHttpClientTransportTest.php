@@ -165,11 +165,23 @@ final class PsrHttpClientTransportTest extends TestCase
         $this->requestFactoryMock->expects($this->once())->method('createRequest')->with('POST', 'https://example.com/')->willReturn($requestMock);
         $this->streamFactoryMock->expects($this->once())->method('createStream')->with('Hi Doc!')->willReturn($requestStreamMock);
         $requestMock->expects($this->once())->method('withBody')->with($requestStreamMock)->willReturn($requestMock);
-        $requestMock->expects($this->exactly(3))->method('withHeader')->withConsecutive(
-            ['X-A-Custom-Header', 'Foo'],
-            ['X-Another-Custom-Header', 'Bar'],
-            ['Content-Type', 'application/xml']
-        )->willReturn($requestMock);
+        $matcher = $this->exactly(3);
+        $requestMock->expects($matcher)->method('withHeader')->willReturnCallback(function (...$parameters) use ($matcher, $requestMock) {
+            if ($matcher->numberOfInvocations() === 1) {
+                $this->assertSame('X-A-Custom-Header', $parameters[0]);
+                $this->assertSame('Foo', $parameters[1]);
+            }
+            if ($matcher->numberOfInvocations() === 2) {
+                $this->assertSame('X-Another-Custom-Header', $parameters[0]);
+                $this->assertSame('Bar', $parameters[1]);
+            }
+            if ($matcher->numberOfInvocations() === 3) {
+                $this->assertSame('Content-Type', $parameters[0]);
+                $this->assertSame('application/xml', $parameters[1]);
+            }
+
+            return $requestMock;
+        });
         $this->httpClientMock->expects($this->once())->method('sendRequest')->with($requestMock)->willReturn($responseMock);
         $responseMock->expects($this->exactly(2))->method('getStatusCode')->willReturn(200);
         $responseMock->expects($this->once())->method('getHeader')->with('Set-Cookie')->willReturn(['JSESSIONID=MartyMcFlySession']);
@@ -199,7 +211,7 @@ final class PsrHttpClientTransportTest extends TestCase
     }
 
     /** @return iterable<string,array<int>> */
-    public function provideBadResponseCodes(): iterable
+    public static function provideBadResponseCodes(): iterable
     {
         foreach (range(100, 199) as $badCode) {
             yield 'HTTP code '.$badCode => [$badCode];
