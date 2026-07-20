@@ -162,6 +162,14 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
  * @method $this     setAllowOverrideClientSettingsOnCreateCall(bool $allowOverrideClientSettingsOnCreateCall)
  * @method string    getClientSettingsOverride()
  * @method $this     setClientSettingsOverride(string $clientSettingsOverride)
+ * @method string    getClientSettingsOverrideJsonUrl()
+ * @method $this     setClientSettingsOverrideJsonUrl(string $clientSettingsOverrideJsonUrl)
+ * @method bool|null isMultiUserWhiteboardEnabled()
+ * @method $this     setMultiUserWhiteboardEnabled(bool $multiUserWhiteboardEnabled)
+ * @method string    getSharedNotesEditor()
+ * @method $this     setSharedNotesEditor(string $sharedNotesEditor)
+ * @method string    getSharedNotesInitialContentJsonUrl()
+ * @method $this     setSharedNotesInitialContentJsonUrl(string $sharedNotesInitialContentJsonUrl)
  */
 class CreateMeetingParameters extends MetaParameters
 {
@@ -246,6 +254,10 @@ class CreateMeetingParameters extends MetaParameters
     protected ?bool $presentationConversionCacheEnabled = null;
     protected ?bool $allowOverrideClientSettingsOnCreateCall = null;
     protected ?string $clientSettingsOverride = null;
+    protected ?string $clientSettingsOverrideJsonUrl = null;
+    protected ?bool $multiUserWhiteboardEnabled = null;
+    protected ?string $sharedNotesEditor = null;
+    protected ?string $sharedNotesInitialContentJsonUrl = null;
 
     /**
      * @var array<string,string>
