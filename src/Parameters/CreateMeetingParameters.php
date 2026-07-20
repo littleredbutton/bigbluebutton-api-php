@@ -39,8 +39,8 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
  * @method $this              setWelcome(string $welcome)
  * @method string|null        getDialNumber()
  * @method $this              setDialNumber(string $dialNumber)
- * @method int|null           getVoiceBridge()
- * @method $this              setVoiceBridge(int $voiceBridge)
+ * @method string|null        getVoiceBridge()
+ * @method $this              setVoiceBridge(string $voiceBridge)
  * @method string|null        getWebVoice()
  * @method $this              setWebVoice(string $webVoice)
  * @method int|null           getMaxParticipants()
@@ -176,7 +176,7 @@ class CreateMeetingParameters extends MetaParameters
 {
     protected ?string $welcome = null;
     protected ?string $dialNumber = null;
-    protected ?int $voiceBridge = null;
+    protected ?string $voiceBridge = null;
     protected ?string $webVoice = null;
     protected ?int $maxParticipants = null;
     protected ?string $loginURL = null;

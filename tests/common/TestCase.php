@@ -64,7 +64,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             'meetingID' => $this->faker->uuid,
             'autoStartRecording' => $this->faker->boolean(50),
             'dialNumber' => $this->faker->phoneNumber,
-            'voiceBridge' => $this->faker->randomNumber(5, true),
+            'voiceBridge' => $this->faker->numerify('#####'),
             'webVoice' => $this->faker->word,
             'logoutURL' => $this->faker->url,
             'maxParticipants' => $this->faker->numberBetween(2, 100),
