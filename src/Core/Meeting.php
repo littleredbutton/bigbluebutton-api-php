@@ -37,7 +37,7 @@ class Meeting
 
     private readonly string $creationDate;
 
-    private readonly int $voiceBridge;
+    private readonly string $voiceBridge;
 
     private readonly string $dialNumber;
 
@@ -86,7 +86,7 @@ class Meeting
         $this->meetingName = $this->rawXml->meetingName->__toString();
         $this->creationTime = (float) $this->rawXml->createTime;
         $this->creationDate = $this->rawXml->createDate->__toString();
-        $this->voiceBridge = (int) $this->rawXml->voiceBridge;
+        $this->voiceBridge = $this->rawXml->voiceBridge->__toString();
         $this->dialNumber = $this->rawXml->dialNumber->__toString();
         $this->hasBeenForciblyEnded = $this->rawXml->hasBeenForciblyEnded->__toString() === 'true';
         $this->isRunning = $this->rawXml->running->__toString() === 'true';
@@ -126,7 +126,7 @@ class Meeting
         return $this->creationDate;
     }
 
-    public function getVoiceBridge(): int
+    public function getVoiceBridge(): string
     {
         return $this->voiceBridge;
     }

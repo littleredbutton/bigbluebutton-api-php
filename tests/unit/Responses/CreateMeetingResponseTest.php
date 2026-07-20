@@ -48,7 +48,7 @@ final class CreateMeetingResponseTest extends TestCase
         $this->assertEquals('1a6938c707cdf5d052958672d66c219c30690c47-1524212045514', $this->meeting->getInternalMeetingId());
         $this->assertEquals('bbb-none', $this->meeting->getParentMeetingId());
         $this->assertEquals(1453283819419, $this->meeting->getCreationTime());
-        $this->assertEquals(76286, $this->meeting->getVoiceBridge());
+        $this->assertEquals('06286', $this->meeting->getVoiceBridge());
         $this->assertEquals('Wed Jan 20 04:56:59 EST 2016', $this->meeting->getCreationDate());
         $this->assertEquals('613-555-1234', $this->meeting->getDialNumber());
         $this->assertFalse($this->meeting->hasUserJoined());
@@ -65,10 +65,10 @@ final class CreateMeetingResponseTest extends TestCase
     {
         $this->assertEachGetterValueIsString($this->meeting, [
             'getReturnCode', 'getInternalMeetingId', 'getParentMeetingId',
-            'getDialNumber', 'getCreationDate',
+            'getDialNumber', 'getVoiceBridge', 'getCreationDate',
         ]);
         $this->assertEachGetterValueIsDouble($this->meeting, ['getCreationTime']);
-        $this->assertEachGetterValueIsInteger($this->meeting, ['getDuration', 'getVoiceBridge']);
+        $this->assertEachGetterValueIsInteger($this->meeting, ['getDuration']);
         $this->assertEachGetterValueIsBoolean($this->meeting, ['hasUserJoined', 'hasBeenForciblyEnded']);
     }
 
