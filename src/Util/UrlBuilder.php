@@ -30,12 +30,12 @@ use BigBlueButton\Enum\HashingAlgorithm;
  *
  * @internal
  */
-final class UrlBuilder
+final readonly class UrlBuilder
 {
     public function __construct(
-        private readonly string $securitySalt,
-        private readonly string $bbbServerBaseUrl,
-        private readonly HashingAlgorithm $hashingAlgorithm,
+        private string $securitySalt,
+        private string $bbbServerBaseUrl,
+        private HashingAlgorithm $hashingAlgorithm,
     ) {
     }
 

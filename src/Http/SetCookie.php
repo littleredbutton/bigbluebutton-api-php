@@ -62,7 +62,7 @@ final class SetCookie implements \Stringable
         // Create the default return array
         $data = self::$defaults;
         // Explode the cookie string using a series of semicolons
-        $pieces = array_filter(array_map('trim', explode(';', $cookie)));
+        $pieces = array_filter(array_map(trim(...), explode(';', $cookie)));
         // The name of the cookie (first kvp) must exist and include an equal sign.
         if (!isset($pieces[0]) || !str_contains($pieces[0], '=')) {
             return new self($data);
