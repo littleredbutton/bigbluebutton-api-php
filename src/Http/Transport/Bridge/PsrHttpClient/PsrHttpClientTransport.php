@@ -67,12 +67,12 @@ if (!interface_exists(StreamFactoryInterface::class)) {
 /**
  * Allows to send requests to the BBB server with a {@link https://www.php-fig.org/psr/psr-18/} implementation.
  */
-final class PsrHttpClientTransport implements TransportInterface
+final readonly class PsrHttpClientTransport implements TransportInterface
 {
     /**
      * @param string[] $defaultHeaders additional headers to pass on each request
      */
-    public function __construct(private readonly ClientInterface $httpClient, private readonly RequestFactoryInterface $requestFactory, private readonly StreamFactoryInterface $streamFactory, private readonly array $defaultHeaders = [])
+    public function __construct(private ClientInterface $httpClient, private RequestFactoryInterface $requestFactory, private StreamFactoryInterface $streamFactory, private array $defaultHeaders = [])
     {
     }
 
