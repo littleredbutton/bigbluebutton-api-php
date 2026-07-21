@@ -181,7 +181,7 @@ final class SetCookieTest extends TestCase
         self::assertSame($isMatch, $cookie->matchesPath($requestPath));
     }
 
-    /** @return array<array<string|bool>> */
+    /** @return array<array<string|bool|null>> */
     public static function cookieValidateProvider(): array
     {
         return [
