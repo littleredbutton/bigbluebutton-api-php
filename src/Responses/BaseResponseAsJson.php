@@ -43,7 +43,7 @@ abstract class BaseResponseAsJson
         $this->data = json_decode($rawJson);
     }
 
-    public function getRawJson(): string
+    public function getRawJson(): string|false
     {
         return json_encode($this->data);
     }

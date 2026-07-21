@@ -476,6 +476,7 @@ final class CreateMeetingParameters extends MetaParameters
         }
     }
 
+    #[\Override]
     public function getHTTPQuery(): string
     {
         $queries = $this->getHTTPQueryArray();
