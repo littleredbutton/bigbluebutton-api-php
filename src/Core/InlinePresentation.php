@@ -24,7 +24,7 @@ namespace BigBlueButton\Core;
 
 use BigBlueButton\Util\SimpleXMLElementExtended;
 
-class InlinePresentation extends Presentation
+final class InlinePresentation extends Presentation
 {
     public function __construct(private readonly string $content, string $filename)
     {

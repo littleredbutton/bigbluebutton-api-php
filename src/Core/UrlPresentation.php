@@ -24,7 +24,7 @@ namespace BigBlueButton\Core;
 
 use BigBlueButton\Util\SimpleXMLElementExtended;
 
-class UrlPresentation extends Presentation
+final class UrlPresentation extends Presentation
 {
     public function __construct(private readonly string $url)
     {
