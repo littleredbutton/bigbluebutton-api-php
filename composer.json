@@ -114,7 +114,7 @@
     "cs-test": "tools/php-cs-fixer fix --dry-run --allow-risky=yes",
     "psalm": "tools/psalm --threads=1",
     "psalm-clear": "tools/psalm --clear-cache && tools/psalm --clear-global-cache",
-    "psalm-fix": "tools/psalm --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType",
+    "psalm-fix": "tools/psalm --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType,MissingOverrideAttribute",
     "phpstan": "tools/phpstan analyse",
     "rector": "tools/rector process --dry-run src/ tests/",
     "rector-fix": "tools/rector process src/ tests/",

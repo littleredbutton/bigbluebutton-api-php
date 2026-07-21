@@ -110,6 +110,7 @@ final class SetCookie implements \Stringable
         }
     }
 
+    #[\Override]
     public function __toString(): string
     {
         $str = $this->data['Name'].'='.$this->data['Value'].'; ';
@@ -126,8 +127,12 @@ final class SetCookie implements \Stringable
         return rtrim($str, '; ');
     }
 
-    /** @return array<string,string|bool|int|null> */
-    public function toArray(): array
+    /**
+     * @return (bool|int|string|null)[]|null
+     *
+     * @psalm-return array<string, bool|int|null|string>|null
+     */
+    public function toArray(): ?array
     {
         return $this->data;
     }
@@ -135,7 +140,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the cookie name.
      */
-    public function getName(): string
+    public function getName(): string|bool|int|null
     {
         return $this->data['Name'];
     }
@@ -153,7 +158,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the cookie value.
      */
-    public function getValue(): ?string
+    public function getValue(): string|bool|int|null
     {
         return $this->data['Value'];
     }
@@ -161,9 +166,9 @@ final class SetCookie implements \Stringable
     /**
      * Set the cookie value.
      *
-     * @param string $value Cookie value
+     * @param string|bool|int|null $value Cookie value
      */
-    public function setValue(string $value): void
+    public function setValue(string|bool|int|null $value): void
     {
         $this->data['Value'] = $value;
     }
@@ -171,7 +176,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the domain.
      */
-    public function getDomain(): ?string
+    public function getDomain(): string|bool|int|null
     {
         return $this->data['Domain'];
     }
@@ -187,7 +192,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the path.
      */
-    public function getPath(): string
+    public function getPath(): string|bool|int|null
     {
         return $this->data['Path'];
     }
@@ -223,7 +228,7 @@ final class SetCookie implements \Stringable
     /**
      * The UNIX timestamp when the cookie Expires.
      */
-    public function getExpires(): int|string|null
+    public function getExpires(): bool|int|string|null
     {
         return $this->data['Expires'];
     }
@@ -243,7 +248,7 @@ final class SetCookie implements \Stringable
     /**
      * Get whether or not this is a secure cookie.
      */
-    public function getSecure(): ?bool
+    public function getSecure(): string|bool|int|null
     {
         return $this->data['Secure'];
     }
@@ -261,7 +266,7 @@ final class SetCookie implements \Stringable
     /**
      * Get whether or not this is a session cookie.
      */
-    public function getDiscard(): ?bool
+    public function getDiscard(): string|bool|int|null
     {
         return $this->data['Discard'];
     }

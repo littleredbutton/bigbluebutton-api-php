@@ -78,6 +78,7 @@ final readonly class CurlTransport implements TransportInterface
         // @codeCoverageIgnoreEnd
     }
 
+    #[\Override]
     public function request(TransportRequest $request): TransportResponse
     {
         // @codeCoverageIgnoreStart
