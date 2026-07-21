@@ -80,7 +80,7 @@ final class Meeting
 
     private readonly bool $isBreakout;
 
-    public function __construct(private \SimpleXMLElement $rawXml)
+    public function __construct(private readonly \SimpleXMLElement $rawXml)
     {
         $this->meetingId = $this->rawXml->meetingID->__toString();
         $this->meetingName = $this->rawXml->meetingName->__toString();
