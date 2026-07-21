@@ -83,6 +83,7 @@ final readonly class SymfonyHttpClientTransport implements TransportInterface
         // @codeCoverageIgnoreEnd
     }
 
+    #[\Override]
     public function request(TransportRequest $request): TransportResponse
     {
         $headers = $this->defaultHeaders;
@@ -125,7 +126,7 @@ final readonly class SymfonyHttpClientTransport implements TransportInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      */
-    private static function extractJsessionCookie(ResponseInterface $symfonyResponse): ?string
+    private static function extractJsessionCookie(ResponseInterface $symfonyResponse): bool|int|string|null
     {
         $responseHeaders = $symfonyResponse->getHeaders();
 
