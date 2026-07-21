@@ -27,7 +27,7 @@ namespace BigBlueButton\Core;
  */
 class Hook
 {
-    private readonly int $hookId;
+    private readonly string $hookId;
 
     private readonly string $meetingId;
 
@@ -39,14 +39,14 @@ class Hook
 
     public function __construct(protected \SimpleXMLElement $rawXml)
     {
-        $this->hookId = (int) $this->rawXml->hookID->__toString();
+        $this->hookId = $this->rawXml->hookID->__toString();
         $this->callbackUrl = $this->rawXml->callbackURL->__toString();
         $this->meetingId = $this->rawXml->meetingID->__toString();
         $this->permanentHook = $this->rawXml->permanentHook->__toString() === 'true';
         $this->rawData = $this->rawXml->rawData->__toString() === 'true';
     }
 
-    public function getHookId(): int
+    public function getHookId(): string
     {
         return $this->hookId;
     }

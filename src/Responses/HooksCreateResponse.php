@@ -27,9 +27,9 @@ namespace BigBlueButton\Responses;
  */
 class HooksCreateResponse extends BaseResponse
 {
-    public function getHookId(): int
+    public function getHookId(): string
     {
-        return (int) $this->rawXml->hookID->__toString();
+        return $this->rawXml->hookID->__toString();
     }
 
     public function isPermanentHook(): bool
