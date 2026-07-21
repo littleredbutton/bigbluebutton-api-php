@@ -28,7 +28,7 @@ use BigBlueButton\Util\ArrayHelper;
 /**
  * Allows to send requests to the BBB server with the pure PHP cURL implementation.
  */
-final class CurlTransport implements TransportInterface
+final readonly class CurlTransport implements TransportInterface
 {
     public const DEFAULT_CURL_OPTIONS = [
         \CURLOPT_SSL_VERIFYPEER => 1,
@@ -64,7 +64,7 @@ final class CurlTransport implements TransportInterface
      *
      * @param mixed[] $curlOptions A list of cURL options to pass to the cURL handle. Option name as key, option value as value.
      */
-    public function __construct(private readonly array $curlOptions = [])
+    public function __construct(private array $curlOptions = [])
     {
     }
 

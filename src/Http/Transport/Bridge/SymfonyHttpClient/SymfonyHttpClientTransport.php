@@ -51,13 +51,13 @@ if (!interface_exists(HttpClientInterface::class)) {
 /**
  * Allows to send requests to the BBB server with a Symfony HTTP Client contract implementation.
  */
-final class SymfonyHttpClientTransport implements TransportInterface
+final readonly class SymfonyHttpClientTransport implements TransportInterface
 {
     /**
      * @param string[] $defaultHeaders additional HTTP headers to pass on each request
      * @param mixed[]  $defaultOptions Options for Symfony HTTP client passed on every request. See {@link https://symfony.com/doc/current/http_client.html} for details.
      */
-    public function __construct(private readonly HttpClientInterface $httpClient, private readonly array $defaultHeaders = [], private readonly array $defaultOptions = [])
+    public function __construct(private HttpClientInterface $httpClient, private array $defaultHeaders = [], private array $defaultOptions = [])
     {
     }
 
