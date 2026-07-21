@@ -42,6 +42,7 @@ abstract class UserDataParameters extends BaseParameters
         return $this;
     }
 
+    #[\Override]
     protected function getHTTPQueryArray(): array
     {
         $properties = parent::getHTTPQueryArray();

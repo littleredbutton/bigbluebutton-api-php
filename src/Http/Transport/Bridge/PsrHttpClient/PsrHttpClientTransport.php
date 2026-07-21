@@ -76,6 +76,7 @@ final readonly class PsrHttpClientTransport implements TransportInterface
     {
     }
 
+    #[\Override]
     public function request(TransportRequest $request): TransportResponse
     {
         if ('' !== $payload = $request->getPayload()) {

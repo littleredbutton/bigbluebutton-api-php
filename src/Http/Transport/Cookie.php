@@ -33,7 +33,7 @@ final class Cookie
     /**
      * @param string[] $headerValues
      */
-    public static function extractJsessionId(array $headerValues): ?string
+    public static function extractJsessionId(array $headerValues): bool|int|string|null
     {
         foreach ($headerValues as $headerValue) {
             $cookie = SetCookie::fromString($headerValue);
