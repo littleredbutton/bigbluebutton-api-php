@@ -27,7 +27,7 @@ use BigBlueButton\Enum\Role;
 /**
  * Class Meeting.
  */
-class Meeting
+final class Meeting
 {
     private readonly string $meetingId;
 
@@ -80,7 +80,7 @@ class Meeting
 
     private readonly bool $isBreakout;
 
-    public function __construct(protected \SimpleXMLElement $rawXml)
+    public function __construct(private \SimpleXMLElement $rawXml)
     {
         $this->meetingId = $this->rawXml->meetingID->__toString();
         $this->meetingName = $this->rawXml->meetingName->__toString();

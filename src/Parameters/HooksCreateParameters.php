@@ -32,7 +32,7 @@ namespace BigBlueButton\Parameters;
  * @method bool|null isGetRaw()
  * @method $this     setGetRaw(bool $getRaw)
  */
-class HooksCreateParameters extends BaseParameters
+final class HooksCreateParameters extends BaseParameters
 {
     protected ?string $meetingID = null;
     protected ?string $eventID = null;

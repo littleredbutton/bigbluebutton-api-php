@@ -25,7 +25,7 @@ namespace BigBlueButton\Responses;
 /**
  * Class ApiVersionResponse.
  */
-class ApiVersionResponse extends BaseResponse
+final class ApiVersionResponse extends BaseResponse
 {
     public function getVersion(): string
     {

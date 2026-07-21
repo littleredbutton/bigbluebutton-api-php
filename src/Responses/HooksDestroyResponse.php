@@ -25,7 +25,7 @@ namespace BigBlueButton\Responses;
 /**
  * Class GetRecordingsResponse.
  */
-class HooksDestroyResponse extends BaseResponse
+final class HooksDestroyResponse extends BaseResponse
 {
     public const KEY_MISSING_HOOK = 'destroyMissingHook';
     public const KEY_HOOK_ERROR = 'destroyHookError';

@@ -30,7 +30,7 @@ namespace BigBlueButton\Parameters;
  * @method bool|null isPublish()
  * @method $this     setPublish(bool $publish)
  */
-class PublishRecordingsParameters extends BaseParameters
+final class PublishRecordingsParameters extends BaseParameters
 {
     public function __construct(protected string $recordID, protected bool $publish)
     {
