@@ -171,7 +171,7 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
  * @method string    getSharedNotesInitialContentJsonUrl()
  * @method $this     setSharedNotesInitialContentJsonUrl(string $sharedNotesInitialContentJsonUrl)
  */
-class CreateMeetingParameters extends MetaParameters
+final class CreateMeetingParameters extends MetaParameters
 {
     protected ?string $welcome = null;
     protected ?string $dialNumber = null;

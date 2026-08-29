@@ -28,7 +28,7 @@ namespace BigBlueButton\Parameters;
  * @method string getMeetingID()
  * @method $this  setMeetingID(string $id)
  */
-class IsMeetingRunningParameters extends BaseParameters
+final class IsMeetingRunningParameters extends BaseParameters
 {
     public function __construct(protected string $meetingID)
     {
