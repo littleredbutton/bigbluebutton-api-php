@@ -2,14 +2,14 @@
     <returncode>SUCCESS</returncode>
     <hooks>
         <hook>
-            <hookID>1</hookID>
+            <hookID>12345678-1234-5678-1234-567812345678</hookID>
             <callbackURL><![CDATA[http://postcatcher.in/catchers/abcdefghijk]]></callbackURL>
             <meetingID><![CDATA[my-meeting]]></meetingID>
             <permanentHook>false</permanentHook>
             <rawData>false</rawData>
         </hook>
         <hook>
-            <hookID>2</hookID>
+            <hookID>23456789-1234-5678-1234-567812345678</hookID>
             <callbackURL><![CDATA[http://postcatcher.in/catchers/1234567890]]></callbackURL>
             <permanentHook>false</permanentHook>
             <rawData>false</rawData>

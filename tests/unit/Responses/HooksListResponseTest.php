@@ -47,7 +47,7 @@ final class HooksListResponseTest extends TestCase
 
         $this->assertEquals('my-meeting', $aHook->getMeetingId());
         $this->assertEquals('http://postcatcher.in/catchers/abcdefghijk', $aHook->getCallbackUrl());
-        $this->assertEquals(1, $aHook->getHookId());
+        $this->assertEquals('12345678-1234-5678-1234-567812345678', $aHook->getHookId());
         $this->assertFalse($aHook->isPermanentHook());
         $this->assertFalse($aHook->hasRawData());
     }
@@ -59,7 +59,7 @@ final class HooksListResponseTest extends TestCase
         $aHook = $this->listResponse->getHooks()[0];
 
         $this->assertEachGetterValueIsString($aHook, ['getCallbackUrl', 'getMeetingId']);
-        $this->assertEachGetterValueIsInteger($aHook, ['getHookId']);
+        $this->assertEachGetterValueIsString($aHook, ['getHookId']);
         $this->assertEachGetterValueIsBoolean($aHook, ['hasRawData', 'isPermanentHook']);
     }
 }

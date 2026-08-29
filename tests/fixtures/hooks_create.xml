@@ -1,6 +1,6 @@
 <response>
     <returncode>SUCCESS</returncode>
-    <hookID>1</hookID>
+    <hookID>12345678-1234-5678-1234-567812345678</hookID>
     <permanentHook>false</permanentHook>
     <rawData>false</rawData>
 </response>

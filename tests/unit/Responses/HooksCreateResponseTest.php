@@ -41,7 +41,7 @@ final class HooksCreateResponseTest extends TestCase
     public function testHooksCreateResponseContent(): void
     {
         $this->assertEquals('SUCCESS', $this->createResponse->getReturnCode());
-        $this->assertEquals(1, $this->createResponse->getHookId());
+        $this->assertEquals('12345678-1234-5678-1234-567812345678', $this->createResponse->getHookId());
         $this->assertFalse($this->createResponse->isPermanentHook());
         $this->assertFalse($this->createResponse->hasRawData());
     }
@@ -49,7 +49,7 @@ final class HooksCreateResponseTest extends TestCase
     public function testHooksCreateResponseTypes(): void
     {
         $this->assertEachGetterValueIsString($this->createResponse, ['getReturnCode']);
-        $this->assertEachGetterValueIsInteger($this->createResponse, ['getHookId']);
+        $this->assertEachGetterValueIsString($this->createResponse, ['getHookId']);
         $this->assertEachGetterValueIsBoolean($this->createResponse, ['isPermanentHook', 'hasRawData']);
     }
 }
