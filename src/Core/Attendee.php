@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Core;
 
-class Attendee
+final class Attendee
 {
     private readonly string $userId;
 

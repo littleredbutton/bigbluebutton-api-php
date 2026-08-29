@@ -25,7 +25,7 @@ namespace BigBlueButton\Responses;
 /**
  * Class GetRecordingsResponse.
  */
-class HooksCreateResponse extends BaseResponse
+final class HooksCreateResponse extends BaseResponse
 {
     public function getHookId(): int
     {

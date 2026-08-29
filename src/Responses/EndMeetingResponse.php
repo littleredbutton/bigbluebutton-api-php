@@ -25,7 +25,7 @@ namespace BigBlueButton\Responses;
 /**
  * Class EndMeetingResponse.
  */
-class EndMeetingResponse extends BaseResponse
+final class EndMeetingResponse extends BaseResponse
 {
     public const KEY_SET_END_MEETING_REQUEST = 'sentEndMeetingRequest';
 

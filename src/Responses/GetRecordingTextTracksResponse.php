@@ -27,7 +27,7 @@ use BigBlueButton\Core\Track;
 /**
  * Class GetRecordingTextTracksResponse.
  */
-class GetRecordingTextTracksResponse extends BaseResponseAsJson
+final class GetRecordingTextTracksResponse extends BaseResponseAsJson
 {
     /**
      * @var Track[]

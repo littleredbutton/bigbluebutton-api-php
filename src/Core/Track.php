@@ -25,7 +25,7 @@ namespace BigBlueButton\Core;
 /**
  * Class Track.
  */
-class Track
+final class Track
 {
     private readonly string $href;
 

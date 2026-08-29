@@ -25,7 +25,7 @@ namespace BigBlueButton\Responses;
 /**
  * Class DeleteRecordingsResponse.
  */
-class DeleteRecordingsResponse extends BaseResponse
+final class DeleteRecordingsResponse extends BaseResponse
 {
     public const KEY_NOT_FOUND = 'notFound';
 

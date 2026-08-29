@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Core;
 
-class PlaybackFormat
+final class PlaybackFormat
 {
     private readonly string $type;
 

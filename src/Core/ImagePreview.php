@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Core;
 
-class ImagePreview
+final class ImagePreview
 {
     public function __construct(
         private readonly int $width,

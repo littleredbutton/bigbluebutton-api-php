@@ -28,7 +28,7 @@ namespace BigBlueButton\Parameters;
  * @method string getRecordID()
  * @method $this  setRecordID(string $recordID)
  */
-class DeleteRecordingsParameters extends BaseParameters
+final class DeleteRecordingsParameters extends BaseParameters
 {
     public function __construct(protected string $recordID)
     {

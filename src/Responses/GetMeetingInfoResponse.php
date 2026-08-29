@@ -27,7 +27,7 @@ use BigBlueButton\Core\Meeting;
 /**
  * Class GetMeetingInfoResponse.
  */
-class GetMeetingInfoResponse extends BaseResponse
+final class GetMeetingInfoResponse extends BaseResponse
 {
     private ?Meeting $meeting = null;
 

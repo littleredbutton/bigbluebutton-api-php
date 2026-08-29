@@ -27,7 +27,7 @@ use BigBlueButton\Core\Meeting;
 /**
  * Class GetMeetingsResponse.
  */
-class GetMeetingsResponse extends BaseResponse
+final class GetMeetingsResponse extends BaseResponse
 {
     /**
      * @var Meeting[]

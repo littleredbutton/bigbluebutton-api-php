@@ -26,7 +26,7 @@ namespace BigBlueButton\Parameters;
  * @method string getHookID()
  * @method $this  setHookID(string $hookID)
  */
-class HooksDestroyParameters extends BaseParameters
+final class HooksDestroyParameters extends BaseParameters
 {
     public function __construct(protected string $hookID)
     {

@@ -25,7 +25,7 @@ namespace BigBlueButton\Responses;
 /**
  * Class JoinMeetingResponse.
  */
-class JoinMeetingResponse extends BaseResponse
+final class JoinMeetingResponse extends BaseResponse
 {
     public const KEY_SUCCESSFULLY_JOINED = 'successfullyJoined';
     public const KEY_INVALID_SESSION = 'InvalidSession';

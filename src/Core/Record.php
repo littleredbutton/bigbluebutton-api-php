@@ -25,7 +25,7 @@ namespace BigBlueButton\Core;
 /**
  * Class Record.
  */
-class Record
+final class Record
 {
     private readonly string $recordId;
     private readonly string $meetingId;

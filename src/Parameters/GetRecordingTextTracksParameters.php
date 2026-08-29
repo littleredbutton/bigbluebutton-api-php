@@ -28,7 +28,7 @@ namespace BigBlueButton\Parameters;
  * @method string getRecordID()
  * @method $this  setRecordID(string $recordID)
  */
-class GetRecordingTextTracksParameters extends MetaParameters
+final class GetRecordingTextTracksParameters extends MetaParameters
 {
     public function __construct(protected string $recordID)
     {

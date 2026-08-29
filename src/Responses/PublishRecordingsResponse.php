@@ -25,7 +25,7 @@ namespace BigBlueButton\Responses;
 /**
  * Class PublishRecordingsResponse.
  */
-class PublishRecordingsResponse extends BaseResponse
+final class PublishRecordingsResponse extends BaseResponse
 {
     public const KEY_NOT_FOUND = 'notFound';
 

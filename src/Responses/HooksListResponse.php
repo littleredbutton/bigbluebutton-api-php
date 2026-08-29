@@ -27,7 +27,7 @@ use BigBlueButton\Core\Hook;
 /**
  * Class GetRecordingsResponse.
  */
-class HooksListResponse extends BaseResponse
+final class HooksListResponse extends BaseResponse
 {
     /**
      * @var Hook[]
