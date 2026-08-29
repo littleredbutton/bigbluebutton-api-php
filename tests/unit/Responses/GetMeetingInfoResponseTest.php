@@ -125,11 +125,11 @@ final class GetMeetingInfoResponseTest extends TestCase
 
         $this->assertEachGetterValueIsString($info, [
             'getMeetingName', 'getMeetingId', 'getInternalMeetingId',
-            'getCreationDate', 'getDialNumber',
+            'getCreationDate', 'getDialNumber', 'getVoiceBridge',
         ]);
 
         $this->assertEachGetterValueIsInteger($info, [
-            'getVoiceBridge', 'getDuration', 'getParticipantCount',
+            'getDuration', 'getParticipantCount',
             'getListenerCount', 'getVoiceParticipantCount', 'getVideoCount', 'getMaxUsers', 'getModeratorCount',
         ]);
 

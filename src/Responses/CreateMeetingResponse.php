@@ -25,7 +25,7 @@ namespace BigBlueButton\Responses;
 /**
  * Class CreateMeetingResponse.
  */
-class CreateMeetingResponse extends BaseResponse
+final class CreateMeetingResponse extends BaseResponse
 {
     public const KEY_DUPLICATE_WARNING = 'duplicateWarning';
     public const KEY_ID_NOT_UNIQUE = 'idNotUnique';
@@ -55,9 +55,9 @@ class CreateMeetingResponse extends BaseResponse
         return $milliseconds ? (float) $this->rawXml->createTime : (int) ($this->rawXml->createTime / 1000);
     }
 
-    public function getVoiceBridge(): int
+    public function getVoiceBridge(): string
     {
-        return (int) $this->rawXml->voiceBridge;
+        return $this->rawXml->voiceBridge->__toString();
     }
 
     public function getDialNumber(): string

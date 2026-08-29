@@ -407,7 +407,7 @@ final class BigBlueButtonTest extends TestCase
                     <internalMeetingID>12345</internalMeetingID>
                     <createTime>1531241258036</createTime>
                     <createDate>Tue Jul 10 16:47:38 UTC 2018</createDate>
-                    <voiceBridge>70066</voiceBridge>
+                    <voiceBridge>07066</voiceBridge>
                     <dialNumber>613-555-1234</dialNumber>
                     <attendeePW>ap</attendeePW>
                     <moderatorPW>mp</moderatorPW>
@@ -441,7 +441,7 @@ final class BigBlueButtonTest extends TestCase
         $this->assertEquals('12345', $response->getMeetings()[0]->getInternalMeetingId());
         $this->assertEquals(1531241258036, $response->getMeetings()[0]->getCreationTime());
         $this->assertEquals('Tue Jul 10 16:47:38 UTC 2018', $response->getMeetings()[0]->getCreationDate());
-        $this->assertEquals(70066, $response->getMeetings()[0]->getVoiceBridge());
+        $this->assertEquals('07066', $response->getMeetings()[0]->getVoiceBridge());
         $this->assertEquals('613-555-1234', $response->getMeetings()[0]->getDialNumber());
         $this->assertFalse($response->getMeetings()[0]->isRunning());
         $this->assertEquals(0, $response->getMeetings()[0]->getDuration());

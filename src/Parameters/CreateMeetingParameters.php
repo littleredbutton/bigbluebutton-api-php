@@ -39,8 +39,8 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
  * @method $this     setWelcome(string $welcome)
  * @method string    getDialNumber()
  * @method $this     setDialNumber(string $dialNumber)
- * @method int       getVoiceBridge()
- * @method $this     setVoiceBridge(int $voiceBridge)
+ * @method string    getVoiceBridge()
+ * @method $this     setVoiceBridge(string $voiceBridge)
  * @method string    getWebVoice()
  * @method $this     setWebVoice(string $webVoice)
  * @method int       getMaxParticipants()
@@ -165,12 +165,20 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
  * @method $this     setAllowOverrideClientSettingsOnCreateCall(bool $allowOverrideClientSettingsOnCreateCall)
  * @method string    getClientSettingsOverride()
  * @method $this     setClientSettingsOverride(string $clientSettingsOverride)
+ * @method string    getClientSettingsOverrideJsonUrl()
+ * @method $this     setClientSettingsOverrideJsonUrl(string $clientSettingsOverrideJsonUrl)
+ * @method bool|null isMultiUserWhiteboardEnabled()
+ * @method $this     setMultiUserWhiteboardEnabled(bool $multiUserWhiteboardEnabled)
+ * @method string    getSharedNotesEditor()
+ * @method $this     setSharedNotesEditor(string $sharedNotesEditor)
+ * @method string    getSharedNotesInitialContentJsonUrl()
+ * @method $this     setSharedNotesInitialContentJsonUrl(string $sharedNotesInitialContentJsonUrl)
  */
-class CreateMeetingParameters extends MetaParameters
+final class CreateMeetingParameters extends MetaParameters
 {
     protected ?string $welcome = null;
     protected ?string $dialNumber = null;
-    protected ?int $voiceBridge = null;
+    protected ?string $voiceBridge = null;
     protected ?string $webVoice = null;
     protected ?int $maxParticipants = null;
     protected ?string $loginURL = null;
@@ -249,6 +257,10 @@ class CreateMeetingParameters extends MetaParameters
     protected ?bool $presentationConversionCacheEnabled = null;
     protected ?bool $allowOverrideClientSettingsOnCreateCall = null;
     protected ?string $clientSettingsOverride = null;
+    protected ?string $clientSettingsOverrideJsonUrl = null;
+    protected ?bool $multiUserWhiteboardEnabled = null;
+    protected ?string $sharedNotesEditor = null;
+    protected ?string $sharedNotesInitialContentJsonUrl = null;
 
     /** @var array<string,Presentation> */
     private array $presentations = [];

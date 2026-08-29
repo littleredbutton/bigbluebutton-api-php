@@ -72,10 +72,10 @@ final class GetMeetingsResponseTest extends TestCase
 
         $aMeeting = $this->meetings->getMeetings()[2];
 
-        $this->assertEachGetterValueIsString($aMeeting, ['getMeetingId', 'getMeetingName', 'getCreationDate', 'getDialNumber']);
+        $this->assertEachGetterValueIsString($aMeeting, ['getMeetingId', 'getMeetingName', 'getCreationDate', 'getDialNumber', 'getVoiceBridge']);
         $this->assertEachGetterValueIsDouble($aMeeting, ['getCreationTime']);
         $this->assertEachGetterValueIsInteger($aMeeting, [
-            'getVoiceBridge', 'getParticipantCount', 'getListenerCount',
+            'getParticipantCount', 'getListenerCount',
             'getVoiceParticipantCount', 'getVideoCount', 'getDuration',
         ]);
         $this->assertEachGetterValueIsBoolean($aMeeting, ['hasBeenForciblyEnded', 'isRunning', 'hasUserJoined']);
