@@ -32,7 +32,7 @@ namespace BigBlueButton\Parameters;
  * @method string getState()
  * @method $this  setState(string $state)
  */
-class GetRecordingsParameters extends MetaParameters
+final class GetRecordingsParameters extends MetaParameters
 {
     protected ?string $meetingID = null;
     protected ?string $recordID = null;

@@ -65,7 +65,7 @@ use BigBlueButton\Enum\Role;
  * @method string    getLastName()
  * @method $this     setLastName(string $lastName)
  */
-class JoinMeetingParameters extends UserDataParameters
+final class JoinMeetingParameters extends UserDataParameters
 {
     protected ?int $createTime = null;
     protected ?string $userID = null;

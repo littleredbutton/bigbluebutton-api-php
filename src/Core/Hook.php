@@ -25,7 +25,7 @@ namespace BigBlueButton\Core;
 /**
  * Class Meeting.
  */
-class Hook
+final class Hook
 {
     private readonly int $hookId;
 
@@ -37,7 +37,7 @@ class Hook
 
     private readonly bool $rawData;
 
-    public function __construct(protected \SimpleXMLElement $rawXml)
+    public function __construct(private readonly \SimpleXMLElement $rawXml)
     {
         $this->hookId = (int) $this->rawXml->hookID->__toString();
         $this->callbackUrl = $this->rawXml->callbackURL->__toString();
