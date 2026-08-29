@@ -21,26 +21,46 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Parameters;
 
+use BigBlueButton\Core\Presentation;
+use BigBlueButton\Core\UrlPresentation;
+use BigBlueButton\Util\SimpleXMLElementExtended;
+
 /**
  * @method string getMeetingID()
  * @method $this  setMeetingID(string $id)
  */
 final class InsertDocumentParameters extends MetaParameters
 {
-    /** @var array<string,array{filename: string, downloadable: bool|null, removable: bool|null}> */
+    /** @var array<string,Presentation> */
     private array $presentations = [];
 
     public function __construct(protected string $meetingID)
     {
     }
 
-    public function addPresentation(string $url, string $filename, ?bool $downloadable = null, ?bool $removable = null): self
+    public function addPresentation(string|Presentation $urlOrPresentation, ?string $filename = null, ?bool $downloadable = null, ?bool $removable = null): self
     {
-        $this->presentations[$url] = [
-            'filename' => $filename,
-            'downloadable' => $downloadable,
-            'removable' => $removable,
-        ];
+        if ($urlOrPresentation instanceof Presentation) {
+            $this->presentations[$urlOrPresentation->getArrayKey()] = $urlOrPresentation;
+
+            return $this;
+        }
+
+        @trigger_error(\sprintf('Calling addPresentation in "%s" with any parameters other than a single Presentation object is deprecated and will throw an exception in 7.0.', self::class), \E_USER_DEPRECATED);
+
+        $presentation = new UrlPresentation($urlOrPresentation);
+
+        if ($filename !== null) {
+            $presentation->setFilename($filename);
+        }
+        if ($downloadable !== null) {
+            $presentation->setDownloadable($downloadable);
+        }
+        if ($removable !== null) {
+            $presentation->setRemovable($removable);
+        }
+
+        $this->presentations[$presentation->getArrayKey()] = $presentation;
 
         return $this;
     }
@@ -57,21 +77,13 @@ final class InsertDocumentParameters extends MetaParameters
         $result = '';
 
         if (!empty($this->presentations)) {
-            $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><modules/>');
+            $xml = new SimpleXMLElementExtended('<?xml version="1.0" encoding="UTF-8"?><modules/>');
             $module = $xml->addChild('module');
             $module->addAttribute('name', 'presentation');
 
-            foreach ($this->presentations as $url => $content) {
-                $presentation = $module->addChild('document');
-                $presentation->addAttribute('url', $url);
-                $presentation->addAttribute('filename', $content['filename']);
-
-                if (\is_bool($content['downloadable'])) {
-                    $presentation->addAttribute('downloadable', $content['downloadable'] ? 'true' : 'false');
-                }
-
-                if (\is_bool($content['removable'])) {
-                    $presentation->addAttribute('removable', $content['removable'] ? 'true' : 'false');
+            foreach ($this->presentations as $content) {
+                if ($content instanceof Presentation) {
+                    $content->addDocumentToXML($module);
                 }
             }
             $result = $xml->asXML();
