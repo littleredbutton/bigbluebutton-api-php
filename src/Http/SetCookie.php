@@ -50,7 +50,7 @@ final class SetCookie implements \Stringable
     /**
      * @var array<string,string|bool|int|null> Cookie data
      */
-    private ?array $data;
+    private array $data;
 
     /**
      * Create a new SetCookie object from a string.
@@ -62,7 +62,7 @@ final class SetCookie implements \Stringable
         // Create the default return array
         $data = self::$defaults;
         // Explode the cookie string using a series of semicolons
-        $pieces = array_filter(array_map('trim', explode(';', $cookie)));
+        $pieces = array_filter(array_map(trim(...), explode(';', $cookie)));
         // The name of the cookie (first kvp) must exist and include an equal sign.
         if (!isset($pieces[0]) || !str_contains($pieces[0], '=')) {
             return new self($data);
@@ -96,7 +96,7 @@ final class SetCookie implements \Stringable
     }
 
     /**
-     * @param array<string,string|int> $data Array of cookie data provided by a Cookie parser
+     * @param array<string,string|bool|int|null> $data Array of cookie data provided by a Cookie parser
      */
     public function __construct(array $data = [])
     {
@@ -110,6 +110,7 @@ final class SetCookie implements \Stringable
         }
     }
 
+    #[\Override]
     public function __toString(): string
     {
         $str = $this->data['Name'].'='.$this->data['Value'].'; ';
@@ -126,7 +127,9 @@ final class SetCookie implements \Stringable
         return rtrim($str, '; ');
     }
 
-    /** @return array<string,string|bool|int|null> */
+    /**
+     * @return array<string, bool|int|string|null>
+     */
     public function toArray(): array
     {
         return $this->data;
@@ -223,7 +226,7 @@ final class SetCookie implements \Stringable
     /**
      * The UNIX timestamp when the cookie Expires.
      */
-    public function getExpires(): int|string|null
+    public function getExpires(): ?int
     {
         return $this->data['Expires'];
     }
@@ -241,7 +244,7 @@ final class SetCookie implements \Stringable
     }
 
     /**
-     * Get whether or not this is a secure cookie.
+     * Get whether this is a secure cookie.
      */
     public function getSecure(): ?bool
     {

@@ -30,21 +30,5 @@ require __DIR__.'/../vendor/autoload.php';
 
 // Load environment
 $dotenv = new Dotenv();
-// usePutenv was not available in version 3.4 und early 4.x versions of symfony/dotenv, so make it optional here
-if (method_exists($dotenv, 'usePutenv')) {
-    $dotenv->usePutenv(true);
-}
-
-// loadEnv was not available in version 3.4 und early 4.x versions of symfony/dotenv, so make it optional here
-if (method_exists($dotenv, 'loadEnv')) {
-    $dotenv->loadEnv(dirname(__DIR__).'/.env');
-} else {
-    $files = [];
-    foreach ([dirname(__DIR__).'/.env', dirname(__DIR__).'/.env.local'] as $file) {
-        if (file_exists($file)) {
-            $files[] = $file;
-        }
-    }
-
-    $dotenv->load(...$files);
-}
+$dotenv->usePutenv();
+$dotenv->loadEnv(dirname(__DIR__).'/.env');

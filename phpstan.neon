@@ -10,6 +10,8 @@ parameters:
       - tools/bootstrap.php
     ignoreErrors:
         -
+            identifier: method.alreadyNarrowedType
+        -
             message: '#^Offset ''input'' does not exist on array\{\}\.$#'
             path: tests/integration/Http/Transport/CurlTransportTest.php
         -
