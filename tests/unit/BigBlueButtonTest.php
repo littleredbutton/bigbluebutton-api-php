@@ -687,7 +687,7 @@ final class BigBlueButtonTest extends TestCase
 
         $xml = '<response>
           <returncode>SUCCESS</returncode>
-          <hookID>1</hookID>
+          <hookID>12345678-1234-5678-1234-567812345678</hookID>
           <permanentHook>false</permanentHook>
           <rawData>false</rawData>
         </response>';
@@ -697,7 +697,7 @@ final class BigBlueButtonTest extends TestCase
         $response = $this->bbb->hooksCreate($params);
 
         $this->assertTrue($response->success());
-        $this->assertSame(1, $response->getHookId());
+        $this->assertSame('12345678-1234-5678-1234-567812345678', $response->getHookId());
         $this->assertFalse($response->isPermanentHook());
         $this->assertFalse($response->hasRawData());
     }
@@ -710,14 +710,14 @@ final class BigBlueButtonTest extends TestCase
           <returncode>SUCCESS</returncode>
           <hooks>
             <hook>
-              <hookID>1</hookID>
+              <hookID>12345678-1234-5678-1234-567812345678</hookID>
               <callbackURL><![CDATA[http://postcatcher.in/catchers/abcdefghijk]]></callbackURL>
               <meetingID><![CDATA[my-meeting]]></meetingID>
               <permanentHook>false</permanentHook>
               <rawData>false</rawData>
             </hook>
             <hook>
-              <hookID>2</hookID>
+              <hookID>23456789-1234-5678-1234-567812345678</hookID>
               <callbackURL><![CDATA[http://postcatcher.in/catchers/1234567890]]></callbackURL>
               <permanentHook>false</permanentHook>
               <rawData>false</rawData>
@@ -734,7 +734,7 @@ final class BigBlueButtonTest extends TestCase
 
         // Hook for a single meeting
         $meetingHook = $response->getHooks()[0];
-        $this->assertSame(1, $meetingHook->getHookId());
+        $this->assertSame('12345678-1234-5678-1234-567812345678', $meetingHook->getHookId());
         $this->assertSame('http://postcatcher.in/catchers/abcdefghijk', $meetingHook->getCallbackURL());
         $this->assertSame('my-meeting', $meetingHook->getMeetingID());
         $this->assertFalse($meetingHook->isPermanentHook());
@@ -742,7 +742,7 @@ final class BigBlueButtonTest extends TestCase
 
         // Global hook
         $globalHook = $response->getHooks()[1];
-        $this->assertSame(2, $globalHook->getHookId());
+        $this->assertSame('23456789-1234-5678-1234-567812345678', $globalHook->getHookId());
         $this->assertSame('http://postcatcher.in/catchers/1234567890', $globalHook->getCallbackURL());
         $this->assertFalse($globalHook->isPermanentHook());
         $this->assertFalse($globalHook->hasRawData());

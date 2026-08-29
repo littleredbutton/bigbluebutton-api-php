@@ -29,7 +29,7 @@ final class HooksDestroyParametersTest extends TestCase
 {
     public function testHooksDestroyParameters(): void
     {
-        $hooksCreateParameters = new HooksDestroyParameters((string) $hookId = $this->faker->numberBetween(1, 50));
+        $hooksCreateParameters = new HooksDestroyParameters($hookId = $this->faker->uuid());
 
         $this->assertEquals($hookId, $hooksCreateParameters->getHookID());
     }
