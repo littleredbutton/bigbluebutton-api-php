@@ -23,14 +23,14 @@ declare(strict_types=1);
 namespace BigBlueButton\Parameters;
 
 /**
- * @method string    getCallbackURL()
- * @method $this     setCallbackURL(string $url)
- * @method string    getMeetingID()
- * @method $this     setMeetingID(string $id)
- * @method string    getEventID()
- * @method $this     setEventID(string $id)
- * @method bool|null isGetRaw()
- * @method $this     setGetRaw(bool $getRaw)
+ * @method string      getCallbackURL()
+ * @method $this       setCallbackURL(string $url)
+ * @method string|null getMeetingID()
+ * @method $this       setMeetingID(string $id)
+ * @method string|null getEventID()
+ * @method $this       setEventID(string $id)
+ * @method bool|null   isGetRaw()
+ * @method $this       setGetRaw(bool $getRaw)
  */
 final class HooksCreateParameters extends BaseParameters
 {
