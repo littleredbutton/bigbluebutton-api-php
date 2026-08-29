@@ -165,7 +165,7 @@ final class CreateMeetingParametersTest extends TestCase
         $params = $createBreakoutMeetingParams->getHTTPQuery();
 
         $this->assertStringContainsString('isBreakout='.rawurlencode($createBreakoutMeetingParams->isBreakout() ? 'true' : 'false'), $params);
-        $this->assertStringContainsString('parentMeetingID='.rawurlencode($createBreakoutMeetingParams->getParentMeetingID()), $params);
+        $this->assertStringContainsString('parentMeetingID='.rawurlencode((string) $createBreakoutMeetingParams->getParentMeetingID()), $params);
         $this->assertStringContainsString('sequence='.rawurlencode((string) $createBreakoutMeetingParams->getSequence()), $params);
         $this->assertStringContainsString('freeJoin='.rawurlencode($createBreakoutMeetingParams->isFreeJoin() ? 'true' : 'false'), $params);
     }
