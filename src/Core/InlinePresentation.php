@@ -26,9 +26,8 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
 
 final class InlinePresentation extends Presentation
 {
-    public function __construct(private readonly string $content, string $filename)
+    public function __construct(private readonly string $content, private readonly string $filename)
     {
-        $this->filename = $filename;
     }
 
     #[\Override]
