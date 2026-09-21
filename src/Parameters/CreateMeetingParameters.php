@@ -139,10 +139,10 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
  * @method $this              setUserCameraCap(int $cap)
  * @method int|null           getMeetingCameraCap()
  * @method $this              setMeetingCameraCap(int $cap)
- * @method array              getDisabledFeatures()
- * @method $this              setDisabledFeatures(array $disabledFeatures)
- * @method array              getDisabledFeaturesExclude()
- * @method $this              setDisabledFeaturesExclude(array $disabledFeaturesExclude)
+ * @method array<Feature>     getDisabledFeatures()
+ * @method $this              setDisabledFeatures(array<Feature> $disabledFeatures)
+ * @method array<Feature>     getDisabledFeaturesExclude()
+ * @method $this              setDisabledFeaturesExclude(array<Feature> $disabledFeaturesExclude)
  * @method bool|null          isPreUploadedPresentationOverrideDefault()
  * @method $this              setPreUploadedPresentationOverrideDefault(bool $preUploadedPresentationOverrideDefault)
  * @method string|null        getPresentationUploadExternalUrl()
@@ -453,9 +453,7 @@ final class CreateMeetingParameters extends MetaParameters
             $module->addAttribute('name', 'presentation');
 
             foreach ($this->presentations as $data) {
-                if ($data instanceof Presentation) {
-                    $data->addDocumentToXML($module);
-                }
+                $data->addDocumentToXML($module);
             }
         }
     }
