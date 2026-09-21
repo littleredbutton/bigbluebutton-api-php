@@ -25,17 +25,17 @@ namespace BigBlueButton\Core;
 /**
  * Class Track.
  */
-final class Track
+final readonly class Track
 {
-    private readonly string $href;
+    private string $href;
 
-    private readonly string $kind;
+    private string $kind;
 
-    private readonly string $label;
+    private string $label;
 
-    private readonly string $lang;
+    private string $lang;
 
-    private readonly string $source;
+    private string $source;
 
     public function __construct(object $track)
     {
