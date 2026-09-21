@@ -26,6 +26,8 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
 
 final class UrlPresentation extends Presentation
 {
+    private ?string $filename = null;
+
     public function __construct(private readonly string $url)
     {
     }
@@ -47,5 +49,12 @@ final class UrlPresentation extends Presentation
         }
 
         return $document;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
     }
 }

@@ -47,9 +47,7 @@ final class SetCookie implements \Stringable
         'HttpOnly' => false,
     ];
 
-    /**
-     * @var array<string,string|bool|int|null> Cookie data
-     */
+    /** @var array<string,string|bool|int|null> Cookie data */
     private array $data;
 
     /**
@@ -238,17 +236,22 @@ final class SetCookie implements \Stringable
      */
     public function setExpires(int|string $timestamp): void
     {
-        $this->data['Expires'] = is_numeric($timestamp)
-            ? (int) $timestamp
-            : strtotime($timestamp);
+        if (is_numeric($timestamp)) {
+            $this->data['Expires'] = (int) $timestamp;
+
+            return;
+        }
+
+        $expires = strtotime($timestamp);
+        $this->data['Expires'] = $expires !== false ? $expires : null;
     }
 
     /**
      * Get whether this is a secure cookie.
      */
-    public function getSecure(): string|bool|int|null
+    public function getSecure(): bool
     {
-        return $this->data['Secure'];
+        return (bool) $this->data['Secure'];
     }
 
     /**
@@ -264,9 +267,9 @@ final class SetCookie implements \Stringable
     /**
      * Get whether or not this is a session cookie.
      */
-    public function getDiscard(): string|bool|int|null
+    public function getDiscard(): bool
     {
-        return $this->data['Discard'];
+        return (bool) $this->data['Discard'];
     }
 
     /**
@@ -381,7 +384,7 @@ final class SetCookie implements \Stringable
     public function validate(): bool|string
     {
         $name = $this->getName();
-        if ($name === '') {
+        if ($name === null || $name === '') {
             return 'The cookie name must not be empty';
         }
 

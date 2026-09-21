@@ -126,7 +126,7 @@ final readonly class SymfonyHttpClientTransport implements TransportInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      */
-    private static function extractJsessionCookie(ResponseInterface $symfonyResponse): bool|int|string|null
+    private static function extractJsessionCookie(ResponseInterface $symfonyResponse): string|int|bool|null
     {
         $responseHeaders = $symfonyResponse->getHeaders();
 
