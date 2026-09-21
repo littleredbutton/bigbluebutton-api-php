@@ -32,22 +32,20 @@ final class InlinePresentation extends Presentation
     }
 
     #[\Override]
-    public function getArrayKey(): string|null
+    public function getArrayKey(): string
     {
         return $this->filename;
     }
 
     #[\Override]
-    public function addDocumentToXML(SimpleXMLElementExtended $module): ?SimpleXMLElementExtended
+    public function addDocumentToXML(SimpleXMLElementExtended $module): SimpleXMLElementExtended
     {
         $document = parent::addDocumentToXML($module);
 
-        /* @phpstan-ignore-next-line */
-        $document[0] = base64_encode($this->content);
+        $element = dom_import_simplexml($document);
+        $element->nodeValue = base64_encode($this->content);
 
-        if (isset($this->filename)) {
-            $document->addAttribute('name', $this->filename);
-        }
+        $document->addAttribute('name', $this->filename);
 
         return $document;
     }

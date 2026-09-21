@@ -219,7 +219,7 @@ final readonly class CurlTransport implements TransportInterface
 
                 $splitHeader = explode(': ', $line, 2);
                 // @codeCoverageIgnoreStart
-                if (!isset($splitHeader[0], $splitHeader[1])) {
+                if (2 !== \count($splitHeader)) {
                     throw new \InvalidArgumentException(\sprintf('Header value "%s" is invalid. Expected format is "Header-Name: value".', $line));
                 }
                 // @codeCoverageIgnoreEnd
