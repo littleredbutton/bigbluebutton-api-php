@@ -26,8 +26,6 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
 
 abstract class Presentation
 {
-    protected ?string $filename = null;
-
     protected ?bool $current = null;
 
     protected ?bool $downloadable = null;
@@ -54,18 +52,6 @@ abstract class Presentation
     }
 
     abstract public function getArrayKey(): string;
-
-    public function getFilename(): ?string
-    {
-        return $this->filename;
-    }
-
-    public function setFilename(string $filename): self
-    {
-        $this->filename = $filename;
-
-        return $this;
-    }
 
     public function getCurrent(): ?bool
     {

@@ -21,13 +21,13 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Core;
 
-final class ImagePreview
+final readonly class ImagePreview
 {
     public function __construct(
-        private readonly int $width,
-        private readonly int $height,
-        private readonly string $alt,
-        private readonly string $url,
+        private int $width,
+        private int $height,
+        private string $alt,
+        private string $url,
     ) {
     }
 

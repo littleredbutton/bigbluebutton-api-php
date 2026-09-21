@@ -47,10 +47,8 @@ final class SetCookie implements \Stringable
         'HttpOnly' => false,
     ];
 
-    /**
-     * @var array<string,string|bool|int|null> Cookie data
-     */
-    private ?array $data;
+    /** @var array<string,string|bool|int|null> Cookie data */
+    private array $data;
 
     /**
      * Create a new SetCookie object from a string.
@@ -62,7 +60,7 @@ final class SetCookie implements \Stringable
         // Create the default return array
         $data = self::$defaults;
         // Explode the cookie string using a series of semicolons
-        $pieces = array_filter(array_map('trim', explode(';', $cookie)));
+        $pieces = array_filter(array_map(trim(...), explode(';', $cookie)));
         // The name of the cookie (first kvp) must exist and include an equal sign.
         if (!isset($pieces[0]) || !str_contains($pieces[0], '=')) {
             return new self($data);
@@ -96,7 +94,7 @@ final class SetCookie implements \Stringable
     }
 
     /**
-     * @param array<string,string|int> $data Array of cookie data provided by a Cookie parser
+     * @param array<string,string|bool|int|null> $data Array of cookie data provided by a Cookie parser
      */
     public function __construct(array $data = [])
     {
@@ -110,6 +108,7 @@ final class SetCookie implements \Stringable
         }
     }
 
+    #[\Override]
     public function __toString(): string
     {
         $str = $this->data['Name'].'='.$this->data['Value'].'; ';
@@ -126,7 +125,9 @@ final class SetCookie implements \Stringable
         return rtrim($str, '; ');
     }
 
-    /** @return array<string,string|bool|int|null> */
+    /**
+     * @return array<string, bool|int|string|null>
+     */
     public function toArray(): array
     {
         return $this->data;
@@ -135,7 +136,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the cookie name.
      */
-    public function getName(): string
+    public function getName(): string|bool|int|null
     {
         return $this->data['Name'];
     }
@@ -153,7 +154,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the cookie value.
      */
-    public function getValue(): ?string
+    public function getValue(): string|bool|int|null
     {
         return $this->data['Value'];
     }
@@ -171,7 +172,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the domain.
      */
-    public function getDomain(): ?string
+    public function getDomain(): string|bool|int|null
     {
         return $this->data['Domain'];
     }
@@ -187,7 +188,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the path.
      */
-    public function getPath(): string
+    public function getPath(): string|bool|int|null
     {
         return $this->data['Path'];
     }
@@ -223,7 +224,7 @@ final class SetCookie implements \Stringable
     /**
      * The UNIX timestamp when the cookie Expires.
      */
-    public function getExpires(): int|string|null
+    public function getExpires(): string|bool|int|null
     {
         return $this->data['Expires'];
     }
@@ -235,17 +236,22 @@ final class SetCookie implements \Stringable
      */
     public function setExpires(int|string $timestamp): void
     {
-        $this->data['Expires'] = is_numeric($timestamp)
-            ? (int) $timestamp
-            : strtotime($timestamp);
+        if (is_numeric($timestamp)) {
+            $this->data['Expires'] = (int) $timestamp;
+
+            return;
+        }
+
+        $expires = strtotime($timestamp);
+        $this->data['Expires'] = $expires !== false ? $expires : null;
     }
 
     /**
-     * Get whether or not this is a secure cookie.
+     * Get whether this is a secure cookie.
      */
-    public function getSecure(): ?bool
+    public function getSecure(): bool
     {
-        return $this->data['Secure'];
+        return (bool) $this->data['Secure'];
     }
 
     /**
@@ -261,9 +267,9 @@ final class SetCookie implements \Stringable
     /**
      * Get whether or not this is a session cookie.
      */
-    public function getDiscard(): ?bool
+    public function getDiscard(): bool
     {
-        return $this->data['Discard'];
+        return (bool) $this->data['Discard'];
     }
 
     /**
@@ -378,7 +384,7 @@ final class SetCookie implements \Stringable
     public function validate(): bool|string
     {
         $name = $this->getName();
-        if ($name === '') {
+        if ($name === null || $name === '') {
             return 'The cookie name must not be empty';
         }
 

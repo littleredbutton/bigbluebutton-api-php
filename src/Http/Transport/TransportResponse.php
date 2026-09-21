@@ -24,9 +24,9 @@ namespace BigBlueButton\Http\Transport;
 /**
  * Represents response returned by {@link TransportInterface} from BBB server.
  */
-final class TransportResponse
+final readonly class TransportResponse
 {
-    public function __construct(private readonly string $body, private readonly ?string $sessionId)
+    public function __construct(private string $body, private ?string $sessionId)
     {
     }
 

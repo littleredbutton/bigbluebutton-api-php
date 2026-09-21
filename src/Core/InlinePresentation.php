@@ -26,26 +26,25 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
 
 final class InlinePresentation extends Presentation
 {
-    public function __construct(private readonly string $content, string $filename)
+    public function __construct(private readonly string $content, private readonly string $filename)
     {
-        $this->filename = $filename;
     }
 
+    #[\Override]
     public function getArrayKey(): string
     {
         return $this->filename;
     }
 
-    public function addDocumentToXML(SimpleXMLElementExtended $module): ?SimpleXMLElementExtended
+    #[\Override]
+    public function addDocumentToXML(SimpleXMLElementExtended $module): SimpleXMLElementExtended
     {
         $document = parent::addDocumentToXML($module);
 
-        /* @phpstan-ignore-next-line */
-        $document[0] = base64_encode($this->content);
+        $element = dom_import_simplexml($document);
+        $element->nodeValue = base64_encode($this->content);
 
-        if (isset($this->filename)) {
-            $document->addAttribute('name', $this->filename);
-        }
+        $document->addAttribute('name', $this->filename);
 
         return $document;
     }

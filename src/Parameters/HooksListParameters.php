@@ -25,8 +25,8 @@ namespace BigBlueButton\Parameters;
 /**
  * Class HooksListParameters.
  *
- * @method string getMeetingID()
- * @method $this  setMeetingID(string $id)
+ * @method string|null getMeetingID()
+ * @method $this       setMeetingID(string $id)
  */
 final class HooksListParameters extends MetaParameters
 {
