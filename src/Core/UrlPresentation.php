@@ -30,11 +30,13 @@ final class UrlPresentation extends Presentation
     {
     }
 
+    #[\Override]
     public function getArrayKey(): string
     {
         return $this->url;
     }
 
+    #[\Override]
     public function addDocumentToXML(SimpleXMLElementExtended $module): ?SimpleXMLElementExtended
     {
         $document = parent::addDocumentToXML($module);

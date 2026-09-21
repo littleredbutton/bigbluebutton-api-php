@@ -31,11 +31,13 @@ final class InlinePresentation extends Presentation
         $this->filename = $filename;
     }
 
-    public function getArrayKey(): string
+    #[\Override]
+    public function getArrayKey(): string|null
     {
         return $this->filename;
     }
 
+    #[\Override]
     public function addDocumentToXML(SimpleXMLElementExtended $module): ?SimpleXMLElementExtended
     {
         $document = parent::addDocumentToXML($module);

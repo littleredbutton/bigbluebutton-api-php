@@ -138,7 +138,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the cookie name.
      */
-    public function getName(): string
+    public function getName(): string|bool|int|null
     {
         return $this->data['Name'];
     }
@@ -156,7 +156,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the cookie value.
      */
-    public function getValue(): ?string
+    public function getValue(): string|bool|int|null
     {
         return $this->data['Value'];
     }
@@ -174,7 +174,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the domain.
      */
-    public function getDomain(): ?string
+    public function getDomain(): string|bool|int|null
     {
         return $this->data['Domain'];
     }
@@ -190,7 +190,7 @@ final class SetCookie implements \Stringable
     /**
      * Get the path.
      */
-    public function getPath(): string
+    public function getPath(): string|bool|int|null
     {
         return $this->data['Path'];
     }
@@ -226,7 +226,7 @@ final class SetCookie implements \Stringable
     /**
      * The UNIX timestamp when the cookie Expires.
      */
-    public function getExpires(): ?int
+    public function getExpires(): string|bool|int|null
     {
         return $this->data['Expires'];
     }
@@ -246,7 +246,7 @@ final class SetCookie implements \Stringable
     /**
      * Get whether this is a secure cookie.
      */
-    public function getSecure(): ?bool
+    public function getSecure(): string|bool|int|null
     {
         return $this->data['Secure'];
     }
@@ -264,7 +264,7 @@ final class SetCookie implements \Stringable
     /**
      * Get whether or not this is a session cookie.
      */
-    public function getDiscard(): ?bool
+    public function getDiscard(): string|bool|int|null
     {
         return $this->data['Discard'];
     }
