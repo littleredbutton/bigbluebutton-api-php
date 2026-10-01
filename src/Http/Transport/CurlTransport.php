@@ -111,7 +111,7 @@ final class CurlTransport implements TransportInterface
             throw new NetworkException('Bad response.', $httpCode);
         }
 
-        curl_close($ch);
+        unset($ch); // close curl handle
 
         $sessionId = null;
         if (isset($headers['set-cookie'])) {
