@@ -38,6 +38,10 @@ final class Cookie
         foreach ($headerValues as $headerValue) {
             $cookie = SetCookie::fromString($headerValue);
 
+            if ($cookie === null) {
+                continue;
+            }
+
             if ($cookie->getName() === 'JSESSIONID') {
                 $value = $cookie->getValue();
 
