@@ -161,8 +161,6 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
  * @method $this              setPluginManifestsFetchUrl(string $pluginManifestsFetchUrl)
  * @method bool|null          isPresentationConversionCacheEnabled()
  * @method $this              setPresentationConversionCacheEnabled(bool $presentationConversionCacheEnabled)
- * @method bool|null          isAllowOverrideClientSettingsOnCreateCall()
- * @method $this              setAllowOverrideClientSettingsOnCreateCall(bool $allowOverrideClientSettingsOnCreateCall)
  * @method string|null        getClientSettingsOverride()
  * @method $this              setClientSettingsOverride(string $clientSettingsOverride)
  * @method string|null        getClientSettingsOverrideJsonUrl()
@@ -255,7 +253,6 @@ final class CreateMeetingParameters extends MetaParameters
     protected ?string $pluginManifests = null;
     protected ?string $pluginManifestsFetchUrl = null;
     protected ?bool $presentationConversionCacheEnabled = null;
-    protected ?bool $allowOverrideClientSettingsOnCreateCall = null;
     protected ?string $clientSettingsOverride = null;
     protected ?string $clientSettingsOverrideJsonUrl = null;
     protected ?bool $multiUserWhiteboardEnabled = null;
