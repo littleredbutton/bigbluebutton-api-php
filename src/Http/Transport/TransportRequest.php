@@ -24,9 +24,9 @@ namespace BigBlueButton\Http\Transport;
 /**
  * Represents request data to be passed to {@link TransportInterface} for talking to BBB server.
  */
-final class TransportRequest
+final readonly class TransportRequest
 {
-    public function __construct(private readonly string $url, private readonly string $payload, private readonly string $contentType)
+    public function __construct(private string $url, private string $payload, private string $contentType)
     {
     }
 

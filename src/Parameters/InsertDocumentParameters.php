@@ -82,9 +82,7 @@ final class InsertDocumentParameters extends MetaParameters
             $module->addAttribute('name', 'presentation');
 
             foreach ($this->presentations as $content) {
-                if ($content instanceof Presentation) {
-                    $content->addDocumentToXML($module);
-                }
+                $content->addDocumentToXML($module);
             }
             $result = $xml->asXML();
         }

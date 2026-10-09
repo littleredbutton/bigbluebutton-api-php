@@ -32,7 +32,7 @@ final class Header
      * Merges multiple arrays of HTTP headers as passed to CURLOPT_HTTPHEADER. Headers given in later arrays will
      * overwrite the previous one with the same name.
      *
-     * @param string[] ...$headers
+     * @param list<mixed> ...$headers
      *
      * @return string[]
      */
@@ -50,7 +50,7 @@ final class Header
                 }
 
                 $splitHeader = explode(': ', $header, 2);
-                if (!isset($splitHeader[0], $splitHeader[1])) {
+                if (2 !== \count($splitHeader)) {
                     throw new \InvalidArgumentException(\sprintf('Header value "%s" is invalid. Expected format is "Header-Name: value".', $header));
                 }
 
