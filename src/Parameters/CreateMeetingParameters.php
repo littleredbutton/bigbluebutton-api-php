@@ -430,6 +430,10 @@ final class CreateMeetingParameters extends MetaParameters
         // Get xml as string after modules have been added
         $resultXML = $xml->asXML();
 
+        if (false === $resultXML) {
+            throw new \LogicException('Could not generate XML.');
+        }
+
         // If xml was not modified (no modules added), return an empty string
         if ($emptyXML === $resultXML) {
             return '';
@@ -480,7 +484,7 @@ final class CreateMeetingParameters extends MetaParameters
         // Pre-defined groups to automatically assign the students to a given breakout room
         if (!empty($this->breakoutRoomsGroups)) {
             $queries = array_merge($queries, [
-                'groups' => json_encode($this->breakoutRoomsGroups),
+                'groups' => json_encode($this->breakoutRoomsGroups, \JSON_THROW_ON_ERROR),
             ]);
         }
 
