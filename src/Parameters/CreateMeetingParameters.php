@@ -161,8 +161,6 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
  * @method $this              setPluginManifestsFetchUrl(string $pluginManifestsFetchUrl)
  * @method bool|null          isPresentationConversionCacheEnabled()
  * @method $this              setPresentationConversionCacheEnabled(bool $presentationConversionCacheEnabled)
- * @method bool|null          isAllowOverrideClientSettingsOnCreateCall()
- * @method $this              setAllowOverrideClientSettingsOnCreateCall(bool $allowOverrideClientSettingsOnCreateCall)
  * @method string|null        getClientSettingsOverride()
  * @method $this              setClientSettingsOverride(string $clientSettingsOverride)
  * @method string|null        getClientSettingsOverrideJsonUrl()
@@ -407,6 +405,24 @@ final class CreateMeetingParameters extends MetaParameters
     public function addBreakoutRoomsGroup(string $id, ?string $name, array $roster): self
     {
         $this->breakoutRoomsGroups[] = ['id' => $id, 'name' => $name, 'roster' => $roster];
+
+        return $this;
+    }
+
+    /**
+     * @deprecated This is a server-side setting only — it is not read from the create request; will be removed in 7.0.
+     */
+    public function isAllowOverrideClientSettingsOnCreateCall(): ?bool
+    {
+        return $this->allowOverrideClientSettingsOnCreateCall;
+    }
+
+    /**
+     * @deprecated This is a server-side setting only — it is not read from the create request; will be removed in 7.0.
+     */
+    public function setAllowOverrideClientSettingsOnCreateCall(bool $allowOverrideClientSettingsOnCreateCall): self
+    {
+        $this->allowOverrideClientSettingsOnCreateCall = $allowOverrideClientSettingsOnCreateCall;
 
         return $this;
     }
