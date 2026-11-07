@@ -37,7 +37,7 @@ class Track
 
     private readonly string $source;
 
-    public function __construct(object $track)
+    public function __construct(\stdClass $track)
     {
         $this->href = $track->href;
         $this->kind = $track->kind;

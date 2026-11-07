@@ -38,9 +38,13 @@ final class SimpleXMLElementExtendedTest extends TestCase
         $module = $xml->addChildWithCData('module', '{"foo": {"foo": "baa"}}');
         $module->addAttribute('name', 'clientSettingsOverride');
 
+        $result = $xml->asXML();
+
+        $this->assertNotFalse($result);
+
         $expected = '<?xml version="1.0" encoding="UTF-8"?>
 <modules><module name="clientSettingsOverride"><![CDATA[{"foo": {"foo": "baa"}}]]></module></modules>';
 
-        $this->assertXmlStringEqualsXmlString($expected, $xml->asXML());
+        $this->assertXmlStringEqualsXmlString($expected, $result);
     }
 }

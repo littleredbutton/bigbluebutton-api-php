@@ -193,7 +193,9 @@ final class CurlTransport implements TransportInterface
     {
         $headers = [];
 
-        curl_setopt($curlHandle, \CURLOPT_HEADER, 1);
+        curl_setopt($curlHandle, \CURLOPT_HEADER, true);
+
+        /** @var string|false $responseContent */
         $responseContent = curl_exec($curlHandle);
 
         // @codeCoverageIgnoreStart
