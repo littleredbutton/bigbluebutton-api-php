@@ -53,7 +53,7 @@ abstract class BaseResponseAsJson
      */
     public function getRawArray(): array
     {
-        return json_decode(json_encode($this->data), true);
+        return json_decode(json_encode($this->data, \JSON_THROW_ON_ERROR), true);
     }
 
     public function getMessage(): string

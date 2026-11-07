@@ -24,7 +24,7 @@ namespace BigBlueButton\Tests\Functional;
 use BigBlueButton\Http\Transport\Bridge\SymfonyHttpClient\SymfonyHttpClientTransport;
 use BigBlueButton\Http\Transport\TransportInterface;
 
-final class BigBlueButtonWithSymfonyHttpClientTransportTest extends AbstractBigBlueButtonFunctionalTest
+final class BigBlueButtonWithSymfonyHttpClientTransportTest extends BigBlueButtonFunctionalTestAbstract
 {
     protected static function createTransport(): TransportInterface
     {
