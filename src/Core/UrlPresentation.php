@@ -26,15 +26,19 @@ use BigBlueButton\Util\SimpleXMLElementExtended;
 
 final class UrlPresentation extends Presentation
 {
+    private ?string $filename = null;
+
     public function __construct(private readonly string $url)
     {
     }
 
+    #[\Override]
     public function getArrayKey(): string
     {
         return $this->url;
     }
 
+    #[\Override]
     public function addDocumentToXML(SimpleXMLElementExtended $module): ?SimpleXMLElementExtended
     {
         $document = parent::addDocumentToXML($module);
@@ -45,5 +49,12 @@ final class UrlPresentation extends Presentation
         }
 
         return $document;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
     }
 }
