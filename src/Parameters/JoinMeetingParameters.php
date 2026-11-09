@@ -38,8 +38,6 @@ use BigBlueButton\Enum\Role;
  * @method $this       setUserID(string $userID)
  * @method string|null getWebVoiceConf()
  * @method $this       setWebVoiceConf(string $webVoiceConf)
- * @method string|null getDefaultLayout()
- * @method $this       setDefaultLayout(string $defaultLayout)
  * @method string|null getAvatarURL()
  * @method $this       setAvatarURL(string $avatarURL)
  * @method bool|null   isRedirect()
@@ -85,5 +83,23 @@ final class JoinMeetingParameters extends UserDataParameters
 
     public function __construct(protected string $meetingID, protected string $fullName, protected Role $role)
     {
+    }
+
+    /**
+     * @deprecated Removed in BBB 3.0 — use addUserData('bbb_default_layout', ...) instead; will be removed in 8.0.
+     */
+    public function getDefaultLayout(): ?string
+    {
+        return $this->defaultLayout;
+    }
+
+    /**
+     * @deprecated Removed in BBB 3.0 — use addUserData('bbb_default_layout', ...) instead; will be removed in 8.0.
+     */
+    public function setDefaultLayout(string $defaultLayout): self
+    {
+        $this->defaultLayout = $defaultLayout;
+
+        return $this;
     }
 }
