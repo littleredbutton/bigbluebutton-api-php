@@ -23,6 +23,8 @@ declare(strict_types=1);
 namespace BigBlueButton\Tests\Functional;
 
 use BigBlueButton\BigBlueButton;
+use BigBlueButton\Core\InlinePresentation;
+use BigBlueButton\Core\UrlPresentation;
 use BigBlueButton\Http\Transport\TransportInterface;
 use BigBlueButton\Parameters\DeleteRecordingsParameters;
 use BigBlueButton\Parameters\EndMeetingParameters;
@@ -47,10 +49,33 @@ abstract class BigBlueButtonFunctionalTestAbstract extends TestCase
     {
         parent::setUp();
 
-        $this->bbb = new BigBlueButton(null, null, static::createTransport());
+        $this->bbb = new BigBlueButton(
+            $this->getBbbServerBaseUrl(),
+            $this->getBbbSecret(),
+            static::createTransport()
+        );
     }
 
     abstract protected static function createTransport(): TransportInterface;
+
+    private function getBbbServerBaseUrl(): string
+    {
+        $baseUrl = getenv('BBB_SERVER_BASE_URL');
+
+        return \is_string($baseUrl) ? $baseUrl : '';
+    }
+
+    private function getBbbSecret(): string
+    {
+        $secret = getenv('BBB_SECRET');
+        if (\is_string($secret) && $secret !== '') {
+            return $secret;
+        }
+
+        $salt = getenv('BBB_SECURITY_SALT');
+
+        return \is_string($salt) ? $salt : '';
+    }
 
     /* Check Connection */
 
@@ -67,7 +92,7 @@ abstract class BigBlueButtonFunctionalTestAbstract extends TestCase
         $this->assertNull($error);
 
         // Check with wrong baseurl and correct secret
-        $wrong_url_bbb = new BigBlueButton($this->faker->url);
+        $wrong_url_bbb = new BigBlueButton($this->faker->url, $this->getBbbSecret());
         $result = $wrong_url_bbb->isConnectionWorking();
         $this->assertFalse($result);
         // Check error message
@@ -75,7 +100,7 @@ abstract class BigBlueButtonFunctionalTestAbstract extends TestCase
         $this->assertSame(BigBlueButton::CONNECTION_ERROR_BASEURL, $error);
 
         // Check with correct baseurl and wrong secret
-        $wrong_secret_bbb = new BigBlueButton(null, $this->faker->text);
+        $wrong_secret_bbb = new BigBlueButton($this->getBbbServerBaseUrl(), $this->faker->text);
         $result = $wrong_secret_bbb->isConnectionWorking();
         $this->assertFalse($result);
         // Check error message
@@ -117,7 +142,7 @@ abstract class BigBlueButtonFunctionalTestAbstract extends TestCase
     public function testCreateMeetingWithDocumentUrl(): void
     {
         $params = $this->getCreateMock($this->generateCreateParams());
-        $params->addPresentation('https://picsum.photos/3840/2160/?random');
+        $params->addPresentation(new UrlPresentation('https://picsum.photos/3840/2160/?random'));
 
         $result = $this->bbb->createMeeting($params);
 
@@ -135,7 +160,7 @@ abstract class BigBlueButtonFunctionalTestAbstract extends TestCase
     public function testCreateMeetingWithDocumentUrlAndFileName(): void
     {
         $params = $this->getCreateMock($this->generateCreateParams());
-        $params->addPresentation('https://picsum.photos/3840/2160/?random', null, 'placeholder.png');
+        $params->addPresentation((new UrlPresentation('https://picsum.photos/3840/2160/?random'))->setFilename('placeholder.png'));
 
         $result = $this->bbb->createMeeting($params);
 
@@ -157,7 +182,7 @@ abstract class BigBlueButtonFunctionalTestAbstract extends TestCase
         $content = file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'bbb_logo.png');
         $this->assertIsString($content);
 
-        $params->addPresentation('bbb_logo.png', $content);
+        $params->addPresentation(new InlinePresentation($content, 'bbb_logo.png'));
 
         $result = $this->bbb->createMeeting($params);
 
@@ -175,12 +200,12 @@ abstract class BigBlueButtonFunctionalTestAbstract extends TestCase
     public function testCreateMeetingWithMultiDocument(): void
     {
         $params = $this->getCreateMock($this->generateCreateParams());
-        $params->addPresentation('https://picsum.photos/3840/2160/?random', null, 'presentation.png');
+        $params->addPresentation((new UrlPresentation('https://picsum.photos/3840/2160/?random'))->setFilename('presentation.png'));
 
         $content = file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'bbb_logo.png');
         $this->assertIsString($content);
 
-        $params->addPresentation('logo.png', $content);
+        $params->addPresentation(new InlinePresentation($content, 'logo.png'));
 
         $result = $this->bbb->createMeeting($params);
 

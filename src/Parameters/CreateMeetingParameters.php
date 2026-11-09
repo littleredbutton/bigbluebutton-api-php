@@ -22,9 +22,7 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Parameters;
 
-use BigBlueButton\Core\InlinePresentation;
 use BigBlueButton\Core\Presentation;
-use BigBlueButton\Core\UrlPresentation;
 use BigBlueButton\Enum\Feature;
 use BigBlueButton\Enum\GuestPolicy;
 use BigBlueButton\Enum\MeetingLayout;
@@ -253,7 +251,6 @@ final class CreateMeetingParameters extends MetaParameters
     protected ?string $pluginManifests = null;
     protected ?string $pluginManifestsFetchUrl = null;
     protected ?bool $presentationConversionCacheEnabled = null;
-    protected ?bool $allowOverrideClientSettingsOnCreateCall = null;
     protected ?string $clientSettingsOverride = null;
     protected ?string $clientSettingsOverrideJsonUrl = null;
     protected ?bool $multiUserWhiteboardEnabled = null;
@@ -363,28 +360,9 @@ final class CreateMeetingParameters extends MetaParameters
     /**
      * @return $this
      */
-    public function addPresentation(string|Presentation $nameOrUrlOrPresentation, ?string $content = null, ?string $filename = null): self
+    public function addPresentation(Presentation $presentation): self
     {
-        if ($nameOrUrlOrPresentation instanceof Presentation) {
-            $this->presentations[$nameOrUrlOrPresentation->getArrayKey()] = $nameOrUrlOrPresentation;
-
-            return $this;
-        }
-
-        @trigger_error(\sprintf('Calling addPresentation in "%s" with any parameters other than a single Presentation object is deprecated and will throw an exception in 7.0.', self::class), \E_USER_DEPRECATED);
-
-        if ($content) {
-            $presentation = new InlinePresentation($content, $nameOrUrlOrPresentation);
-            $this->presentations[$presentation->getArrayKey()] = $presentation;
-        } else {
-            $presentation = new UrlPresentation($nameOrUrlOrPresentation);
-
-            if ($filename != null) {
-                $presentation->setFilename($filename);
-            }
-
-            $this->presentations[$presentation->getArrayKey()] = $presentation;
-        }
+        $this->presentations[$presentation->getArrayKey()] = $presentation;
 
         return $this;
     }
@@ -405,24 +383,6 @@ final class CreateMeetingParameters extends MetaParameters
     public function addBreakoutRoomsGroup(string $id, ?string $name, array $roster): self
     {
         $this->breakoutRoomsGroups[] = ['id' => $id, 'name' => $name, 'roster' => $roster];
-
-        return $this;
-    }
-
-    /**
-     * @deprecated This is a server-side setting only — it is not read from the create request; will be removed in 7.0.
-     */
-    public function isAllowOverrideClientSettingsOnCreateCall(): ?bool
-    {
-        return $this->allowOverrideClientSettingsOnCreateCall;
-    }
-
-    /**
-     * @deprecated This is a server-side setting only — it is not read from the create request; will be removed in 7.0.
-     */
-    public function setAllowOverrideClientSettingsOnCreateCall(bool $allowOverrideClientSettingsOnCreateCall): self
-    {
-        $this->allowOverrideClientSettingsOnCreateCall = $allowOverrideClientSettingsOnCreateCall;
 
         return $this;
     }

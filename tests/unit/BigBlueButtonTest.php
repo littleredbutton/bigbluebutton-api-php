@@ -23,9 +23,9 @@ declare(strict_types=1);
 namespace BigBlueButton\Tests\Unit;
 
 use BigBlueButton\BigBlueButton;
+use BigBlueButton\Core\UrlPresentation;
 use BigBlueButton\Enum\ApiMethod;
 use BigBlueButton\Enum\HashingAlgorithm;
-use BigBlueButton\Exceptions\ConfigException;
 use BigBlueButton\Exceptions\NetworkException;
 use BigBlueButton\Exceptions\ParsingException;
 use BigBlueButton\Http\Transport\TransportInterface;
@@ -59,21 +59,7 @@ final class BigBlueButtonTest extends TestCase
         parent::setUp();
 
         $this->transport = $this->createMock(TransportInterface::class);
-        $this->bbb = new BigBlueButton('http://localhost/', null, $this->transport);
-    }
-
-    public function testMissingUrl(): void
-    {
-        $this->expectException(ConfigException::class);
-
-        $previousEnvironmentValue = getenv('BBB_SERVER_BASE_URL');
-        putenv('BBB_SERVER_BASE_URL=');
-
-        try {
-            new BigBlueButton('');
-        } finally {
-            putenv('BBB_SERVER_BASE_URL='.$previousEnvironmentValue);
-        }
+        $this->bbb = new BigBlueButton('http://localhost/', 'S3cr3t', $this->transport);
     }
 
     public function testNetworkFailure(): void
@@ -270,8 +256,8 @@ final class BigBlueButtonTest extends TestCase
     {
         $createMeetingParams = $this->generateCreateParams();
         $params = $this->getCreateMock($createMeetingParams);
-        $params->addPresentation('http://test-install.blindsidenetworks.com/default.pdf', null, 'presentation.pdf');
-        $params->addPresentation('http://test-install.blindsidenetworks.com/file.pdf');
+        $params->addPresentation((new UrlPresentation('http://test-install.blindsidenetworks.com/default.pdf'))->setFilename('presentation.pdf'));
+        $params->addPresentation(new UrlPresentation('http://test-install.blindsidenetworks.com/file.pdf'));
         $params->setClientSettingsOverride('{ "public": { "app": { "appName": "Test" } } }');
 
         $xml = '<response>
