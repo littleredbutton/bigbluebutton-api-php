@@ -28,6 +28,7 @@ namespace BigBlueButton\Enum;
 enum Feature: string
 {
     case BREAKOUT_ROOMS = 'breakoutRooms';
+    /** @deprecated Removed as a disabledFeatures option in BBB 3.0 — use Feature::LIVE_TRANSCRIPTION instead; will be removed in 8.0. */
     case CAPTIONS = 'captions';
     case CHAT = 'chat';
     case PRIVATE_CHAT = 'privateChat';
