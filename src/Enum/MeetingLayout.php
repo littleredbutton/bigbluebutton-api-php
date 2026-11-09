@@ -33,7 +33,12 @@ enum MeetingLayout: string
     case PRESENTATION_FOCUS = 'PRESENTATION_FOCUS';
     case VIDEO_FOCUS = 'VIDEO_FOCUS';
     case CAMERAS_ONLY = 'CAMERAS_ONLY';
-    case PARTICIPANTS_CHAT_ONLY = 'PARTICIPANTS_CHAT_ONLY';
+    case PARTICIPANTS_AND_CHAT_ONLY = 'PARTICIPANTS_AND_CHAT_ONLY';
     case PRESENTATION_ONLY = 'PRESENTATION_ONLY';
     case MEDIA_ONLY = 'MEDIA_ONLY';
+
+    /**
+     * @deprecated BC only. Use MeetingLayout::PARTICIPANTS_AND_CHAT_ONLY instead; will be removed in 8.0.
+     */
+    public const PARTICIPANTS_CHAT_ONLY = self::PARTICIPANTS_AND_CHAT_ONLY;
 }

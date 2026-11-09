@@ -29,6 +29,7 @@ enum ApiMethod: string
 {
     case CREATE = 'create';
     case JOIN = 'join';
+    /** @deprecated Removed in BBB 3.0; will be removed in 8.0. */
     case ENTER = 'enter';
     case END = 'end';
     case IS_MEETING_RUNNING = 'isMeetingRunning';
