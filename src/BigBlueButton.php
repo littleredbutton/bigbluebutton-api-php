@@ -24,7 +24,6 @@ namespace BigBlueButton;
 
 use BigBlueButton\Enum\ApiMethod;
 use BigBlueButton\Enum\HashingAlgorithm;
-use BigBlueButton\Exceptions\ConfigException;
 use BigBlueButton\Exceptions\NetworkException;
 use BigBlueButton\Exceptions\ParsingException;
 use BigBlueButton\Exceptions\RuntimeException;
@@ -77,10 +76,6 @@ class BigBlueButton
     public const CONNECTION_ERROR_BASEURL = 1;
     public const CONNECTION_ERROR_SECRET = 2;
 
-    protected string $securitySecret;
-
-    protected string $bbbServerBaseUrl;
-
     protected UrlBuilder $urlBuilder;
 
     protected ?string $jSessionId = null;
@@ -90,57 +85,10 @@ class BigBlueButton
     protected TransportInterface $transport;
 
     /**
-     * @param string|null             $baseUrl   (optional) If not given, it will be retrieved from the environment
-     * @param string|null             $secret    (optional) If not given, it will be retrieved from the environment
      * @param TransportInterface|null $transport (optional) Use a custom transport for all HTTP requests. Will fallback to default CurlTransport.
-     *
-     * @throws ConfigException
      */
-    public function __construct(?string $baseUrl = null, ?string $secret = null, ?TransportInterface $transport = null, protected HashingAlgorithm $hashingAlgorithm = HashingAlgorithm::SHA_1)
+    public function __construct(protected string $bbbServerBaseUrl, protected string $securitySecret, ?TransportInterface $transport = null, protected HashingAlgorithm $hashingAlgorithm = HashingAlgorithm::SHA_1)
     {
-        if (null === $baseUrl) {
-            @trigger_error(\sprintf('Constructing "%s" without passing a server base URL is deprecated and will throw an exception 6.0.', self::class), \E_USER_DEPRECATED);
-        }
-
-        if (null === $secret) {
-            @trigger_error(\sprintf('Constructing "%s" without passing a secret is deprecated and will throw an exception 6.0.', self::class), \E_USER_DEPRECATED);
-        }
-
-        if (getenv('BBB_SECURITY_SALT') !== false || getenv('BBB_SECRET') !== false) {
-            @trigger_error('Using BBB_SECURITY_SALT or BBB_SECRET environment variables is deprecated for security reasons and will be removed in 6.0. Use the constructor parameters instead.', \E_USER_DEPRECATED);
-        }
-
-        if (getenv('BBB_SERVER_BASE_URL') !== false) {
-            @trigger_error('Using BBB_SERVER_BASE_URL environment variable is deprecated for security reasons and will be removed in 6.0. Use the constructor parameters instead.', \E_USER_DEPRECATED);
-        }
-
-        // Keeping backward compatibility with older deployed versions
-        $securitySecret = $secret ?: getenv('BBB_SECURITY_SALT') ?: getenv('BBB_SECRET');
-
-        if (false === $securitySecret) {
-            // @codeCoverageIgnoreStart
-            @trigger_error(\sprintf('Constructing "%s" without passing a secret is deprecated since 6.0 and will throw an exception in 7.0.', self::class), \E_USER_DEPRECATED);
-            $this->securitySecret = ''; // previous behaviour
-        // @codeCoverageIgnoreEnd
-        } else {
-            $this->securitySecret = $securitySecret;
-        }
-
-        $bbbServerBaseUrl = $baseUrl ?: getenv('BBB_SERVER_BASE_URL');
-
-        if (false === $bbbServerBaseUrl) {
-            // @codeCoverageIgnoreStart
-            @trigger_error(\sprintf('Constructing "%s" without passing a server base URL is deprecated since 6.0 and will throw an exception in 7.0.', self::class), \E_USER_DEPRECATED);
-            $this->bbbServerBaseUrl = ''; // previous behaviour
-        // @codeCoverageIgnoreEnd
-        } else {
-            $this->bbbServerBaseUrl = $bbbServerBaseUrl;
-        }
-
-        if (empty($this->bbbServerBaseUrl)) {
-            throw new ConfigException('Base url required');
-        }
-
         $this->urlBuilder = new UrlBuilder($this->securitySecret, $this->bbbServerBaseUrl, $this->hashingAlgorithm);
         $this->transport = $transport ?? CurlTransport::createWithDefaultOptions();
     }
