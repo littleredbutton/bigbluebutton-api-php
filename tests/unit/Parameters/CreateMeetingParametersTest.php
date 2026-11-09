@@ -138,9 +138,9 @@ final class CreateMeetingParametersTest extends TestCase
         $this->assertStringNotContainsString('disabledFeatures=', $params);
 
         // Test with multiple disabled features
-        $createMeetingParams->setDisabledFeatures([Feature::CHAT, Feature::POLLS, Feature::CAPTIONS]);
+        $createMeetingParams->setDisabledFeatures([Feature::CHAT, Feature::POLLS, Feature::LIVE_TRANSCRIPTION]);
         $params = urldecode($createMeetingParams->getHTTPQuery());
-        $this->assertStringContainsString('disabledFeatures=chat,polls,captions', $params);
+        $this->assertStringContainsString('disabledFeatures=chat,polls,liveTranscription', $params);
 
         // Test empty disabled features exclude
         $createMeetingParams->setDisabledFeaturesExclude([]);
