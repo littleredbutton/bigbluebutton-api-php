@@ -21,6 +21,7 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Tests\Unit\Parameters;
 
+use BigBlueButton\Core\UrlPresentation;
 use BigBlueButton\Parameters\InsertDocumentParameters;
 use BigBlueButton\Tests\Common\TestCase;
 
@@ -32,10 +33,10 @@ final class InsertDocumentParametersTest extends TestCase
         $params = new InsertDocumentParameters($meetingId);
 
         // Adding presentations
-        $params->addPresentation('http://localhost/foobar.png', 'Foobar.png');
-        $params->addPresentation('http://localhost/foobar.pdf', 'Foobar.pdf', true);
-        $params->addPresentation('http://localhost/foobar.svg', 'Foobar.svg', true, false);
-        $params->addPresentation('http://localhost/demo.pdf', 'Demo.pdf', true);
+        $params->addPresentation((new UrlPresentation('http://localhost/foobar.png'))->setFilename('Foobar.png'));
+        $params->addPresentation((new UrlPresentation('http://localhost/foobar.pdf'))->setFilename('Foobar.pdf')->setDownloadable(true));
+        $params->addPresentation((new UrlPresentation('http://localhost/foobar.svg'))->setFilename('Foobar.svg')->setDownloadable(true)->setRemovable(false));
+        $params->addPresentation((new UrlPresentation('http://localhost/demo.pdf'))->setFilename('Demo.pdf')->setDownloadable(true));
 
         // Removing presentation
         $params->removePresentation('http://localhost/demo.pdf');

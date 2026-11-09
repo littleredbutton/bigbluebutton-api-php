@@ -22,7 +22,6 @@ declare(strict_types=1);
 namespace BigBlueButton\Parameters;
 
 use BigBlueButton\Core\Presentation;
-use BigBlueButton\Core\UrlPresentation;
 use BigBlueButton\Util\SimpleXMLElementExtended;
 
 /**
@@ -38,28 +37,8 @@ final class InsertDocumentParameters extends MetaParameters
     {
     }
 
-    public function addPresentation(string|Presentation $urlOrPresentation, ?string $filename = null, ?bool $downloadable = null, ?bool $removable = null): self
+    public function addPresentation(Presentation $presentation): self
     {
-        if ($urlOrPresentation instanceof Presentation) {
-            $this->presentations[$urlOrPresentation->getArrayKey()] = $urlOrPresentation;
-
-            return $this;
-        }
-
-        @trigger_error(\sprintf('Calling addPresentation in "%s" with any parameters other than a single Presentation object is deprecated and will throw an exception in 7.0.', self::class), \E_USER_DEPRECATED);
-
-        $presentation = new UrlPresentation($urlOrPresentation);
-
-        if ($filename !== null) {
-            $presentation->setFilename($filename);
-        }
-        if ($downloadable !== null) {
-            $presentation->setDownloadable($downloadable);
-        }
-        if ($removable !== null) {
-            $presentation->setRemovable($removable);
-        }
-
         $this->presentations[$presentation->getArrayKey()] = $presentation;
 
         return $this;

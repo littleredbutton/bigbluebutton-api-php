@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Tests\Unit\Parameters;
 
+use BigBlueButton\Core\InlinePresentation;
+use BigBlueButton\Core\UrlPresentation;
 use BigBlueButton\Enum\Feature;
 use BigBlueButton\Enum\GuestPolicy;
 use BigBlueButton\Parameters\CreateMeetingParameters;
@@ -201,7 +203,7 @@ final class CreateMeetingParametersTest extends TestCase
     {
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
-        $createMeetingParams->addPresentation('http://test-install.blindsidenetworks.com/default.pdf');
+        $createMeetingParams->addPresentation(new UrlPresentation('http://test-install.blindsidenetworks.com/default.pdf'));
         $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_url.xml', $createMeetingParams->getModules());
     }
 
@@ -209,7 +211,7 @@ final class CreateMeetingParametersTest extends TestCase
     {
         $params = $this->generateCreateParams();
         $createMeetingParams = $this->getCreateMock($params);
-        $createMeetingParams->addPresentation('http://test-install.blindsidenetworks.com/default.pdf', null, 'presentation.pdf');
+        $createMeetingParams->addPresentation((new UrlPresentation('http://test-install.blindsidenetworks.com/default.pdf'))->setFilename('presentation.pdf'));
         $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_filename.xml', $createMeetingParams->getModules());
     }
 
@@ -221,7 +223,7 @@ final class CreateMeetingParametersTest extends TestCase
         $content = file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'bbb_logo.png');
         $this->assertIsString($content);
 
-        $createMeetingParams->addPresentation('bbb_logo.png', $content);
+        $createMeetingParams->addPresentation(new InlinePresentation($content, 'bbb_logo.png'));
         $this->assertXmlStringEqualsXmlFile(__DIR__.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'..'.\DIRECTORY_SEPARATOR.'fixtures'.\DIRECTORY_SEPARATOR.'presentation_with_embedded_file.xml', $createMeetingParams->getModules());
     }
 
